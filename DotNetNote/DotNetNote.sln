@@ -5,6 +5,10 @@ VisualStudioVersion = 16.0.30524.135
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetNote", "DotNetNote\DotNetNote.csproj", "{774A81AC-A331-4AFE-A3E0-F5E5181E2F38}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetNote.Models", "DotNetNote.Models\DotNetNote.Models.csproj", "{7FC07D42-6E38-4804-AFBA-FD4EC58AE2AB}"
+EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "DotNetNote.SqlServer", "DotNetNote.SqlServer\DotNetNote.SqlServer.sqlproj", "{F0C55BF3-07C9-4DFC-9A49-23F33273AF5A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,16 @@ Global
 		{774A81AC-A331-4AFE-A3E0-F5E5181E2F38}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{774A81AC-A331-4AFE-A3E0-F5E5181E2F38}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{774A81AC-A331-4AFE-A3E0-F5E5181E2F38}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7FC07D42-6E38-4804-AFBA-FD4EC58AE2AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7FC07D42-6E38-4804-AFBA-FD4EC58AE2AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7FC07D42-6E38-4804-AFBA-FD4EC58AE2AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7FC07D42-6E38-4804-AFBA-FD4EC58AE2AB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F0C55BF3-07C9-4DFC-9A49-23F33273AF5A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F0C55BF3-07C9-4DFC-9A49-23F33273AF5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F0C55BF3-07C9-4DFC-9A49-23F33273AF5A}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{F0C55BF3-07C9-4DFC-9A49-23F33273AF5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F0C55BF3-07C9-4DFC-9A49-23F33273AF5A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F0C55BF3-07C9-4DFC-9A49-23F33273AF5A}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
