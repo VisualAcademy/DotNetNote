@@ -12,4 +12,8 @@
     <Folder Include="Models\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Dul" Version="1.2.5" />
+  </ItemGroup>
+
 </Project>
