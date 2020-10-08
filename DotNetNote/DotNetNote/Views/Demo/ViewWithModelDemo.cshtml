@@ -1,0 +1,10 @@
+﻿@*컨트롤러에서 넘어온 개체를 @model 키워드로 받는다.*@
+@model DotNetNote.Models.DemoModel
+
+@{ Layout = null; }
+
+<h2>모델 형식으로 전송된 데이터</h2>
+
+@*@Model을 사용 점을 찍어서 인텔리센스의 도움을 받아서 Id, Name 속성을 출력합니다.*@
+<h3>@Model.Id</h3>
+<h3>@Model.Name</h3>
