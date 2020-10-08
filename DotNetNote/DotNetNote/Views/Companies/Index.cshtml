@@ -1,0 +1,38 @@
+﻿<h1>회사들</h1>
+
+<h2>입력</h2>
+<form action="/Companies/Index" method="post">
+    회사명: 
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+        <input class="mdl-textfield__input" type="text" name="name" id="name" />
+        <label class="mdl-textfield__label" for="name">Name...</label>
+    </div>
+    <input class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" 
+           type="submit" name="btnSubmit" value="전송" />
+</form>
+
+<h2>출력</h2>
+<table class="mdl-data-table mdl-js-data-table" style="width: 200px;">
+    <thead>
+        <tr>
+            <th class="mdl-data-talbe__cell--non-numeric">번호</th>
+            <th class="mdl-data-talbe__cell--non-numeric">회사명</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>1</td>
+            <td class="mdl-data-talbe__cell--non-numeric">Foo 회사</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td class="mdl-data-talbe__cell--non-numeric">Bar 회사</td>
+        </tr>
+    </tbody>
+</table>   
+
+@if (ViewBag.Message != null)
+{
+    <hr />
+    @ViewBag.Message
+}

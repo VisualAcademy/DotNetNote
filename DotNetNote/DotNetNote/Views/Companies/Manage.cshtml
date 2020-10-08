@@ -1,0 +1,30 @@
+﻿@model List<DotNetNote.Models.CompanyModel>
+
+<h1>Company Management</h1>
+
+<form action="/Companies/Manage" method="post">
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+        <input class="mdl-textfield__input" type="text" name="name" id="name" />
+        <label class="mdl-textfield__label" for="name">Name...</label>
+    </div>
+    <input class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" 
+           type="submit" name="btnSubmit" value="전송" />
+</form>
+
+<table class="mdl-data-table mdl-js-data-table" style="width: 200px;">
+    <thead>
+        <tr>
+            <th class="mdl-data-talbe__cell--non-numeric">번호</th>
+            <th class="mdl-data-talbe__cell--non-numeric">회사명</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var c in Model)
+        {
+        <tr>
+            <td>@c.Id</td>
+            <td class="mdl-data-talbe__cell--non-numeric">@c.Name</td>
+        </tr>
+        }
+    </tbody>
+</table>   
