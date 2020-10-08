@@ -1,0 +1,96 @@
+﻿@model DotNetNote.Models.Applicant
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>지원서 폼</title>
+    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/lib/bootstrap-3-datepicker/dist/css/bootstrap-datepicker.css" rel="stylesheet" />
+</head>
+<body>
+
+    <h1>지원서 폼</h1>
+
+    <form asp-controller="FormValidationDemo" asp-action="ApplicationForm" method="post">
+        <div class="form-group">
+            <label asp-for="Name" class="col-sm-2 control-label"></label>
+            <div class="col-sm-10">
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="FatherName" class="col-sm-2 control-label"></label>
+            <div class="col-sm-10">
+                <input asp-for="FatherName" class="form-control" />
+                <span asp-validation-for="FatherName"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="FatherDob" class="col-sm-2 control-label"></label>
+            <div class="col-sm-10">
+                <input asp-for="FatherDob" class="form-control" />
+                <span asp-validation-for="FatherDob"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="IsFatherMember" class="col-sm-2 control-label"></label>
+            <div class="col-sm-10">
+
+                <select asp-for="IsFatherMember" class="form-control" 
+                    asp-items=
+                    "@(new SelectList(DotNetNote.Models.Constants.YesOrNo, "Value", "Text"))">
+                    <option value=""></option>
+                </select>
+                                
+                <span asp-validation-for="IsFatherMember"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="MotherName" class="col-sm-2 control-label"></label>
+            <div class="col-sm-10">
+                <input asp-for="MotherName" class="form-control" />
+                <span asp-validation-for="MotherName"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="MotherDob" class="col-sm-2 control-label"></label>
+            <div class="col-sm-10">
+                <input asp-for="MotherDob" class="form-control" />
+                <span asp-validation-for="MotherDob"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox"> Remember me
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <input type="submit" name="btnSubmit" value="전송" />
+            </div>
+        </div>
+
+    </form>
+
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+    <script src="~/lib/moment/moment.js"></script>
+    <script src="~/lib/bootstrap-3-datepicker/dist/js/bootstrap-datepicker.js"></script>
+
+    <script>
+        $(function () {
+            $("#FatherDob").datepicker();
+            $("#MotherDob").datepicker();
+         });
+    </script>
+</body>
+</html>

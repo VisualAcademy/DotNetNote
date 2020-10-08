@@ -1,0 +1,26 @@
+﻿@model DotNetNote.Models.MaximModel
+
+@{ 
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>강력한 형식의 뷰</title>
+</head>
+<body>
+    <h2>강력한 형식의 뷰</h2>
+
+    @using (Html.BeginForm())
+    {
+        @Html.LabelFor(n => n.Name)
+        <text>: </text>
+        @Html.TextBoxFor(n => n.Name)<br />
+        
+        @Html.LabelFor(c => c.Content)
+        <text>: </text>
+        @Html.TextBoxFor(c => c.Content)<br />
+        <input type="submit" value="전송" />
+    }
+</body>
+</html>

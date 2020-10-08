@@ -1,0 +1,42 @@
+﻿@model DotNetNote.Models.MaximModel
+
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>jQuery 플러그인 기반 클라이언트 측 유효성 검사</title>
+    <style>
+        .input-validation-error {
+            border: 1px solid red;
+        }
+    </style>
+</head>
+<body>
+<h2>jQuery 플러그인 기반 클라이언트 측 유효성 검사</h2>
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(false)
+
+    @Html.LabelFor(n => n.Name)
+    <text>: </text>
+    @Html.TextBoxFor(n => n.Name)
+    @Html.ValidationMessageFor(n => n.Name)
+    <br />
+
+    @Html.LabelFor(c => c.Content)
+    <text>: </text>
+    @Html.TextBoxFor(c => c.Content)
+    @Html.ValidationMessageFor(c => c.Content)
+    <br />
+
+    <input type="submit" value="전송" />
+}
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+<script src=
+"~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+</body>
+</html>
