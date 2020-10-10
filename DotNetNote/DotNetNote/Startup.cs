@@ -30,6 +30,9 @@ namespace DotNetNote
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddTransient<ICompanyRepository, CompanyRepositoryEntityFramework>();
+
+            // DotNetSale
+            services.AddTransient<ICategoryRepository, CategoryRepositoryInMemory>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
