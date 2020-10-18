@@ -1,0 +1,9 @@
+﻿@{ 
+    Layout = null;
+}
+
+<h3>현재 사이트와 관련된 추천 사이트</h3>
+
+@await Component.InvokeAsync("SiteList", "Index")
+
+

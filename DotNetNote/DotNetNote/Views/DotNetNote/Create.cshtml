@@ -1,0 +1,18 @@
+﻿@model Note
+
+<h2 style="text-align:center;">게시판</h2>
+@ViewBag.TitleDescription
+<hr />
+
+<div class="row">
+    <div class="col-md-offset-2 col-md-8 col-md-offset-2">
+        <form asp-controller="DotNetNote" asp-action="Create" 
+              enctype="multipart/form-data" method="post">
+            @await Html.PartialAsync("_BoardEditorForm")
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

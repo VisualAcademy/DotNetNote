@@ -1,37 +1,30 @@
-﻿@inject Microsoft.Extensions.Options.IOptions<
-    DotNetNote.Settings.DotNetNoteSettings> option
+﻿@inject Microsoft.Extensions.Options.IOptions<DotNetNote.Settings.DotNetNoteSettings> option
 
-@if (User.Identity.IsAuthenticated)
-{
-    <form asp-controller="User" asp-action="Logout" method="post"
-          id="logoutForm" class="navbar-right">
-        <ul class="nav navbar-nav navbar-right">
-            @if (User.IsInRole("Users") 
-               && User.FindFirst("UserId").Value == option.Value.SiteAdmin)
-            {
-                <li>
-                    <a asp-controller="Admin" asp-action="Index">
-                        <i class="fa fa-gear"></i> 대시보드
-                    </a>
-                </li>
-            }
-            <li>
-                <a asp-controller="User" asp-action="UserInfor" title="Manage">
-                    @User.FindFirst("UserId").Value
-                </a>
+<ul class="navbar-nav">
+    @if (User.Identity.IsAuthenticated)
+    {
+        @if (User.IsInRole("Users") && User.FindFirst("UserId").Value == option.Value.SiteAdmin)
+        {
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-controller="Admin" asp-action="Index" title="Dashboard"><i class="fa fa-gear"></i> 대시보드</a>
             </li>
-            <li>
-                <button type="submit" class="btn btn-link navbar-btn navbar-link">
-                    로그아웃
-                </button>
-            </li>
-        </ul>
-    </form>
-}
-else
-{
-    <ul class="nav navbar-nav navbar-right">
-        <li><a asp-controller="User" asp-action="Register">회원 가입</a></li>
-        <li><a asp-controller="User" asp-action="Login">로그인</a></li>
-    </ul>
-}
+        }
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity.Name!@*@User.FindFirst("UserId").Value*@</a>
+        </li>
+        <li class="nav-item">
+            <form class="form-inline" asp-controller="User" asp-action="Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                <button type="submit" class="nav-link btn btn-link text-dark">로그아웃</button>
+            </form>
+        </li>
+    }
+    else
+    {
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-controller="User" asp-action="Register">회원 가입</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-controller="User" asp-action="Login">로그인</a>
+        </li>
+    }
+</ul>

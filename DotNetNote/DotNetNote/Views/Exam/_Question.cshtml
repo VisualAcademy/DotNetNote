@@ -1,0 +1,14 @@
+﻿@model Question
+
+<div class="question">
+
+    @Html.Hidden("Exam.Questions[" + Model.OrderNumber + "].Id", Model.Id)
+
+    @Model.Title <div class="points"> (@Model.Point) </div> <br />
+
+
+    @foreach (var choice in Model.Choices)
+    {
+        await Html.RenderPartialAsync("_Choice", choice);<br />
+    }
+</div>

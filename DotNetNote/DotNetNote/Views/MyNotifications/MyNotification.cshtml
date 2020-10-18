@@ -1,0 +1,34 @@
+﻿@{
+    Layout = null;
+}
+
+<link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+
+<h3>알림이 있으면 출력</h3>
+
+<input type="button" id="btnCheck" value="알림이 있는지 확인" />
+
+<input type="hidden" id="hdnUserId" value="@ViewBag.UserId" />
+
+<script>
+    $(function () {
+        $("#btnCheck").click(function () {
+
+            var userId = parseInt($("#hdnUserId").val(), 10);
+
+            // Web API를 호출하여, 알림이 있는지 확인
+            $.get("/api/IsNotification?userId=" + userId)
+                .done(function (data) {
+                    if (data) {
+                        alert("알림이 있습니다.");
+                    }
+                    else {
+                        alert("알림이 없습니다.");
+                    }
+                });
+
+        });
+    });
+</script>

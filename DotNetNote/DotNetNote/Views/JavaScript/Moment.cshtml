@@ -1,0 +1,18 @@
+﻿@{ 
+    Layout = null;
+}
+<script src="~/lib/moment/min/moment-with-locales.js"></script>
+<script>
+    // Korean
+    moment.locale('ko');
+
+    console.log(moment().format()); // 기본값 : 현재시간
+    console.log(moment().format('YYYY MM DD hh:mm:ss a')); // 전체 시간
+    console.log(moment("20000101", "YYYYMMDD").fromNow()); // 지난 시간
+    console.log(moment().startOf('day').fromNow()); //
+
+    console.log(moment("20150615 11:58", "YYYYMMDD hh:mm").fromNow()); //
+
+    console.log(moment().format('YYYYMMDD')); // 전체 시간
+    console.log(moment().format('YYYYMMDDhhmmss')); // 전체 시간
+</script>

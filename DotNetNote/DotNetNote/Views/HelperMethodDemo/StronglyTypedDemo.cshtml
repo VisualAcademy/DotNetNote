@@ -1,0 +1,24 @@
+﻿@{ Layout = null; }
+
+@model StronglyTypedClass
+
+<h3>강력한 형식의 뷰 페이지</h3>
+
+<h4>출력(Razor)</h4>
+@Model.Id, @Model.Name, @Model.Age
+
+<h4>출력(기본)</h4>
+@Html.Display("Id"),
+@Html.Display("Name"),
+@Html.Display(nameof(Model.Age))
+
+<h4>출력(강력한 형식)</h4>
+@Html.DisplayFor(m => m.Id),
+@Html.DisplayFor(s => s.Name),
+@Html.DisplayFor(xxx => xxx.Age)
+
+<h4>입력</h4>
+@Html.TextBoxFor(m => m.Id)
+@Html.TextBoxFor(m => m.Name)
+@Html.TextBoxFor(m => m.Age)
+

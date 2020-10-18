@@ -1,0 +1,19 @@
+﻿@{
+    Layout = null;
+}
+
+<script src="~/jquery/jquery.js"></script>
+<script>
+$(function() {
+
+    var number = 1234; 
+
+    $.get("/api/WebApiNote?number=" + number, function (data) {
+        // alert(data);
+
+        console.log(data); 
+
+    });
+
+});
+</script>

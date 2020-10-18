@@ -1,0 +1,37 @@
+﻿<h2 style="text-align:center;">게시판</h2>
+<span style="color: #ff0000">
+    댓글 삭제 - 정확한 암호를 입력하시면 댓글를 삭제하실 수 있습니다.
+</span>
+<hr />
+<form asp-controller="DotNetNote" asp-action="CommentDelete" method="post">
+    <input type="hidden" name="BoardId" value="@ViewBag.BoardId" />
+    <input type="hidden" name="Id" value="@ViewBag.Id" />
+    <table style="width: 500px; margin-left: auto; margin-right: auto;">
+        <tr>
+            <td class="text-center">
+                <i class="glyphicon glyphicon-lock"></i>
+                <span style="font-size: 12pt;"> 댓글 삭제</span>
+            </td>
+        </tr>
+        <tr>
+            <td class="text-center">
+                <span>
+                    해당 댓글를 삭제하시려면 올바른 암호를 입력하십시오.
+                </span>
+                <br />
+                암호(<u>P</u>):
+                <input type="password" name="txtPassword" maxlength="40" 
+                       class="form-control" accesskey="P" tabindex="2" 
+                       style="width:250px; display:inline-block;" />
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align: center;">
+                <input type="submit" value="삭제" class="btn btn-danger" />
+                <input type="button" value="뒤로" onclick="history.go(-1);" 
+                       class="btn btn-default"><br />
+                <span class="text-danger">@ViewBag.ErrorMessage</span>
+            </td>
+        </tr>
+    </table>
+</form>

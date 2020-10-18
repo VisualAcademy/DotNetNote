@@ -1,0 +1,17 @@
+﻿@{ 
+    Layout = null;
+}
+
+
+@inject DotNetNote.Services.IGuidService IGuidService
+
+
+@inject DotNetNote.Services.GuidService GuidService
+
+
+@IGuidService.GetGuid()
+
+<hr />
+
+@GuidService.GetGuid()
+

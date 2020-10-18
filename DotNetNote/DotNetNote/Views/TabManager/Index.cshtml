@@ -1,0 +1,72 @@
+﻿
+@{ 
+    Layout = null;
+
+    ViewData["Title"] = "탭 관리자";
+}
+
+<link href="~/css/TabManager/TabManager.css" rel="stylesheet" />
+
+<div class="popupMain">
+    <div class="title">
+        <span>탭 관리자</span>
+        <img src="~/images/TabManager/btnClose.png" id="btnClose" onclick="window.close()" />
+    </div>
+    <div class="boxTitle">
+        <div id="cls">탭 리스트</div>
+        <div id="name"></div>
+        <div id="ratio" class="blue"></div>
+        <div id="subject"></div>
+        <div id="date"></div>
+    </div>
+    <div class="boxButton">
+        <a href="#"><img src="~/images/TabManager/btnPost.gif" /></a>
+    </div>
+    <div class="boxHeader">
+        <div class="data1">NO</div>
+        <div class="data2">문제유형</div>
+        <div class="data3">난이도</div>
+        <div class="data4">1차</div>
+        <div class="data5">2차</div>
+    </div>
+    <div class="boxBody">
+        @for (int i = 1; i <= 20; i++)
+        {
+            string sample = (i % 2 == 0) ? "O" : "X";
+            string clsNme = (i % 2 == 0) ? "blue" : "red";
+            <div class="boxItem">
+                <div class="data1">@(i)</div>
+                <div class="data2">나머지에 관한 문제</div>
+                <div class="data3">하</div>
+                <div class="data4 @(clsNme)">@(sample)</div>
+                <div class="data5 @(clsNme)">@(sample)</div>
+            </div>
+        }
+    </div>
+    <div class="boxFooter">
+        <div class="total">총합</div>
+        <div id="total1" class="blue">10</div>
+        <div id="total2" class="blue">20</div>
+    </div>
+</div>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript">
+        function setMainInfo(cls, name, ratio, subject, date) {
+            $("#cls").html(cls);
+            $("#name").html(name);
+            $("#ratio").html(ratio + "%");
+            $("#subject").html(subject);
+            $("#date").html(date);
+        }
+
+        function setTotal(total1, total2) {
+            $("#total1").html(total1);
+            $("#total2").html(total2);
+        }
+
+        $(document).ready(function () {
+            setMainInfo("닷넷코리아", "박용준", 60, "게시물 테스트", "2017-06-26");
+            setTotal(4, 5);
+        });
+</script>

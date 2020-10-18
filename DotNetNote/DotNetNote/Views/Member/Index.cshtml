@@ -1,0 +1,17 @@
+﻿@model  List<Member>
+
+<h2>멤버 리스트</h2>
+
+<ul>
+    @foreach (var m in Model)
+    {
+        <li>@m.Id - @m.FirstName</li>
+    }
+</ul>
+
+<h2>멤버 입력</h2>
+
+<form action="/Member/Index" method="post">
+    <input type="text" name="firstName" id="firstName" />
+    <input type="submit" name="btnSubmit" value="저장" />
+</form>

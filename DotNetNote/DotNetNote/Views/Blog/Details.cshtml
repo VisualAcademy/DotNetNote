@@ -1,0 +1,145 @@
+﻿@model Note
+@inject Microsoft.Extensions.Options.IOptions<
+    DotNetNote.Settings.DotNetNoteSettings> option
+
+<h2 style="text-align:center;">블로그 포스트</h2>
+@*<span style="color: #ff0000">
+    글 보기 - 현재 글에 대해서 수정 및 삭제를 할 수 있습니다.
+</span>
+<hr />*@
+
+@*CKEditor 적용: http://docs.ckeditor.com/#!/guide/dev_codesnippet 참고*@
+<link href="/scripts/ckeditor/plugins/codesnippet/lib/highlight/styles/vs.css" rel="stylesheet" />
+<script src="/scripts/ckeditor/plugins/codesnippet/lib/highlight/highlight.pack.js"></script>
+
+<table style="width: 100%; margin-left: auto; margin-right: auto;">
+    <tbody>
+        <tr style="color: white; background-color: #46698c;">
+            <td style="width: 80px; text-align: right; height: 35px;">
+                <b style="font-size: 18px">제 목</b> :
+            </td>
+            <td colspan="3">
+                <span style="font-weight:bold;font-size:18px;">
+                    @Model.Title
+                </span>
+            </td>
+        </tr>
+        <tr style="background-color: #efefef;">
+            <td class="text-right">
+                번 호 :
+            </td>
+            <td>
+                <span>@Model.Id</span>
+            </td>
+            <td class="text-right">
+                E-mail :
+            </td>
+            <td>
+                <a href="mailto:@Model.Email">@Model.Email</a>
+            </td>
+        </tr>
+        <tr style="background-color: #efefef;">
+            <td class="text-right">
+                이 름 :
+            </td>
+            <td>
+                <span>@Model.Name</span>
+            </td>
+            <td class="text-right">
+                Homepage :
+            </td>
+            <td>
+                <span>
+                    @Html.Raw(String.Format(
+                        "<a href=\"{0}\" target=\"_blank\">{0}</a>"
+                        , Model.Homepage))
+                </span>
+            </td>
+        </tr>
+        <tr style="background-color: #efefef;">
+            <td class="text-right">
+                작성일 :
+            </td>
+            <td>
+                <span>@Model.PostDate</span>
+            </td>
+            <td class="text-right">
+                IP 주소 :
+            </td>
+            <td>
+                <span>@Model.PostIp</span>
+            </td>
+        </tr>
+        <tr style="background-color: #efefef;">
+            <td class="text-right">
+                조회수 :
+            </td>
+            <td>
+                <span>@Model.ReadCount</span>
+            </td>
+            <td class="text-right">
+                파일 :
+            </td>
+            <td>
+                @Html.Raw(ViewBag.FileName)
+            </td>
+        </tr>
+        <tr>
+            <td colspan="4"
+                style="padding:10px;height:100px;vertical-align:top;">
+                @Html.Raw(ViewBag.ImageDown)
+                @Html.Raw(ViewBag.Content)
+            </td>
+        </tr>
+        <tr>
+            <td colspan="4">
+                <hr />
+            </td>
+        </tr>
+        <tr>
+            <td colspan="4">
+                @await Html.PartialAsync("_BoardCommentControl", (NoteCommentViewModel)ViewBag.CommentListAndId)
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<div style="text-align:center;">
+
+    @if (Model.Category != "Notice" && User.IsInRole("Users") &&
+        User.FindFirst("UserId").Value == option.Value.SiteAdmin)
+    {
+        <a asp-action="Pinned" asp-route-id="@Model.Id" class="btn btn-danger">
+            공지로 올리기
+        </a>
+    }
+    <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-default">
+        삭제
+    </a>
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-default">
+        수정
+    </a>
+    <a asp-action="Reply" asp-route-id="@Model.Id" class="btn btn-default">
+        답변
+    </a>
+
+    <a asp-action="Index" class="btn btn-default">리스트</a>
+</div>
+<br />
+
+@section Scripts {
+    @if (TempData["Message"] != null)
+    {
+        <link href="~/lib/toastr/toastr.css" rel="stylesheet" />
+        <script src="~/lib/toastr/toastr.js"></script>
+        <script>
+            $(function () {
+                toastr.info('@TempData["Message"]');
+            });
+        </script>
+    }
+
+    @*CKEditor 코드 스니핏*@
+    @*CKEditor 적용: http://docs.ckeditor.com/#!/guide/dev_codesnippet 참고*@
+    <script>hljs.initHighlightingOnLoad();</script>
+}

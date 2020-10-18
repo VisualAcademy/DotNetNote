@@ -1,0 +1,31 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Web API 만들고 jQuery Ajax로 JSON 데이터 가져오기</title>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+            crossorigin="anonymous"></script>
+    <script>
+        var API_URI = "http://www.dotnetnote.com/api/pointstatus";
+
+        function getPointData() {
+            $.getJSON(API_URI, function (data) {
+                $("#gold").val(data.gold);
+                $("#silver").val(data.silver);
+                $("#bronze").val(data.bronze);
+            });
+        }
+
+        $(function () {
+            // 페이지 로드
+            getPointData(); 
+        });
+    </script>
+</head>
+<body>
+    <input type="text" name="gold" id="gold" value="" />
+    <input type="text" name="silver" id="silver" value="" />
+    <input type="text" name="bronze" id="bronze" value="" />
+</body>
+</html>

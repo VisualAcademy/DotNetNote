@@ -1,0 +1,579 @@
+﻿@page
+@model DotNetNote.Pages.BuildSeoulModel
+@{
+    // ViewData["Title"] = "BuildSeoul";
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8" />
+    <meta property="og:title" content="Best of Build Seoul 2019">
+    <meta property="og:description" content="2019년 6월 28일 (금) 12:30 ~ 18:00, 서울특별시 종로구 종로 1길 50, 더케이트윈타워 A동 11층 한국마이크로소프트">
+    <meta property="og:image" content="/assets/BuildSeoul/images/build.jpg">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Best of Build Seoul 2019</title>
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+    <style>
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	/*font-size: 100%;*/
+	/*font: inherit;*/
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+#wrapper{ width: 750px; font-family: 'Noto Sans KR', sans-serif; margin: 0px auto; font-size: 14px; color: #555; line-height: 24px; position: relative; padding-top: 70px; }
+#wrapper h2{ color: #f36621; font-weight: bold; font-size:20px; padding-bottom: 24px; font-family: 'Noto Sans KR', sans-serif; }
+#wrapper strong{ font-weight: bold; }
+#wrapper a{ text-decoration: none; display: inline-block; font-weight: bold; color: #fff; background: #009786; text-align: center; }
+
+.top_logo{ position: absolute; top: 25px; left: 45px; }
+/*visual*/
+.visual{ height: 458px; background:url("/assets/BuildSeoul/images/visual_bg.jpg") center center no-repeat; position: relative;  }
+.visual h1{ position: absolute; font-size: 40px; font-weight: bold; bottom: 65px; left: 45px; color: #222; font-family: sans-serif, 'Noto Sans KR'; }
+
+/*greeting*/
+.greeting{ padding: 50px 45px 60px; }
+.greeting strong{ color: #009786; }
+.greeting p{ margin-top: 20px; }
+.greeting p:first-child{ margin-top: 0px; }
+.time_space{ padding-left: 14px; border-left: 4px solid #009786; margin: 45px 0px 60px; }
+.time_space a{ height: 24px; line-height: 24px; padding: 0 10px; }
+
+.registration{ text-align: center; }
+.registration a{ font-size: 22px; height: 45px; line-height: 45px; padding: 0 20px; }
+
+/*agenda*/
+.agenda{ padding: 60px 45px 60px; background: #e4ecef; }
+.agenda table{ background: #fff; width: 100%; }
+.agenda table tr th{ font-weight: bold; padding: 5px 10px; border-bottom: 1px solid #cfcfcf; vertical-align: middle; }
+.agenda table tr td{ padding: 5px 10px; border-bottom: 1px solid #cfcfcf; vertical-align: middle; }
+.agenda table tr td:first-child{ text-align: center; }
+.agenda table tr:first-child th{ font-size: 18px; color: #fff; }
+
+.agenda table.table_orange{ margin-bottom: 90px; }
+.agenda table.table_orange tr:first-child th{ background: #f36523; }
+.agenda table.table_orange tr:nth-child(2) th{ color: #f36523; border-bottom: 2px solid #f36523; font-size: 16px; }
+.agenda table.table_orange tr:last-child td{ border-bottom: 2px solid #f36523; }
+.agenda table.table_orange strong{ color: #f36523; }
+
+.agenda table.table_purple{ margin-bottom: 90px; }
+.agenda table.table_purple tr:first-child th{ background: #7b5ba6; }
+.agenda table.table_purple tr:nth-child(2) th{ color: #7b5ba6; border-bottom: 2px solid #7b5ba6; font-size: 16px;  }
+.agenda table.table_purple tr:last-child td{ border-bottom: 2px solid #7b5ba6; }
+.agenda table.table_purple strong{ color: #7b5ba6; }
+
+.agenda table.table_mint{ margin-bottom: 40px; }
+.agenda table.table_mint tr:first-child th{ background: #009786; }
+.agenda table.table_mint tr:nth-child(2) th{ color: #009786; border-bottom: 2px solid #009786; font-size: 16px;  }
+.agenda table.table_mint tr:last-child td{ border-bottom: 2px solid #009786; }
+.agenda table.table_mint strong{ color: #009786; }
+
+/*information*/
+.information{ padding: 45px 45px 60px; }
+
+/*footer*/
+.footer{ text-align: right; padding: 0px 45px 45px;  }
+
+/*particles*/
+.particles{ position: absolute; background-repeat: no-repeat; background-position: center center; z-index: 1; }
+.particles_01{ background-image: url("/assets/BuildSeoul/images/particles_01.png"); width:66px; height:79px; left: 614px; top: 86px; }/*보라*/
+.particles_02{ background-image: url("/assets/BuildSeoul/images/particles_02.png"); width:60px; height:59px; left: 62px; top: 173px;  }/*노랑*/
+.particles_03{ background-image: url("/assets/BuildSeoul/images/particles_03.png"); width:51px; height:109px; left: 625px; top: 470px;  }/*초록*/
+.particles_04{ background-image: url("/assets/BuildSeoul/images/particles_04.png"); width:69px; height:68px; left: 128px; top: 1144px;  }/*노랑*/
+.particles_05{ background-image: url("/assets/BuildSeoul/images/particles_05.png"); width:64px; height:73px; left: 609px; top: 1120px;  }/*보라*/
+.particles_06{ background-image: url("/assets/BuildSeoul/images/particles_06.png"); width:60px; height:57px; left: 528px; top: 1740px;    }/*노랑*/
+.particles_07{ background-image: url("/assets/BuildSeoul/images/particles_07.png"); width:43px; height:50px; left: 78px; top: 1750px;   }/*보라*/
+.particles_08{ background-image: url("/assets/BuildSeoul/images/particles_08.png"); width:126px; height:69px; left: 18px; top: 2650px;  }/*초록*/
+.particles_09{ background-image: url("/assets/BuildSeoul/images/particles_09.png"); width:50px; height:50px; left: 627px; top: 2650px;  }/*초록*/
+
+
+
+@@media screen and (max-width: 768px){
+	#wrapper{ width: 90%; font-size: 13px; line-height: 22px; }
+	.top_logo{ top: 25px; left: 25px; }
+	/*visual*/
+	.visual{ height: 400px;  background:#e4ecef url("/assets/BuildSeoul/images/visual_bg.jpg") top center no-repeat; background-size: auto 100%; }
+	.visual h1{ font-size: 30px; bottom: 35px; left: 25px; }
+
+	/*greeting*/
+	.greeting{ padding: 30px 25px 40px; }
+	.greeting strong{ color: #009786; }
+	.greeting p{ margin-top: 15px; }
+	.time_space{ padding-left: 14px; border-left: 4px solid #009786; margin: 35px 0px 40px; }
+	.time_space a{ height: 20px; line-height: 20px; padding: 0 7px; }
+
+	.registration{ text-align: center; }
+	.registration a{ font-size: 18px; height: 35px; line-height: 35px; padding: 0 10px; }
+
+	/*agenda*/
+	.agenda{ padding: 30px 25px 40px; }
+	.agenda table tr th{ padding: 3px 6px; }
+	.agenda table tr td{ padding: 3px 6px; }
+	.agenda table tr:first-child th{ font-size: 16px; }
+
+	.agenda table.table_orange{ margin-bottom: 30px; }
+	.agenda table.table_orange tr:nth-child(2) th{ font-size: 14px; }
+
+	.agenda table.table_purple{ margin-bottom: 30px; }
+	.agenda table.table_purple tr:nth-child(2) th{ font-size: 14px;  }
+
+	.agenda table.table_mint{ margin-bottom: 30px; }
+	.agenda table.table_mint tr:nth-child(2) th{ font-size: 14px;  }
+
+	/*information*/
+	.information{ padding: 30px 25px 30px; }
+
+	/*footer*/
+	.footer{ text-align: right; padding: 0px 25px 40px;  }
+
+	.particles, br{ display: none; }
+
+}
+
+@@media screen and (max-width: 720px){
+	#wrapper{ width: 100%; line-height: 20px; }
+	/*visual*/
+	.visual{ height: 300px;  }
+}
+
+
+    </style>
+</head>
+<body>
+
+    <div id="wrapper">
+
+        <div class="top_logo"><img src="/assets/BuildSeoul/images/logo.png" alt="Microsoft Logo"></div>
+        <div class="visual">
+
+        </div><!-- visual -->
+
+
+
+        <div class="greeting">
+            <p><h1 style="font-size:20px">Best of Build Seoul 2019</h1></p>
+            <p>
+                5월 6-8일(현지시간) 마이크로소프트는 미국 시애틀에서 연례 개발자 행사인 //Build/ 2019를 성공적으로 <br>
+                개최하였습니다. 80여개의 국가에서 6,000명 이상의 개발자와 450명의 학생 개발자들이 참가한 본 <br>
+                행사에서는 Satya Nadella, CEO의 기조연설과 C+AI 부문장인 Scott Guthrie, E+D 부문장인 Rajesh Jha의 <br>
+                기술 키노트를 시작으로, 500여개의 기술 콘텐츠를 일반인에게 공개하였습니다. 본 행사를 통해 지능적이고 <br>
+                생산적인 소프트웨어를 개발하기 위해서 개발자들을 활용할 수 있는 다채로운 기술들이 신규로 <br>
+                소개되었을 뿐 아니라, 스타벅스, J.P. Morgan, Kronger, Spatial, Epic Game과 같은 다양한 기업들이 <br>
+                어떻게 각자의 비즈니스에 마이크로소프트의 기술을 접목하여 활용하고 있는지에 대해서도 구체적인 <br>
+                사례가 발표되었습니다.
+            </p>
+
+            <p>
+                특별히 클라우드 애플리케이션 구축, 컨테이너 기술, 서버리스, 최신 개발 도구를 이용한 협업, DevOps, <br>
+                크로스 플랫폼 개발, 혼합현실, IoT, AI와 기계 학습 등이 폭넓게 다뤄졌습니다.
+            </p>
+
+            <p>
+                이에 한국에 계신 개발자들의 관심에 부응하고자, 한국마이크로소프트에서는 //Build/ 2019의 다루어진 <br>
+                핵심 내용과 주요 기술 주제를 집약하여 Best of Build Seoul 2019 행사를 마련하였습니다. 본 행사를 통해 <br>
+                마이크로소프트의 기술 전략과 미래 기술을 직접 확인하시기 바랍니다.
+            </p>
+
+            <ul class="time_space">
+                <li><strong>일시</strong> : 2019년 6월 28일 (금) 12:30 ~ 18:00</li>
+                <li><strong>장소</strong> : 서울특별시 종로구 종로 1길 50, 더케이트윈타워 A동 11층 한국마이크로소프트 <a href="https://bit.ly/2JlKo9h" target="_blank">약도보기</a></li>
+            </ul><!-- time_space -->
+
+            <div class="registration">
+                <a href="http://Aka.ms/buildseoul" target="_blank">등록하기</a>
+            </div><!-- registration -->
+        </div><!-- greeting -->
+
+
+
+        <div class="agenda">
+            <h2>Agenda</h2>
+            <table class="table_orange">
+                <colgroup>
+                    <col width="18%">
+                    <col>
+                    <col width="28%">
+                </colgroup>
+                <tr>
+                    <th colspan="3">Best of Build Seoul 2019</th>
+                </tr>
+                <tr>
+                    <th>Time</th>
+                    <th>Session</th>
+                    <th>Speaker</th>
+                </tr>
+                <tr>
+                    <td>12:30 - 13:00</td>
+                    <td><strong>등록</strong></td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td>13:00 - 13:10</td>
+                    <td><strong>인사말 및 행사소개</strong></td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td>13:10 - 14:40</td>
+                    <td>
+                        <strong>개발자를 위한 최상의 플랫폼, 상상하고 실현하라</strong>
+                        <p>- 빌드 없는 개발자 행사는 엔드게임 없는 어벤저스</p>
+                    </td>
+                    <td><p>김명신 기술 에반젤리스트</p> 한국마이크로소프트</td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="text-align: left">
+                        //Build/ 2019 키노트에서 다루어진 핵심 내용을 중심으로 마이크로소프트의 기술 전략과 미래 기술을 살펴봅니다. 발전을 거듭하고 있는 Dynamic 365&Power Plaform, M365, Game, Azure 플랫폼이 제공하는 주요기능들과 새롭게 발표된 내용의 가치를 되짚어 보고, 그 가치와 활용 예를 폭넓게 살펴볼 것입니다. 더불어 Linux 커널을 품은 WSL2, 완전히 새롭게 거듭난 Windows Terminal, 통합 개발 프레임워크로 나날이 발전해 가고 있는 .NET, 비교 대상이 없는 압도적 개발 도구들, 크로미니움을 기반으로한 Edge 브라우저 등 올해 마이크로소프트가 전략적으로 개발하고 있는 플랫폼 기술과 제품을 데모를 통해 살펴봅니다.
+                    </td>
+                </tr>
+                <tr>
+                    <td>14:40 - 15:00</td>
+                    <td><strong>휴식</strong></td>
+                    <td>&nbsp;</td>
+                </tr>
+            </table><!-- table_orange -->
+
+            <table class="table_purple">
+                <colgroup>
+                    <col width="18%">
+                    <col>
+                    <col width="28%">
+                </colgroup>
+                <tr>
+                    <th colspan="3">Track 1</th>
+                </tr>
+                <tr>
+                    <th>Time</th>
+                    <th>Session</th>
+                    <th>Speaker</th>
+                </tr>
+                <tr>
+                    <td>15:00 - 15:50</td>
+                    <td>
+                        <strong>Serverless의 총아 Azure Functions</strong>
+                        <p>- 더욱 고급스러워진 서버리스. Azure Functions <br>(feat AKS)</p>
+                    </td>
+                    <td><p>이진헌</p>한국마이크로소프트 </td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="text-align: left">
+                        서버리스 애플리케이션을 개발하는 경우 우리는 종종 다양한 고민을 하게 됩니다. 예를 들면, 특정 벤더에 대한 lock-in 문제나 cold start 문제, FaaS의 제약들, 보안 문제 등이 그것이죠. 이번 세션에서는 이러한 다양한 고민들을 해결하고, 간극을 메꾸기 위한 Azure Functions의 멋지고도 새로운 기능들을 소개합니다. 예를 들면, event-driven 컨테이너, stateful functions, 강화된 자동화 기능들, 네트워크 격리 등등 개발자들이 훌륭한 앱을 개발하기 위해 활용할 수 있는 다양한 기능들을 다룹니다.
+                    </td>
+                </tr>
+                <tr>
+                    <td>15:50 - 16:00</td>
+                    <td><strong>휴식</strong></td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td>16:00 - 16:50</td>
+                    <td>
+                        <strong>더 빨리, 더 자주, 더 쉽게, <br>Azure DevOps를 이용한 쾌속 개발 전략</strong>
+                        <p>- 저그 팀장, 테란 개발자, 프로토스 담당자, 데모로 훔쳐보는 그들의 프로젝트 이야기</p>
+                    </td>
+                    <td><p>유승호 기술이사</p>(주)디벨로피언스 </td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="text-align: left">
+                        마이크로서비스와 컨테이너 기술은 사실 그리 쉽지 않으며, 다양한 모범 사례들이 계속해서 나타나고 있습니다. 이 세션에서는 DevOps 모범 사례들을 Kubernetes와 결합하여 알아볼 것입니다. 이 세션은 "Hello World"와 같은 가벼운 세션이 아니며, 프로세스를 단순화하기 위해 제작된 컨테이너 도구들을 가지고 맨땅에서 DevOps 슈퍼 히어로로 거듭날 수 있는 방법을 알려주는 심화 세션입니다.
+                    </td>
+                </tr>
+                <tr>
+                    <td>16:50 - 17:00</td>
+                    <td><strong>휴식</strong></td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td>17:00 - 17:50</td>
+                    <td>
+                        <strong>Kubernetes 그 이상의 가치를 실현하는 Azure Kubernetes Service와 미래 전략</strong>
+                        <p>- Kubernetes를 더 편하고 강력하게, Microsoft가 준비한 Kubernetes 종합선물세트 AKS</p>
+                    </td>
+                    <td><p>김도균</p>독립 IT 기술자 </td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="text-align: left">
+                        업계나 규모와 무관하게 모든 기업들은 민첩성을 갖춘 미션-크리티컬 애플리케이션을 개발하고, 테스트 및 배포하기 위해서 컨테이너와 쿠버네티스를 활용하고 있습니다.  이 세션에서는 AKS(Azure Kubernetes Service)가 어떻게 진화하고 있는지 알아보고, 또한 실제 고객 사례를 통해 얻은 일반적인 시나리오와 모범 사례도 공유합니다. 더불어, 애플리케이션 개발 패턴 중 하나인 서버리스 Kubernetes의 데모도 준비되어 있습니다.
+                    </td>
+                </tr>
+                <tr>
+                    <td>17:50 - 18:00</td>
+                    <td><strong>클로징 &amp; 경품추천</strong></td>
+                    <td>&nbsp;</td>
+                </tr>
+            </table><!-- table_purple -->
+
+            <table class="table_mint">
+                <colgroup>
+                    <col width="18%">
+                    <col>
+                    <col width="28%">
+                </colgroup>
+                <tr>
+                    <th colspan="3">Track 2</th>
+                </tr>
+                <tr>
+                    <th>Time</th>
+                    <th>Session</th>
+                    <th>Speaker</th>
+                </tr>
+                <tr>
+                    <td>15:00 - 15:50</td>
+                    <td>
+                        <strong>.NET의 현재와 미래. 그 새로운 시작</strong>
+                        <p>- .NET의 역습 그리고 그 새로운 여정</p>
+                    </td>
+                    <td> <p>김태영 기술 에반젤리스트</p>한국마이크로소프트</td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="text-align: left">
+                        이 세션에서는 마이크로소프트 .NET 플랫폼의 현재와 미래에 대해 이야기합니다. 우선 .NET의 현재를 이해하고, 그의 놀라운 성장 스토리와 더불어 새로워진 .NET 기능들에 대해서도 다룹니다. 특히, .NET은 이제 빅데이터 영역과 머신러닝 영역도 지원하기 시작했습니다. .NET for Apache Spark와 ML.NET은 더욱 빠르게 대용량의 데이터를 처리할 수 있도록 도울뿐만 아니라, 쉽고 빠르게 자신만의 머신러닝 모델을 만들 수 있도록 돕습니다. 장담컨데, .NET은 미래를 위한 최첨단 솔루션을 구축하는 데 도움이 되는 기술로 거듭날 것입니다.
+                    </td>
+                </tr>
+                <tr>
+                    <td>15:50 - 16:00</td>
+                    <td><strong>휴식</strong></td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td>16:00 - 16:50</td>
+                    <td>
+                        <strong>ASP.NET Core 3.0과 Blazor를 활용한 새로운 WEB 개발. 그리고 Try .NET</strong>
+                        <p>- 힙하게 Blazor! TRY하라 .NET <br>(feat. ASP.NET Core)</p>
+                    </td>
+                    <td>
+                        <p>한상훈</p><p>넥슨,</p>
+                        <p>박용준</p><p>Microsoft MVP</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="text-align: left">
+                        ASP.NET Core 3.0에는 최신 웹 애플리케이션 및 서비스를 구축하기 위한 새로운 기능이 어마어마하게 탑재되어 있습니다. 이 세션에서는 ASP.NET Core 3.0를 활용하는 다양한 내용을 다루는데, 먼저, 힙하고도 쿨한 Blazor를 사용하여 대화형 클라이언트 웹 UI를 구축하는 방법에 대해서 알아보고, 더불어 고성능 gRPC 마이크로서비스 및 long-running worker 서비스 프로세스를 개발하는 방법에 대해서도 다룹니다 또한, IdentityServer 통합 기능을 사용해서 API를 보호하고, 클라이언트/서버 간의 스트리밍을 위해서 SignalR을 사용해 봅니다. 또한, Blazor를 활용하여 준비되고 있는 완전히 새로운 인터랙티브 문서 서비스 Try .NET에 대해서도 데모를 진행합니다. 놀라기 싫지만 이미 놀라고 있는 자신을 마주하게 되는 시간을 놓치지 마세요.
+                    </td>
+                </tr>
+                <tr>
+                    <td>16:50 - 17:00</td>
+                    <td><strong>휴식</strong></td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td>17:00 - 17:50</td>
+                    <td>
+                        <strong>.NET 개발자를 AI 세상으로 이끄는 ML.NET 1.0</strong>
+                        <p> 두둥뚱뚜둥. .NET과 머신러닝의 놀라운 결합. ML.NET</p>
+                    </td>
+                    <td> <p>송기수 기술이사</p>OpenSG</td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="text-align: left">
+                        ML.NET은 .NET 개발자들을 위한 오픈소스, 크로스 플랫폼 머신 러닝 프레임워크이며(네. 무료입니다), Windows Hello, Bing 광고, 파워포인트 디자인 아이디어 등과 같은 다양한 마이크로소프트의 서비스에서 사용되고 있는 확장 가능한 플랫폼이기도 합니다. 이 세션에서는 이번에 공식 출시된 ML.NET 1.0의 핵심 내용들을 다룹니다. 여러분이 머신 러닝에 대한 기본 사항과 더불어 맞춤형 머신러닝 모델을 개발하여 여러분의 응용 프로그램에 통합하는 방법을 알아보고 싶다면 이 세션의 데모들이 매우 만족스러울 것입니다!
+                    </td>
+                </tr>
+                <tr>
+                    <td>17:50 - 18:00</td>
+                    <td><strong>클로징 &amp; 경품추천</strong></td>
+                    <td>&nbsp;</td>
+                </tr>
+            </table><!-- table_mint -->
+
+            <div class="registration">
+                <a href="http://Aka.ms/buildseoul" target="_blank">등록하기</a>
+            </div><!-- registration -->
+        </div><!-- agenda -->
+
+        <div class="agenda">
+            <h2>발표자 소개</h2>
+            <table class="table_orange">
+                <colgroup>
+                    <col width="18%">
+                    <col>
+                    <col width="28%">
+                </colgroup>
+                <!-- <tr>
+                    <th>사진</th>
+                    <th>소개</th>
+                </tr> -->
+                <tr>
+                    <td><img src="/assets/BuildSeoul/images/msk.png" width="100px" /></td>
+                    <td>
+                        <p>김명신 기술 에반젤리스트, 한국마이크로소프트</p>
+                        <p style="padding-top: 8px">
+                            마이크로소프트의 기술을 더 많은 사람이 올바르게 이해하고 사용하기를 바라는 마음으로 한국 마이크로소프트의
+                            수석 에반젤리스트로 일하고 있다. 다양한 개발자 콘퍼런스에 단골 발표자로 참가하고 있어서 쉽사리 만나볼 수 있는쉬 운 남자다.
+                            Effeictve C#, CLR via C#, Windows via C++ 등 다양한 기술 서적의 저자이며 역자이기도 하다. 당장 필요하지도 않은 개발
+                            공부야말로 인생에서 포기할 수 없는 마지막 사치라고 터무니없는 주장을 하며, “내일부터 운동해야지“ 라는 말을
+                            20년째 반복하고 있다.
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td><img src="/assets/BuildSeoul/images/jhl.png" width="100px" /></td>
+                    <td>
+                        <p>이진헌, 한국마이크로소프트 </p>
+                        <p style="padding-top: 8px">
+                            한국마이크로소프트에서 프런트 앤드 및 백 앤드 웹 기술을 다루었고, 최근에는 더 많은 사람들이 클라우드 위에 차려진
+                            풍성한 밥상을 누릴 수 있도록 개발자들을 돕는 일을 하고 있다.
+                            영화 인터스텔라의 대사 "우리는 답을 찾을 것이다. 늘 그랬듯이"를 혼자 중얼거리는 습관이 있다.
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td><img src="/assets/BuildSeoul/images/shy.png" width="100px" /></td>
+                    <td>
+                        <p>유승호 기술이사, (주)디벨로피언스 </p>
+                        <p style="padding-top: 8px">
+                            Azure, DevOps, Visual Studio, App Center에 열광하는 자칭 뼈속까지 뼈개발자.14년차 Microsoft MVP, Azure와 DevOps로
+                            먹고 사는 개발 안하는 개발자. 이제는 아무도 모르는 하야시의 와글넷 18년차 운영자, 페북그룹 "나는 개발자다" 운영자.
+                            하야시라는 닉네임은 예전 강의할때 학생들이 지어준별명입니다. 토종한국인입니다.
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td><img src="/assets/BuildSeoul/images/dkk.png" width="100px" /></td>
+                    <td>
+                        <p>김도균, 독립 IT 기술자 </p>
+                        <p style="padding-top: 8px">
+                            국내에 처음 출간한 파워셸 저서 <실무에서 바로쓰는 파워셸>
+                                을 비롯해 다수의 저서와 번역서를 출간했다.2 012년 오랫동안
+                                몸담은 대기업을 떠난 후, 7년째 IT 기술 강의와 세미나, 저술 및 기술 번역, 기술 자문 등 다양한 역할과 경험을 즐기고 있다.
+                                주 4일 하루 4시간만 일해도 살 수 있는 시스템을 만들 수 없을까 늘 고민한다.
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td><img src="/assets/BuildSeoul/images/tyk.png" width="100px" /></td>
+                    <td>
+                        <p>김태영 기술 에반젤리스트, 한국마이크로소프트</p>
+                        <p style="padding-top: 8px">
+                            한국마이크로소프트의 기술 에반젤리스트이자 20년 차 닷넷 커뮤니티인 Taeyo.NET의 운영자 중 한명이다.
+                            한때는 .NET의 붐과 함께 명성을 날렸었으나 시간이 흘러 덧없게도 아싸로 되돌아간 개발자이기도 하다. 여전히 기술 세미나를
+                            즐기나 불러주는 데가 없어서 가끔은 스스로 세미나를 주최하기도 한다. 여전히 .NET의 부활을 기대하고 있지만, 과연
+                            그런 날이 올지 궁금해한다.
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td><img src="/assets/BuildSeoul/images/yjp.png" width="100px" /></td>
+                    <td>
+                        <p>박용준, Microsoft MVP</p>
+                        <p style="padding-top: 8px">
+                            Visual Studio 분야 마이크로소프트 공인 강사(MCT)를 거쳐 2006년부터 14년 연속 Visual Studio and Development 기술 분야
+                            마이크로소프트 MVP로 활동하고 있다. Tech Days, WebCamp 등 다양한 마이크로소프트 기술 세미나의 스피커로 활동하며
+                            다수의 책을 집필하고 번역하고, Taeyo.NET, ASP.NET Korea User Group 커뮤니티에 운영진으로 참여하고 있다
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td><img src="/assets/BuildSeoul/images/shh.png" width="100px" /></td>
+                    <td>
+                        <p>한상훈, 넥슨</p>
+                        <p style="padding-top: 8px">
+                            열정, 긍정, 순정을 빼면 아무것도 남는 게 없는 열혈 프로그래머로 2010년부터 Microsoft MVP로 활동하고 있고, 국내 최고의
+                            .NET 커뮤니티인 Taeyo.NET과 ASP.NET Korea User Group에서 잡일과 궂은일을 담당하고 있다.
+                            ASP.NET이 최고의 인기를 누리던 시절에 호기롭게 입문하였으나 입문과 동시에 거짓말같이 지속적인 쇠퇴를 함께하고
+                            있기에 이게 다 나 때문은 아닌가 하는 죄책감에 시달리고 있다.
+                            하지만 대한민국에서 ASP.NET을 좋아하는 거로는 둘째가라면 서러울 정도로 애정하는 순정남이다.
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td><img src="/assets/BuildSeoul/images/kss.png" width="100px" /></td>
+                    <td>
+                        <p>송기수 기술이사, OpenSG</p>
+                        <p style="padding-top: 8px">
+                            현재 개발 컨설팅회사인 오픈에스지의 기술이사이며, 반도체/디스플레이/건설/제조 등 여러 산업 현장에서 프로젝트를 진행 중이다.
+                            재직 전에는 교육 강사로서 이전 삼성 멀티캠퍼스 교육센터 등에서 개발자.N ET 과정을 진행해 왔으며, 2000년 초부터 TechED Korea,
+                            DevDays, MSDN Seminar 등 개발 콘퍼런스 스피커로도 활동하고 있다. 최근에는 하루 업무의 대다수 시간을 비주얼 스튜디오와
+                            같이 보내며 일 년에 한 권 정도 책을 쓰고, 두 달에 한 번 정도 강의를 하면 행복해질 수 있다고 믿는'Happy Developer'이다.
+                        </p>
+                    </td>
+                </tr>
+            </table>
+
+            <div class="registration">
+                <a href="http://Aka.ms/buildseoul" target="_blank">등록하기</a>
+            </div><!-- registration -->
+        </div>
+
+
+
+        <div class="information">
+            <h2>행사 경품</h2>
+            <img src="/assets/BuildSeoul/images/prize.png" width="100%" />
+            <ul>
+                <li>- 마지막까지 세미나에 참석하시는 분들 중 추첨을 통하여 푸짐한 경품을 드립니다.</li>
+                <li>- 행사에 참석하시는 모든 분들께 소정의 기념품을 제공해 드립니다.</li>
+            </ul>
+        </div>
+        <div class="information">
+            <h2>Information</h2>
+            <ul>
+                <li>- 아젠다는 주최 측에 의해 변경될 수 있습니다.</li>
+                <li>- 본 행사는 좌석이 한정되어 있어 사전등록을 권장 드립니다.</li>
+                <li>- 행사 등록이 조기 마감될 수 있으니, 사전 등록을 서둘러 주시기 바랍니다</li>
+                <li>- 주차가 지원되지 않으니, 가급적 대중교통을 이용해 주시기 바랍니다.</li>
+            </ul>
+        </div>
+        <div class="information">
+            <h2>행사 문의</h2>
+
+            <p>운영 사무국 (주)엔데버 / Tel.02-521-3925 / <a href="mailto:ish@ndeavor.co.kr">ish@ndeavor.co.kr</a></p>
+        </div><!-- information -->
+
+
+
+        <div class="footer">
+            <img src="/assets/BuildSeoul/images/logo.png" alt="Microsoft Logo">
+        </div><!-- footer -->
+
+        <div class="particles_01 particles"></div>
+        <div class="particles_02 particles"></div>
+        <div class="particles_03 particles"></div>
+        <div class="particles_04 particles"></div>
+        <div class="particles_05 particles"></div>
+        <div class="particles_06 particles"></div>
+        <div class="particles_07 particles"></div>
+        <div class="particles_08 particles"></div>
+        <div class="particles_09 particles"></div>
+    </div>
+
+</body>
+</html>

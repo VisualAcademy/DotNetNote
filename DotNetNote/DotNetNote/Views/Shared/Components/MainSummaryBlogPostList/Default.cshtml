@@ -1,0 +1,84 @@
+﻿@model List<Note>
+
+@foreach (var m in Model)
+{
+    <ul class="notice">
+        <li *ngFor="let post of posts">
+            <div class="date">
+                <div class="month">@m.PostDate.Month</div>
+                <div class="day">@m.PostDate.Day</div>
+            </div>
+            <div class="details">
+                <span class="title">
+                    @if (m.Homepage == null)
+                    {
+                        <a href="/Blog/Details/@m.Id">
+                            @Dul.StringLibrary.CutStringUnicode(@m.Title, 70)
+                        </a>
+                    }
+                    else
+                    {
+                        <a href="@m.Homepage" target="_blank">
+                            @m.Homepage
+                            @Dul.StringLibrary.CutStringUnicode(@m.Title, 70)
+                        </a>
+                    }
+                </span>
+                <span class="name">@m.Name</span>&nbsp;&nbsp;
+                <em>@m.PostDate.ToString()</em>&nbsp;&nbsp;
+                <em class="small"><i class="fa fa-eye"></i>@m.ReadCount</em> &nbsp;
+                <em class="small"><i class="fa fa-commenting-o"></i>@m.CommentCount</em>
+            </div>
+        </li>
+    </ul>
+}
+<style>
+.notice {
+    list-style: none;
+}
+
+    .notice > li {
+        position: relative;
+        margin-bottom: 20px;
+    }
+
+        .notice > li .date {
+            background-color: tomato;
+            width: 60px;
+            color: #C0FFEE; 
+            text-align: center;
+            padding: 0;
+            border-radius: 7px; 
+        }
+
+            .notice > li .date .month {
+                text-transform: uppercase; 
+                font-size: 14px;
+                font-weight: bold;
+                padding: 2px 6px;
+            }
+
+            .notice > li .date .day {
+                background: #f7f7f7;
+                color: #333;
+                font-size: 20px; 
+                padding: 6px 12px 6px 12px;
+            }
+
+        .notice > li .details {
+            position: absolute;
+            top: 0;
+            left: 70px;
+        }
+
+            .notice > li .details .title {
+                display: block;
+                font-weight: bold;
+                font-size: 20px; 
+                margin-bottom: 5px;
+            }
+
+            .notice > li .details .name {
+                font-size: 15px; 
+            }
+</style>

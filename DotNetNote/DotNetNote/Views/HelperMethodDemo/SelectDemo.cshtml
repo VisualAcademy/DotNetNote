@@ -1,0 +1,14 @@
+﻿@{ 
+    Layout = null;
+}
+
+<h3>드롭다운리스트</h3>
+
+@Html.DropDownList("lstSelect", new SelectList(new[] { "항목1", "항목2" }))
+
+
+<h3>리스트박스</h3>
+
+@Html.ListBox("lstHobby", new MultiSelectList(new[] { "항목1", "항목2" }))
+
+

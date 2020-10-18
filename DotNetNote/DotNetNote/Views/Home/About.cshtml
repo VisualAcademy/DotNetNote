@@ -1,0 +1,49 @@
+﻿@{
+    ViewData["Title"] = "정보";
+}
+<h2>@ViewData["Title"].</h2>
+<h3>@ViewData["Message"]</h3>
+
+<p>이 사이트는 ASP.NET Core 5.0 학습을 위한 데모 사이트입니다.</p>
+<p>학습이 완료된 후에 현재 사이트가 만들어집니다.</p>
+
+<div class="row mb-5">
+    <div class="col-md-6">
+        <div class="thumbnail">
+            <img src="http://placeimg.com/640/480/any" class="img-fluid" />
+            <i>Photo by http://placeimg.com</i>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="thumbnail">
+            <img src="http://unsplash.it/640/480/?random" class="img-fluid" />
+            <i>Photo by https://unsplash.it</i>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-5">
+    <div class="col-md-6">
+        <h3><i class="fa fa-wrench"></i> 현재 사이트에서 사용된 기술 리스트</h3>
+        @await Component.InvokeAsync("TechList")
+    </div>
+    <div class="col-md-6">
+        <h3><i class="fa fa-sitemap"></i> 현재 사이트와 관련된 추천 사이트</h3>
+        @await Component.InvokeAsync("SiteList")
+    </div>
+</div>
+
+<div class="row mb-5">
+    <div class="col-md-6">
+        <div class="thumbnail">
+            <img src="https://picsum.photos/640/480" class="img-fluid" />
+            <i>Photo by https://picsum.photos</i>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="thumbnail">
+            <img src="https://placehold.it/640x480" class="img-fluid" />
+            <i>Photo by https://placehold.it</i>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,10 @@
+﻿@using DotNetNote.Models
+@model IEnumerable<DataModel>
+
+<ul>
+    @foreach (var data in Model)
+    {
+        <li>@data.Id, @data.Name, @data.Title</li>
+    }
+</ul>
+

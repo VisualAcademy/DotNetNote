@@ -1,0 +1,14 @@
+﻿@{ 
+    Layout = null;
+}
+
+@using DotNetNote.Services
+
+@inject CopyrightService CopyrightService
+
+<p>
+    &copy; @CopyrightService.CopyrightString
+</p>
+<p>
+    &copy; @CopyrightService.GetCopyrightString()
+</p>

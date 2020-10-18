@@ -67,5 +67,75 @@ body {
   bottom: 0;
   width: 100%;
   white-space: nowrap;
-  line-height: 60px; /* Vertically center the text there */
+  line-height: 20px; /* Vertically center the text there */
 }
+
+
+/* Carousel */
+.carousel-caption p {
+    font-size: 20px;
+    line-height: 1.4;
+}
+
+/* Make .svg files in the carousel display properly in older browsers */
+.carousel-inner .item img[src$=".svg"] {
+    width: 100%;
+}
+
+/* Hide/rearrange for smaller screens */
+@media screen and (max-width: 767px) {
+    /* Hide captions */
+    .carousel-caption {
+        display: none
+    }
+}
+
+
+/*[DNN]*/
+.MainSummaryTitle {
+    border-bottom: 1px solid #e2e2e2;
+}
+
+.readMore {
+    float: right;
+    font-size: 11px;
+    font-weight: normal;
+    margin-top: 10px;
+}
+
+.clear {
+    clear: both;
+}
+
+.post_date {
+    font-size: 12px;
+    margin-right: 5px;
+}
+
+.post_title {
+    font-size: 14px;
+    font-family: 'Malgun Gothic', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+}
+
+
+
+
+
+.question {
+    background-color: #E0ECF8;
+    margin: 10px 10px 10px 10px;
+    padding: 10px 10px 10px 10px;
+    border: solid 2px black;
+}
+
+.points {
+    float: right;
+    color: Red;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+
+
+
+

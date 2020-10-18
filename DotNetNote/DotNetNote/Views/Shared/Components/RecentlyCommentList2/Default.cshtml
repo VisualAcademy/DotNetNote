@@ -1,0 +1,26 @@
+﻿@model List<NoteComment>
+
+@*<ul>
+    @foreach (var nt in Model)
+    {
+        <li>
+            <a href="/DotNetNote/Details/@nt.BoardId">
+                @nt.Opinion
+            </a>
+        </li>
+    }
+</ul>*@
+
+@foreach (var m in Model)
+{
+    <div class="post_item">
+        <div class="post_item_text">
+            <span class="post_date">@m.PostDate.ToString("yyyy-MM-dd")</span>
+            <span class="post_title">
+                <a href="/DotNetNotePublic/Details/@m.BoardId">
+                    @Dul.StringLibrary.CutStringUnicode(@m.Opinion, 33)
+                </a>
+            </span>
+        </div>
+    </div>
+}

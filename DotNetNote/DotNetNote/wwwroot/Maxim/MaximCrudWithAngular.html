@@ -1,0 +1,265 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Angular + Web API를 사용한 CRUD 작업</title>
+    <link href="/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+    <style>
+        #divFullScreen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1000;
+            background-color: grey;
+            opacity: .7;
+        }
+
+        .ajaxIndicator {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            margin-left: -32px;
+            margin-top: -32px;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div ng-app="maximApp">
+        <div data-ng-controller="maximController" class="container">
+            <h2>{{ title }}</h2>
+            <div class="row">
+                <div class="col-md-12">
+                    <strong class="error">{{ error }}</strong>
+                    <p data-ng-hide="isAddMode">
+                        <a data-ng-click="changeAddMode()"
+                           class="btn btn-primary">내용 추가하기</a>
+                    </p>
+                    <form name="frmAddMaxim" id="frmAddMaxim" 
+                          data-ng-show="isAddMode" 
+                          style="width:600px;margin:0 auto;">
+                        <div class="form-group">
+                            <label for="cname"
+                                   class="col-sm-2 control-label">이름:</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control"
+                                       id="name" placeholder="이름" 
+                                       required 
+                                       ng-minlength="1" 
+                                       ng-maxlength="25"
+                                       data-ng-model="maximInput.name" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="content"
+                                   class="col-sm-2 control-label">내용:</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control"
+                                       id="content" placeholder="명언" 
+                                       required
+                                       ng-minlength="3"
+                                       ng-maxlength="255"
+                                       data-ng-model="maximInput.content" />
+                            </div>
+                        </div>
+                        <br />
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <input type="submit" value="입력" 
+                                       data-ng-click="add()"
+                                       data-ng-disabled="!frmAddMaxim.$valid" 
+                                       class="btn btn-primary" />
+                                <input type="button" value="취소"
+                                       data-ng-click="changeAddMode()" 
+                                       class="btn btn-primary" />
+                            </div>
+                        </div>
+                        <br />
+                    </form>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover" 
+                               style="width:100%;">
+                            <tr>
+                                <th>#</th>
+                                <td>이름</td>
+                                <th>명언</th>
+                                <th></th>
+                            </tr>
+                            <tr ng-repeat="maxim in maxims">
+                                <td>
+                                    <strong ng-hide="maxim.editStatus">
+                                        {{ maxim.id }}
+                                    </strong>
+                                </td>
+                                <td>
+                                    <p ng-hide="maxim.editStatus">
+                                        {{ maxim.name }}
+                                    </p>
+                                    <input type="text" 
+                                        ng-show="maxim.editStatus" 
+                                        ng-model="maxim.name" />
+                                </td>
+                                <td>
+                                    <p ng-hide="maxim.editStatus">
+                                        {{ maxim.content }}
+                                    </p>
+                                    <input type="text" 
+                                        ng-show="maxim.editStatus" 
+                                        ng-model="maxim.content" />
+                                </td>
+                                <td>
+                                    <p ng-hide="maxim.editStatus">
+                                        <a ng-click="changeEditStatus(maxim)" 
+                                           href="javascript:;">수정</a> |
+                                        <a data-ng-click="remove(maxim)" 
+                                           href="javascript:;">삭제</a>
+                                    </p>
+                                    <p ng-show="maxim.editStatus">
+                                        <a ng-click="save(maxim)" 
+                                           href="javascript:;">저장</a> |
+                                        <a ng-click="changeEditStatus(maxim)" 
+                                           href="javascript:;">취소</a>
+                                    </p>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div id="divFullScreen" data-ng-show="loading">
+                <img src="/images/ajaxIndicator.gif" class="ajaxIndicator" />
+            </div>
+        </div>
+    </div>
+    
+
+    <script src="/lib/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="/lib/angular/angular.js"></script>
+
+
+    <script>
+        (function () {
+            'use strict';
+
+            //[1] Angualr 모듈 선언
+            var app = angular.module('maximApp', []);
+
+            //[2][1] Angualr 컨트롤러 선언
+            app.controller('maximController'
+                , ['$scope', '$http', maximController]);
+
+            //[2][2] 컨트롤러 구현부
+            function maximController($scope, $http) {
+
+                // Web API 주소: ASP.NET Web API로 구현
+                //const API_URL = "/api/maximservice/";
+                var API_URL = "/api/maximservice/";
+
+                // 속성(Property)
+                $scope.title = "명언 관리";
+                $scope.loading = true; // 로딩 창 띄우기
+                $scope.isAddMode = false; // 입력 모드(true: 입력 폼 출력)
+
+                // 입력 값 임시 저장용 개체
+                $scope.maximInput = {
+                    id: 0,
+                    name: '',
+                    content: '',
+                };
+
+                // 메서드(함수, Function)
+                $scope.changeEditStatus = function () {
+                    this.maxim.editStatus = !this.maxim.editStatus;
+                };
+
+                // 입력 폼 표시 및 감추기 토글
+                $scope.changeAddMode = function () {
+                    $scope.isAddMode = !$scope.isAddMode;
+                };
+
+
+                // 출력: GET
+                $http.get(API_URL).success(function (data) {
+                    $scope.maxims = data;
+                    $scope.loading = false;
+                })
+                .error(function () {
+                    $scope.error = "데이터를 가져오는 동안 에러가 발생했습니다. ";
+                    $scope.loading = false;
+                });
+
+
+                // 입력: POST
+                $scope.add = function () {
+                    $scope.loading = true;
+
+                    // POST: get()의 success().error() 대신 then(f,f) 사용 가능
+                    $http.post(API_URL, $scope.maximInput)
+                        .then(function (result) {
+                            alert("데이터가 입력되었습니다.");
+                            $scope.isAddMode = false;
+                            $scope.maxims.push(result.data); // resut.data 주의
+                            $scope.loading = false;
+                                                   
+                            $scope.maximInput = {}; // 입력 폼 클리어
+                        }, function (error) {
+                            $scope.error =
+                                "데이터를 입력하는동안 에러가 발생했습니다. "
+                                + error.data.ExceptionMessage; // 또 다른 방법
+                            $scope.loading = false;
+                        });
+                };
+
+
+                // 수정: PUT
+                $scope.save = function () {
+                    $scope.loading = true;
+                    var maxim = this.maxim;
+
+                    // PUT
+                    $http.put(API_URL + maxim.id, maxim).success(
+                        function (data) {
+                            alert("데이터가 수정되었습니다.");
+                            maxim.editStatus = false;
+                            $scope.loading = false;
+                        })
+                    .error(function (data) {
+                        $scope.error =
+                            "데이터를 수정하는동안 에러가 발생했습니다. " + data;
+                        $scope.loading = false;
+                    });
+                };
+
+
+                // 삭제: DELETE
+                $scope.remove = function () {
+                    $scope.loading = true;
+                    var id = this.maxim.id;
+
+                    // DELETE
+                    $http.delete(API_URL + id).success(function (data) {
+                        alert("데이터가 삭제되었습니다.");
+                        $.each($scope.maxims, function (i) {
+                            if ($scope.maxims[i].id === id) {
+                                $scope.maxims.splice(i, 1);
+                                return false;
+                            }
+                        });
+                        $scope.loading = false;
+                    })
+                    .error(function (data) {
+                        $scope.error =
+                            "데이터를 삭제하는동안 에러가 발생했습니다. " + data;
+                        $scope.loading = false;
+                    });
+                };
+            } // maximController
+        })();
+    </script>
+</body>
+</html>

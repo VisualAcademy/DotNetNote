@@ -1,0 +1,22 @@
+﻿@using DotNetNote.Models
+
+@{ 
+    ViewData["Title"] = "참여자 리스트";
+}
+
+@model List<Attendee>
+
+
+<h1>참여자 리스트입니다.</h1>
+
+<a asp-controller="Attendee" asp-action="Create"
+   class="btn btn-info">참가 등록하기</a>
+<hr />
+
+<ul>
+    @foreach (var a in Model)
+    {
+        <li>@a.Id, @a.Name</li>
+    }
+</ul>
+
