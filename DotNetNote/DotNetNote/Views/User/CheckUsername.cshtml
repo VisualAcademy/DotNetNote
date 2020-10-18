@@ -1,0 +1,32 @@
+﻿@{ 
+    Layout = null;
+}
+
+<h1>아이디 중복 확인</h1>
+<input type="text" name="txtUsername" id="txtUsername" />
+<input type="button" name="btnCheckUsername" id="btnCheckUsername" 
+       value="아이디 중복 확인" />
+<span id="lblDisplay" style="color:red;"></span>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script>
+    $(function () { 
+        $("#btnCheckUsername").click(function () { 
+            var API_URI = "/api/UserService/" + $("#txtUsername").val();
+
+            $.ajax({
+                url: API_URI,
+                type: 'GET',
+                statusCode: {
+                    200: function (data) { 
+                        alert("있다.");
+                        $("#lblDisplay").text(data);
+                    },
+                    404: function (data) { 
+                        alert("없다.");
+                        $("#lblDisplay").text(data.responseText);
+                    }
+                }
+            });
+        });
+    });
+</script>

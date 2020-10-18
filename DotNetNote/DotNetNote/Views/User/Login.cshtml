@@ -1,0 +1,54 @@
+﻿@model UserViewModel
+
+@{
+    ViewData["Title"] = "로그인";
+}
+
+<h2>@ViewData["Title"].</h2>
+<div class="row">
+@if (ViewBag.IsLoginFailed != null && Convert.ToBoolean(ViewBag.IsLoginFailed))
+{
+<div class="col-md-8">
+    5번 로그인 실패, 10분후에 다시 로그인 시도하세요.
+</div>
+}
+<div class="col-md-8">
+<section>
+<form asp-controller="User" asp-action="Login" class="form-horizontal"
+      asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" asp-antiforgery="true">
+<h4>아이디와 암호를 입력하시오.</h4>
+<hr />
+<div asp-validation-summary="All" class="text-danger"></div>
+<div class="form-group">
+    <label asp-for="UserId" class="col-md-2 control-label"></label>
+    <div class="col-md-6">
+        <input asp-for="UserId" class="form-control" placeholder="아이디" />
+        <span asp-validation-for="UserId" class="text-danger"></span>
+    </div>
+</div>
+<div class="form-group">
+    <label asp-for="Password" class="col-md-2 control-label"></label>
+    <div class="col-md-6">
+        <input asp-for="Password" class="form-control" 
+               type="password" placeholder="암호" />
+        <span asp-validation-for="Password" class="text-danger"></span>
+    </div>
+</div>
+<div class="form-group">
+    <div class="col-md-offset-2 col-md-6">
+        <button type="submit" class="btn btn-primary btn-lg">로그인</button>
+
+        <a asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]" 
+           class="btn btn-default btn-sm">회원가입</a>
+    </div>
+</div>
+</form>
+</section>
+</div>
+<div class="col-md-4">
+</div>
+</div>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}
