@@ -28,15 +28,26 @@ namespace DotNetNote.TagHelpers
             //var list = _repository.GetNoteSummaryByCategory(Category);
             var list = _repository.GetNoteSummaryByCategoryCache(Category);
 
-            foreach (var l in list)
+            if (list != null && list.Count > 0)
             {
-                s += $"<div class='post_item'><div class='post_item_text'>" 
-                    + $"<span class='post_date'>" 
-                    + l.PostDate.ToString("yyyy-MM-dd") 
-                    + "</span><span class='post_title'>" 
-                    + "<a href = '/DotNetNote/Details/" + l.Id + "'>" 
-                    + Dul.StringLibrary.CutStringUnicode(l.Title, 33) 
-                    + "</a></span></div></div>";
+                foreach (var l in list)
+                {
+                    s += $"<div class='post_item'><div class='post_item_text'>" 
+                        + $"<span class='post_date'>" 
+                        + l.PostDate.ToString("yyyy-MM-dd") 
+                        + "</span><span class='post_title'>" 
+                        + "<a href = '/DotNetNote/Details/" + l.Id + "'>" 
+                        + Dul.StringLibrary.CutStringUnicode(l.Title, 33) 
+                        + "</a></span></div></div>";
+                }
+            }
+            else
+            {
+                s += @"
+                    <div class='text-center'>
+                        항목이 없습니다.
+                    </div>
+                ";
             }
 
             output.Content.AppendHtml(s);

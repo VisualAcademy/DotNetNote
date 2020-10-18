@@ -9,9 +9,9 @@ namespace DotNetNote.ViewComponents
         public IViewComponentResult Invoke()
         {
             var siteLists = new List<Site>() {
-                new Site { Id = 1, Title = "길벗출판사",
+                new Site { Id = 1, Title = "길벗",
                     Url = "http://www.gilbut.co.kr",
-                    Description = "C# 교과서 및 ASP.NET Core 다루는 기술 책 출간" },
+                    Description = "C# 교과서 및 ASP.NET & Core를 다루는 기술 책 출간" },
                 new Site { Id = 2, Title = "데브렉",
                     Url = "http://www.devlec.com",
                     Description = "DotNetNote 사이트 제작 관련 동영상 강의 제공" },

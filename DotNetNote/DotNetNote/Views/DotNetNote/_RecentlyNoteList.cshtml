@@ -1,26 +1,13 @@
 ﻿<div id="divRecentlyNoteList"></div>
 
-@*<script>
-    $(function () {
-        var API_URL = "/api/NoteService";
-        $.getJSON(API_URL, function (data) {
-            var noteCommentList = "<ul>";
-            $.each(data, function (index, entry) {
-                noteCommentList +=
-                    "<li><a href=\"/DotNetNote/Details/" + entry.id + "\">" + entry.title.substring(0, 38) + "</a></li>"
-            });
-            noteCommentList += "</ul>";
-
-            $("#divRecentlyNoteList").html(noteCommentList);
-        });
-    });
-</script>*@
-
 <script>
     $(function () {
         var API_URL = "/api/NoteService";
         $.getJSON(API_URL, function (data) {
             var noteCommentList = "";
+            if (data.length == 0) {
+                noteCommentList = "<div class='text-center'>항목이 없습니다.</div>";
+            }
             $.each(data, function (index, entry) {
                 noteCommentList += '<div class="post_item">' + 
                         '<div class="post_item_text">' + 

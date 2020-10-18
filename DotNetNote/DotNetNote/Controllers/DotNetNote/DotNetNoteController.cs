@@ -143,7 +143,7 @@ namespace DotNetNote.Controllers
         /// 게시판 글쓰기 폼
         /// </summary>
         [HttpGet]
-        //[Authorize] // 스팸 글 때문에 추가
+        [Authorize] // 스팸 글 때문에 추가
         public IActionResult Create()
         {
             // 로깅
@@ -161,7 +161,7 @@ namespace DotNetNote.Controllers
         /// 게시판 글쓰기 처리 + 파일 업로드 처리
         /// </summary>
         [HttpPost]
-        //[Authorize] // 스팸 글 때문에 추가
+        [Authorize] // 스팸 글 때문에 추가
         public async Task<IActionResult> Create(
             Note model, ICollection<IFormFile> files)
         {
