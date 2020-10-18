@@ -3,29 +3,38 @@
 
 @model IEnumerable<Note>
 
-@inject INoteRepository DnnRepo
+@inject INoteRepository NoteRepositoryReference
 
 @{
     ViewData["Title"] = "게시판 리스트";
 }
 
-<h2 style="text-align:center;">게시판</h2>
-<span style="color: #ff0000">
-    글 목록 - ASP.NET Core 5.0 완성형 게시판입니다.
-</span>
-<hr />
+<!-- Page Content -->
+<div class="container">
 
-<table style="width: 760px; margin-left: auto; margin-right: auto;">
-    <tr>
-        <td>
+    <div class="m-5" id="dotnetnote-list">
+        <h2 style="text-align:center;">게시판</h2>
+        <span style="color: #ff0000">
+            글 목록 - ASP.NET Core 5.0 완성형 게시판입니다.
+        </span>
+        <hr />
 
-            <div style="font-style:italic;text-align:right;font-size:8pt;">
-                Total Record: @ViewBag.TotalRecord
-            </div>
-            <table class="table table-bordered table-hover table-condensed
-                   table-striped table-responsive">
-                <tr style="background-color:rgb(222, 222, 222)">
-                    <th style="width:50px; text-align:center;">
+        <div style="font-style:italic;text-align:right;font-size:8pt;">
+            Total Record: @ViewBag.TotalRecord
+        </div>
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+                <colgroup>
+                    <col style="width: 100px;" />
+                    <col style="width: auto;" />
+                    <col style="width: 100px;" />
+                    <col style="width: 100px;" />
+                    <col style="width: 150px;" />
+                    <col style="width: 100px;" />
+                    <col style="width: 20px;" />
+                </colgroup>
+                <tr class="thead-light">
+                    <th style="width:100px; text-align:center;">
                         @Html.DisplayNameFor(model => model.Id)
                     </th>
                     <th style="width:360px; text-align:center;">
@@ -43,31 +52,29 @@
                     <th style="width:60px; text-align:center;">
                         @Html.DisplayNameFor(model => model.ReadCount)
                     </th>
+                    <th>
+                        &nbsp;
+                    </th>
                 </tr>
 
                 <cache expires-after="@TimeSpan.FromMinutes(10)">
                     @*최근 공지 글 2개 출력: 캐싱 적용*@
-                    @foreach (var item in
-                      DnnRepo.GetNoteSummaryByCategory("Notice").Take(2))
+                    @foreach (var item in NoteRepositoryReference.GetNoteSummaryByCategory("Notice").Take(2))
                     {
                         <tr>
                             <td style="text-align:center;">
-                                <span class="label label-success"
-                                      style="font-size:xx-small">NOTICE</span>
+                                <span class="badge badge-success" style="font-size:xx-small">NOTICE</span>
                             </td>
                             <td>
                                 @Html.Raw(BoardLibrary.FuncStep(item.Step))
-                                <a asp-controller="DotNetNote"
-                                   asp-action="Details"
-                                   asp-route-id="@item.Id">
+                                <a asp-controller="DotNetNote" asp-action="Details" asp-route-id="@item.Id">
                                     <strong>
                                         @StringLibrary.CutStringUnicode(
                                            item.Title, 30)
                                     </strong>
                                 </a>
                                 <small>
-                                    @Html.Raw(BoardLibrary.ShowCommentCount(
-                                        item.CommentCount))
+                                    @Html.Raw(BoardLibrary.ShowCommentCount(item.CommentCount))
                                 </small>
                                 @Html.Raw(BoardLibrary.FuncNew(item.PostDate))
                             </td>
@@ -82,6 +89,9 @@
                             </td>
                             <td style="text-align:right;">
                                 @Html.DisplayFor(modelItem => item.ReadCount)
+                            </td>
+                            <td>
+                                &nbsp;
                             </td>
                         </tr>
                     }
@@ -105,13 +115,11 @@
                             </td>
                             <td>
                                 @Html.Raw(BoardLibrary.FuncStep(item.Step))
-                                <a asp-controller="DotNetNote" asp-action="Details"
-                                   asp-route-id="@item.Id">
+                                <a asp-controller="DotNetNote" asp-action="Details" asp-route-id="@item.Id">
                                     @StringLibrary.CutStringUnicode(item.Title, 30)
                                 </a>
                                 <small>
-                                    @Html.Raw(BoardLibrary.ShowCommentCount(
-                                        item.CommentCount))
+                                    @Html.Raw(BoardLibrary.ShowCommentCount(item.CommentCount))
                                 </small>
                                 @Html.Raw(BoardLibrary.FuncNew(item.PostDate))
                             </td>
@@ -127,57 +135,68 @@
                             <td style="text-align:right;">
                                 @Html.DisplayFor(modelItem => item.ReadCount)
                             </td>
+                            <td>
+                                &nbsp;
+                            </td>
                         </tr>
                     }
                 }
             </table>
-        </td>
-    </tr>
-    <tr>
-        <td style="text-align:center;">
-            <dnn-paging-helper url="@Context.Request.Path"
-                               page-index='Convert.ToInt32(Context.Request.Query["Page"])'
-                               page-size="10"
-                               record-count="@ViewBag.TotalRecord"
-                               search-mode='Convert.ToBoolean(@ViewBag.SearchMode)'
-                               search-field="@ViewBag.SearchField"
-                               search-query="@ViewBag.SearchQuery">
-            </dnn-paging-helper>
-        </td>
-    </tr>
-    <tr>
-        <td class="text-center">
-            @await Html.PartialAsync("_AdvancedPagingWithCss", ViewBag.PageModel as PagerBase)
-        </td>
-    </tr>
-    <tr>
-        <td style="text-align:right;">
-            <a asp-action="Create" class="btn btn-primary">글쓰기</a>
-        </td>
-    </tr>
-    <tr>
-        <td style="text-align:center;">
-            @*@Html.Partial("_SearchForm")*@
-            @await Html.PartialAsync("_SearchForm")
-            <br />
-            @if (ViewBag.SearchMode)
-            {
-                <a asp-controller="DotNetNote" asp-action="Index"
-                   class="btn btn-success">검색 완료</a>
-            }
-        </td>
-    </tr>
-</table>
 
-@section Scripts {
-    @if (TempData["Message"] != null)
-    {
-        <link href="~/lib/toastr/toastr.css" rel="stylesheet" />
-        <script src="~/lib/toastr/toastr.js"></script>
-        <script>
+        </div>
+
+        <table style="width: 100%; margin-left: auto; margin-right: auto; border: 0;">
+            <tr>
+                <td style="text-align:center;">
+                    <div class="d-flex">
+                        <dnn-paging-helper url="@Context.Request.Path"
+                                           page-index='Convert.ToInt32(Context.Request.Query["Page"])'
+                                           page-size="10"
+                                           record-count="@ViewBag.TotalRecord"
+                                           search-mode='Convert.ToBoolean(@ViewBag.SearchMode)'
+                                           search-field="@ViewBag.SearchField"
+                                           search-query="@ViewBag.SearchQuery">
+                        </dnn-paging-helper>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="text-center">
+                    @await Html.PartialAsync("_AdvancedPagingWithCss", ViewBag.PageModel as PagerBase)
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align:right;">
+                    <a asp-action="Create" class="btn btn-primary">글쓰기</a>
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align:center;">
+                    @*@Html.Partial("_SearchForm")*@
+                    @await Html.PartialAsync("_SearchForm")
+                    <br />
+                    @if (ViewBag.SearchMode)
+                    {
+                        <a asp-controller="DotNetNote" asp-action="Index"
+                           class="btn btn-success">검색 완료</a>
+                    }
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    @section Scripts {
+        @if (TempData["Message"] != null)
+        {
+            <link href="~/lib/toastr/toastr.css" rel="stylesheet" />
+            <script src="~/lib/toastr/toastr.js"></script>
+            <script>
             $(function () {
                 toastr.info('@TempData["Message"]');
             });
-        </script>
+            </script>
+        }
     }
-}
+
+</div>
+<!-- /.container -->

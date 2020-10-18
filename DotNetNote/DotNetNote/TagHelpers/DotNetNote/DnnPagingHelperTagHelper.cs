@@ -62,7 +62,7 @@ namespace DotNetNote.TagHelpers
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
             output.TagName = "ul";
-            output.Attributes.Add("class", "pagination pagination-sm");
+            output.Attributes.Add("class", "pagination pagination-sm mx-auto");
 
             if (PageIndex == 0)
             {
@@ -71,8 +71,8 @@ namespace DotNetNote.TagHelpers
 
             int i = 0;
 
-            string strPage = ""; 
-            
+            string strPage = "";
+
             if (PageIndex > 10)
             {
                 if (!SearchMode)
