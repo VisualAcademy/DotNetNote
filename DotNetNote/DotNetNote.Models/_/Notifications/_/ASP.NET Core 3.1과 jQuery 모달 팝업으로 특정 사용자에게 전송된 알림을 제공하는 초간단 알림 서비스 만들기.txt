@@ -1,0 +1,4 @@
+알림 서비스 만들기
+
+데이터베이스와 테이블
+DotNetNote.Database/MyNotifications.sql
