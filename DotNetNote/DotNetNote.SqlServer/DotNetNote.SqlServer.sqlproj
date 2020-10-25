@@ -86,6 +86,7 @@
     <Folder Include="dbo\Tables\Points" />
     <Folder Include="dbo\Tables\RecruitManager" />
     <Folder Include="dbo\Tables\TabManager" />
+    <Folder Include="DotNetSale" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Users\Stored Procedures\GetUsers.sql" />
@@ -156,5 +157,6 @@
     <Build Include="dbo\Tables\Twos.sql" />
     <Build Include="dbo\Tables\Urls.sql" />
     <Build Include="dbo\Tables\Warehouses.sql" />
+    <Build Include="DotNetSale\01_Categories.sql" />
   </ItemGroup>
 </Project>

@@ -431,6 +431,7 @@ namespace DotNetNote
 
             // DotNetSale
             services.AddTransient<ICategoryRepository, CategoryRepositoryInMemory>();
+            services.AddTransient<DotNetSale.Models.ICategoryRepository, DotNetSale.Models.CategoryRepositoryInMemory>();
 
             // <GoodsManager>
             // IGoodsRepository 주입 -> GoodsRepository의 인스턴스를 실행
@@ -574,13 +575,15 @@ namespace DotNetNote
 
 
 
+            #region Serilog
             //// 31.8.4. Serilog를 사용하여 로그 파일 기록하기 
             //Log.Logger = new LoggerConfiguration()
             //    .MinimumLevel.Debug()
-            //    //.WriteTo.RollingFile(Path.Combine(env.ContentRootPath, "DnnLogs-{Date}.txt"))
-            //    .WriteTo.RollingFile(Path.Combine(env.ContentRootPath + "\\Logs", "DnnLogs-{Date}.txt"))
+            //    .WriteTo.File(Path.Combine(env.ContentRootPath, "DnsLogs.txt"), rollingInterval: RollingInterval.Day)
             //    .CreateLogger();
-            ////loggerFactory.AddSerilog();
+            //loggerFactory.AddSerilog(); 
+            #endregion
+
 
 
             ////[!] CORS

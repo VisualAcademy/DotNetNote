@@ -1,0 +1,21 @@
+﻿@{ 
+    Layout = null;
+}
+
+@model List<Category>
+
+<h1>카테고리 리스트</h1>
+
+@*@Model[0].CategoryId - @Model[0].CategoryName   
+<br />
+@Model[1].CategoryId - @Model[1].CategoryName
+<br />
+@Model[2].CategoryId - @Model[2].CategoryName
+<br />*@
+
+<ul>
+    @foreach (var c in Model)
+    {
+    <li>@c.CategoryId - @c.CategoryName</li>
+    }
+</ul>
