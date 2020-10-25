@@ -56,12 +56,14 @@
     <PackageReference Include="Markdown" Version="2.2.1" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.9" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.9" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.0-rc.2.20516.1" />
     <PackageReference Include="MimeTypesMap" Version="1.0.8" />
     <PackageReference Include="SendGrid" Version="9.21.0" />
     <PackageReference Include="WindowsAzure.Storage" Version="9.3.3" />
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Areas\Modules\Data\" />
     <Folder Include="wwwroot\files\" />
   </ItemGroup>
 

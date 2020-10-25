@@ -400,6 +400,7 @@ namespace DotNetNote
 
             //[Attendee] 참석자 목록 - 서비스 등록
             services.AddTransient<IAttendeeRepository, AttendeeRepository>();
+            services.AddSingleton<AttendeeApp.Models.IAttendeeRepository>(new AttendeeApp.Models.AttendeeRepository(Configuration.GetConnectionString("DefaultConnection")));
 
             //[RecruitManager] 
             services.AddTransient<
@@ -614,6 +615,12 @@ namespace DotNetNote
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+                endpoints.MapControllerRoute(
+                  name: "areas",
+                  pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+                );
+
                 endpoints.MapRazorPages();
 
                 //endpoints.MapGet("/", async context =>
