@@ -19,6 +19,11 @@ namespace DotNetNote.Models
                     .GetSection("DefaultConnection").Value);
         }
 
+        public AttendeeRepository(string connectionString)
+        {
+            con = new SqlConnection(connectionString);
+        }
+
         public void Add(Attendee model)
         {
             var sql =
