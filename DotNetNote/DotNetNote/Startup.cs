@@ -48,9 +48,6 @@ namespace DotNetNote
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddTransient<ICompanyRepository, CompanyRepositoryEntityFramework>();
 
-            // DotNetSale
-            //services.AddTransient<ICategoryRepository, CategoryRepositoryInMemory>();
-
             //[!] Configuration: JSON 파일의 데이터를 POCO 클래스에 주입
             services.Configure<DotNetNoteSettings>(
                 Configuration.GetSection("DotNetNoteSettings"));
@@ -219,62 +216,6 @@ namespace DotNetNote
             });
 
 
-            //// ASP.NET Core 2.2 버전을 기준 버전으로 실행 
-            //services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-
-
-            //#region services.AddMvc() 추가 옵션들 보관(참고용)
-            ////[MVC] MVC 서비스 추가 및 JSON 렌더링 옵션 지정
-            ////services.AddMvc()
-            ////    .AddXmlDataContractSerializerFormatters(); // XML로 Web API 결괏값 출력
-            ////services.AddMvc(); // ASP.NET Core의 가장 중요한 서비스
-            ////.AddJsonOptions(options =>
-            ////{
-            ////    //[Web API] JSON 속성 첫자 소문자: ASP.NET Core 1.0 기본
-            ////    options.SerializerSettings.ContractResolver =
-            ////    new CamelCasePropertyNamesContractResolver();
-            ////});
-            //////[!] Web API에서 JSON 결과물을 대문자(모델 클래스 형태)로 변경
-            ////services.AddMvc().AddJsonOptions(
-            ////    option => option.SerializerSettings.ContractResolver =
-            ////        new Newtonsoft.Json.Serialization.DefaultContractResolver());
-
-            //////[!]  JSON 첫자를 대문자로 표시(?)
-            ////services.AddMvc() 
-            ////    .AddJsonOptions(options =>
-            ////    {
-            ////        if (options.SerializerSettings.ContractResolver != null)
-            ////        {
-            ////            //[Web API] JSON 속성 첫자 대문자
-            ////            var castedResolver = 
-            ////                options.SerializerSettings.ContractResolver 
-            ////                    as Newtonsoft.Json.Serialization
-            ////                        .DefaultContractResolver;
-            ////            // 모델 클래스에서 대문자로 지정되었으면 그대로 출력
-            ////            castedResolver.NamingStrategy = null; 
-            ////        }
-            ////    });
-
-            //////[!] 사용할 일은 없겠지만, JSON 대신에 XML을 반환하고자 한다면 아래 코드 사용
-            ////services.AddMvc(options =>
-            ////{
-            ////    options.OutputFormatters.Add(new XmlDataContractSerializerOutputFormatter());
-            ////}); 
-            //#endregion
-
-
-            //// In production, the Angular files will be served from this directory
-            //services.AddSpaStaticFiles(configuration =>
-            //{
-            //    configuration.RootPath = "ClientApp/dist";
-            //});
-
-            //// <DashboardContext:새로운 DbContext 추가>
-            //services.AddEntityFrameworkSqlServer().AddDbContext<DashboardContext>(options =>
-            //    options.UseSqlServer(
-            //        Configuration.GetConnectionString("DefaultConnection")));
-            //// </DashboardContext:새로운 DbContext 추가>
-
             // ============================================================================== // 
             // 새로운 DbContext 추가
             services.AddEntityFrameworkSqlServer().AddDbContext<DotNetNoteContext>(options =>
@@ -287,10 +228,6 @@ namespace DotNetNote
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
             // ============================================================================== // 
-
-            //// 의존성 주입
-            //services.AddTransient<ITwelveRepository, TwelveRepository>();
-
 
             //[DI] 의존성 주입(Dependency Injection)
             DependencyInjectionContainer(services);
