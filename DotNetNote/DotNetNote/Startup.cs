@@ -1,6 +1,5 @@
 ﻿using DotNetNote.Common;
 using DotNetNote.Components;
-using DotNetNote.Data;
 using DotNetNote.Models;
 using DotNetNote.Models.Exams;
 using DotNetNote.Models.Notifications;
@@ -9,7 +8,6 @@ using DotNetNote.Services;
 using DotNetNote.Settings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -218,15 +216,8 @@ namespace DotNetNote
 
             // ============================================================================== // 
             // 새로운 DbContext 추가
-            services.AddEntityFrameworkSqlServer().AddDbContext<DotNetNoteContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
-            // ============================================================================== // 
-            // ============================================================================== // 
-            // 새로운 DbContext 추가
-            services.AddEntityFrameworkSqlServer().AddDbContext<TechContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
+            services.AddEntityFrameworkSqlServer().AddDbContext<DotNetNoteContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddEntityFrameworkSqlServer().AddDbContext<TechContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             // ============================================================================== // 
 
             //[DI] 의존성 주입(Dependency Injection)
@@ -391,10 +382,6 @@ namespace DotNetNote
             // </Notifications>
 
             services.AddTransient<IUrlRepository, UrlRepository>();
-
-
-
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -563,13 +550,15 @@ namespace DotNetNote
 
                 endpoints.MapRazorPages();
 
+                #region 한글 출력 데모
                 //endpoints.MapGet("/", async context =>
                 //{
                 //    //await context.Response.WriteAsync("Hello World!");
                 //    // 한글 출력
                 //    context.Response.Headers["Content-Type"] = "text/html; charset=utf-8";
                 //    await context.Response.WriteAsync("안녕하세요.", System.Text.Encoding.UTF8);
-                //});
+                //}); 
+                #endregion
             });
         }
     }
