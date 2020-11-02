@@ -10,13 +10,16 @@ namespace DotNetNote.Models
         private IConfiguration _config;
         private SqlConnection con;
 
+        public UserRepository(string connectionString)
+        {
+            con = new SqlConnection(connectionString);
+        }
+
         public UserRepository(IConfiguration config)
         {
             _config = config;
             // appsettings.json 파일에 설정된 데이터베이스 연결 문자열 읽어오기
-            con = new SqlConnection(
-                _config.GetSection("ConnectionStrings")
-                    .GetSection("DefaultConnection").Value);
+            con = new SqlConnection(_config.GetSection("ConnectionStrings").GetSection("DefaultConnection").Value);
         }
 
         /// <summary>

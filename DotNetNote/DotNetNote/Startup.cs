@@ -239,8 +239,9 @@ namespace DotNetNote
             // IConfiguration 주입 -> Configuration의 인스턴스를 실행 
             services.AddSingleton<IConfiguration>(Configuration);
 
-            //[User][5] 회원 관리
-            services.AddTransient<IUserRepository, UserRepository>();
+            //[User][5] 회원 관리            
+            services.AddSingleton<IUserRepository>(new UserRepository(Configuration.GetConnectionString("DefaultConnection"))); //services.AddTransient<IUserRepository, UserRepository>();
+
             // LoginFailedManager
             services.AddTransient<ILoginFailedRepository, LoginFailedRepository>();
             services.AddTransient<ILoginFailedManager, LoginFailedManager>();

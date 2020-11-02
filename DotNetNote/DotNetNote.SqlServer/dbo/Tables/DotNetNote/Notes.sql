@@ -1,19 +1,23 @@
-﻿--[1] 게시판(DotNetNote)용 테이블 설계
-Create Table dbo.Notes
+﻿--[1] Table: Notes(완성형 게시판) 테이블 설계 
+--[!] 게시판 테이블 설계: Articles, Posts, Entries, Notes, Memos, (Basic+Upload+Reply) => DotNetNote/DotNetMemo
+CREATE TABLE [dbo].[Notes]
 (
     Id              Int Identity(1, 1) Not Null Primary Key,    -- 번호
-    Name            NVarChar(25) Not Null,                      -- 이름
     Email           NVarChar(100) Null,                         -- 이메일 
-    Title           NVarChar(150) Not Null,                     -- 제목
-    PostDate        DateTime Default GetDate() Not Null,        -- 작성일 
-    PostIp          NVarChar(15) Null,                          -- 작성IP
-    Content         NText Not Null,                             -- 내용
     Password        NVarChar(255) Null,                         -- 비밀번호
     ReadCount       Int Default 0,                              -- 조회수
     Encoding        NVarChar(10) Not Null,                      -- 인코딩(HTML/Text)
     Homepage        NVarChar(100) Null,                         -- 홈페이지
     ModifyDate      DateTime Null,                              -- 수정일 
     ModifyIp        NVarChar(15) Null,                          -- 수정IP
+
+    --[0] 5W1H: 누가, 언제, 어디서, 무엇을, 어떻게, 왜
+    [Name]          NVarChar(25) Not Null,                      -- [2][이름](작성자)
+    PostDate        DateTime Default GetDate() Not Null,        -- 작성일 
+    PostIp          NVarChar(15) Null,                          -- 작성IP
+    [Title]         NVarChar(150) Not Null,                     -- [3][제목]
+    [Content]       NText Not Null,                             -- [4][내용]__NVarChar(Max) => NText__
+    Category        NVarChar(20) Default('Free') Null,          -- 카테고리(확장...) => '공지', '자유', '자료', '사진', ...
 
 	--[2] 자료실 게시판 관련 주요 컬럼
     FileName        NVarChar(255) Null,                         -- 파일명
@@ -28,7 +32,6 @@ Create Table dbo.Notes
     ParentNum       Int Default 0,                              -- 부모글번호
 
     CommentCount    Int Default 0,                              -- 댓글수
-    Category        NVarChar(20) Default('Free') Null,          -- 카테고리(확장...) => '공지', '자유', '자료', '사진', ...
 
     -- 추가: 필요한 항목 추가
     Num             Int Null,                                   -- 번호(확장...)
