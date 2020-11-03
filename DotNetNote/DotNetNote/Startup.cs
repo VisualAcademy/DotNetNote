@@ -41,7 +41,7 @@ namespace DotNetNote
 
             //services.AddSingleton<ICompanyRepository>(new CompanyRepositoryAdo(Configuration["ConnectionStrings:DefaultConnection"]));
             //services.AddSingleton<ICompanyRepository>(new CompanyRepositoryDapper(Configuration["ConnectionStrings:DefaultConnection"]));
-            services.AddEntityFrameworkSqlServer().AddDbContext<CompanyContext>(options =>
+            services.AddDbContext<CompanyContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddTransient<ICompanyRepository, CompanyRepositoryEntityFramework>();
@@ -215,8 +215,8 @@ namespace DotNetNote
 
             // ============================================================================== // 
             // 새로운 DbContext 추가
-            services.AddEntityFrameworkSqlServer().AddDbContext<DotNetNoteContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddEntityFrameworkSqlServer().AddDbContext<TechContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<DotNetNoteContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<TechContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             // ============================================================================== // 
 
             //[DI] 의존성 주입(Dependency Injection)
