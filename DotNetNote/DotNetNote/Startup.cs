@@ -54,15 +54,14 @@ namespace DotNetNote
             ////[!] 디렉터리 브라우징 기능 제공(옵션)
             //services.AddDirectoryBrowser();
 
-            //// <TodoComponent>
-            ////[1] 인-메모리 DB를 가상으로 만들어서 
-            ////    TodoContext에서 지정한 모델 클래스 구조로 DB CRUD 구현 가능
+            // <TodoComponent>
+            //[1] 인-메모리 DB를 가상으로 만들어서 
+            //    TodoContext에서 지정한 모델 클래스 구조로 DB CRUD 구현 가능
+            services.AddDbContext<TodoContext>(options => options.UseInMemoryDatabase("TodoComponent"));
+            ////[2] SQL Server에 데이터 저장(PM> Add-Migration -> PM> Update-Database)
             //services.AddDbContext<TodoContext>(
-            //    options => options.UseInMemoryDatabase("TodoComponent"));
-            //////[2] SQL Server에 데이터 저장(PM> Add-Migration -> PM> Update-Database)
-            ////services.AddDbContext<TodoContext>(
-            ////    options => options.UseSqlServer(Configuration["ConnectionString"]));
-            //// </TodoComponent>
+            //    options => options.UseSqlServer(Configuration["ConnectionString"]));
+            // </TodoComponent>
 
 
             ////[!] 인 메모리 데이터베이스 사용 사용자 관리
@@ -386,7 +385,7 @@ namespace DotNetNote
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider)
         {
             if (env.IsDevelopment())
             {
@@ -423,13 +422,13 @@ namespace DotNetNote
             //}
 
 
-            //// <TodoComponent>
-            ////[!] IServiceProvider를 사용하여 임시 데이터 저장하기
-            //var todo = serviceProvider.GetService<TodoContext>();
-            //todo.Todos.Add(new Todo { Id = -2, Title = "Angular", IsDone = false });
-            //todo.Todos.Add(new Todo { Id = -1, Title = "ASP.NET Core", IsDone = true });
-            //todo.SaveChanges();
-            //// </TodoComponent>
+            // <TodoComponent>
+            //[!] IServiceProvider를 사용하여 임시 데이터 저장하기
+            var todo = serviceProvider.GetService<TodoContext>();
+            todo.Todos.Add(new Todo { Id = -2, Title = "Angular", IsDone = false });
+            todo.Todos.Add(new Todo { Id = -1, Title = "ASP.NET Core", IsDone = true });
+            todo.SaveChanges();
+            // </TodoComponent>
 
 
             #region TempData
