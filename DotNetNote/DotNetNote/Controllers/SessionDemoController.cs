@@ -5,18 +5,21 @@ using System;
 
 namespace DotNetNote.Controllers
 {
+    /// <summary>
+    /// Session 개체 사용 데모 
+    /// </summary>
     public class SessionDemoController : Controller
     {
         public IActionResult Index()
         {
-            //[1] 세션 저장
+            //[1] 세션(Session) 개체 저장
             HttpContext.Session.SetString("Username", "Green");
             return View();
         }
 
         public IActionResult GetSession()
         {
-            //[2] 세션 읽기
+            //[2] 세션(Session) 개체 읽기
             ViewBag.Username = HttpContext.Session.GetString("Username"); 
             return View(); 
         }
