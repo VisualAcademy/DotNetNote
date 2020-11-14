@@ -288,6 +288,7 @@ namespace DotNetNote
 
             //[DI(Dependency Injection)] 서비스 등록: 30.4
             //services.AddTransient<CopyrightService>();
+            // 30. ASP.NET Core에서 종속성 주입(의존성 주입)
             services.AddTransient<ICopyrightService, CopyrightService>();
 
             //[DI] @inject 키워드로 뷰에 직접 클래스의 속성 또는 메서드 값 출력

@@ -2,6 +2,9 @@
 
 namespace DotNetNote.Services
 {
+    /// <summary>
+    /// 서비스 클래스
+    /// </summary>
     public class CopyrightService : ICopyrightService
     {
         public string GetCopyrightString()
