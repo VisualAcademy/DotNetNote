@@ -175,6 +175,7 @@ namespace DotNetNote
 
 
 
+            #region CORS
             ////[CORS] CORS 설정 공식 코드 1/2
             //services.AddCors(options =>
             //{
@@ -185,6 +186,15 @@ namespace DotNetNote
             //        .AllowAnyHeader());
             //});
 
+            //[CORS] Angular, React 등의 SPA를 위한 CORS(Cross Origin Resource Sharing) 설정 1/2
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(builder =>
+                {
+                    builder.WithOrigins("https://localhost:3000"); // [!] Trailing Slash
+                });
+            }); 
+            #endregion
 
 
             //services.Configure<CookiePolicyOptions>(options =>
@@ -513,6 +523,7 @@ namespace DotNetNote
 
 
 
+            #region CORS
             ////[!] CORS
             ////app.UseCors(options => options.WithOrigins(
             ////    "http://dotnetnote.azurewebsites.net/api/values"));
@@ -520,6 +531,11 @@ namespace DotNetNote
 
             ////[CORS] CORS 설정 공식 코드 2/2
             //app.UseCors("AllowAnyOrigin"); // Policy 이름은 AddCores() 메서드의 내용과 동일해야 함 
+
+            //[CORS] Angular, React 등의 SPA를 위한 CORS(Cross Origin Resource Sharing) 설정 2/2
+            app.UseCors(); // 반드시 UseRouting() 뒤에 와야 함 
+            #endregion
+
 
 
             //// [!] 로그아웃 처리 
