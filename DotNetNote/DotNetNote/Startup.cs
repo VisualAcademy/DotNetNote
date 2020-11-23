@@ -95,7 +95,7 @@ namespace DotNetNote
             {
                 // 세션 유지 시간
                 options.IdleTimeout = TimeSpan.FromMinutes(30);
-            }); 
+            });
             #endregion
 
             #region ASP.NET Core 쿠키 인증: ConfigureServices()
@@ -176,16 +176,6 @@ namespace DotNetNote
 
 
             #region CORS
-            ////[CORS] CORS 설정 공식 코드 1/2
-            //services.AddCors(options =>
-            //{
-            //    options.AddPolicy("AllowAnyOrigin",
-            //        builder => builder
-            //        .AllowAnyOrigin()
-            //        .AllowAnyMethod()
-            //        .AllowAnyHeader());
-            //});
-
             //[CORS] Angular, React 등의 SPA를 위한 CORS(Cross Origin Resource Sharing) 설정 1/2
             services.AddCors(options =>
             {
@@ -193,8 +183,27 @@ namespace DotNetNote
                 {
                     builder.WithOrigins("https://localhost:3000"); // [!] Trailing Slash
                 });
-            }); 
+            });
+
+            ////[CORS] CORS 설정 공식 코드 1/2
+            //services.AddCors(options =>
+            //{
+            //    options.AddPolicy("AllowAnyOrigin", builder =>
+            //    {
+            //        builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+            //    });
+            //});
+
+            ////[CORS] CORS 이름을 지정해서 설정
+            //services.AddCors(options =>
+            //{
+            //    options.AddPolicy("EntriesPolicy", builder =>
+            //    {
+            //        builder.WithOrigins("*").AllowAnyHeader().AllowAnyMethod();
+            //    });
+            //});
             #endregion
+
 
 
             //services.Configure<CookiePolicyOptions>(options =>
@@ -524,16 +533,19 @@ namespace DotNetNote
 
 
             #region CORS
-            ////[!] CORS
-            ////app.UseCors(options => options.WithOrigins(
-            ////    "http://dotnetnote.azurewebsites.net/api/values"));
-            ////app.UseCors(options => options.AllowAnyOrigin().WithMethods("GET"));
+            //[CORS] Angular, React 등의 SPA를 위한 CORS(Cross Origin Resource Sharing) 설정 2/2
+            app.UseCors(); // 반드시 UseRouting() 뒤에 와야 함 
 
             ////[CORS] CORS 설정 공식 코드 2/2
             //app.UseCors("AllowAnyOrigin"); // Policy 이름은 AddCores() 메서드의 내용과 동일해야 함 
 
-            //[CORS] Angular, React 등의 SPA를 위한 CORS(Cross Origin Resource Sharing) 설정 2/2
-            app.UseCors(); // 반드시 UseRouting() 뒤에 와야 함 
+            ////[CORS] 특정 이름 지정 가능
+            //app.UseCors("EntriesPolicy"); 
+
+            ////[!] CORS
+            ////app.UseCors(options => options.WithOrigins(
+            ////    "http://dotnetnote.azurewebsites.net/api/values"));
+            ////app.UseCors(options => options.AllowAnyOrigin().WithMethods("GET"));
             #endregion
 
 
