@@ -116,5 +116,8 @@ namespace DotNetNote.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        // VisualAcademy 섹션 강의: ASP.NET Core 2.X 버전으로 진행
+        public IActionResult IndexVisualAcademy() => View(); 
     }
 }
