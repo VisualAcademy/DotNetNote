@@ -35,7 +35,6 @@ namespace DotNetNote.Controllers
         [Authorize]
         public IActionResult Index() => View();
 
-
         //[User][6][3] : 회원 가입 폼
         [HttpGet]
         public IActionResult Register() => View();
@@ -68,7 +67,6 @@ namespace DotNetNote.Controllers
             }
         }
 
-
         //[User][6][5] : 로그인 폼
         [HttpGet]
         [AllowAnonymous] // 인증되지 않은 사용자도 접근 가능
@@ -77,10 +75,6 @@ namespace DotNetNote.Controllers
             ViewData["ReturnUrl"] = returnUrl;
             return View();
         }
-
-
-
-
 
         //[User][6][6] : 로그인 처리
         [HttpPost]
@@ -157,7 +151,6 @@ namespace DotNetNote.Controllers
             return View(model);
         }
 
-
         //[User][6][7]: 로그아웃 처리
         public async Task<IActionResult> Logout()
         {
@@ -175,7 +168,6 @@ namespace DotNetNote.Controllers
 
             return Redirect("/User/Index");
         }
-
 
         //[User][6][8] : 회원 정보 보기 및 수정
         [Authorize]
