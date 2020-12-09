@@ -13,7 +13,7 @@ using Dul.Board;
 
 namespace DotNetNote.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class BlogController : Controller
     {
         //[DNN] 의존성 주입

@@ -3,7 +3,7 @@
 @foreach (var m in Model)
 {
     <ul class="notice">
-        <li *ngFor="let post of posts">
+        <li @**ngFor="let post of posts"*@>
             <div class="date">
                 <div class="month">@m.PostDate.Month</div>
                 <div class="day">@m.PostDate.Day</div>
@@ -18,8 +18,7 @@
                     }
                     else
                     {
-                        <a href="@m.Homepage" target="_blank">
-                            @m.Homepage
+                        <a href="/Blog/Details/@m.Id">
                             @Dul.StringLibrary.CutStringUnicode(@m.Title, 70)
                         </a>
                     }
@@ -27,7 +26,8 @@
                 <span class="name">@m.Name</span>&nbsp;&nbsp;
                 <em>@m.PostDate.ToString()</em>&nbsp;&nbsp;
                 <em class="small"><i class="fa fa-eye"></i>@m.ReadCount</em> &nbsp;
-                <em class="small"><i class="fa fa-commenting-o"></i>@m.CommentCount</em>
+                <em class="small"><i class="fa fa-commenting-o"></i>@m.CommentCount</em> 
+                @*&nbsp; <a href="@m.Homepage" target="_blank" style="font-size:11px;"><em>@m.Homepage</em></a>*@
             </div>
         </li>
     </ul>
@@ -35,6 +35,7 @@
 <style>
 .notice {
     list-style: none;
+    padding: 0; 
 }
 
     .notice > li {
