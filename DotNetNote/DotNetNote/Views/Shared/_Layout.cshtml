@@ -49,29 +49,21 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                        <li>
-                            <a class="nav-link text-dark" href="/BuildSeoul">빌드서울</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="DotNetNote" asp-action="Index">게시판</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="WebCamp" asp-action="Index">웹캠프</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="CommunityCamp" asp-action="Index">커뮤니티캠프</a>
+                        <li class="dropdown nav-item d-sm-none d-md-block">
+                            <a class="dropdown-toggle nav-link text-dark" href="#" role="button" id="ddlPages" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Pages
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" href="/BuildSeoul">빌드서울</a>
+                                <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                                <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="About">정보</a>
+                                <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Contact">연락처</a>
+                            </div>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="About">정보</a>
+                            <a class="nav-link text-dark text-nowrap" asp-area="" asp-controller="DotNetNote" asp-action="Index">게시판</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Contact">연락처</a>
-                        </li>
-
-                        <li class="dropdown nav-item">
+                        <li class="dropdown nav-item d-sm-none d-md-none d-lg-block">
                             <a class="dropdown-toggle nav-link text-dark" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 예제
                             </a>
@@ -103,12 +95,13 @@
                                 <a class="dropdown-item" asp-controller="Tech" asp-action="Index">Web API - 기술 목록(with Angular)</a>
                             </div>
                         </li>
-
                         <li class="dropdown nav-item">
                             <a class="dropdown-toggle nav-link text-dark" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                DB프로그래밍
+                                웹앱
                             </a>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" asp-area="" asp-controller="WebCamp" asp-action="Index">웹캠프</a>
+                                <a class="dropdown-item" asp-area="" asp-controller="CommunityCamp" asp-action="Index">커뮤니티캠프</a>
                                 <a class="dropdown-item" href="/Todo">MVC - 인메모리 TODO</a>
                                 <a class="dropdown-item" href="/api/Todos" target="_blank">REST - 인메모리 TODO</a>
                                 <a class="dropdown-item" href="~/Maxim/Default.html">명언 서비스</a>
@@ -117,7 +110,6 @@
                                 <a class="dropdown-item" asp-controller="RecruitManager" asp-action="Index">모집 관리자</a>
                             </div>
                         </li>
-
                         <li class="dropdown nav-item">
                             <a class="dropdown-toggle nav-link text-dark" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 책
@@ -139,8 +131,6 @@
         </main>
         <br /><br /><br />@*임시 테스트*@
     </div>
-
-
 
     <footer class="border-top footer text-muted">
         <div class="container text-center">

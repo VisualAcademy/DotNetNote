@@ -6,22 +6,22 @@
         @if (User.IsInRole("Users") && User.FindFirst("UserId").Value == option.Value.SiteAdmin)
         {
             <li class="nav-item">
-                <a class="nav-link text-dark" asp-controller="Admin" asp-action="Index" title="Dashboard"><i class="fa fa-gear"></i> 대시보드</a>
+                <a class="nav-link text-dark text-nowrap" asp-controller="Admin" asp-action="Index" title="Dashboard"><i class="fa fa-gear"></i> 대시보드</a>
             </li>
         }
         <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity.Name!@*@User.FindFirst("UserId").Value*@</a>
+            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">@User.Identity.Name@*@User.FindFirst("UserId").Value*@</a>
         </li>
         <li class="nav-item">
             <form class="form-inline" asp-controller="User" asp-action="Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                <button type="submit" class="nav-link btn btn-link text-dark">로그아웃</button>
+                <button type="submit" class="nav-link btn btn-link text-dark text-nowrap">로그아웃</button>
             </form>
         </li>
     }
     else
     {
         <li class="nav-item">
-            <a class="nav-link text-dark" asp-controller="User" asp-action="Register">회원 가입</a>
+            <a class="nav-link text-dark" asp-controller="User" asp-action="Register">회원가입</a>
         </li>
         <li class="nav-item">
             <a class="nav-link text-dark" asp-controller="User" asp-action="Login">로그인</a>
