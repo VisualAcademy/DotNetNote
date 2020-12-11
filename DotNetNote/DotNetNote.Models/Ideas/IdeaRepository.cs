@@ -27,6 +27,7 @@ namespace DotNetNote.Models
 
         public Idea Add(Idea model)
         {
+            //[!] 새로운 데이터 저장 후 일련번호(Identity) 값을 반환 받아 모델 클래스에 채움
             var sql =
                 "Insert Into Ideas (Note) Values (@Note); " +
                 "Select Cast(SCOPE_IDENTITY() As Int);";
