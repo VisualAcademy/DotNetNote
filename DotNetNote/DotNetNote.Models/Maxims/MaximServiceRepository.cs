@@ -26,6 +26,7 @@ namespace DotNetNote.Models
         // 입력
         public Maxim AddMaxim(Maxim model)
         {
+            //[!] 새로운 데이터 저장 후 일련번호(Identity) 값을 반환 받아 모델 클래스에 채움
             string sql = @"
                 Insert Into Maxims (Name, Content) Values (@Name, @Content);
                 Select Cast(SCOPE_IDENTITY() As Int);
