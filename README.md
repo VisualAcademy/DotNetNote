@@ -12,3 +12,6 @@ ASP.NET & Core를 다루는 기술 책의 닷넷코어 파트 전체 소스의 �
 다음 링크를 통해서 현재 소스의 실제 실행되는 모양을 볼 수 있습니다.
 
 https://www.dotnetnote.com
+
+DotNetNote 사이트는 Azure Web App과 Azure SQL Database를 사용하여 운영됩니다.
+
