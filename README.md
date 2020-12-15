@@ -15,3 +15,9 @@ https://www.dotnetnote.com
 
 DotNetNote 사이트는 Azure Web App과 Azure SQL Database를 사용하여 운영됩니다.
 
+## 구글 광고 제거
+
+Layout.cshtml 파일에 들어있는 구글 광고 링크는 제거하셔도 됩니다. 
+<script data-ad-client="ca-pub-XXXX" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  
+    
