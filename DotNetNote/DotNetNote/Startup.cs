@@ -8,12 +8,16 @@ using DotNetNote.Services;
 using DotNetNote.Settings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Rewrite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Net.Http.Headers;
 using System;
+using System.Net;
 
 namespace DotNetNote
 {
@@ -418,6 +422,9 @@ namespace DotNetNote
 
             app.UseRouting();
 
+            // Azure Web App 고유 경로 요청시 www.dotnetnote.com 경로로 영구 이동 
+            app.UseRewriter(new RewriteOptions().Add(new RedirectAzureWebsitesRule()).AddRedirectToWwwPermanent());
+
             app.UseAuthentication();
             app.UseAuthorization();
 
@@ -591,6 +598,29 @@ namespace DotNetNote
                 //}); 
                 #endregion
             });
+        }
+    }
+
+    public class RedirectAzureWebsitesRule : IRule
+    {
+        public int StatusCode { get; } = (int)HttpStatusCode.MovedPermanently;
+
+        public void ApplyRule(RewriteContext context)
+        {
+            HttpRequest request = context.HttpContext.Request;
+            HostString host = context.HttpContext.Request.Host;
+
+            if (host.HasValue && host.Value == "dotnetnote.azurewebsites.net")
+            {
+                HttpResponse response = context.HttpContext.Response;
+                response.StatusCode = StatusCode;
+                response.Headers[HeaderNames.Location] = request.Scheme + "://" + "www.dotnetnote.com" + request.PathBase + request.Path + request.QueryString;
+                context.Result = RuleResult.EndResponse;
+            }
+            else
+            {
+                context.Result = RuleResult.ContinueRules;
+            }
         }
     }
 }
