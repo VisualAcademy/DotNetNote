@@ -515,7 +515,7 @@ namespace DotNetNote
 
 
 
-            //app.UseHttpsRedirection();
+            app.UseHttpsRedirection();
             //app.UseStatusCodePages();
 
 
