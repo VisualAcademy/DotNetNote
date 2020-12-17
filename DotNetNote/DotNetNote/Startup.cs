@@ -58,14 +58,18 @@ namespace DotNetNote
             ////[!] 디렉터리 브라우징 기능 제공(옵션)
             //services.AddDirectoryBrowser();
 
+
+            #region TodoComponent
             // <TodoComponent>
+            // "TodoComponent_EFCore와 스캐폴딩 기능으로 만든 TODO 앱을 미리 살펴본 후 애저 웹앱에 게시하기" 강좌에서 사용 
             //[1] 인-메모리 DB를 가상으로 만들어서 
             //    TodoContext에서 지정한 모델 클래스 구조로 DB CRUD 구현 가능
             services.AddDbContext<TodoContext>(options => options.UseInMemoryDatabase("TodoComponent"));
             ////[2] SQL Server에 데이터 저장(PM> Add-Migration -> PM> Update-Database)
             //services.AddDbContext<TodoContext>(
             //    options => options.UseSqlServer(Configuration["ConnectionString"]));
-            // </TodoComponent>
+            // </TodoComponent> 
+            #endregion
 
 
             ////[!] 인 메모리 데이터베이스 사용 사용자 관리
