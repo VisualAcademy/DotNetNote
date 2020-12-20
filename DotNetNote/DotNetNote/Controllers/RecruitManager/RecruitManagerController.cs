@@ -17,15 +17,16 @@ namespace DotNetNote.Controllers.RecruitManager
         /// </summary>
         public IActionResult Index()
         {
-            return View();
+            //return View();
+            return View("~/Views/_MiniProjects/RecruitManager/Index.cshtml");
         }
 
         #region 모집 추가
         [HttpGet]
         public IActionResult RecruitSettingCreate()
         {
-
-            return View();
+            //return View();
+            return View("~/Views/_MiniProjects/RecruitManager/RecruitSettingCreate.cshtml");
         }
 
         [HttpPost]
@@ -40,7 +41,8 @@ namespace DotNetNote.Controllers.RecruitManager
                 return RedirectToAction(nameof(RecruitSettingList));
             }
 
-            return View(model);
+            //return View(model);
+            return View("~/Views/_MiniProjects/RecruitManager/RecruitSettingCreate.cshtml", model);
         } 
         #endregion
 
@@ -52,7 +54,8 @@ namespace DotNetNote.Controllers.RecruitManager
             // 전체 레코드
             var recruits = _repo.GetAll();
 
-            return View(recruits); 
+            //return View(recruits); 
+            return View("~/Views/_MiniProjects/RecruitManager/RecruitSettingList.cshtml", recruits);
         }
 
         /// <summary>
@@ -64,15 +67,15 @@ namespace DotNetNote.Controllers.RecruitManager
 
             var recruit = _repo.GetById(id); 
 
-            return View(recruit);
+            //return View(recruit);
+            return View("~/Views/_MiniProjects/RecruitManager/RecruitSettingDetail.cshtml", recruit);
         }
 
         /// <summary>
         /// 상세 데이터 수정 또는 삭제
         /// </summary>
         [HttpPost]
-        public IActionResult RecruitSettingEditOrDelete(
-            RecruitSetting model, string action)
+        public IActionResult RecruitSettingEditOrDelete(RecruitSetting model, string action)
         {
             if (action == "update")
             {
@@ -100,12 +103,10 @@ namespace DotNetNote.Controllers.RecruitManager
             }
         }
 
-
         // [FromQuery] 특성으로,
         // BoardView?BoardName=Recruit&BoardNum=11 형태의 쿼리스트링 받기 
         [HttpGet]
-        public IActionResult BoardView(
-            [FromQuery]string boardName, [FromQuery]int boardNum)
+        public IActionResult BoardView([FromQuery]string boardName, [FromQuery]int boardNum)
         {
             // [FromQuery] 특성 사용
             ViewData["BoardName"] = boardName;
@@ -126,10 +127,8 @@ namespace DotNetNote.Controllers.RecruitManager
                 _repo.IsFinishedRecruit(boardName, boardNum);
 
 
-            return View();
+            //return View();
+            return View("~/Views/_MiniProjects/RecruitManager/BoardView.cshtml");
         }   
-
-
-
     }
 }
