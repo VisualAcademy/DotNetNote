@@ -1,8 +1,10 @@
 ﻿using DotNetNote.Models.RecruitManager;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DotNetNote.Controllers.RecruitManager
 {
+    [Authorize] // 로그인된 사용자만 테스트 가능 
     public class RecruitManagerController : Controller
     {
         private IRecruitSettingRepository _repo;
