@@ -14,7 +14,7 @@ namespace DotNetNote.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            return View("~/Views/_MiniProjects/Urls/Index.cshtml");
         }
 
         public IActionResult IsExistsMethodTest()
@@ -25,7 +25,7 @@ namespace DotNetNote.Controllers
 
             ViewBag.IsExists = r; 
 
-            return View();
+            return View("~/Views/_MiniProjects/Urls/IsExistsMethodTest.cshtml");
         }
     }
 }
