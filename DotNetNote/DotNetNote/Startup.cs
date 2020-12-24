@@ -349,8 +349,8 @@ namespace DotNetNote
             //[b] 위 코드를 아래 코드로 변경
             services.AddTransient<INoteCommentRepository, NoteCommentRepository>();
 
-
-            //services.AddTransient<MaximServiceRepository, MaximServiceRepository>();
+            // 명언 리스트: Web API + (jQuery CRUD or Angular.js CRUD) 
+            services.AddTransient<MaximServiceRepository, MaximServiceRepository>();
 
             //[Tech] 기술 목록
             // services.AddTransient<ITechRepository, TechRepository>(); // Dapper 사용한 리포지토리 클래스 사용
