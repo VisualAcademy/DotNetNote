@@ -70,9 +70,7 @@
     <Folder Include="dbo\Stored Procedures\DotNetNote" />
     <Folder Include="dbo\Stored Procedures\LogManager" />
     <Folder Include="dbo\Views" />
-    <Folder Include="dbo\Views\Blog" />
     <Folder Include="dbo\Views\BoardManager" />
-    <Folder Include="dbo\Tables\Blog" />
     <Folder Include="dbo\Tables\BoardManager" />
     <Folder Include="dbo\Tables\DapperDemo" />
     <Folder Include="dbo\Tables\DotNetNote" />
@@ -87,6 +85,7 @@
     <Folder Include="dbo\Tables\TabManager" />
     <Folder Include="DotNetSale" />
     <Folder Include="Ideas" />
+    <Folder Include="Blogs" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Users\Stored Procedures\GetUsers.sql" />
@@ -116,11 +115,7 @@
     <Build Include="dbo\Stored Procedures\AddPermission.sql" />
     <Build Include="dbo\Stored Procedures\Memos_Procedures.sql" />
     <Build Include="dbo\Stored Procedures\Signs_Procedures.sql" />
-    <Build Include="dbo\Views\Blog\BlogPosts.sql" />
     <Build Include="dbo\Views\BoardManager\BoardViews.sql" />
-    <Build Include="dbo\Tables\Blog\Blogs.sql" />
-    <Build Include="dbo\Tables\Blog\Comments.sql" />
-    <Build Include="dbo\Tables\Blog\Posts.sql" />
     <Build Include="dbo\Tables\BoardManager\Boards.sql" />
     <Build Include="dbo\Tables\DapperDemo\SubTables.sql" />
     <Build Include="dbo\Tables\DapperDemo\Tables.sql" />
@@ -158,5 +153,9 @@
     <Build Include="dbo\Tables\Warehouses.sql" />
     <Build Include="DotNetSale\01_Categories.sql" />
     <Build Include="Ideas\Ideas.sql" />
+    <Build Include="Blogs\Blogs.sql" />
+    <Build Include="Blogs\Comments.sql" />
+    <Build Include="Blogs\Posts.sql" />
+    <Build Include="Blogs\BlogPosts.sql" />
   </ItemGroup>
 </Project>
