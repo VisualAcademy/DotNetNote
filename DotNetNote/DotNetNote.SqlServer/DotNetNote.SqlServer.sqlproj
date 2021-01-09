@@ -77,7 +77,6 @@
     <Folder Include="dbo\Tables\Exam" />
     <Folder Include="dbo\Tables\Fives" />
     <Folder Include="dbo\Tables\GoodsManager" />
-    <Folder Include="dbo\Tables\Heroes" />
     <Folder Include="dbo\Tables\LogManager" />
     <Folder Include="dbo\Tables\MenuManager" />
     <Folder Include="dbo\Tables\Points" />
@@ -86,6 +85,7 @@
     <Folder Include="DotNetSale" />
     <Folder Include="Ideas" />
     <Folder Include="Blogs" />
+    <Folder Include="Heroes" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Users\Stored Procedures\GetUsers.sql" />
@@ -124,7 +124,6 @@
     <Build Include="dbo\Tables\Exam\Questions.sql" />
     <Build Include="dbo\Tables\Fives\Fives.sql" />
     <Build Include="dbo\Tables\GoodsManager\Goods.sql" />
-    <Build Include="dbo\Tables\Heroes\Heroes.sql" />
     <Build Include="dbo\Tables\LogManager\Logs.sql" />
     <Build Include="dbo\Tables\MenuManager\Menus.sql" />
     <Build Include="dbo\Tables\Points\Points_PointLogs.sql" />
@@ -157,5 +156,6 @@
     <Build Include="Blogs\Comments.sql" />
     <Build Include="Blogs\Posts.sql" />
     <Build Include="Blogs\BlogPosts.sql" />
+    <Build Include="Heroes\Heroes.sql" />
   </ItemGroup>
 </Project>
