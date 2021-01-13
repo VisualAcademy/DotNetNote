@@ -61,8 +61,6 @@
     <Folder Include="Users\Tables" />
     <Folder Include="dbo" />
     <Folder Include="dbo\Tables" />
-    <Folder Include="_" />
-    <Folder Include="_\Notifications" />
     <Folder Include="dbo\Scripts" />
     <Folder Include="dbo\Stored Procedures" />
     <Folder Include="dbo\Stored Procedures\Blog" />
@@ -86,6 +84,7 @@
     <Folder Include="Ideas" />
     <Folder Include="Blogs" />
     <Folder Include="Heroes" />
+    <Folder Include="Notifications" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Users\Stored Procedures\GetUsers.sql" />
@@ -93,7 +92,6 @@
     <Build Include="Users\Tables\UserLogs.sql" />
     <Build Include="Users\Tables\Users.sql" />
     <Build Include="dbo\Tables\Companies.sql" />
-    <Build Include="_\Notifications\MyNotifications.sql" />
     <None Include="dbo\Scripts\SysDateTimeOffset.sql" />
     <Build Include="dbo\Stored Procedures\Blog\GetBlogPost.sql" />
     <Build Include="dbo\Stored Procedures\DapperDemo\GetTableById.sql" />
@@ -157,5 +155,6 @@
     <Build Include="Blogs\Posts.sql" />
     <Build Include="Blogs\BlogPosts.sql" />
     <Build Include="Heroes\Heroes.sql" />
+    <Build Include="Notifications\MyNotifications.sql" />
   </ItemGroup>
 </Project>
