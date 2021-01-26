@@ -41,7 +41,8 @@ namespace DotNetNote
             //        Configuration.GetConnectionString("DefaultConnection")));
             //services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
             //    .AddEntityFrameworkStores<ApplicationDbContext>();
-            services.AddRazorPages();
+
+            services.AddRazorPages(); //[!] Razor Pages 사용 설정 [1 of 2]
 
             //services.AddSingleton<ICompanyRepository>(new CompanyRepositoryAdo(Configuration["ConnectionStrings:DefaultConnection"]));
             //services.AddSingleton<ICompanyRepository>(new CompanyRepositoryDapper(Configuration["ConnectionStrings:DefaultConnection"]));
@@ -590,7 +591,7 @@ namespace DotNetNote
                   pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
                 );
 
-                endpoints.MapRazorPages();
+                endpoints.MapRazorPages(); //[!] Razor Pages 사용 설정 [2 of 2]
 
                 #region 한글 출력 데모
                 //endpoints.MapGet("/", async context =>
