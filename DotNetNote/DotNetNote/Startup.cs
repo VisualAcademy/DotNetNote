@@ -6,6 +6,7 @@ using DotNetNote.Models.Notifications;
 using DotNetNote.Models.RecruitManager;
 using DotNetNote.Services;
 using DotNetNote.Settings;
+using MemoEngineCore.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -413,6 +414,8 @@ namespace DotNetNote
             // </Notifications>
 
             services.AddTransient<IUrlRepository, UrlRepository>();
+
+            services.AddTransient<IBlogService, FileBlogService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
