@@ -19,3 +19,9 @@ DotNetNote 사이트는 Azure Web App과 Azure SQL Database를 사용하여 운�
 
 Layout.cshtml 파일에 들어있는 구글 광고 링크는 제거하셔도 됩니다. 
    
+## ASP.NET Core Fundamentals 강의 재생 목록
+
+현재 소스를 제작하는 내용에 대한 유료 강좌는 다음 링크를 참고하세요. 
+
+https://www.youtube.com/watch?v=xRz2DA8bbbc&list=PLO56HZSjrPTDtR6uKaE7mThbGAUgzvTJe
+
