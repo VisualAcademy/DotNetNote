@@ -11,4 +11,3 @@ namespace DotNetNote.Models
         public int BoardId { get; set; }
     }
 }
-
