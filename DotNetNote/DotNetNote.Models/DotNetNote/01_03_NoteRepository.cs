@@ -26,8 +26,8 @@ namespace DotNetNote.Models
             IConfiguration config, ILogger<NoteRepository> logger, IMemoryCache memoryCache)
         {
             _config = config;
-            con = new SqlConnection(_config.GetSection("ConnectionStrings")
-                .GetSection("DefaultConnection").Value);
+            //TODO: 아래 라인에 F9로 중단점 설정 후 F5로 실행 -> F10로 다음 라인까지 테스트
+            con = new SqlConnection(_config.GetSection("ConnectionStrings").GetSection("DefaultConnection").Value);
             _logger = logger;
             _cache = memoryCache;
         }
@@ -149,8 +149,9 @@ namespace DotNetNote.Models
             try
             {
                 var parameters = new DynamicParameters(new { Page = page });
-                return con.Query<Note>("ListNotes", parameters,
-                    commandType: CommandType.StoredProcedure).ToList();
+                //TODO: 아래 라인에 F9로 중단점 설정 후 F5로 실행 -> F10로 다음 라인까지 테스트
+                var results = con.Query<Note>("ListNotes", parameters, commandType: CommandType.StoredProcedure).ToList();
+                return results;
             }
             catch (System.Exception ex)
             {
