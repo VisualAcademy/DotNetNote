@@ -2,6 +2,9 @@
 @using Microsoft.Extensions.Configuration
 @inject IConfiguration Configuration
 
+@*[2]*@
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor _context
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -50,8 +53,8 @@
                     <partial name="_LoginPartial" />
                     <ul class="navbar-nav flex-grow-1">
                         @*<li class="nav-item d-sm-none d-md-none d-lg-block">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>*@
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            </li>*@
                         <li class="dropdown nav-item d-sm-none d-md-block">
                             <a class="dropdown-toggle nav-link text-dark" href="#" role="button" id="ddlPages" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Pages
