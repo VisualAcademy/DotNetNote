@@ -296,14 +296,6 @@ namespace DotNetNote
                             .GetSection("SiteAdmin").Value));
             });
 
-
-
-
-
-
-
-
-
             // IBuyerRepository 개체를 생성자 매개 변수로 주입: BuyerRepository의 인스턴스를 생성 
             services.AddSingleton<IBuyerRepository>(new BuyerRepository(Configuration["ConnectionStrings:DefaultConnection"]));
             services.AddTransient<IVariableRepository, VariableRepositoryInMemory>();
@@ -333,11 +325,9 @@ namespace DotNetNote
             services.AddScoped<IScopedGuidService, ScopedGuidService>();
             services.AddSingleton<ISingletonGuidService, SingletonGuidService>();
 
-
             //[CommunityCamp] 모듈 서비스 등록
             services.AddTransient<ICommunityCampJoinMemberRepository,
                 CommunityCampJoinMemberRepository>();
-
 
             //[DNN][1] 게시판 관련 서비스 등록            
             //[1] 생성자에 문자열로 연결 문자열 지정
@@ -366,10 +356,8 @@ namespace DotNetNote
             services.AddSingleton<AttendeeApp.Models.IAttendeeRepository>(new AttendeeApp.Models.AttendeeRepository(Configuration.GetConnectionString("DefaultConnection")));
 
             //[RecruitManager] 
-            services.AddTransient<
-                IRecruitSettingRepository, RecruitSettingRepository>();
-            services.AddTransient<IRecruitRegistrationRepository,
-                RecruitRegistrationRepository>();
+            services.AddTransient<IRecruitSettingRepository, RecruitSettingRepository>();
+            services.AddTransient<IRecruitRegistrationRepository, RecruitRegistrationRepository>();
 
             //[One], [Two], ... 
             services.AddTransient<IOneRepository, OneRepository>();
@@ -377,16 +365,12 @@ namespace DotNetNote
             services.AddTransient<IThreeRepository, ThreeRepository>();
             services.AddTransient<IFourRepository, FourRepository>();
             services.AddTransient<IFiveRepository, FiveRepository>();
-
             // Exams: Questions, ... 
             services.AddTransient<IQuestionRepository, QuestionRepository>();
-
             //[HeroManager]: 영웅 관리자: ASP.NET Core부터 Angular까지 A to Z
             services.AddTransient<IHeroRepository, HeroRepository>();
-
             // 캐릭터 설정
             services.AddTransient<ICharacterRepository, CharacterRepository>();
-
             // 포인트 관리
             //services.AddTransient<IPointRepository, PointRepository>(); // DB 사용
             services.AddTransient<IPointRepository, PointRepositoryInMemory>(); // 인-메모리 사용
@@ -417,7 +401,6 @@ namespace DotNetNote
             // </Notifications>
 
             services.AddTransient<IUrlRepository, UrlRepository>();
-
             services.AddTransient<IBlogService, FileBlogService>();
         }
 
@@ -531,13 +514,8 @@ namespace DotNetNote
             ////[!] 상태 코드 표시 
             ////app.UseStatusCodePages(); //[나] Status Code: 404; Not Found 형태로 상태 표시가 출력됨
 
-
-
             app.UseHttpsRedirection();
             //app.UseStatusCodePages();
-
-
-
 
             #region Serilog
             //// 31.8.4. Serilog를 사용하여 로그 파일 기록하기 
@@ -547,8 +525,6 @@ namespace DotNetNote
             //    .CreateLogger();
             //loggerFactory.AddSerilog(); 
             #endregion
-
-
 
             #region CORS
             //[CORS] Angular, React 등의 SPA를 위한 CORS(Cross Origin Resource Sharing) 설정 2/2
@@ -566,8 +542,6 @@ namespace DotNetNote
             ////app.UseCors(options => options.AllowAnyOrigin().WithMethods("GET"));
             #endregion
 
-
-
             //// [!] 로그아웃 처리 
             //app.UseRouter(routes =>
             //{
@@ -583,7 +557,6 @@ namespace DotNetNote
             //        context.Response.Redirect("/");
             //    });
             //});
-
 
             app.UseEndpoints(endpoints =>
             {
