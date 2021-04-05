@@ -25,5 +25,3 @@ Go
 --Delete From Heroes Where Id = 3; 
 ---- 검색
 --Select Id, Name, Icon From Heroes Where Icon Like N'%p.png%';
-
-
