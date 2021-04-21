@@ -23,5 +23,7 @@ Layout.cshtml 파일에 들어있는 구글 광고 링크는 제거하셔도 됩
 
 현재 소스를 제작하는 내용에 대한 유료 강좌는 다음 링크를 참고하세요. 
 
+http://www.devle.com
+
 https://www.youtube.com/watch?v=xRz2DA8bbbc&list=PLO56HZSjrPTDtR6uKaE7mThbGAUgzvTJe
 
