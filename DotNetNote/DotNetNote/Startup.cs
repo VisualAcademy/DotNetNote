@@ -38,7 +38,9 @@ namespace DotNetNote
             //services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddHttpContextAccessor(); //[1]
 
-            services.AddControllersWithViews();
+            services.AddControllersWithViews();     // MVC + Web API 사용 가능
+            services.AddRazorPages();               // Razor Pages 사용 가능
+            services.AddServerSideBlazor();         // Blazor Server 사용 가능
 
             //services.AddDbContext<ApplicationDbContext>(options =>
             //    options.UseSqlServer(
@@ -571,6 +573,9 @@ namespace DotNetNote
                 );
 
                 endpoints.MapRazorPages(); //[!] Razor Pages 사용 설정 [2 of 2]
+
+                // Blazor Server 사용 가능
+                endpoints.MapBlazorHub();
 
                 #region 한글 출력 데모
                 //endpoints.MapGet("/", async context =>
