@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿// (실시간) ASP.NET Core MVC 기초 컨트롤러 클래스, 액션 메서드, 뷰 페이지
+using Microsoft.AspNetCore.Mvc;
 
 namespace DotNetNote.Controllers
 {
