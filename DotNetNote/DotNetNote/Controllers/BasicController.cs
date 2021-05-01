@@ -16,10 +16,7 @@ namespace DotNetNote.Controllers
             return View();
         }
 
-        public IActionResult Unit()
-        {
-            return View();
-        }
+        public IActionResult Unit() => View();
 
         [HttpGet]
         public IActionResult Quiz(int id, int page)
@@ -47,9 +44,6 @@ namespace DotNetNote.Controllers
             return View(score);
         }
 
-        public IActionResult Review()
-        {
-            return View();
-        }
+        public IActionResult Review() => View();
     }
 }
