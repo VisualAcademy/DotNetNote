@@ -18,8 +18,8 @@ namespace DotNetNote.Controllers
     {
         //[DNN] 의존성 주입
         private IWebHostEnvironment _environment; // 환경 변수
-        private readonly INoteRepository _repository; // 게시판 리파지터리
-        private readonly INoteCommentRepository _commentRepository; // 댓글 리파지터리
+        private readonly INoteRepository _repository; // 게시판 리포지토리
+        private readonly INoteCommentRepository _commentRepository; // 댓글 리포지토리
         private readonly ILogger<DotNetNoteController> _logger; // 기본 제공 로깅
 
         public DotNetNotePublicController(

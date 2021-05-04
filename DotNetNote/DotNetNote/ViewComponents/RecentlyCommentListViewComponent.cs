@@ -5,7 +5,7 @@ namespace DotNetNote.ViewComponents
 {
     public class RecentlyCommentListViewComponent : ViewComponent
     {
-        // 댓글 리파지터리 개체
+        // 댓글 리포지토리 개체
         private INoteCommentRepository _repository;
 
         public RecentlyCommentListViewComponent(

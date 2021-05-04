@@ -15,7 +15,7 @@ namespace DotNetNote.Models.StudentManager
     }
 
     /// <summary>
-    /// Student 리파지터리 클래스 
+    /// Student 리포지토리 클래스 
     /// </summary>
     public class StudentRepository
     {

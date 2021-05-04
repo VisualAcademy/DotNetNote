@@ -18,8 +18,8 @@ namespace DotNetNote.Controllers
     {
         //[DNN] 의존성 주입
         private IWebHostEnvironment _environment; // 환경 변수
-        private INoteRepository _repository; // 게시판 리파지터리
-        private INoteCommentRepository _commentRepository; // 댓글 리파지터리
+        private INoteRepository _repository; // 게시판 리포지토리
+        private INoteCommentRepository _commentRepository; // 댓글 리포지토리
 
 
         public BlogController(IWebHostEnvironment environment,

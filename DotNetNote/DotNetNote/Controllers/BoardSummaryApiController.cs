@@ -15,7 +15,7 @@ namespace DotNetNote.Controllers
         public DateTime PostDate { get; set; }
     }
 
-    //[2] 리파지터리 클래스
+    //[2] 리포지토리 클래스
     public class BoardSummaryRepository
     {
         public List<BoardSummaryModel> GetAll()

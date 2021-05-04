@@ -34,7 +34,7 @@ namespace DotNetNote.Models
     }
 
     /// <summary>
-    /// 리파지터리 클래스 
+    /// 리포지토리 클래스 
     /// </summary>
     public class FourRepository : IFourRepository
     {

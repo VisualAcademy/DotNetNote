@@ -330,7 +330,7 @@ namespace DotNetNote.Models.Exams
         {
             try
             {
-                // 페이지 번호는 1, 2, 3 사용, 리파지터리에서는 0, 1, 2 사용
+                // 페이지 번호는 1, 2, 3 사용, 리포지토리에서는 0, 1, 2 사용
                 pageNumber = (pageNumber > 0) ? pageNumber - 1 : 0;
                 var models = _repository.GetAllWithPaging(pageNumber, pageSize);
                 if (models == null)
