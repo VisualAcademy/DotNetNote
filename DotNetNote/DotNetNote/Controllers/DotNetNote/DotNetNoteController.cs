@@ -237,8 +237,8 @@ namespace DotNetNote.Controllers
                 if (System.IO.File.Exists(Path.Combine(_environment.WebRootPath, "files") + "\\" + fileName))
                 {
                     byte[] fileBytes = System.IO.File.ReadAllBytes(Path.Combine(_environment.WebRootPath, "files") + "\\" + fileName);
-
-                    return File(fileBytes, "application/octet-stream", fileName);
+                    
+                    return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
                 }
 
                 return null;
