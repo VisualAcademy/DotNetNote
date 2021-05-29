@@ -6,7 +6,7 @@
 <script>
     function ConfirmDelete() {
         var varFlag = false;
-        var txtId = document.getElementById("Password");
+        var txtId = document.getElementById("password");
         if (txtId.value.length == 0) {
             bootbox.alert("비밀번호를 입력하세요.", function () { });
             txtId.focus();
@@ -36,7 +36,7 @@
         <input type="hidden" name="id" id="id" value="@ViewBag.Id" />
         <br />
         비밀번호 :
-        <input type="password" name="Password" id="Password" 
+        <input type="password" name="password" id="password" 
                style="width:120px;display:inline-block;" class="form-control" />
         <input type="submit" value="지우기" class="btn btn-danger" 
                style="display:inline-block;" />
