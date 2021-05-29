@@ -93,7 +93,8 @@
         </tr>
         <tr>
             <td colspan="4">
-                @await Html.PartialAsync("_BoardCommentControl", (NoteCommentViewModel)ViewBag.CommentListAndId)
+                @await Html.PartialAsync("_BoardCommentControl", 
+                    (NoteCommentViewModel)ViewBag.CommentListAndId)
             </td>
         </tr>
     </tbody>
@@ -101,7 +102,8 @@
 
 <div style="text-align:center;">
 
-    @if (Model?.Category != "Notice" && User.IsInRole("Users") && User?.FindFirst("UserId")?.Value == option.Value.SiteAdmin)
+    @if (Model?.Category != "Notice" && User.IsInRole("Users") 
+        && User?.FindFirst("UserId")?.Value == option.Value.SiteAdmin)
     {
         <a asp-action="Pinned" asp-route-id="@Model.Id" class="btn btn-danger">
             공지로 올리기
