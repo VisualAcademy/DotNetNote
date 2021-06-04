@@ -7,6 +7,7 @@ namespace DotNetNote.Controllers
     [Authorize(Roles = "Administrators")]
     public class AppSettingsDemo : Controller
     {
+        // https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration/?view=aspnetcore-5.0
         private readonly IConfiguration _configuration;
 
         public AppSettingsDemo(IConfiguration configuration)

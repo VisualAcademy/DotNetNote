@@ -33,6 +33,7 @@ namespace DotNetNote.Components
 
     public class UserModelRepository : IUserModelRepository
     {
+        // https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration/?view=aspnetcore-5.0
         private IConfiguration _config;
         private IDbConnection db;
         private IMemoryCache _cache;

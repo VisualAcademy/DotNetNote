@@ -9,6 +9,7 @@ namespace DotNetNoteCom.Controllers
 {
     public class BlobController : Controller
     {
+        // https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration/?view=aspnetcore-5.0
         private IConfiguration _config;
 
         public BlobController(IConfiguration config)

@@ -18,6 +18,7 @@ namespace DotNetNoteCom.Controllers
     public class SignServicesController : Controller
     {
         private readonly ISignRepository _repository;
+        // https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration/?view=aspnetcore-5.0
         private readonly IConfiguration _configuration;
 
         public SignServicesController(ISignRepository repository, IConfiguration configuration) 

@@ -8,6 +8,7 @@ namespace AttendeeApp.Models
 {
     public class AttendeeRepository : IAttendeeRepository
     {
+        // https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration/?view=aspnetcore-5.0
         private readonly IConfiguration _config;
         private SqlConnection con;
 
