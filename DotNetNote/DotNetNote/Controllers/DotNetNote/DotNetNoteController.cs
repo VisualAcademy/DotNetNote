@@ -431,9 +431,11 @@ namespace DotNetNote.Controllers
 
             note.Id = id;
             note.Name = model.Name;
-            note.Email = Dul.HtmlUtility.Encode(model.Email);
+            //note.Email = Dul.HtmlUtility.Encode(model.Email);
+            note.Email = model.Email;
             note.Homepage = model.Homepage;
-            note.Title = Dul.HtmlUtility.Encode(model.Title);
+            //note.Title = Dul.HtmlUtility.Encode(model.Title);
+            note.Title = model.Title;
             note.Content = model.Content;
             note.FileName = fileName;
             note.FileSize = fileSize;
