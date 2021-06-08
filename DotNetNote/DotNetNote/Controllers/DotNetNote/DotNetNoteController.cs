@@ -353,6 +353,7 @@ namespace DotNetNote.Controllers
         /// </summary>
         public IActionResult DeleteCompleted() => View();
 
+        #region 수정
         /// <summary>
         /// 게시판 수정 폼
         /// </summary>
@@ -367,11 +368,11 @@ namespace DotNetNote.Controllers
             var note = _repository.GetNoteById(id);
 
             // 첨부된 파일명 및 파일크기 기록
-            if (note.FileName.Length > 1)
+            if (note.FileName.Length > 0)
             {
                 ViewBag.FileName = note.FileName;
                 ViewBag.FileSize = note.FileSize;
-                ViewBag.FileNamePrevious = 
+                ViewBag.FileNamePrevious =
                     $"기존에 업로드된 파일명: {note.FileName}";
             }
             else
@@ -388,7 +389,7 @@ namespace DotNetNote.Controllers
         /// </summary>
         [HttpPost]
         public async Task<IActionResult> Edit(
-            Note model, ICollection<IFormFile> files, 
+            Note model, ICollection<IFormFile> files,
             int id, string previousFileName = "", int previousFileSize = 0)
         {
             ViewBag.FormType = BoardWriteFormType.Modify;
@@ -425,20 +426,20 @@ namespace DotNetNote.Controllers
                     }
                 }
             }
-            
+
             Note note = new Note();
 
             note.Id = id;
-            note.Name     = model.Name;
-            note.Email    = Dul.HtmlUtility.Encode(model.Email);
+            note.Name = model.Name;
+            note.Email = Dul.HtmlUtility.Encode(model.Email);
             note.Homepage = model.Homepage;
-            note.Title    = Dul.HtmlUtility.Encode(model.Title);
-            note.Content  = model.Content;
+            note.Title = Dul.HtmlUtility.Encode(model.Title);
+            note.Content = model.Content;
             note.FileName = fileName;
             note.FileSize = fileSize;
-            note.Password = 
+            note.Password =
                 (new Dul.Security.CryptorEngine()).EncryptPassword(model.Password);
-            note.ModifyIp = 
+            note.ModifyIp =
                 HttpContext.Connection.RemoteIpAddress.ToString(); // IP 주소
             note.Encoding = model.Encoding;
 
@@ -450,11 +451,12 @@ namespace DotNetNote.Controllers
             }
             else
             {
-                ViewBag.ErrorMessage = 
+                ViewBag.ErrorMessage =
                     "업데이트가 되지 않았습니다. 암호를 확인하세요.";
                 return View(note);
             }
-        }
+        } 
+        #endregion
 
         /// <summary>
         /// 답변 글쓰기 폼
