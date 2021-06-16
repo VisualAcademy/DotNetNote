@@ -75,8 +75,7 @@ namespace DotNetNote.Controllers
             return View();
         }
 
-        //[Authorize]
-        //[Authorize("Administrators")] // 관리자 아이디로 접근했을 때 볼 수 있음
+        [Authorize("Administrators")] // 관리자 아이디로 접근했을 때 볼 수 있음
         public IActionResult ComCampAdmin()
         {
             // 관리자 페이지
