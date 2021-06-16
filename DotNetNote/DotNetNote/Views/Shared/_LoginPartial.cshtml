@@ -10,7 +10,7 @@
             </li>
         }
         <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">@User.Identity.Name@*@User.FindFirst("UserId").Value*@</a>
+            <a class="nav-link text-dark" href="/User/UserInfor" title="Manage">@User.Identity.Name@*@User.FindFirst("UserId").Value*@</a>
         </li>
         <li class="nav-item">
             <form class="form-inline" asp-controller="User" asp-action="Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
