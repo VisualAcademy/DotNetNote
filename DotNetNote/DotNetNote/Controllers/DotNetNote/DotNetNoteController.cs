@@ -598,6 +598,7 @@ namespace DotNetNote.Controllers
             }
         }
 
+        #region CommentAdd: 댓글 입력 처리
         /// <summary>
         /// 댓글 입력
         /// </summary>
@@ -610,16 +611,17 @@ namespace DotNetNote.Controllers
             NoteComment comment = new NoteComment();
             comment.BoardId = BoardId;
             comment.Name = txtName;
-            comment.Password = 
+            comment.Password =
                 (new Dul.Security.CryptorEngine()).EncryptPassword(txtPassword);
             comment.Opinion = txtOpinion;
 
             // 댓글 데이터 저장
             _commentRepository.AddNoteComment(comment);
-            
+
             // 댓글 저장 후 다시 게시판 상세 보기 페이지로 이동
             return RedirectToAction("Details", new { Id = BoardId });
         }
+        #endregion
 
         /// <summary>
         /// 댓글 삭제 폼
