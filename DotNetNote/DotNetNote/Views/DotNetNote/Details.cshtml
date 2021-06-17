@@ -93,8 +93,9 @@
         </tr>
         <tr>
             <td colspan="4">
-                @await Html.PartialAsync("_BoardCommentControl", 
-                    (NoteCommentViewModel)ViewBag.CommentListAndId)
+                @*https://docs.microsoft.com/ko-kr/aspnet/core/mvc/views/partial?view=aspnetcore-5.0*@
+                @*@await Html.PartialAsync("_BoardCommentControl", (NoteCommentViewModel)ViewBag.CommentListAndId)*@
+                <partial name="_BoardCommentControl" model="(NoteCommentViewModel)ViewBag.CommentListAndId" />
             </td>
         </tr>
     </tbody>
