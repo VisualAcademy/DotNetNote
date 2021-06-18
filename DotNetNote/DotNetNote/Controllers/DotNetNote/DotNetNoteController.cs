@@ -627,10 +627,10 @@ namespace DotNetNote.Controllers
         /// 댓글 삭제 폼
         /// </summary>
         [HttpGet]
-        public IActionResult CommentDelete(string BoardId, string Id)
+        public IActionResult CommentDelete(string boardId, string id)
         {
-            ViewBag.BoardId = BoardId;
-            ViewBag.Id = Id;
+            ViewBag.BoardId = boardId;
+            ViewBag.Id = id;
 
             return View();
         }
@@ -640,22 +640,22 @@ namespace DotNetNote.Controllers
         /// </summary>
         [HttpPost]
         public IActionResult CommentDelete(
-            string BoardId, string Id, string txtPassword)
+            string boardId, string id, string txtPassword)
         {
             txtPassword = (new Dul.Security.CryptorEngine()).EncryptPassword(txtPassword);
             // 현재 삭제하려는 댓글의 암호가 맞으면, 삭제 진행
-            if (_commentRepository.GetCountBy(Convert.ToInt32(BoardId)
-                , Convert.ToInt32(Id), txtPassword) > 0)
+            if (_commentRepository.GetCountBy(Convert.ToInt32(boardId)
+                , Convert.ToInt32(id), txtPassword) > 0)
             {
                 // 삭제 처리
                 _commentRepository.DeleteNoteComment(
-                    Convert.ToInt32(BoardId), Convert.ToInt32(Id), txtPassword);
+                    Convert.ToInt32(boardId), Convert.ToInt32(id), txtPassword);
                 // 게시판 상세 보기 페이지로 이동
-                return RedirectToAction("Details", new { Id = BoardId });
+                return RedirectToAction("Details", new { Id = boardId });
             }
 
-            ViewBag.BoardId = BoardId;
-            ViewBag.Id = Id;
+            ViewBag.BoardId = boardId;
+            ViewBag.Id = id;
             ViewBag.ErrorMessage = "암호가 틀립니다. 다시 입력해주세요.";
 
             return View();
