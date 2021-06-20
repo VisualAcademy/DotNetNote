@@ -25,10 +25,7 @@ namespace DotNetNote.Controllers
         }
 
         [HttpGet]
-        public IActionResult Create()
-        {
-            return View();
-        }
+        public IActionResult Create() => View();
 
         [HttpPost]
         public IActionResult Create(CommunityCampJoinMember model)
@@ -55,10 +52,7 @@ namespace DotNetNote.Controllers
         }
 
         [HttpGet]
-        public IActionResult Delete()
-        {
-            return View();
-        }
+        public IActionResult Delete() => View();
 
         [HttpPost]
         public IActionResult Delete(CommunityCampJoinMember model)
