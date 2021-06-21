@@ -1,7 +1,6 @@
 ﻿@*appsettings.json 파일의 내용을 레이아웃 페이지에 주입해서 사용하기*@
 @using Microsoft.Extensions.Configuration
 @inject IConfiguration Configuration
-
 @*[2]*@
 @inject Microsoft.AspNetCore.Http.IHttpContextAccessor _context
 
@@ -38,10 +37,12 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
 
     @*<link href="~/lib/toastr/toastr.min.css" rel="stylesheet" />
-    <script src="~/lib/toastr/toastr.min.js"></script>*@
+        <script src="~/lib/toastr/toastr.min.js"></script>*@
 
-    @*구글 광고*@
-    <script data-ad-client="ca-pub-3764019141561118" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <environment names="Production">
+        @*구글 광고*@
+        <script data-ad-client="ca-pub-3764019141561118" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    </environment>
 </head>
 <body>
     <header>
@@ -145,18 +146,20 @@
         <main role="main" class="pb-3">
             @RenderBody()
 
-            @*구글 광고*@
-            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-            <!-- DotNetNoteHorizontal -->
-            <ins class="adsbygoogle"
-                 style="display:block"
-                 data-ad-client="ca-pub-3764019141561118"
-                 data-ad-slot="7578766649"
-                 data-ad-format="auto"
-                 data-full-width-responsive="true"></ins>
-            <script>
-                (adsbygoogle = window.adsbygoogle || []).push({});
-            </script>
+            <environment names="Production">
+                @*구글 광고*@
+                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                <!-- DotNetNoteHorizontal -->
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-3764019141561118"
+                     data-ad-slot="7578766649"
+                     data-ad-format="auto"
+                     data-full-width-responsive="true"></ins>
+                <script>
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+            </environment>
         </main>
         <br /><br /><br />@*임시 테스트*@
     </div>
