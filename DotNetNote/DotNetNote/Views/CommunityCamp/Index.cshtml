@@ -15,13 +15,13 @@
 <hr />
 
 @*<div class="lead">
-    참여 등록이 마감되었습니다.
-    만약, 참여자 중 취소하시는 분들이 계시면,
-    대기자 리스트 분에게 연락드리도록 하겠습니다.
-    본 사이트는 행사 전에 DB 완전 초기화될 것입니다.
-    감사합니다.
-</div>
-<hr />*@
+        참여 등록이 마감되었습니다.
+        만약, 참여자 중 취소하시는 분들이 계시면,
+        대기자 리스트 분에게 연락드리도록 하겠습니다.
+        본 사이트는 행사 전에 DB 완전 초기화될 것입니다.
+        감사합니다.
+    </div>
+    <hr />*@
 
 @*<table class="table table-bordered table-hover table-condensed table-responsive table-striped">
         <tr>
@@ -51,12 +51,12 @@
             <div class="panel-heading">ASP.NET Korea 참여자 리스트</div>
             <div class="panel-body">
                 @foreach (var aspnetkorea in Model.Where(m => m.CommunityName
-            == "ASP.NET Korea").OrderBy(m => m.Id).Take(15))
+           == "ASP.NET Korea").OrderBy(m => m.Id).Take(15))
                 {
                     <div class="col-md-3">
                         @aspnetkorea.Name
                         <a asp-controller="CommunityCamp" asp-action="Delete"
-                            title="취소">
+                           title="취소">
                             <i class="glyphicon glyphicon-remove-sign"></i>
                         </a>
                     </div>
@@ -71,12 +71,12 @@
             </div>
             <div class="panel-body">
                 @foreach (var taeyonetkorea in Model.Where(m => m.CommunityName
-            == "Taeyo.NET").OrderBy(m => m.Id).Take(15))
+           == "Taeyo.NET").OrderBy(m => m.Id).Take(15))
                 {
                     <div class="col-md-3">
                         @taeyonetkorea.Name
                         <a asp-controller="CommunityCamp" asp-action="Delete"
-                            title="취소">
+                           title="취소">
                             <i class="glyphicon glyphicon-remove-sign"></i>
                         </a>
                     </div>
@@ -91,7 +91,7 @@
             <div class="panel-heading">ASP.NET Korea 대기자 리스트</div>
             <div class="panel-body">
                 @foreach (var aspnetkorea in Model.Where(m => m.CommunityName
-            == "ASP.NET Korea").OrderBy(m => m.Id).Skip(15).Take(25))
+           == "ASP.NET Korea").OrderBy(m => m.Id).Skip(15).Take(25))
                 {
                     <div class="col-md-3">
                         @{
@@ -101,11 +101,11 @@
                         }
                         @aspName
                         <a asp-controller="CommunityCamp" asp-action="Delete"
-                            title="취소">
+                           title="취소">
                             <i class="glyphicon glyphicon-remove-sign"></i>
                         </a>
                     </div>
-                            }
+                }
             </div>
         </div>
     </div>
@@ -116,7 +116,7 @@
             </div>
             <div class="panel-body">
                 @foreach (var taeyonetkorea in Model.Where(m => m.CommunityName
-            == "Taeyo.NET").OrderBy(m => m.Id).Skip(15).Take(25))
+           == "Taeyo.NET").OrderBy(m => m.Id).Skip(15).Take(25))
                 {
                     <div class="col-md-3">
                         @{
@@ -126,11 +126,11 @@
                         }
                         @taeyoName
                         <a asp-controller="CommunityCamp" asp-action="Delete"
-                            title="취소">
+                           title="취소">
                             <i class="glyphicon glyphicon-remove-sign"></i>
                         </a>
                     </div>
-                            }
+                }
             </div>
         </div>
     </div>
@@ -138,29 +138,32 @@
 
 
 @*<center>
-    <table width="650" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-            <td style="font-size:1px;"><img src="http://event.ndeavor.co.kr/2016/comcamp/160302_comcamp_Open_Camp_650_eDM_green_01.gif" style="vertical-align:top" /></td>
-        </tr>
-        <tr>
-            <td style="font-size:1px;"><img src="http://event.ndeavor.co.kr/2016/comcamp/160302_comcamp_Open_Camp_650_eDM_green_04.gif" style="vertical-align:top" /></td>
-        </tr>
-        <tr>
-            <td style="font-size:1px;"><img src="http://event.ndeavor.co.kr/2016/comcamp/160302_comcamp_Open_Camp_650_eDM_green_05.gif" style="vertical-align:top" /></td>
-        </tr>
-        <tr>
-            <td style="font-size:1px;"><img src="http://event.ndeavor.co.kr/2016/comcamp/160302_comcamp_Open_Camp_650_eDM_green_06.jpg" style="vertical-align:top" /></td>
-        </tr>
-    </table>
-</center>*@
+        <table width="650" cellpadding="0" cellspacing="0" border="0">
+            <tr>
+                <td style="font-size:1px;"><img src="http://event.ndeavor.co.kr/2016/comcamp/160302_comcamp_Open_Camp_650_eDM_green_01.gif" style="vertical-align:top" /></td>
+            </tr>
+            <tr>
+                <td style="font-size:1px;"><img src="http://event.ndeavor.co.kr/2016/comcamp/160302_comcamp_Open_Camp_650_eDM_green_04.gif" style="vertical-align:top" /></td>
+            </tr>
+            <tr>
+                <td style="font-size:1px;"><img src="http://event.ndeavor.co.kr/2016/comcamp/160302_comcamp_Open_Camp_650_eDM_green_05.gif" style="vertical-align:top" /></td>
+            </tr>
+            <tr>
+                <td style="font-size:1px;"><img src="http://event.ndeavor.co.kr/2016/comcamp/160302_comcamp_Open_Camp_650_eDM_green_06.jpg" style="vertical-align:top" /></td>
+            </tr>
+        </table>
+    </center>*@
 
 
 @section Scripts {
     @if (TempData["Message"] != null)
     {
+        <link href="~/lib/toastr/toastr.min.css" rel="stylesheet" />
+        <script src="~/lib/toastr/toastr.min.js"></script>
         <script>
-            toastr.info('@TempData["Message"]');
+            $(function () {
+                toastr.info('@TempData["Message"]');
+            });
         </script>
     }
 }
-

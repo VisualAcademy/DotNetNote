@@ -37,7 +37,7 @@
     {
       "library": "toastr.js@2.1.4",
       "destination": "wwwroot/lib/toastr",
-      "files": [ "toastr.min.js", "toastr.min.css" ]
+      "files": [ "toastr.min.js", "toastr.min.css", "toastr.css", "toastr.js.map" ]
     }
   ]
 }
