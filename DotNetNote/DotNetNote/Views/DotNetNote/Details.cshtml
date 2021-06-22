@@ -129,8 +129,8 @@
 @section Scripts {
     @if (TempData["Message"] != null)
     {
-        <link href="~/lib/toastr/toastr.css" rel="stylesheet" />
-        <script src="~/lib/toastr/toastr.js"></script>
+        <link href="~/lib/toastr/toastr.min.css" rel="stylesheet" />
+        <script src="~/lib/toastr/toastr.min.js"></script>
         <script>
             $(function () {
                 toastr.info('@TempData["Message"]');
