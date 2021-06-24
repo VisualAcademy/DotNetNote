@@ -14,44 +14,45 @@
    class="btn btn-info">참가 등록하기</a>
 <hr />
 
-@*<div class="lead">
-        참여 등록이 마감되었습니다.
-        만약, 참여자 중 취소하시는 분들이 계시면,
-        대기자 리스트 분에게 연락드리도록 하겠습니다.
-        본 사이트는 행사 전에 DB 완전 초기화될 것입니다.
-        감사합니다.
-    </div>
-    <hr />*@
+<div class="lead">
+    참여 등록이 마감되었습니다.
+    만약, 참여자 중 취소하시는 분들이 계시면,
+    대기자 리스트 분에게 연락드리도록 하겠습니다.
+    본 사이트는 행사 완료 후 DB가 완전 초기화될 것입니다.
+    감사합니다.
+</div>
+<hr />
 
-@*<table class="table table-bordered table-hover table-condensed table-responsive table-striped">
+@*
+<table class="table table-bordered table-hover table-condensed table-responsive table-striped">
+    <tr>
+        <th>커뮤니티</th>
+        <th>이름</th>
+        <th>연락처</th>
+        <th>이메일</th>
+        <th>티셔츠 사이즈</th>
+    </tr>
+    @foreach (var members in Model)
+    {
         <tr>
-            <th>커뮤니티</th>
-            <th>이름</th>
-            <th>연락처</th>
-            <th>이메일</th>
-            <th>티셔츠 사이즈</th>
+            <td>@members.CommunityName</td>
+            <td>@members.Name</td>
+            <td>@members.Mobile</td>
+            <td>@members.Email</td>
+            <td>@members.Size</td>
         </tr>
-        @foreach (var members in Model)
-        {
-            <tr>
-                <td>@members.CommunityName</td>
-                <td>@members.Name</td>
-                <td>@members.Mobile</td>
-                <td>@members.Email</td>
-                <td>@members.Size</td>
-            </tr>
-        }
-    </table>*@
+    }
+</table>
+*@
 
 
-
-<div class="row">
+<div class="row mb-3">
     <div class="col-md-6">
-        <div class="panel panel-default">
-            <div class="panel-heading">ASP.NET Korea 참여자 리스트</div>
-            <div class="panel-body">
+        <div class="card">
+            <div class="card-header">ASP.NET Korea 참여자 리스트</div>
+            <div class="card-body">
                 @foreach (var aspnetkorea in Model.Where(m => m.CommunityName
-           == "ASP.NET Korea").OrderBy(m => m.Id).Take(15))
+          == "ASP.NET Korea").OrderBy(m => m.Id).Take(15))
                 {
                     <div class="col-md-3">
                         @aspnetkorea.Name
@@ -65,13 +66,13 @@
         </div>
     </div>
     <div class="col-md-6">
-        <div class="panel panel-default">
-            <div class="panel-heading">
+        <div class="card">
+            <div class="card-header">
                 Taeyo.NET 참여자 리스트
             </div>
-            <div class="panel-body">
+            <div class="card-body">
                 @foreach (var taeyonetkorea in Model.Where(m => m.CommunityName
-           == "Taeyo.NET").OrderBy(m => m.Id).Take(15))
+          == "Taeyo.NET").OrderBy(m => m.Id).Take(15))
                 {
                     <div class="col-md-3">
                         @taeyonetkorea.Name
@@ -85,13 +86,13 @@
         </div>
     </div>
 </div>
-<div class="row">
+<div class="row mb-3">
     <div class="col-md-6">
-        <div class="panel panel-default">
-            <div class="panel-heading">ASP.NET Korea 대기자 리스트</div>
-            <div class="panel-body">
+        <div class="card">
+            <div class="card-header">ASP.NET Korea 대기자 리스트</div>
+            <div class="card-body">
                 @foreach (var aspnetkorea in Model.Where(m => m.CommunityName
-           == "ASP.NET Korea").OrderBy(m => m.Id).Skip(15).Take(25))
+          == "ASP.NET Korea").OrderBy(m => m.Id).Skip(15).Take(25))
                 {
                     <div class="col-md-3">
                         @{
@@ -110,13 +111,13 @@
         </div>
     </div>
     <div class="col-md-6">
-        <div class="panel panel-default">
-            <div class="panel-heading">
+        <div class="card">
+            <div class="card-header">
                 Taeyo.NET 대기자 리스트
             </div>
-            <div class="panel-body">
+            <div class="card-body">
                 @foreach (var taeyonetkorea in Model.Where(m => m.CommunityName
-           == "Taeyo.NET").OrderBy(m => m.Id).Skip(15).Take(25))
+          == "Taeyo.NET").OrderBy(m => m.Id).Skip(15).Take(25))
                 {
                     <div class="col-md-3">
                         @{
@@ -135,25 +136,6 @@
         </div>
     </div>
 </div>
-
-
-@*<center>
-        <table width="650" cellpadding="0" cellspacing="0" border="0">
-            <tr>
-                <td style="font-size:1px;"><img src="http://event.ndeavor.co.kr/2016/comcamp/160302_comcamp_Open_Camp_650_eDM_green_01.gif" style="vertical-align:top" /></td>
-            </tr>
-            <tr>
-                <td style="font-size:1px;"><img src="http://event.ndeavor.co.kr/2016/comcamp/160302_comcamp_Open_Camp_650_eDM_green_04.gif" style="vertical-align:top" /></td>
-            </tr>
-            <tr>
-                <td style="font-size:1px;"><img src="http://event.ndeavor.co.kr/2016/comcamp/160302_comcamp_Open_Camp_650_eDM_green_05.gif" style="vertical-align:top" /></td>
-            </tr>
-            <tr>
-                <td style="font-size:1px;"><img src="http://event.ndeavor.co.kr/2016/comcamp/160302_comcamp_Open_Camp_650_eDM_green_06.jpg" style="vertical-align:top" /></td>
-            </tr>
-        </table>
-    </center>*@
-
 
 @section Scripts {
     @if (TempData["Message"] != null)
