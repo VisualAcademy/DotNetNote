@@ -3,6 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DotNetNote.ViewComponents
 {
+    /// <summary>
+    /// 최근 댓글 리스트
+    /// </summary>
     public class RecentlyCommentListViewComponent : ViewComponent
     {
         // 댓글 리포지토리 개체
@@ -14,10 +17,7 @@ namespace DotNetNote.ViewComponents
             _repository = repository;
         }
 
-        public IViewComponentResult Invoke()
-        {
-            // 최근 댓글 리스트 전달
-            return View(_repository.GetRecentComments());
-        }
+        // 최근 댓글 리스트 전달
+        public IViewComponentResult Invoke() => View(_repository.GetRecentComments());
     }
 }
