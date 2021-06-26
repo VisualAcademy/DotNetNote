@@ -677,11 +677,13 @@ namespace DotNetNote.Controllers
         /// <summary>
         /// (참고) 최근 글 리스트 Web API 테스트 페이지
         /// </summary>
+        [Authorize("Administrators")]
         public IActionResult NoteServiceDemo() => View();
 
         /// <summary>
         /// (참고) 최근 댓글 리스트 Web API 테스트 페이지
         /// </summary>
+        [Authorize("Administrators")]
         public IActionResult NoteCommentServiceDemo() => View(); 
 
         #region 공지사항 모듈
