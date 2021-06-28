@@ -38,6 +38,11 @@
       "library": "toastr.js@2.1.4",
       "destination": "wwwroot/lib/toastr",
       "files": [ "toastr.min.js", "toastr.min.css", "toastr.css", "toastr.js.map" ]
+    },
+    {
+      "library": "bootbox.js@5.5.2",
+      "destination": "wwwroot/lib/bootbox",
+      "files": [ "bootbox.js", "bootbox.min.js" ]
     }
   ]
 }
