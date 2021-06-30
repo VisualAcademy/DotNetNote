@@ -35,6 +35,8 @@ namespace DotNetNote
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<TodoApi.Models.TodoContext>(opt => opt.UseInMemoryDatabase("TodoList"));
+
             //services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddHttpContextAccessor(); //[1]
 
