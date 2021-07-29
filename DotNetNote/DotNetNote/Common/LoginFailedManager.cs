@@ -6,12 +6,18 @@ using System.Linq;
 
 namespace DotNetNote.Common
 {
+    /// <summary>
+    /// 인터페이스: Manager, Repository, Service, ...
+    /// </summary>
     public interface ILoginFailedManager
     {
         bool IsLoginFailed(string username);
         void ClearLoginFailed(string username);
     }
 
+    /// <summary>
+    /// 리포지토리 클래스: LoginFailedManager, LoginFailedRepository, LoginFailedService, ...
+    /// </summary>
     public class LoginFailedManager : ILoginFailedManager
     {
         private ILoginFailedRepository _repo;
@@ -62,6 +68,9 @@ namespace DotNetNote.Common
         }
     }
 
+    /// <summary>
+    /// 모델 클래스 
+    /// </summary>
     public class UserLog
     {
         public int Id { get; set; }
@@ -70,6 +79,9 @@ namespace DotNetNote.Common
         public DateTime FailedPasswordAttemptWindowStart { get; set; }
     }
 
+    /// <summary>
+    /// 리포지토리 인터페이스
+    /// </summary>
     public interface ILoginFailedRepository
     {
         UserLog AddLogin(UserLog model);
@@ -80,6 +92,9 @@ namespace DotNetNote.Common
         bool IsLastLoginTenMinute(string username);
     }
 
+    /// <summary>
+    /// 리포지토리 클래스 with Dapper
+    /// </summary>
     public class LoginFailedRepository : ILoginFailedRepository
     {
         private SqlConnection db;
