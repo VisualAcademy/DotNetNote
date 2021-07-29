@@ -3,7 +3,7 @@ CREATE TABLE [dbo].[UserLogs]
 (
 	-- 일련번호
 	[Id] INT NOT NULL PRIMARY KEY Identity(1, 1),		
-	-- 사용자 아아디
+	-- 사용자 아이디
 	Username NVarChar(50) Not Null,						
 	-- 로그인 실패 카운트
 	FailedPasswordAttemptCount Int Default(0),			
