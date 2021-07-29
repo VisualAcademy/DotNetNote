@@ -276,14 +276,17 @@ namespace DotNetNote
             // IConfiguration 주입 -> Configuration의 인스턴스를 실행 
             services.AddSingleton<IConfiguration>(Configuration);
 
+            #region 회원 인증 관련
             //[User][5] 회원 관리            
             services.AddSingleton<IUserRepository>(new UserRepository(Configuration.GetConnectionString("DefaultConnection"))); //services.AddTransient<IUserRepository, UserRepository>();
 
             // LoginFailedManager
             services.AddTransient<ILoginFailedRepository, LoginFailedRepository>();
             services.AddTransient<ILoginFailedManager, LoginFailedManager>();
+
             // 사용자 정보 보기 전용 컴포넌트
-            services.AddTransient<IUserModelRepository, UserModelRepository>();
+            services.AddTransient<IUserModelRepository, UserModelRepository>(); 
+            #endregion
 
             //[User][9] Policy 설정
             services.AddAuthorization(options =>
