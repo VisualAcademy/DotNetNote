@@ -30,7 +30,7 @@ namespace DotNetNote.Controllers
 
         public IActionResult Index()
         {
-            _logger.LogInformation("HOME - Index 페이지가 로드되었습니다.");
+            //_logger.LogInformation("HOME - Index 페이지가 로드되었습니다.");
 
             // ViewData[] 또는 ViewBag. 개체로 뷰 페이지로 값 전송 
             ViewBag.SiteName = _dnnSettings.SiteName;
@@ -83,14 +83,11 @@ namespace DotNetNote.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
+        public IActionResult Privacy() => View();
 
         public IActionResult About()
         {
-            _logger.LogInformation("HOME - About 페이지가 로드되었습니다.");
+            //_logger.LogInformation("HOME - About 페이지가 로드되었습니다.");
 
             ViewData["Message"] = "안녕하세요. DotNetNote 사이트입니다.";
 
@@ -99,17 +96,14 @@ namespace DotNetNote.Controllers
 
         public IActionResult Contact()
         {
-            _logger.LogInformation("HOME - Contact 페이지가 로드되었습니다.");
+            //_logger.LogInformation("HOME - Contact 페이지가 로드되었습니다.");
 
             ViewData["Message"] = "안녕하세요. DotNetNote 사이트입니다.";
 
             return View();
         }
 
-        public IActionResult Angular()
-        {
-            return View();
-        }
+        public IActionResult Angular() => View();
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
