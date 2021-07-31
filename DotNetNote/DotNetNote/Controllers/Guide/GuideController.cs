@@ -2,11 +2,11 @@
 
 namespace DotNetNote.Controllers
 {
+    /// <summary>
+    /// ASP.NET Core 책 학습 가이드 
+    /// </summary>
     public class GuideController : Controller
     {
-        public IActionResult Index()
-        {
-            return View();
-        }
+        public IActionResult Index() => View();
     }
 }
