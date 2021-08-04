@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 namespace DotNetNote.Models
 {
     /// <summary>
-    /// Note 클래스: Notes 테이블과 일대일 매핑되는 ViewModel 클래스
+    /// [1][1] Note 클래스: Notes 테이블과 일대일 매핑되는 ViewModel 클래스
     /// </summary>
     public class Note
     {

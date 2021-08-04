@@ -11,6 +11,9 @@ using System.Linq;
 
 namespace DotNetNote.Models
 {
+    /// <summary>
+    /// [1][3] 리포지토리 클래스 with Dapper
+    /// </summary>
     public class NoteRepository : INoteRepository
     {
         private IConfiguration _config;
