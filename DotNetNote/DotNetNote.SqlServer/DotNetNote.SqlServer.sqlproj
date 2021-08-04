@@ -117,8 +117,8 @@
     <Build Include="dbo\Tables\BoardManager\Boards.sql" />
     <Build Include="dbo\Tables\DapperDemo\SubTables.sql" />
     <Build Include="dbo\Tables\DapperDemo\Tables.sql" />
-    <Build Include="dbo\Tables\DotNetNote\NoteComments.sql" />
-    <Build Include="dbo\Tables\DotNetNote\Notes.sql" />
+    <Build Include="dbo\Tables\DotNetNote\00_02_NoteComments.sql" />
+    <Build Include="dbo\Tables\DotNetNote\00_01_Notes.sql" />
     <Build Include="dbo\Tables\Exam\Questions.sql" />
     <Build Include="dbo\Tables\Fives\Fives.sql" />
     <Build Include="dbo\Tables\GoodsManager\Goods.sql" />

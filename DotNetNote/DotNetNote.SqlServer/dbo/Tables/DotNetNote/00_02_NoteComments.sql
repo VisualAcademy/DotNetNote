@@ -1,4 +1,4 @@
-﻿--[0] 댓글 테이블 생성
+﻿--[0][2] 댓글 테이블 생성
 Create Table dbo.NoteComments
 (
     Id          Int Identity(1, 1) 

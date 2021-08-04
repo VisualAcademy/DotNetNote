@@ -1,4 +1,4 @@
-﻿--[0] Table: Notes(완성형 게시판) 테이블 설계 
+﻿--[0][1] Table: Notes(완성형 게시판) 테이블 설계 
 --[!] 게시판 테이블 설계: Articles, Posts, Entries, Notes, Memos, (Basic+Upload+Reply) => DotNetNote/DotNetMemo
 CREATE TABLE [dbo].[Notes]
 (
