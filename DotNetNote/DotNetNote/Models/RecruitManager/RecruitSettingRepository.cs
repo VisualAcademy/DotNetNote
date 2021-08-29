@@ -4,16 +4,20 @@ using System.Collections.Generic;
 using System.Data;
 using Microsoft.Data.SqlClient;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace DotNetNote.Models.RecruitManager
 {
     public interface IRecruitSettingRepository
     {
-        RecruitSetting Add(RecruitSetting model);       // 입력 
-        List<RecruitSetting> GetAll();                  // 출력
-        RecruitSetting GetById(int id);                 // 상세
-        RecruitSetting Update(RecruitSetting model);    // 수정
-        void Remove(int id);                            // 삭제
+        RecruitSetting Add(RecruitSetting model);           // 입력 
+
+        List<RecruitSetting> GetAll();                      // 출력
+        Task<IEnumerable<RecruitSetting>> GetAllAsync();    // 출력
+
+        RecruitSetting GetById(int id);                     // 상세
+        RecruitSetting Update(RecruitSetting model);        // 수정
+        void Remove(int id);                                // 삭제
         
         bool IsRecruitSettings(string boardName, int boardNum);
 
@@ -83,6 +87,15 @@ namespace DotNetNote.Models.RecruitManager
                 Order By Id Desc
             ";
             return db.Query<RecruitSetting>(sql).ToList();
+        }
+        public async Task<IEnumerable<RecruitSetting>> GetAllAsync()
+        {
+            string sql = @"
+                Select * 
+                From RecruitSettings
+                Order By Id Desc
+            ";
+            return await db.QueryAsync<RecruitSetting>(sql);
         }
 
         /// <summary>

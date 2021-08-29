@@ -2,6 +2,7 @@
 using DotNetNote.Models.RecruitManager;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace DotNetNote.Controllers.RecruitManager
 {
@@ -52,10 +53,11 @@ namespace DotNetNote.Controllers.RecruitManager
         /// <summary>
         /// 모집 리스트
         /// </summary>
-        public IActionResult RecruitSettingList()
+        public async Task<IActionResult> RecruitSettingList()
         {
             // 전체 레코드
-            var recruits = _repo.GetAll();
+            //var recruits = _repo.GetAll(); // 동기 방식
+            var recruits = await _repo.GetAllAsync(); // 비동기 방식 
 
             //return View(recruits); 
             return View("~/Views/_MiniProjects/RecruitManager/RecruitSettingList.cshtml", recruits);
