@@ -66,7 +66,7 @@ namespace DotNetNote.Controllers.RecruitManager
         /// <summary>
         /// 모집 상세
         /// </summary>
-        public IActionResult RecruitSettingDetail(int id)
+        public IActionResult RecruitSettingDetails(int id)
         {
             ViewData["Id"] = id.ToString();
 
@@ -92,7 +92,7 @@ namespace DotNetNote.Controllers.RecruitManager
 
                 // 수정 후 상세 보기 페이지로 이동 
                 return RedirectToAction(
-                    nameof(RecruitSettingDetail), new { Id = model.Id });
+                    nameof(RecruitSettingDetails), new { Id = model.Id });
             }
             else
             {
