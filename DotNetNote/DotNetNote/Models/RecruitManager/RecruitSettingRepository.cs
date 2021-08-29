@@ -16,6 +16,8 @@ namespace DotNetNote.Models.RecruitManager
         Task<IEnumerable<RecruitSetting>> GetAllAsync();    // 출력
 
         RecruitSetting GetById(int id);                     // 상세
+        Task<RecruitSetting> GetByIdAsync(int id);          // 상세
+
         RecruitSetting Update(RecruitSetting model);        // 수정
         void Remove(int id);                                // 삭제
 
@@ -103,6 +105,7 @@ namespace DotNetNote.Models.RecruitManager
         }
         #endregion
 
+        #region 상세보기 액션 메서드들 
         /// <summary>
         /// 상세 
         /// </summary>
@@ -116,6 +119,20 @@ namespace DotNetNote.Models.RecruitManager
             return db.Query<RecruitSetting>(sql,
                 new { id }).SingleOrDefault();
         }
+        /// <summary>
+        /// 상세 
+        /// </summary>
+        public async Task<RecruitSetting> GetByIdAsync(int id)
+        {
+            string sql = @"
+                Select * 
+                From RecruitSettings
+                Where Id = @Id 
+            ";
+            return await
+                db.QuerySingleOrDefaultAsync<RecruitSetting>(sql, new { id });
+        } 
+        #endregion
 
         /// <summary>
         /// 모집 설정 정보 수정

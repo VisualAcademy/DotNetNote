@@ -66,11 +66,12 @@ namespace DotNetNote.Controllers.RecruitManager
         /// <summary>
         /// 모집 상세
         /// </summary>
-        public IActionResult RecruitSettingDetails(int id)
+        public async Task<IActionResult> RecruitSettingDetails(int id)
         {
             ViewData["Id"] = id.ToString();
 
-            var recruit = _repo.GetById(id); 
+            //var recruit = _repo.GetById(id); 
+            var recruit = await _repo.GetByIdAsync(id);
 
             //return View(recruit);
             return View("~/Views/_MiniProjects/RecruitManager/RecruitSettingDetail.cshtml", recruit);
