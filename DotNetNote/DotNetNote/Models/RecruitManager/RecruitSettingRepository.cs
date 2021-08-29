@@ -18,7 +18,7 @@ namespace DotNetNote.Models.RecruitManager
         RecruitSetting GetById(int id);                     // 상세
         RecruitSetting Update(RecruitSetting model);        // 수정
         void Remove(int id);                                // 삭제
-        
+
         bool IsRecruitSettings(string boardName, int boardNum);
 
 
@@ -30,11 +30,11 @@ namespace DotNetNote.Models.RecruitManager
     public class RecruitSettingRepository : IRecruitSettingRepository
     {
         // 데이터베이스 연결 문자열 가져온 후 DB 개체 생성하기 
-        private IConfiguration _config; 
+        private IConfiguration _config;
         private IDbConnection db;
         public RecruitSettingRepository(IConfiguration config)
         {
-            _config = config; 
+            _config = config;
             db = new SqlConnection(
                 _config.GetSection("ConnectionStrings")
                     .GetSection("DefaultConnection").Value);
@@ -76,6 +76,7 @@ namespace DotNetNote.Models.RecruitManager
             return model;
         }
 
+        #region 전체 모집 정보 출력
         /// <summary>
         /// 전체 모집 정보 출력
         /// </summary>
@@ -88,6 +89,9 @@ namespace DotNetNote.Models.RecruitManager
             ";
             return db.Query<RecruitSetting>(sql).ToList();
         }
+        /// <summary>
+        /// 전체 모집 정보 출력
+        /// </summary>
         public async Task<IEnumerable<RecruitSetting>> GetAllAsync()
         {
             string sql = @"
@@ -97,6 +101,7 @@ namespace DotNetNote.Models.RecruitManager
             ";
             return await db.QueryAsync<RecruitSetting>(sql);
         }
+        #endregion
 
         /// <summary>
         /// 상세 
@@ -108,7 +113,7 @@ namespace DotNetNote.Models.RecruitManager
                 From RecruitSettings
                 Where Id = @Id 
             ";
-            return db.Query<RecruitSetting>(sql, 
+            return db.Query<RecruitSetting>(sql,
                 new { id }).SingleOrDefault();
         }
 
@@ -142,7 +147,7 @@ namespace DotNetNote.Models.RecruitManager
             string sql = "Delete From RecruitSettings Where Id = @Id";
             db.Execute(sql, new { Id = id });
         }
-        
+
         /// <summary>
         /// 특정 게시판에 대한 모집 관련 세부 설정이 되었는지 안되었는지 확인
         /// </summary>
@@ -160,8 +165,11 @@ namespace DotNetNote.Models.RecruitManager
                     BoardNum = @BoardNum
             ";
 
-            var count = db.Query<int>(sqlCount, new {
-                BoardName = boardName, BoardNum = boardNum }).Single();
+            var count = db.Query<int>(sqlCount, new
+            {
+                BoardName = boardName,
+                BoardNum = boardNum
+            }).Single();
 
             if (count > 0)
             {
@@ -169,7 +177,7 @@ namespace DotNetNote.Models.RecruitManager
             }
             return false;
         }
-        
+
         /// <summary>
         /// 모집 종료: 최대 등록 인원을 0으로 설정하면 종료된 이벤트로 처리 
         /// </summary>
@@ -212,9 +220,10 @@ namespace DotNetNote.Models.RecruitManager
                 sqlCount1,
                 new
                 {
-                    BoardName = boardName, BoardNum = boardNum
+                    BoardName = boardName,
+                    BoardNum = boardNum
                 }
-                ).SingleOrDefault(); 
+                ).SingleOrDefault();
 
             // 모집 등록 카운
             var sqlCount2 = @"
@@ -224,7 +233,8 @@ namespace DotNetNote.Models.RecruitManager
                 sqlCount2,
                 new
                 {
-                    BoardName = boardName, BoardNum = boardNum
+                    BoardName = boardName,
+                    BoardNum = boardNum
                 }
                 ).Single();
 
@@ -236,6 +246,6 @@ namespace DotNetNote.Models.RecruitManager
 
             return false; // 모집 중...
         }
-        
+
     }
 }
