@@ -193,6 +193,27 @@ namespace DotNetNote.Models.RecruitManager
             db.Execute(sql, model);
             return model;
         }
+        /// <summary>
+        /// 모집 설정 정보 수정
+        /// </summary>
+        public RecruitSetting UpdateAsync(RecruitSetting model)
+        {
+            var sql =
+                " Update RecruitSettings                    " +
+                " Set                                       " +
+                "    Remarks       =       @Remarks,        " +
+                "    BoardName     =       @BoardName,      " +
+                "    BoardNum      =       @BoardNum,       " +
+                "    BoardTitle    =       @BoardTitle,     " +
+                "    BoardContent  =       @BoardContent,   " +
+                "    StartDate     =       @StartDate,      " +
+                "    EventDate     =       @EventDate,      " +
+                "    EndDate       =       @EndDate,        " +
+                "    MaxCount      =       @MaxCount        " +
+                " Where Id = @Id                 ";
+            db.Execute(sql, model);
+            return model;
+        }
 
         /// <summary>
         /// 모집 정보 삭제
