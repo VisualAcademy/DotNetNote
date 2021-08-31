@@ -20,6 +20,8 @@ namespace DotNetNote.Models.RecruitManager
         Task<RecruitSetting> GetByIdAsync(int id);              // 상세
 
         RecruitSetting Update(RecruitSetting model);            // 수정
+        Task<RecruitSetting> UpdateAsync(RecruitSetting model); // 수정
+
         void Remove(int id);                                    // 삭제
 
         bool IsRecruitSettings(string boardName, int boardNum);
@@ -113,7 +115,7 @@ namespace DotNetNote.Models.RecruitManager
             var id = await db.QuerySingleAsync<int>(sql, model);
             model.Id = id;
             return model;
-        } 
+        }
         #endregion
 
         #region 전체 모집 정보 출력
@@ -169,7 +171,7 @@ namespace DotNetNote.Models.RecruitManager
             ";
             return await
                 db.QuerySingleOrDefaultAsync<RecruitSetting>(sql, new { id });
-        } 
+        }
         #endregion
 
         /// <summary>
@@ -196,7 +198,7 @@ namespace DotNetNote.Models.RecruitManager
         /// <summary>
         /// 모집 설정 정보 수정
         /// </summary>
-        public RecruitSetting UpdateAsync(RecruitSetting model)
+        public async Task<RecruitSetting> UpdateAsync(RecruitSetting model)
         {
             var sql =
                 " Update RecruitSettings                    " +
@@ -211,7 +213,7 @@ namespace DotNetNote.Models.RecruitManager
                 "    EndDate       =       @EndDate,        " +
                 "    MaxCount      =       @MaxCount        " +
                 " Where Id = @Id                 ";
-            db.Execute(sql, model);
+            await db.ExecuteAsync(sql, model);
             return model;
         }
 
