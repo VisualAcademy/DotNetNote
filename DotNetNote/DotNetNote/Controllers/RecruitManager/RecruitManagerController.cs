@@ -34,13 +34,14 @@ namespace DotNetNote.Controllers.RecruitManager
         }
 
         [HttpPost]
-        public IActionResult RecruitSettingCreate(RecruitSetting model)
+        public async Task<IActionResult> RecruitSettingCreate(RecruitSetting model)
         {
             // 정상적인 데이터인지 확인
             if (ModelState.IsValid)
             {
                 // 실제 데이터베이스 저장
-                _repo.Add(model);
+                //_repo.Add(model);
+                await _repo.AddAsync(model);
 
                 return RedirectToAction(nameof(RecruitSettingList));
             }

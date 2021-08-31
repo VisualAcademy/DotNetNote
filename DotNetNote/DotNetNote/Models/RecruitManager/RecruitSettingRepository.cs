@@ -10,16 +10,17 @@ namespace DotNetNote.Models.RecruitManager
 {
     public interface IRecruitSettingRepository
     {
-        RecruitSetting Add(RecruitSetting model);           // 입력 
+        RecruitSetting Add(RecruitSetting model);               // 입력 
+        Task<RecruitSetting> AddAsync(RecruitSetting model);    // 입력 
 
-        List<RecruitSetting> GetAll();                      // 출력
-        Task<IEnumerable<RecruitSetting>> GetAllAsync();    // 출력
+        List<RecruitSetting> GetAll();                          // 출력
+        Task<IEnumerable<RecruitSetting>> GetAllAsync();        // 출력
 
-        RecruitSetting GetById(int id);                     // 상세
-        Task<RecruitSetting> GetByIdAsync(int id);          // 상세
+        RecruitSetting GetById(int id);                         // 상세
+        Task<RecruitSetting> GetByIdAsync(int id);              // 상세
 
-        RecruitSetting Update(RecruitSetting model);        // 수정
-        void Remove(int id);                                // 삭제
+        RecruitSetting Update(RecruitSetting model);            // 수정
+        void Remove(int id);                                    // 삭제
 
         bool IsRecruitSettings(string boardName, int boardNum);
 
@@ -42,6 +43,7 @@ namespace DotNetNote.Models.RecruitManager
                     .GetSection("DefaultConnection").Value);
         }
 
+        #region 모집 정보 설정 기록 
         /// <summary>
         /// 모집 정보 설정 기록 
         /// </summary>
@@ -77,6 +79,42 @@ namespace DotNetNote.Models.RecruitManager
             model.Id = id;
             return model;
         }
+        /// <summary>
+        /// 모집 정보 설정 기록 
+        /// </summary>
+        public async Task<RecruitSetting> AddAsync(RecruitSetting model)
+        {
+            var sql = @"
+                Insert Into RecruitSettings (
+                    Remarks,
+                    BoardName, 
+                    BoardNum, 
+                    BoardTitle, 
+                    BoardContent,
+                    StartDate, 
+                    EventDate, 
+                    EndDate, 
+                    MaxCount
+                ) 
+                Values (
+                    @Remarks,
+                    @BoardName, 
+                    @BoardNum, 
+                    @BoardTitle, 
+                    @BoardContent,
+                    @StartDate, 
+                    @EventDate, 
+                    @EndDate, 
+                    @MaxCount
+                ); 
+
+                Select Cast(SCOPE_IDENTITY() As Int);
+            ";
+            var id = await db.QuerySingleAsync<int>(sql, model);
+            model.Id = id;
+            return model;
+        } 
+        #endregion
 
         #region 전체 모집 정보 출력
         /// <summary>
