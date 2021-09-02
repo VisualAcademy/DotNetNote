@@ -303,7 +303,7 @@ namespace DotNetNote.Models.RecruitManager
                 }
                 ).SingleOrDefault();
 
-            // 모집 등록 카운
+            // 모집 등록 카운트
             var sqlCount2 = @"
                 Select Count(*) From RecruitSettings 
                 Where BoardName = @BoardName And BoardNum = @BoardNum";
