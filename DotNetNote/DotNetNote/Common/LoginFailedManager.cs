@@ -148,11 +148,10 @@ namespace DotNetNote.Common
 
         public bool IsLastLoginTenMinute(string username)
         {
-            string sql =
-                @"
-Select DateDiff(mi, FailedPasswordAttemptWindowStart, GetDate())
-From UserLogs 
-Where Username = @Username";
+            string sql = @"
+                Select DateDiff(mi, FailedPasswordAttemptWindowStart, GetDate())
+                From UserLogs 
+                Where Username = @Username";
             int r = db.Query<int>(sql, new { Username = username }).SingleOrDefault();
             if (r <= 10)
             {
