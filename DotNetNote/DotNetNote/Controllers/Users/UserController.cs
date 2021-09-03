@@ -73,6 +73,10 @@ namespace DotNetNote.Controllers
         public IActionResult Login(string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
+
+            // Login.cshtml 뷰 페이지에서 로그인 실패 메시지 출력
+            ViewBag.IsLoginFailed = false;
+
             return View();
         }
 
@@ -88,7 +92,9 @@ namespace DotNetNote.Controllers
                 //[!] 로그인 실패 5번 체크
                 if (_loginFailed.IsLoginFailed(model.UserId))
                 {
-                    ViewBag.IsLoginFailed = true;
+                    // Login.cshtml 뷰 페이지에서 로그인 실패 메시지 출력
+                    ViewBag.IsLoginFailed = true; 
+
                     return View(model);
                 }
                 #endregion
