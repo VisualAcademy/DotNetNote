@@ -84,13 +84,16 @@ namespace DotNetNote.Controllers
         {
             if (ModelState.IsValid)
             {
+                #region 로그인 실패 5번 체크
                 //[!] 로그인 실패 5번 체크
                 if (_loginFailed.IsLoginFailed(model.UserId))
                 {
                     ViewBag.IsLoginFailed = true;
                     return View(model);
                 }
+                #endregion
 
+                #region 아이디와 암호가 맞으면 로그인(인증) 처리
                 //if (_repository.IsCorrectUser(model.UserId, model.Password))
                 if (_repository.IsCorrectUser(model.UserId, (new Dul.Security.CryptorEngine()).EncryptPassword(model.Password)))
                 {
@@ -129,7 +132,6 @@ namespace DotNetNote.Controllers
                     await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme
                         , new ClaimsPrincipal(ci), authenticationProperties); // 옵션
 
-
                     ////[참고] ASP.NET Core Identity에서 로그인하는 모양
                     //var identity = new ClaimsIdentity("Cookies");
                     //identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, user.Id));
@@ -137,15 +139,13 @@ namespace DotNetNote.Controllers
 
                     //await HttpContext.SignInAsync("Cookies", new ClaimsPrincipal(identity));
 
-
-
                     // 추가: 세션에 로그인 사용자 정보 저장
-                    // 세션 인증 로그인
+                    // 세션 인증 로그인: 인증 방식으로 세션 사용 금지
                     //HttpContext.Session.SetString("Username", model.UserId);
 
-
                     return LocalRedirect("/User/Index");
-                }
+                } 
+                #endregion
             }
 
             return View(model);
