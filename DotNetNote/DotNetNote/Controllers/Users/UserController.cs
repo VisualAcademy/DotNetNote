@@ -93,7 +93,7 @@ namespace DotNetNote.Controllers
                 if (_loginFailed.IsLoginFailed(model.UserId))
                 {
                     // Login.cshtml 뷰 페이지에서 로그인 실패 메시지 출력
-                    ViewBag.IsLoginFailed = true; 
+                    ViewBag.IsLoginFailed = true;
 
                     return View(model);
                 }
@@ -101,7 +101,9 @@ namespace DotNetNote.Controllers
 
                 #region 아이디와 암호가 맞으면 로그인(인증) 처리
                 //if (_repository.IsCorrectUser(model.UserId, model.Password))
-                if (_repository.IsCorrectUser(model.UserId, (new Dul.Security.CryptorEngine()).EncryptPassword(model.Password)))
+                string encryptPassword = (new Dul.Security.CryptorEngine())
+                    .EncryptPassword(model.Password);
+                if (_repository.IsCorrectUser(model.UserId, encryptPassword))
                 {
                     //[!] 인증 부여: 인증된 사용자의 주요 정보(Name, Role, ...)를 기록
                     var claims = new List<Claim>()
@@ -150,7 +152,7 @@ namespace DotNetNote.Controllers
                     //HttpContext.Session.SetString("Username", model.UserId);
 
                     return LocalRedirect("/User/Index");
-                } 
+                }
                 #endregion
             }
 
