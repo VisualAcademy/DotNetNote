@@ -61,8 +61,9 @@ namespace DotNetNote.Controllers
             else
             {
                 //_repository.AddUser(model.UserId, model.Password);
-                _repository.AddUser(model.UserId, (new Dul.Security.CryptorEngine()).EncryptPassword(model.Password)
-                );
+                string encryptPassword = (new Dul.Security.CryptorEngine())
+                    .EncryptPassword(model.Password);
+                _repository.AddUser(model.UserId, encryptPassword);
                 return RedirectToAction("Index");
             }
         }
