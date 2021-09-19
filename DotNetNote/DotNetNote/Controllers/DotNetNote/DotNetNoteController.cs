@@ -57,13 +57,14 @@ namespace DotNetNote.Controllers
         /// </summary>
         public int TotalRecordCount { get; set; } = 0;
 
+        #region Index: 게시판 리스트 페이지
         /// <summary>
         /// 게시판 리스트 페이지
         /// </summary>
         public IActionResult Index()
         {
             // 로깅
-            _logger.LogInformation("게시판 리스트 페이지 로딩"); 
+            _logger.LogInformation("게시판 리스트 페이지 로딩");
 
             // 검색 모드 결정: ?SearchField=Name&SearchQuery=닷넷코리아 
             SearchMode = (
@@ -119,10 +120,10 @@ namespace DotNetNote.Controllers
 
             // 주요 정보를 뷰 페이지로 전송
             ViewBag.TotalRecord = TotalRecordCount;
-            ViewBag.SearchMode  = SearchMode;
+            ViewBag.SearchMode = SearchMode;
             ViewBag.SearchField = SearchField;
             ViewBag.SearchQuery = SearchQuery;
-            
+
             // 페이저 컨트롤 적용
             ViewBag.PageModel = new PagerBase
             {
@@ -135,10 +136,12 @@ namespace DotNetNote.Controllers
                 SearchField = SearchField,
                 SearchQuery = SearchQuery
             };
-            
+
             return View(notes);
         }
+        #endregion
 
+        #region Create: 게시판 글쓰기 페이지 
         /// <summary>
         /// 게시판 글쓰기 폼
         /// </summary>
@@ -192,16 +195,16 @@ namespace DotNetNote.Controllers
 
             Note note = new Note();
 
-            note.Name     = model.Name;
-            note.Email    = Dul.HtmlUtility.Encode(model.Email);
+            note.Name = model.Name;
+            note.Email = Dul.HtmlUtility.Encode(model.Email);
             note.Homepage = model.Homepage;
             //note.Title    = Dul.HtmlUtility.Encode(model.Title);
-            note.Title    = model.Title;
-            note.Content  = model.Content;
+            note.Title = model.Title;
+            note.Content = model.Content;
             note.FileName = fileName;
             note.FileSize = fileSize;
-            note.Password = 
-                (new Dul.Security.CryptorEngine()).EncryptPassword(model.Password);
+            note.Password = (new Dul.Security.CryptorEngine())
+                .EncryptPassword(model.Password);
             note.PostIp =
                 HttpContext.Connection.RemoteIpAddress.ToString(); // IP 주소
             note.Encoding = model.Encoding;
@@ -213,7 +216,7 @@ namespace DotNetNote.Controllers
 
             return RedirectToAction("Index"); // 저장 후 리스트 페이지로 이동
         }
-
+        #endregion
 
         /// <summary>
         /// 게시판 파일 강제 다운로드 기능(/BoardDown/:Id)
