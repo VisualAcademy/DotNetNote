@@ -31,7 +31,7 @@
                             '<span class="post_title">' +
                                 '<a href="/DotNetNote/Details/'
                                     + entry.boardId + '">' +
-                                    entry.opinion.substring(0, 31)
+                                    entry.opinion.substring(0, 31).replace(/</, "&lt;")
                                 + '</a>' +
                             '</span>' +
                         '</div>' +

@@ -17,7 +17,7 @@
                             '<span class="post_title">' + 
                                 '<a href="/DotNetNote/Details/'
                                     + entry.id + '">' +
-                                    entry.title.substring(0, 31)
+                                    entry.title.substring(0, 31).replace(/</, "&lt;")
                                 + '</a>' + 
                             '</span>' + 
                         '</div>' + 

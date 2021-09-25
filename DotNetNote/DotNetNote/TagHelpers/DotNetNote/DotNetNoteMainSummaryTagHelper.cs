@@ -37,7 +37,7 @@ namespace DotNetNote.TagHelpers
                         + l.PostDate.ToString("yyyy-MM-dd") 
                         + "</span><span class='post_title'>" 
                         + "<a href = '/DotNetNote/Details/" + l.Id + "'>" 
-                        + Dul.StringLibrary.CutStringUnicode(l.Title, 33) 
+                        + Dul.StringLibrary.CutStringUnicode(l.Title, 33).Replace("<", "&lt;") 
                         + "</a></span></div></div>";
                 }
             }
