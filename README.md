@@ -6,10 +6,10 @@ ASP.NET & Core를 다루는 기술 책의 닷넷코어 파트 소스 결과물
 ## ASP.NET Core 6.0 전체 강의 소스
 박용준 강사가 진행하는 ASP.NET Core 6.0 강의의 전체 소스는 현재 리포지토리에 들어 있습니다. 
 
-## ASP.NET & Core를 다루는 기술 닷넷코어 파트 전체 소스
+## ASP.NET & Core를 다루는 기술 - 닷넷코어 파트 전체 소스
 ASP.NET & Core를 다루는 기술 책의 닷넷코어 파트 전체 소스의 최신 버전은 현재 리포지토리에 적용되어 있습니다.
 
-## 강의 데모 사이트
+## 강의 데모 사이트: 닷넷노트닷컴
 
 다음 링크를 통해서 현재 소스의 실제 실행되는 모양을 볼 수 있습니다.
 
@@ -40,7 +40,6 @@ https://github.com/VisualAcademy/AspNetCoreBook
 
 ## ASP.NET Core 2.1 버전의 DotNetNote는 다음 경로에 있습니다.
 https://github.com/VisualAcademy/DotNetNoteV21
-
 
 ## ASP.NET Core 3.1 버전의 DotNetNote는 다음 리포지토리에 있습니다.
 https://github.com/VisualAcademy/DotNetNoteV31
