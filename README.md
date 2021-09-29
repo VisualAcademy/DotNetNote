@@ -30,6 +30,8 @@ http://www.devle.com
 https://www.youtube.com/watch?v=xRz2DA8bbbc&list=PLO56HZSjrPTDtR6uKaE7mThbGAUgzvTJe
 
 
+## ASP.NET Core 1.x 버전의 DotNetNote는 다음 경로에 있습니다.
+https://github.com/VisualAcademy/AspNetCoreBook
 
 ## ASP.NET Core 2.1 버전의 DotNetNote는 다음 경로에 있습니다.
 https://github.com/VisualAcademy/DotNetNoteV21
