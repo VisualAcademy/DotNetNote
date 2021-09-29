@@ -17,7 +17,9 @@ https://www.dotnetnote.com
 
 DotNetNote 사이트는 Azure Web App과 Azure SQL Database를 사용하여 운영됩니다.
 
-제가 강의하는 ASP.NET Core MVC의 최종 목적은 현재 리포지토리의 소스를 사용하여 다음 링크의 게시판을 만들 수 있는 능력을 키우는데 있습니다. 
+제가 강의하는 ASP.NET Core MVC의 최종 목적은 
+
+현재 리포지토리의 소스를 사용하여 다음 링크의 게시판을 만들 수 있는 능력을 키우는데 있습니다. 
 
 https://www.dotnetnote.com/DotNetNote
 
