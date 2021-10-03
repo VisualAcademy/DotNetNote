@@ -13,7 +13,7 @@
 
     // 기본 컨트롤러: 제목만 표시
     function WebCampController($scope) {
-        $scope.title = 'WebCamp 2019';
+        $scope.title = 'WebCamp 2022';
 
         activate();
 
