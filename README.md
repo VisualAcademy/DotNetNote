@@ -1,4 +1,4 @@
-# DotNetNote - 닷넷노트
+# DotNetNote 6.0 - 닷넷노트 6.0
 ASP.NET Core 6.0 개발, 강의, 집필 소스 모음
 ASP.NET & Core를 다루는 기술 책의 닷넷코어 파트 소스 결과물
 
