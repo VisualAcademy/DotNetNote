@@ -259,7 +259,16 @@ namespace DotNetNote.Controllers
 
             //[!] 인코딩 방식에 따른 데이터 출력: 
             // 직접 문자열 비교해도 되지만, 학습목적으로 열거형으로 비교 
-            ContentEncodingType encoding = (ContentEncodingType)Enum.Parse(typeof(ContentEncodingType), note.Encoding);
+            ContentEncodingType encoding = ContentEncodingType.Text;
+            try
+            {
+                encoding = (ContentEncodingType)Enum.Parse(typeof(ContentEncodingType), note.Encoding);
+            }
+            catch (Exception)
+            {
+                encoding = ContentEncodingType.Text;
+            }
+
             string encodedContent = "";
             switch (encoding)
             {
