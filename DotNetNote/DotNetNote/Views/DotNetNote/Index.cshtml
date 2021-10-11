@@ -67,7 +67,8 @@
                             </td>
                             <td>
                                 @Html.Raw(BoardLibrary.FuncStep(item.Step))
-                                <a asp-controller="DotNetNote" asp-action="Details" asp-route-id="@item.Id">
+                                    @*<a asp-controller="DotNetNote" asp-action="Details" asp-route-id="@item.Id">*@
+                                    <a asp-action="Details" asp-route-id="@item.Id">
                                     <strong>
                                         @StringLibrary.CutStringUnicode(item.Title, 35)
                                     </strong>
@@ -114,7 +115,8 @@
                             </td>
                             <td>
                                 @Html.Raw(BoardLibrary.FuncStep(item.Step))
-                                <a asp-controller="DotNetNote" asp-action="Details" asp-route-id="@item.Id">
+                                @*<a asp-controller="DotNetNote" asp-action="Details" asp-route-id="@item.Id">*@
+                                <a asp-action="Details" asp-route-id="@item.Id">
                                     @StringLibrary.CutStringUnicode(item.Title, 35)
                                 </a>
                                 <small>
