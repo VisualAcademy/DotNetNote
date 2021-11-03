@@ -40,9 +40,12 @@ namespace DotNetNote
             //services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddHttpContextAccessor(); //[1]
 
+            //[!] MVC 사용을 위한 서비스 등록: 가장 기본적인 확장 메서드
             services.AddControllersWithViews();     // MVC + Web API 사용 가능
             services.AddRazorPages();               // Razor Pages 사용 가능
             services.AddServerSideBlazor();         // Blazor Server 사용 가능
+
+            //services.AddRazorPages(); //[!] Razor Pages 사용 설정 [1 of 2]
 
             //services.AddDbContext<ApplicationDbContext>(options =>
             //    options.UseSqlServer(
@@ -50,7 +53,6 @@ namespace DotNetNote
             //services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
             //    .AddEntityFrameworkStores<ApplicationDbContext>();
 
-            services.AddRazorPages(); //[!] Razor Pages 사용 설정 [1 of 2]
 
             //services.AddSingleton<ICompanyRepository>(new CompanyRepositoryAdo(Configuration["ConnectionStrings:DefaultConnection"]));
             //services.AddSingleton<ICompanyRepository>(new CompanyRepositoryDapper(Configuration["ConnectionStrings:DefaultConnection"]));
