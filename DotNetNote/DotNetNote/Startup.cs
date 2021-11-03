@@ -7,6 +7,7 @@ using DotNetNote.Models.RecruitManager;
 using DotNetNote.Services;
 using DotNetNote.Settings;
 using MemoEngineCore.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -16,9 +17,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.Net.Http.Headers;
 using System;
 using System.Net;
+using System.Text;
 
 namespace DotNetNote
 {
@@ -126,7 +129,26 @@ namespace DotNetNote
                 {
                     options.LoginPath = "/User/Login/";
                     options.AccessDeniedPath = "/User/Forbidden/";
-                });
+                })
+
+            // JWT 인증 
+            .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
+            {
+                options.RequireHttpsMetadata = false;
+                options.SaveToken = true;
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateAudience = false,
+                    ValidateIssuer = false,
+                    ValidateIssuerSigningKey = true,
+                    // 보안키 문자열 길게 설정할 것
+                    IssuerSigningKey = new SymmetricSecurityKey(
+                        Encoding.UTF8.GetBytes(
+                            Configuration["SymmetricSecurityKey"])),
+                    ValidateLifetime = true,
+                    ClockSkew = TimeSpan.FromMinutes(5)
+                };
+            });
 
             //// _httpContextAccessor.IsAuthenticated 등 사용 
             //services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
