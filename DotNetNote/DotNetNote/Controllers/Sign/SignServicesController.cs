@@ -36,7 +36,8 @@ public class SignServicesController : Controller
     {
         if (!IsLogin(model))
         {
-            return NotFound("이메일 또는 암호가 틀립니다.");
+            //return NotFound("이메일 또는 암호가 틀립니다.");
+            return BadRequest("이메일 또는 암호가 틀립니다.");
         }
 
         string t = CreateToken(model);
@@ -58,39 +59,50 @@ public class SignServicesController : Controller
             return NotFound("등록이되지 않았습니다.");
         }
 
-        string t = CreateToken(model);
+        string jwtToken = CreateToken(model);
 
-        return Ok(new SignDto { 
-            SignId = sign.SignId, Token = t, Email = model.Email });
+        return Ok(new SignDto
+        {
+            SignId = sign.SignId,
+            Token = jwtToken,
+            Email = model.Email
+        });
     }
 
     /// <summary>
-    /// 토큰 생성
+    /// 토큰 생성: JWT 토큰 생성 교과서 코드
+    /// TODO: Claim 추가 및  JwtSecurityToken에 issuer 등의 추가 매개 변수 지정
     /// </summary>
     private string CreateToken(SignViewModel model)
     {
-        //[1] 보안키 생성
+        //[1] 클레임 생성
+        var claims = new Claim[]
+        {
+            new Claim(JwtRegisteredClaimNames.Sub, model.Email),
+            new Claim(JwtRegisteredClaimNames.Email, model.Email),
+            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+        };
+
+        //[2] 보안키 생성
         var key = _configuration.GetSection("SymmetricSecurityKey").Value;
         var securityKey =
             new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key));
         var signingCredentials =
             new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
-        //[2] 클레임 생성
-        var claims = new Claim[]
-        {
-                new Claim(JwtRegisteredClaimNames.Sub, model.Email)
-        };
-
         //[3] 토큰 생성하기
         var token = new JwtSecurityToken(
+            issuer: "", // 내용 채울 것
+            audience: "", // 내용 채울 것            
+            expires: DateTime.Now.AddMinutes(5),
+
             claims: claims,
-            signingCredentials: signingCredentials,
-            expires: DateTime.Now.AddMinutes(5));
-        var t = new JwtSecurityTokenHandler().WriteToken(token);
+            signingCredentials: signingCredentials
+        );
+        var jwtToken = new JwtSecurityTokenHandler().WriteToken(token);
 
         //[!] 토큰 반환 
-        return t;
+        return jwtToken;
     }
 
     /// <summary>
