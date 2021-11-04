@@ -92,9 +92,9 @@ public class SignServicesController : Controller
 
         //[3] 토큰 생성하기
         var token = new JwtSecurityToken(
-            issuer: "", // 내용 채울 것
-            audience: "", // 내용 채울 것            
-            expires: DateTime.Now.AddMinutes(5),
+            issuer: "https://localhost:5001/", // 내용 채울 것
+            audience: "DotNetNote", // 내용 채울 것            
+            expires: DateTime.UtcNow.AddMinutes(5),
 
             claims: claims,
             signingCredentials: signingCredentials

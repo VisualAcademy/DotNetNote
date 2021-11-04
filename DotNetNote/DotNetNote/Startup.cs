@@ -416,8 +416,11 @@ namespace DotNetNote
             services.AddTransient<IGoodsRepository, GoodsRepository>();
             // </GoodsManager>
 
+
+            // JWT 토큰 인증 관련 코드 
             // 의존성 해결: ISignRepository => SignRepositoryInMemory
             services.AddTransient<ISignRepository, SignRepositoryInMemory>();
+
 
             services.AddSingleton<ICompanyRepository>(new CompanyRepositoryAdo(Configuration["ConnectionStrings:DefaultConnection"]));
             //services.AddSingleton<ICompanyRepository>(new CompanyRepositoryDapper(Configuration["ConnectionStrings:DefaultConnection"]));
