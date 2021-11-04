@@ -131,7 +131,8 @@ namespace DotNetNote
                     options.AccessDeniedPath = "/User/Forbidden/";
                 })
 
-            // JWT 인증 
+
+            // JWT 토큰 인증 관련 코드 
             .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
             {
                 options.RequireHttpsMetadata = false;
@@ -149,6 +150,11 @@ namespace DotNetNote
                     ClockSkew = TimeSpan.FromMinutes(5)
                 };
             });
+
+            // JWT 토큰 인증 관련 코드 
+            // 의존성 해결: ISignRepository => SignRepositoryInMemory
+            services.AddTransient<ISignRepository, SignRepositoryInMemory>();
+
 
             //// _httpContextAccessor.IsAuthenticated 등 사용 
             //services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
@@ -415,12 +421,6 @@ namespace DotNetNote
             // IGoodsRepository 주입 -> GoodsRepository의 인스턴스를 실행
             services.AddTransient<IGoodsRepository, GoodsRepository>();
             // </GoodsManager>
-
-
-            // JWT 토큰 인증 관련 코드 
-            // 의존성 해결: ISignRepository => SignRepositoryInMemory
-            services.AddTransient<ISignRepository, SignRepositoryInMemory>();
-
 
             services.AddSingleton<ICompanyRepository>(new CompanyRepositoryAdo(Configuration["ConnectionStrings:DefaultConnection"]));
             //services.AddSingleton<ICompanyRepository>(new CompanyRepositoryDapper(Configuration["ConnectionStrings:DefaultConnection"]));
