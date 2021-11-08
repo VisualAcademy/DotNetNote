@@ -27,6 +27,9 @@ namespace MemoEngineCore.Services
                 throw new ArgumentNullException(nameof(env));
             }
 
+            // C# 10의 새로운 기능 
+            ArgumentNullException.ThrowIfNull(env);
+
             this.folder = Path.Combine(env.WebRootPath, POSTS);
 
             this.Initialize();
