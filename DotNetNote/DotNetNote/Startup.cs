@@ -1,6 +1,5 @@
 ﻿using DotNetNote.Common;
 using DotNetNote.Components;
-using DotNetNote.Models;
 using DotNetNote.Models.Exams;
 using DotNetNote.Models.Notifications;
 using DotNetNote.Models.RecruitManager;
@@ -9,14 +8,12 @@ using DotNetNote.Settings;
 using MemoEngineCore.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Rewrite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.Net.Http.Headers;
 using System;
@@ -115,8 +112,8 @@ public class Startup
         // Session 개체 사용시 옵션 부여 
         services.AddSession(options =>
         {
-                // 세션 유지 시간
-                options.IdleTimeout = TimeSpan.FromMinutes(30);
+            // 세션 유지 시간
+            options.IdleTimeout = TimeSpan.FromMinutes(30);
         });
         #endregion
 
@@ -142,8 +139,8 @@ public class Startup
                 ValidateAudience = false,
                 ValidateIssuer = false,
                 ValidateIssuerSigningKey = true,
-                    // 보안키 문자열 길게 설정할 것
-                    IssuerSigningKey = new SymmetricSecurityKey(
+                // 보안키 문자열 길게 설정할 것
+                IssuerSigningKey = new SymmetricSecurityKey(
                     Encoding.UTF8.GetBytes(
                         Configuration["SymmetricSecurityKey"])),
                 ValidateLifetime = true,
@@ -212,12 +209,12 @@ public class Startup
         //[User][9] Policy 설정
         services.AddAuthorization(options =>
         {
-                // Users Role이 있으면, Users Policy 부여
-                options.AddPolicy("Users", policy => policy.RequireRole("Users"));
+            // Users Role이 있으면, Users Policy 부여
+            options.AddPolicy("Users", policy => policy.RequireRole("Users"));
 
-                // Users Role이 있고 UserId가 DotNetNoteSettings:SiteAdmin에 지정된 값(예를 들어 "Admin")이면 "Administrators" 부여
-                // "UserId" - 대소문자 구분
-                options.AddPolicy("Administrators", policy => policy.RequireRole("Users").RequireClaim("UserId", Configuration.GetSection("DotNetNoteSettings").GetSection("SiteAdmin").Value));
+            // Users Role이 있고 UserId가 DotNetNoteSettings:SiteAdmin에 지정된 값(예를 들어 "Admin")이면 "Administrators" 부여
+            // "UserId" - 대소문자 구분
+            options.AddPolicy("Administrators", policy => policy.RequireRole("Users").RequireClaim("UserId", Configuration.GetSection("DotNetNoteSettings").GetSection("SiteAdmin").Value));
         });
 
 
@@ -229,7 +226,7 @@ public class Startup
             options.AddDefaultPolicy(builder =>
             {
                 builder.WithOrigins("https://localhost:3000"); // [!] Trailing Slash
-                });
+            });
         });
 
         ////[CORS] CORS 설정 공식 코드 1/2
@@ -267,17 +264,17 @@ public class Startup
         // Identity 옵션 설정
         services.Configure<IdentityOptions>(options =>
         {
-                // 암호 설정
-                options.Password.RequiredLength = 8;
+            // 암호 설정
+            options.Password.RequiredLength = 8;
             options.Password.RequireDigit = true;
             options.Password.RequireLowercase = true;
 
-                // 잠금 설정
-                options.Lockout.MaxFailedAccessAttempts = 5;
+            // 잠금 설정
+            options.Lockout.MaxFailedAccessAttempts = 5;
             options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(10);
 
-                // 사용자 설정
-                options.User.RequireUniqueEmail = true;
+            // 사용자 설정
+            options.User.RequireUniqueEmail = true;
         });
 
 
@@ -321,16 +318,16 @@ public class Startup
         //[User][9] Policy 설정
         services.AddAuthorization(options =>
         {
-                // Users Role이 있으면, Users Policy 부여
-                options.AddPolicy("Users", policy => policy.RequireRole("Users"));
+            // Users Role이 있으면, Users Policy 부여
+            options.AddPolicy("Users", policy => policy.RequireRole("Users"));
 
-                // Users Role이 있고 UserId가 DotNetNoteSettings:SiteAdmin에 
-                // 지정된 값(예를 들어 "Admin")이면 "Administrators" 부여
-                // "UserId" - 대소문자 구분
-                options.AddPolicy("Administrators", policy =>
-                policy.RequireRole("Users").RequireClaim("UserId",
-                    Configuration.GetSection("DotNetNoteSettings")
-                        .GetSection("SiteAdmin").Value));
+            // Users Role이 있고 UserId가 DotNetNoteSettings:SiteAdmin에 
+            // 지정된 값(예를 들어 "Admin")이면 "Administrators" 부여
+            // "UserId" - 대소문자 구분
+            options.AddPolicy("Administrators", policy =>
+            policy.RequireRole("Users").RequireClaim("UserId",
+                Configuration.GetSection("DotNetNoteSettings")
+                    .GetSection("SiteAdmin").Value));
         });
 
         // IBuyerRepository 개체를 생성자 매개 변수로 주입: BuyerRepository의 인스턴스를 생성 
@@ -446,7 +443,7 @@ public class Startup
             app.UseDeveloperExceptionPage();
         }
 
-        app.UseDefaultFiles(); 
+        app.UseDefaultFiles();
         app.UseStaticFiles();
 
         app.UseRouting();
@@ -595,10 +592,10 @@ public class Startup
 
         app.UseEndpoints(endpoints =>
         {
-                //endpoints.MapDefaultControllerRoute();
-                endpoints.MapControllerRoute(
-                name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+            //endpoints.MapDefaultControllerRoute();
+            endpoints.MapControllerRoute(
+            name: "default",
+            pattern: "{controller=Home}/{action=Index}/{id?}");
 
             endpoints.MapControllerRoute(
               name: "areas",
@@ -607,19 +604,19 @@ public class Startup
 
             endpoints.MapRazorPages(); //[!] Razor Pages 사용 설정 [2 of 2]
 
-                // Blazor Server 사용 가능
-                endpoints.MapBlazorHub();
+            // Blazor Server 사용 가능
+            endpoints.MapBlazorHub();
 
-                #region 한글 출력 데모
-                //endpoints.MapGet("/", async context =>
-                //{
-                //    //await context.Response.WriteAsync("Hello World!");
-                //    // 한글 출력
-                //    context.Response.Headers["Content-Type"] = "text/html; charset=utf-8";
-                //    await context.Response.WriteAsync("안녕하세요.", System.Text.Encoding.UTF8);
-                //}); 
-                #endregion
-            });
+            #region 한글 출력 데모
+            //endpoints.MapGet("/", async context =>
+            //{
+            //    //await context.Response.WriteAsync("Hello World!");
+            //    // 한글 출력
+            //    context.Response.Headers["Content-Type"] = "text/html; charset=utf-8";
+            //    await context.Response.WriteAsync("안녕하세요.", System.Text.Encoding.UTF8);
+            //}); 
+            #endregion
+        });
     }
 }
 
