@@ -446,6 +446,7 @@ public class Startup
             app.UseDeveloperExceptionPage();
         }
 
+        app.UseDefaultFiles(); 
         app.UseStaticFiles();
 
         app.UseRouting();
