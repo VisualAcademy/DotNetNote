@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TodoApi.Models;
+using TodoItem = TodoApi.Models.TodoItem;
 
 namespace TodoApi.Controllers
 {
