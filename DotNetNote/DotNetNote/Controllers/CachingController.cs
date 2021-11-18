@@ -3,67 +3,68 @@ using Microsoft.Extensions.Caching.Memory;
 using System;
 using System.Threading.Tasks;
 
-namespace DotNetNote.Controllers
+namespace DotNetNote.Controllers;
+
+public class CachingController : Controller
 {
-    public class CachingController : Controller
+    private IMemoryCache _cache;
+
+    public CachingController(IMemoryCache memoryCache)
     {
-        private IMemoryCache _cache;
+        _cache = memoryCache;
+    }
 
-        public CachingController(IMemoryCache memoryCache)
+    public IActionResult Index()
+    {
+        // 캐시에 담을 개체
+        DateTime cacheData;
+
+        // 캐시에 데이터가 들어있으면 해당 데이터를 가져오기
+        if (!_cache.TryGetValue("SetTime", out cacheData))
         {
-            _cache = memoryCache;
+            // 캐시에 개체 값을 담기
+            cacheData = DateTime.Now;
+
+            // 캐시에 현재 시간 저장
+            _cache.Set(
+                "SetTime",
+                cacheData,
+                (new MemoryCacheEntryOptions()).SetAbsoluteExpiration(TimeSpan.FromSeconds(5)));
         }
 
-        public IActionResult Index()
+        ViewBag.CachedDateTime = cacheData;
+
+        return View();
+    }
+
+    public IActionResult CacheGetOrCreate()
+    {
+        var cacheData = _cache.GetOrCreate("SetString", e =>
         {
-            // 캐시에 담을 개체
-            DateTime cacheData;
+            e.SlidingExpiration = TimeSpan.FromSeconds(5);
+            return "초: " + DateTime.Now.Second.ToString();
+        });
 
-            // 캐시에 데이터가 들어있으면 해당 데이터를 가져오기
-            if (!_cache.TryGetValue("SetTime", out cacheData))
-            {
-                // 캐시에 개체 값을 담기
-                cacheData = DateTime.Now;
+        ViewBag.SetString = cacheData;
 
-                // 캐시에 현재 시간 저장
-                _cache.Set(
-                    "SetTime",
-                    cacheData,
-                    (new MemoryCacheEntryOptions()).SetAbsoluteExpiration(TimeSpan.FromSeconds(5)));
-            }
+        return View();
+    }
 
-            ViewBag.CachedDateTime = cacheData;
+    public async Task<IActionResult> CacheGetOrCreateAsync()
+    {
+        // 캐시 읽어오기
+        //var cacheData = _cache.Get<string>("SetString");
+        // 캐시 제거
+        // _cache.Remove("SetString");
 
-            return View();
-        }
-
-        public IActionResult CacheGetOrCreate()
+        var cacheData = await _cache.GetOrCreateAsync("SetString", e =>
         {
-            var cacheData = _cache.GetOrCreate("SetString", e => {
-                e.SlidingExpiration = TimeSpan.FromSeconds(5);
-                return "초: " + DateTime.Now.Second.ToString();
-            });
+            e.SlidingExpiration = TimeSpan.FromSeconds(5);
+            return Task.FromResult("초: " + DateTime.Now.Second.ToString());
+        });
 
-            ViewBag.SetString = cacheData;
+        ViewBag.SetString = cacheData;
 
-            return View();
-        }
-
-        public async Task<IActionResult> CacheGetOrCreateAsync()
-        {
-            // 캐시 읽어오기
-            //var cacheData = _cache.Get<string>("SetString");
-            // 캐시 제거
-            // _cache.Remove("SetString");
-
-            var cacheData = await _cache.GetOrCreateAsync("SetString", e => {
-                e.SlidingExpiration = TimeSpan.FromSeconds(5);
-                return Task.FromResult("초: " + DateTime.Now.Second.ToString());
-            });
-
-            ViewBag.SetString = cacheData;
-
-            return View("CacheGetOrCreate");
-        }
+        return View("CacheGetOrCreate");
     }
 }

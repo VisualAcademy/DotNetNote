@@ -2,22 +2,21 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 
-namespace Hawaso.Controllers
+namespace DotNetNote.Controllers;
+
+public class AppKeysController : Controller
 {
-    public class AppKeysController : Controller
+    private readonly AppKeyConfig appKeyConfig;
+
+    public AppKeysController(IOptions<AppKeyConfig> appKeyConfig)
     {
-        private readonly AppKeyConfig appKeyConfig;
+        this.appKeyConfig = appKeyConfig.Value;
+    }
 
-        public AppKeysController(IOptions<AppKeyConfig> appKeyConfig)
-        {
-            this.appKeyConfig = appKeyConfig.Value;
-        }
-
-        public IActionResult Index()
-        {
-            //ViewData["AzureStorageAccount"] = appKeyConfig.AzureStorageAccount;
-            ViewData["AzureStorageAccount"] = "해킹금지";
-            return View();
-        }
+    public IActionResult Index()
+    {
+        //ViewData["AzureStorageAccount"] = appKeyConfig.AzureStorageAccount;
+        ViewData["AzureStorageAccount"] = "해킹금지";
+        return View();
     }
 }

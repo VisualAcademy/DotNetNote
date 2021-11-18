@@ -1,12 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace DotNetNote.Controllers
+namespace DotNetNote.Controllers;
+
+public class AspNetCoreDevController : Controller
 {
-    public class AspNetCoreDevController : Controller
-    {
-        public IActionResult Index()
-        {
-            return View();
-        }
-    }
+    public IActionResult Index() => View();
 }

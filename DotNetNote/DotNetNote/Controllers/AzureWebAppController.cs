@@ -1,12 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace DotNetNote.Controllers
+namespace DotNetNote.Controllers;
+
+public class AzureWebAppController : Controller
 {
-    public class AzureWebAppController : Controller
-    {
-        public IActionResult Index()
-        {
-            return View();
-        }
-    }
+    public IActionResult Index() => View();
 }
