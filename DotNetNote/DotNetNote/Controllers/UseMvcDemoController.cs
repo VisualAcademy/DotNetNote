@@ -1,26 +1,23 @@
-﻿using DotNetNote.Models;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System;
 
-namespace DotNetNote.Controllers
+namespace DotNetNote.Controllers;
+
+public class UseMvcDemoController : Controller
 {
-    public class UseMvcDemoController : Controller
+    public string StringResultDemo()
     {
-        public string StringResultDemo()
-        {
-            return "/UseMvcDemp/StringResultDemo 경로로 실행됨";
-        }
+        return "/UseMvcDemp/StringResultDemo 경로로 실행됨";
+    }
 
-        public DateTime DateTimeDemo() => DateTime.Now;
+    public DateTime DateTimeDemo() => DateTime.Now;
 
-        public IActionResult HtmlOnly() => View();
+    public IActionResult HtmlOnly() => View();
 
-        public IActionResult UsingModelDemo()
-        {
-            DemoClass dc = new DemoClass() { Id = 1, Name = "박용준" }; 
+    public IActionResult UsingModelDemo()
+    {
+        DemoClass dc = new DemoClass() { Id = 1, Name = "박용준" };
 
-            return View(dc);
-        }
+        return View(dc);
     }
 }
-

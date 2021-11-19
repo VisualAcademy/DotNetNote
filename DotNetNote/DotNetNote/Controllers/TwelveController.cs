@@ -1,45 +1,43 @@
-﻿using DotNetNote.Models;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
-namespace TwelveManager.Controllers
+namespace DotNetNote.Controllers;
+
+public class TwelveController : Controller
 {
-    public class TwelveController : Controller
+    private readonly ITwelveRepository _repository;
+
+    public TwelveController(ITwelveRepository repository)
     {
-        private readonly ITwelveRepository _repository;
+        _repository = repository;
+    }
 
-        public TwelveController(ITwelveRepository repository)
+    public IActionResult Index()
+    {
+        return View();
+    }
+
+    public IActionResult SeedTest()
+    {
+        var parentId = 1;
+        ViewBag.ParentId = parentId;
+        var twelves = _repository.Seed(parentId);
+        return View(twelves);
+    }
+
+    public IActionResult AddProfit()
+    {
+        for (int i = 1; i <= 12; i++)
         {
-            this._repository = repository;
+            _repository.SaveOrUpdateProfit(1, i, i * 10);
         }
 
-        public IActionResult Index()
-        {
-            return View();
-        }
+        return View();
+    }
 
-        public IActionResult SeedTest()
-        {
-            var parentId = 1;
-            ViewBag.ParentId = parentId;
-            var twelves = _repository.Seed(parentId); 
-            return View(twelves);
-        }
-
-        public IActionResult AddProfit()
-        {
-            for (int i = 1; i <= 12; i++)
-            {
-                _repository.SaveOrUpdateProfit(1, i, i * 10);
-            }
-
-            return View(); 
-        }
-
-        public IActionResult GetTwelves()
-        {
-            ViewBag.ParentId = 1;
-            var twelves = _repository.GetTwelves(1);
-            return View(twelves);
-        }
+    public IActionResult GetTwelves()
+    {
+        ViewBag.ParentId = 1;
+        var twelves = _repository.GetTwelves(1);
+        return View(twelves);
     }
 }
