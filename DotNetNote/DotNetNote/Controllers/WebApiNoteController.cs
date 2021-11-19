@@ -1,28 +1,27 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace DotNetNote.Controllers
-{
-    [Route("api/[controller]")]
-    public class WebApiNoteController : Controller
-    {
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return $"넘어온 값: {id}";
-        }
+namespace DotNetNote.Controllers;
 
-        [HttpGet]
-        public double GetByNumber(int number)
-        {
-            return number;
-        }
+[Route("api/[controller]")]
+public class WebApiNoteController : Controller
+{
+    [HttpGet("{id}")]
+    public string Get(int id)
+    {
+        return $"넘어온 값: {id}";
     }
 
-    public class WebApiNoteTestController : Controller
+    [HttpGet]
+    public double GetByNumber(int number)
     {
-        public IActionResult GetByNumber()
-        {
-            return View();
-        }
+        return number;
+    }
+}
+
+public class WebApiNoteTestController : Controller
+{
+    public IActionResult GetByNumber()
+    {
+        return View();
     }
 }
