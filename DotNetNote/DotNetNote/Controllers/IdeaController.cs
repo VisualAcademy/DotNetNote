@@ -1,39 +1,37 @@
-﻿using DotNetNote.Models;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
-namespace DotNetNote.Controllers
+namespace DotNetNote.Controllers;
+
+/// <summary>
+/// [5] ASP.NET 컨트롤러 클래스
+/// </summary>
+public class IdeaController : Controller
 {
-    /// <summary>
-    /// [5] ASP.NET 컨트롤러 클래스
-    /// </summary>
-    public class IdeaController : Controller
+    private IIdeaRepository _repository;
+
+    public IdeaController(IIdeaRepository repository)
     {
-        private IIdeaRepository _repository;
+        _repository = repository;
+    }
 
-        public IdeaController(IIdeaRepository repository)
+    [HttpGet]
+    public IActionResult Index()
+    {
+        var ideas = _repository.GetAll();
+        return View(ideas);
+    }
+
+    [HttpPost]
+    public IActionResult Index(Idea model)
+    {
+        if (ModelState.IsValid)
         {
-            _repository = repository;
+            model = _repository.Add(model);
+            return RedirectToAction(nameof(Index));
         }
-
-        [HttpGet]
-        public IActionResult Index()
+        else
         {
-            var ideas = _repository.GetAll();
-            return View(ideas);
-        }
-
-        [HttpPost]
-        public IActionResult Index(Idea model)
-        {
-            if (ModelState.IsValid)
-            {
-                model = _repository.Add(model);
-                return RedirectToAction(nameof(Index));
-            }
-            else
-            {
-                return View(model);
-            }
+            return View(model);
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.IO;
@@ -63,7 +62,7 @@ namespace DotNetNote.Controllers
             byte[] fileBytes = System.IO.File.ReadAllBytes(
                 Path.Combine(
                     _environment.WebRootPath, "files") + "\\" + fileName);
-                        
+
             return File(fileBytes, "application/octet-stream", fileName);
         }
 

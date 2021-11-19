@@ -1,6 +1,5 @@
-﻿using System.Linq;
-using DotNetNote.Models;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 
 namespace DotNetNote.Controllers
 {
