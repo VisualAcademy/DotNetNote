@@ -1,35 +1,33 @@
-﻿using System.Linq;
-using DotNetNote.Models;
-using MemberManagement.Data;
+﻿using MemberManagement.Data;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 
-namespace MemberManagement.Controllers
+namespace DotNetNote.Controllers;
+
+public class MemberController : Controller
 {
-    public class MemberController : Controller
+    private MemberDbContext _memberDbContext;
+
+    public MemberController(MemberDbContext memberDbContext)
     {
-        private MemberDbContext _memberDbContext;
+        _memberDbContext = memberDbContext;
+    }
 
-        public MemberController(MemberDbContext memberDbContext)
-        {
-            _memberDbContext = memberDbContext;
-        }
+    public IActionResult Index()
+    {
+        var members = _memberDbContext.Members.OrderByDescending(m => m.Id).ToList();
 
-        public IActionResult Index()
-        {
-            var members = _memberDbContext.Members.OrderByDescending(m => m.Id).ToList();
+        return View(members);
+    }
 
-            return View(members);
-        }
+    [HttpPost]
+    public IActionResult Index(string firstName)
+    {
+        var member = new Member { FirstName = firstName };
 
-        [HttpPost]
-        public IActionResult Index(string firstName)
-        {
-            var member = new Member { FirstName = firstName };
+        _memberDbContext.Add(member);
+        _memberDbContext.SaveChanges();
 
-            _memberDbContext.Add(member);
-            _memberDbContext.SaveChanges();
-
-            return RedirectToAction(nameof(Index)); 
-        }
+        return RedirectToAction(nameof(Index));
     }
 }

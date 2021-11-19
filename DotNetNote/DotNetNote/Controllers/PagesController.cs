@@ -1,32 +1,25 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace DotNetNote.Controllers
+namespace DotNetNote.Controllers;
+
+public class PagesController : Controller
 {
-    public class PagesController : Controller
+    public IActionResult Index() => View();
+
+    public IActionResult Welcome() => View();   
+
+    public IActionResult NotFoundPage()
     {
-        public IActionResult Index()
-        {
-            return View();
-        }
+        return View();
+    }
 
-        public IActionResult Welcome()
-        {
-            return View();             
-        }
+    public IActionResult NotAssigned()
+    {
+        return View();
+    }
 
-        public IActionResult NotFoundPage()
-        {
-            return View();             
-        }
-
-        public IActionResult NotAssigned() 
-        {
-            return View();             
-        }
-
-        public IActionResult IntroDemo()
-        {
-            return View();
-        }
+    public IActionResult IntroDemo()
+    {
+        return View();
     }
 }

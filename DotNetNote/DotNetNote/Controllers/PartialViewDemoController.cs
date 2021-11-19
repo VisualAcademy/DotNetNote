@@ -1,27 +1,26 @@
 ﻿using Dul.Web;
 using Microsoft.AspNetCore.Mvc;
 
-namespace DotNetNote.Controllers
+namespace DotNetNote.Controllers;
+
+public class PartialViewDemoController : Controller
 {
-    public class PartialViewDemoController : Controller
+    public IActionResult Index(int page = 1)
     {
-        public IActionResult Index(int page = 1)
+        var pageModel = new PagerBase
         {
-            var pageModel = new PagerBase
-            {
-                Url = "PartialViewDemo",
-                RecordCount = 140,
-                PageSize = 10,
-                PageNumber = page,
+            Url = "PartialViewDemo",
+            RecordCount = 140,
+            PageSize = 10,
+            PageNumber = page,
 
-                SearchMode = true,
-                SearchField = "Title",
-                SearchQuery = "ASP.NET"
-            };
+            SearchMode = true,
+            SearchField = "Title",
+            SearchQuery = "ASP.NET"
+        };
 
-            ViewBag.PageModel = pageModel;
+        ViewBag.PageModel = pageModel;
 
-            return View();
-        }
+        return View();
     }
 }
