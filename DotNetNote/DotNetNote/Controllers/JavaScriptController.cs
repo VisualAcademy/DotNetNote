@@ -1,17 +1,16 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace DotNetNote.Controllers
-{
-    public class JavaScriptController : Controller
-    {
-        public IActionResult Index()
-        {
-            return View();
-        }
+namespace DotNetNote.Controllers;
 
-        public IActionResult Moment()
-        {
-            return View();
-        }
+public class JavaScriptController : Controller
+{
+    public IActionResult Index()
+    {
+        return View();
+    }
+
+    public IActionResult Moment()
+    {
+        return View();
     }
 }

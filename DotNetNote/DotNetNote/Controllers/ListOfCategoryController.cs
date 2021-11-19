@@ -1,25 +1,23 @@
-﻿using DotNetNote.Models;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
-namespace DotNetNote.Controllers
+namespace DotNetNote.Controllers;
+
+public class ListOfCategoryController : Controller
 {
-    public class ListOfCategoryController : Controller
+    private readonly ICategoryRepository _repository;
+
+    public ListOfCategoryController(ICategoryRepository repository)
     {
-        private readonly ICategoryRepository _repository;
+        _repository = repository;
+    }
 
-        public ListOfCategoryController(ICategoryRepository repository)
-        {
-            _repository = repository; 
-        }
+    public IActionResult Index()
+    {
+        // var categoryRepository = new CategoryRepositoryInMemory();
+        // var categories = categoryRepository.GetCategories();
 
-        public IActionResult Index()
-        {
-            // var categoryRepository = new CategoryRepositoryInMemory();
-            // var categories = categoryRepository.GetCategories();
+        var categories = _repository.GetCategories();
 
-            var categories = _repository.GetCategories();
-
-            return View(categories);
-        }
+        return View(categories);
     }
 }
