@@ -4,7 +4,7 @@ using System.Linq;
 using System.Data;
 using Microsoft.Data.SqlClient;
 
-namespace DotNetNote.Models
+namespace DotNetNote.Models.Buyers
 {
     public class BuyerRepository : IBuyerRepository
     {
@@ -24,7 +24,7 @@ namespace DotNetNote.Models
         public List<Buyer> GetBuyers()
         {
             string sql = "Select * From Buyers Order By Id Desc";
-            return db.Query<Buyer>(sql).ToList(); 
+            return db.Query<Buyer>(sql).ToList();
         }
     }
 }

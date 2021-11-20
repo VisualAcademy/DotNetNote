@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace DotNetNote.Models
+﻿namespace DotNetNote.Models.Buyers
 {
     public class Buyer
     {

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DotNetNote.Models.Buyers;
+using Microsoft.AspNetCore.Mvc;
 
 namespace DotNetNote.Controllers;
 

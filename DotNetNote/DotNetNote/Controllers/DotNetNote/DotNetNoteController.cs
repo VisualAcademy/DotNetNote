@@ -1,6 +1,6 @@
-﻿using DotNetNote.Models;
+﻿using Dul.Board;
+using Dul.Web;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -13,8 +13,6 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
-using Dul.Board;
-using Dul.Web;
 
 namespace DotNetNote.Controllers
 {
@@ -224,7 +222,7 @@ namespace DotNetNote.Controllers
         public FileResult BoardDown(int id)
         {
             string fileName = "";
-            
+
             // 넘겨져 온 번호에 해당하는 파일명 가져오기(보안때문에... 파일명 숨김)
             fileName = _repository.GetFileNameById(id);
 
@@ -240,7 +238,7 @@ namespace DotNetNote.Controllers
                 if (System.IO.File.Exists(Path.Combine(_environment.WebRootPath, "files") + "\\" + fileName))
                 {
                     byte[] fileBytes = System.IO.File.ReadAllBytes(Path.Combine(_environment.WebRootPath, "files") + "\\" + fileName);
-                    
+
                     return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
                 }
 
@@ -314,7 +312,7 @@ namespace DotNetNote.Controllers
             ViewBag.CommentListAndId = vm;
 
             return View(note);
-        } 
+        }
         #endregion
 
         /// <summary>
@@ -359,7 +357,7 @@ namespace DotNetNote.Controllers
 
             ViewBag.Id = id;
             return View();
-        } 
+        }
         #endregion
 
         /// <summary>
@@ -471,7 +469,7 @@ namespace DotNetNote.Controllers
                     "업데이트가 되지 않았습니다. 암호를 확인하세요.";
                 return View(note);
             }
-        } 
+        }
         #endregion
 
         /// <summary>
@@ -494,8 +492,8 @@ namespace DotNetNote.Controllers
 
             // 기존 글의 제목과 내용을 새 Note 개체에 저장 후 전달
             newNote.Title = $"Re : {note.Title}";
-            newNote.Content = 
-                $"\n\nOn {note.PostDate}, '{note.Name}' wrote:\n----------\n>" 
+            newNote.Content =
+                $"\n\nOn {note.PostDate}, '{note.Name}' wrote:\n----------\n>"
                 + $"{note.Content.Replace("\n", "\n>")}\n---------";
 
             return View(newNote);
@@ -537,16 +535,16 @@ namespace DotNetNote.Controllers
             Note note = new Note();
 
             note.Id = note.ParentNum = Convert.ToInt32(id); // 부모글 저장
-            note.Name     = model.Name;
-            note.Email    = Dul.HtmlUtility.Encode(model.Email);
+            note.Name = model.Name;
+            note.Email = Dul.HtmlUtility.Encode(model.Email);
             note.Homepage = model.Homepage;
-            note.Title    = Dul.HtmlUtility.Encode(model.Title);
-            note.Content  = model.Content;
+            note.Title = Dul.HtmlUtility.Encode(model.Title);
+            note.Content = model.Content;
             note.FileName = fileName;
             note.FileSize = fileSize;
-            note.Password = 
+            note.Password =
                 (new Dul.Security.CryptorEngine()).EncryptPassword(model.Password);
-            note.PostIp   = HttpContext.Connection.RemoteIpAddress.ToString();
+            note.PostIp = HttpContext.Connection.RemoteIpAddress.ToString();
             note.Encoding = model.Encoding;
 
             _repository.ReplyNote(note); // 데이터 답변 저장
@@ -579,7 +577,7 @@ namespace DotNetNote.Controllers
                 string strFileName = fileName;
                 string strFileExt = Path.GetExtension(strFileName);
                 string strContentType = "";
-                if (strFileExt == ".gif" || strFileExt == ".jpg" 
+                if (strFileExt == ".gif" || strFileExt == ".jpg"
                     || strFileExt == ".jpeg" || strFileExt == ".png")
                 {
                     switch (strFileExt)
@@ -683,7 +681,7 @@ namespace DotNetNote.Controllers
         public IActionResult Pinned(int id)
         {
             // 공지사항(NOTICE)으로 올리기
-            _repository.Pinned(id); 
+            _repository.Pinned(id);
 
             return RedirectToAction("Details", new { Id = id });
         }
@@ -698,7 +696,7 @@ namespace DotNetNote.Controllers
         /// (참고) 최근 댓글 리스트 Web API 테스트 페이지
         /// </summary>
         [Authorize("Administrators")]
-        public IActionResult NoteCommentServiceDemo() => View(); 
+        public IActionResult NoteCommentServiceDemo() => View();
 
         #region 공지사항 모듈
         /// <summary>
@@ -722,7 +720,7 @@ namespace DotNetNote.Controllers
             });
         }
 
-        public IActionResult MainListPage() => View(); 
+        public IActionResult MainListPage() => View();
 
         /// <summary>
         /// 로그인 페이지의 팝업 공지사항 목록에 사용될 공지사항 목록 조회
@@ -734,7 +732,7 @@ namespace DotNetNote.Controllers
         [AllowAnonymous]
         public JsonResult PopupList(int page = 1, string keyword = "")
         {
-            int cnt = 0; 
+            int cnt = 0;
 
             List<Note> notices;
             if (string.IsNullOrWhiteSpace(keyword))
@@ -774,7 +772,7 @@ namespace DotNetNote.Controllers
             var articleBase = _context.Notes.Where(n => n.Id == num).SingleOrDefault();
 
             Note prevArticleSet = new Note();
-            Note nextArticleSet = new Note(); 
+            Note nextArticleSet = new Note();
             if (string.IsNullOrWhiteSpace(keyword))
             {
                 prevArticleSet = _context.Notes.Where(n => n.Id < num).OrderByDescending(n => n.Id).FirstOrDefault(); // 이전 
@@ -821,7 +819,7 @@ namespace DotNetNote.Controllers
         [HttpPost]
         [Route("api/DotNetNote/PostNote")]
         [AllowAnonymous]
-        public IActionResult PostNote([FromBody]Note note)
+        public IActionResult PostNote([FromBody] Note note)
         {
             if (ModelState.IsValid)
             {
@@ -830,7 +828,7 @@ namespace DotNetNote.Controllers
                     // 입력
                     note.Id = 0;
 
-                    _repository.Add(note); 
+                    _repository.Add(note);
 
                     // 201 응답을 생성합니다.
                     var response = new HttpResponseMessage(HttpStatusCode.Created)

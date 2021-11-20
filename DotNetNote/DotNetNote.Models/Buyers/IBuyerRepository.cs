@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace DotNetNote.Models
+namespace DotNetNote.Models.Buyers
 {
     public interface IBuyerRepository
     {
