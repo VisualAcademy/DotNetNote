@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 
-namespace DotNetNote.Models
+namespace DotNetNote.Models.Companies
 {
     public class CompanyRepositoryAdo : ICompanyRepository
     {

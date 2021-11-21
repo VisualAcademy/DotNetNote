@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace DotNetNote.Models
+namespace DotNetNote.Models.Companies
 {
     public class CompanyRepositoryEntityFramework : ICompanyRepository
     {
@@ -11,7 +11,7 @@ namespace DotNetNote.Models
 
         public CompanyRepositoryEntityFramework(CompanyContext context)
         {
-            this.db = context;
+            db = context;
         }
 
         public CompanyModel Add(CompanyModel model)

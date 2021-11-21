@@ -1,6 +1,6 @@
 ﻿using Dul.Data;
 
-namespace DotNetNote.Models
+namespace DotNetNote.Models.Companies
 {
     public interface ICompanyRepository : IBreadShop<CompanyModel>
     {

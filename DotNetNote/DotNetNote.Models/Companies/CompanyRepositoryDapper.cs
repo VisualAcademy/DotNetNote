@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 
-namespace DotNetNote.Models
+namespace DotNetNote.Models.Companies
 {
     public class CompanyRepositoryDapper : ICompanyRepository
     {

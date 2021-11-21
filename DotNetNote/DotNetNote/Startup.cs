@@ -1,6 +1,7 @@
 ﻿using DotNetNote.Common;
 using DotNetNote.Components;
 using DotNetNote.Models.Buyers;
+using DotNetNote.Models.Companies;
 using DotNetNote.Models.Exams;
 using DotNetNote.Models.Notifications;
 using DotNetNote.Models.RecruitManager;

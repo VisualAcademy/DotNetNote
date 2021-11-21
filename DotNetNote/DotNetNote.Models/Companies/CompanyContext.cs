@@ -6,7 +6,7 @@
 using Microsoft.EntityFrameworkCore;
 using System.Configuration;
 
-namespace DotNetNote.Models
+namespace DotNetNote.Models.Companies
 {
     public class CompanyContext : DbContext
     {

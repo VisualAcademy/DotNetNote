@@ -1,4 +1,4 @@
-﻿using DotNetNote.Models;
+﻿using DotNetNote.Models.Companies;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DotNetNote.Controllers
