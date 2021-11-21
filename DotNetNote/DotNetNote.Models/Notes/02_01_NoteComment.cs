@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace DotNetNote.Models
+namespace DotNetNote.Models.Notes
 {
     /// <summary>
     /// [2][1] 댓글 뷰 모델 클래스

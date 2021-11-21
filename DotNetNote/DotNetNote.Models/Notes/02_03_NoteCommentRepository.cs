@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 
-namespace DotNetNote.Models
+namespace DotNetNote.Models.Notes
 {
     public class NoteCommentRepository : INoteCommentRepository
     {
@@ -64,13 +64,13 @@ namespace DotNetNote.Models
         /// 댓글 삭제 
         /// </summary>
         public int DeleteNoteComment(int boardId, int id, string password) => con.Execute(@"Delete NoteComments Where BoardId = @BoardId And Id = @Id And Password = @Password; Update Notes Set CommentCount = CommentCount - 1 Where Id = @BoardId", new { BoardId = boardId, Id = id, Password = password }, commandType: CommandType.Text);
-        
+
         /// <summary>
         /// 최근 댓글 리스트 전체
         /// </summary>
         public List<NoteComment> GetRecentComments()
         {
-            string sql = 
+            string sql =
                 "SELECT TOP 2 * FROM NoteComments Order By Id Desc";
 
             // 캐시에 담을 개체
@@ -86,7 +86,7 @@ namespace DotNetNote.Models
                 _cache.Set(
                     "GetRecentComments",
                     cacheData,
-                    (new MemoryCacheEntryOptions()).SetAbsoluteExpiration(TimeSpan.FromSeconds(60)));
+                    new MemoryCacheEntryOptions().SetAbsoluteExpiration(TimeSpan.FromSeconds(60)));
             }
 
             return cacheData;

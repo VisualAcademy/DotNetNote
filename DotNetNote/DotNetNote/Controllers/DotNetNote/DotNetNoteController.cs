@@ -1,4 +1,5 @@
-﻿using Dul.Board;
+﻿using DotNetNote.Models.Notes;
+using Dul.Board;
 using Dul.Web;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;

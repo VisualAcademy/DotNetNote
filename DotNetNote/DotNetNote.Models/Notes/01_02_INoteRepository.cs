@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace DotNetNote.Models
+namespace DotNetNote.Models.Notes
 {
     /// <summary>
     /// [1][2] 리포지토리 인터페이스 
@@ -21,7 +21,7 @@ namespace DotNetNote.Models
         void UpdateDownCount(string fileName);
         void UpdateDownCountById(int id);
         int UpdateNote(Note model);
-        
+
         // 메인 페이지에서 사용
         List<Note> GetRecentPosts();
         List<Note> GetRecentPostsCache();

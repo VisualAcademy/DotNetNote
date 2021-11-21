@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace DotNetNote.Models
+namespace DotNetNote.Models.Notes
 {
     /// <summary>
     /// 특정 Id에 해당하는 게시물에 대한 댓글 리스트와 게시판Id를 묶어서 전송

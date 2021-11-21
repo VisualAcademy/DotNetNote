@@ -1,4 +1,4 @@
-﻿using DotNetNote.Models;
+﻿using DotNetNote.Models.Notes;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DotNetNote.ViewComponents

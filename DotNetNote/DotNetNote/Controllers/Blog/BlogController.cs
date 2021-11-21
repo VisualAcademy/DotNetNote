@@ -1,5 +1,4 @@
-﻿using DotNetNote.Models;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -10,6 +9,7 @@ using System.IO;
 //using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Dul.Board;
+using DotNetNote.Models.Notes;
 
 namespace DotNetNote.Controllers
 {

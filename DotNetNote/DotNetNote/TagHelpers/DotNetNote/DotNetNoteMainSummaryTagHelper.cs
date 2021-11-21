@@ -1,4 +1,4 @@
-﻿using DotNetNote.Models;
+﻿using DotNetNote.Models.Notes;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace DotNetNote.TagHelpers
