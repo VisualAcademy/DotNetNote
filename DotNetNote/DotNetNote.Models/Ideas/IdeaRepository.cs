@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 
-namespace DotNetNote.Models
+namespace DotNetNote.Models.Ideas
 {
     /// <summary>
     /// [4] 리포지토리 클래스

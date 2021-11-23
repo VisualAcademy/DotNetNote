@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace DotNetNote.Models
+namespace DotNetNote.Models.Ideas
 {
     /// <summary>
     /// [2] 모델 클래스
