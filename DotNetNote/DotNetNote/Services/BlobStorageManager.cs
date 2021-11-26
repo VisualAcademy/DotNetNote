@@ -1,4 +1,4 @@
-﻿using DotNetNoteCore.Settings;
+﻿using DotNetNote.Settings;
 using HeyRed.Mime;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;

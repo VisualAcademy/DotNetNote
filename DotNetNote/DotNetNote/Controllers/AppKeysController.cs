@@ -1,4 +1,4 @@
-﻿using DotNetNoteCore.Settings;
+﻿using DotNetNote.Settings;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 
