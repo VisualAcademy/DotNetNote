@@ -1,4 +1,5 @@
-﻿using Dapper;
+﻿// 모델 -> 인터페이스 -> 리포지토리 -> 컨트롤러 -> REST 
+using Dapper;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
@@ -165,7 +166,7 @@ namespace DotNetNote.Models
     }
 
     /// <summary>
-    /// 컨트롤러 클래스: ASP.NET Core MVC 파트  
+    /// [4] 컨트롤러 클래스: ASP.NET Core MVC 파트  
     /// </summary>
     public class HeroController : Controller
     {
@@ -243,7 +244,7 @@ namespace DotNetNote.Models
     }
 
     /// <summary>
-    /// Web API 컨트롤러 클래스: Angular / jQuery 등의 프론트엔드에서 접근할 Web API
+    /// [5] Web API 컨트롤러 클래스: Angular / jQuery 등의 프론트엔드에서 접근할 Web API
     /// 복수형 또는 Services 등의 접미사 사용 권장
     /// 컨벤션 기반 라우팅 대신에 특성(어트리뷰트) 라우팅 추천
     /// </summary>
