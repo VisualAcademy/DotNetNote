@@ -1,12 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 
 namespace DotNetNote.Models.StudentManager
 {
     /// <summary>
-    /// Student 모델 클래스
+    /// [1] Student 모델 클래스
     /// </summary>
     public class Student
     {
@@ -15,7 +14,7 @@ namespace DotNetNote.Models.StudentManager
     }
 
     /// <summary>
-    /// Student 리포지토리 클래스 
+    /// [2] Student 리포지토리 클래스 - 인메모리 
     /// </summary>
     public class StudentRepository
     {
@@ -24,34 +23,34 @@ namespace DotNetNote.Models.StudentManager
             List<Student> students = new List<Student>();
             students.Add(new Student { StudentId = 1, Name = "홍길동" });
             students.Add(new Student { StudentId = 2, Name = "백두산" });
-            return students; 
+            return students;
         }
     }
 
     /// <summary>
-    /// Student Web API 서비스 클래스 
+    /// [3] Student Web API 서비스 클래스 
     /// </summary>
-    [Route("api/[controller]")]
+    [Route("api/[controller]")] // GET: api/StudentService 
     public class StudentServiceController : Controller
     {
-        private StudentRepository repo;
+        private readonly StudentRepository _repository;
 
         public StudentServiceController()
         {
-            repo = new StudentRepository();
+            _repository = new StudentRepository();
         }
 
         [HttpGet("")]
         public IEnumerable<Student> Get()
         {
-            return repo.GetAllInMemory().AsEnumerable();
+            return _repository.GetAllInMemory().AsEnumerable();
         }
 
         [HttpGet("{id}")]
         public Student GetById(int id)
         {
             // 데이터 조회
-            Student student = repo.GetAllInMemory()[id];
+            Student student = _repository.GetAllInMemory()[id];
             if (student == null)
             {
                 Response.StatusCode = (int)HttpStatusCode.NotFound;
