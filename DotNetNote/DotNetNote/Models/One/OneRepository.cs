@@ -1,7 +1,6 @@
 ﻿using Dapper;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace DotNetNote.Models
@@ -23,7 +22,7 @@ namespace DotNetNote.Models
         public List<One> GetAll()
         {
             string sql = "Select * From Ones Order By Id Asc";
-            return db.Query<One>(sql).ToList(); 
+            return db.Query<One>(sql).ToList();
         }
 
         public One Add(One model)
@@ -34,7 +33,7 @@ namespace DotNetNote.Models
             ";
             var id = db.Query<int>(sql, model).Single();
             model.Id = id;
-            return model; 
+            return model;
         }
     }
 }

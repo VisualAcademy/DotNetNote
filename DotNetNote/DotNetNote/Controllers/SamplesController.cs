@@ -25,20 +25,9 @@ public class SamplesController : Controller
     /// <summary>
     /// jQuery UI 테스트
     /// </summary>
-    public IActionResult jQueryUITest()
-    {
-        return View();
-    }
+    public IActionResult jQueryUITest() => View();
 
+    public IActionResult BootboxDemo() => View();
 
-    public IActionResult BootboxDemo()
-    {
-        return View();
-    }
-
-    public IActionResult BootboxProcess()
-    {
-        return View();
-    }
-
+    public IActionResult BootboxProcess() => View();
 }

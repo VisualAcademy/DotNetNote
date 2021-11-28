@@ -1,9 +1,8 @@
 ﻿using Dapper;
+using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using System;
-using System.Collections.Generic;
 using System.Data;
-using Microsoft.Data.SqlClient;
 using System.Linq;
 
 namespace DotNetNote.Models.RecruitManager
@@ -48,7 +47,7 @@ namespace DotNetNote.Models.RecruitManager
 
         public List<RecruitRegistration> GetAll()
         {
-            string query = 
+            string query =
                 "Select * From RecruitRegistrations Order By Id Desc";
             return db.Query<RecruitRegistration>(query).ToList();
         }
@@ -159,9 +158,13 @@ namespace DotNetNote.Models.RecruitManager
                     And 
                     Username = @Username
             ";
-            var count = db.Query<int>(sqlCount, 
-                new { BoardName = boardName, BoardNum = boardNum,
-                    Username = username }).Single();
+            var count = db.Query<int>(sqlCount,
+                new
+                {
+                    BoardName = boardName,
+                    BoardNum = boardNum,
+                    Username = username
+                }).Single();
 
             if (count > 0)
             {

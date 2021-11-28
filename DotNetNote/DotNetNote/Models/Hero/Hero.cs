@@ -1,13 +1,12 @@
-﻿using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using Microsoft.Data.SqlClient;
-using Dapper;
-using System.Linq;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
+﻿using Dapper;
 using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
+using System;
+using System.Data;
+using System.Linq;
 
 namespace DotNetNote.Models
 {
@@ -40,7 +39,7 @@ namespace DotNetNote.Models
         List<Hero> GetAllHeroesWithPaging(int pageIndex, int pageSize = 10);
 
         // 추가: 이미 등록된 영웅 이름인지 확인
-        Hero GetHeroByName(string name);  
+        Hero GetHeroByName(string name);
     }
 
     /// <summary>
@@ -60,7 +59,7 @@ namespace DotNetNote.Models
             _config = config;
             string connectionString = _config.GetSection("ConnectionString").Value;
             //db = new SqlConnection(_config.GetSection("ConnectionStrings").GetSection("DefaultConnection").Value);
-            db = new SqlConnection(connectionString); 
+            db = new SqlConnection(connectionString);
         }
 
         /// <summary>
@@ -178,7 +177,7 @@ namespace DotNetNote.Models
         public HeroController(IHeroRepository repository, ILogger<HeroController> logger)
         {
             _repository = repository;
-            _logger = logger; 
+            _logger = logger;
         }
 
         /// <summary>
@@ -291,7 +290,7 @@ namespace DotNetNote.Models
                 return BadRequest();
             }
         }
-        
+
         /// <summary>
         /// GET: /api/heroes/{id}
         /// </summary>
@@ -321,7 +320,7 @@ namespace DotNetNote.Models
         [HttpPost]
         [Produces("application/json", Type = typeof(Hero))]
         [Consumes("application/json")] // application/xml 
-        public IActionResult Post([FromBody]Hero model) // Deserialize, 생성 전용 DTO 클래스 사용 가능
+        public IActionResult Post([FromBody] Hero model) // Deserialize, 생성 전용 DTO 클래스 사용 가능
         {
             // 예외 처리 방법
             if (model == null)
@@ -366,7 +365,7 @@ namespace DotNetNote.Models
 
         // PUT: /api/heroes/{id}
         [HttpPut("{id:int}")] // HttpPatch == 부분 업데이트 
-        public IActionResult Put(int id, [FromBody]Hero model)
+        public IActionResult Put(int id, [FromBody] Hero model)
         {
             if (model == null)
             {
