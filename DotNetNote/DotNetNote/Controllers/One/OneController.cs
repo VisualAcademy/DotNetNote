@@ -1,30 +1,28 @@
-﻿using DotNetNote.Models;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
-namespace DotNetNote.Controllers
+namespace DotNetNote.Controllers;
+
+public class OneController : Controller
 {
-    public class OneController : Controller
+    private IOneRepository _repository;
+
+    public OneController(IOneRepository repository)
     {
-        private IOneRepository _repository;
+        _repository = repository;
+    }
 
-        public OneController(IOneRepository repository)
-        {
-            _repository = repository; 
-        }
+    [HttpGet]
+    public IActionResult Index()
+    {
+        var ones = _repository.GetAll();
+        return View(ones);
+    }
 
-        [HttpGet]
-        public IActionResult Index()
-        {
-            var ones = _repository.GetAll(); 
-            return View(ones);
-        }
+    [HttpPost]
+    public IActionResult Index(One model)
+    {
+        _repository.Add(model);
 
-        [HttpPost]
-        public IActionResult Index(One model)
-        {
-            _repository.Add(model);
-
-            return RedirectToAction(nameof(Index));
-        }
+        return RedirectToAction(nameof(Index));
     }
 }

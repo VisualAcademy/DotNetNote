@@ -1,36 +1,33 @@
-﻿using DotNetNote.Models;
-using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 
-namespace DotNetNote.Controllers
+namespace DotNetNote.Controllers;
+
+[Route("api/[controller]")]
+public class OneServiceController : Controller
 {
-    [Route("api/[controller]")]
-    public class OneServiceController : Controller
+    private IOneRepository _repository;
+
+    public OneServiceController(IOneRepository repository)
     {
-        private IOneRepository _repository;
+        _repository = repository;
+    }
 
-        public OneServiceController(IOneRepository repository)
-        {
-            _repository = repository;
-        }
+    [HttpGet]
+    public IEnumerable<One> Get()
+    {
+        return _repository.GetAll().AsEnumerable();
+    }
 
-        [HttpGet]
-        public IEnumerable<One> Get()
-        {
-            return _repository.GetAll().AsEnumerable();
-        }
+    [HttpGet("{id}")]
+    public One Get(int id)
+    {
+        return Get().Where(o => o.Id == id).Single();
+    }
 
-        [HttpGet("{id}")]
-        public One Get(int id)
-        {
-            return Get().Where(o => o.Id == id).Single(); 
-        }
-
-        [HttpPost]
-        public One Post([FromBody]One model)
-        {
-            return _repository.Add(model); 
-        }
+    [HttpPost]
+    public One Post([FromBody] One model)
+    {
+        return _repository.Add(model);
     }
 }

@@ -1,63 +1,61 @@
-﻿using DotNetNote.Models;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 
-namespace DotNetNote.Controllers
+namespace DotNetNote.Controllers;
+
+[Route("api/[controller]")]
+public class ThreeServiceController : Controller
 {
-    [Route("api/[controller]")]
-    public class ThreeServiceController : Controller
+    private IThreeRepository _repository;
+
+    public ThreeServiceController(IThreeRepository repository)
     {
-        private IThreeRepository _repository;
+        _repository = repository;
+    }
 
-        public ThreeServiceController(IThreeRepository repository)
+    [HttpGet]
+    public IActionResult Get()
+    {
+        try
         {
-            _repository = repository;
+            var threes = _repository.GetAll();
+            if (threes == null)
+            {
+                return NotFound($"아무런 데이터가 없습니다.");
+            }
+            return Ok(threes);
         }
-
-        [HttpGet]
-        public IActionResult Get()
+        catch
         {
-            try
-            {
-                var threes = _repository.GetAll();
-                if (threes == null)
-                {
-                    return NotFound($"아무런 데이터가 없습니다.");
-                }
-                return Ok(threes);
-            }
-            catch
-            {
 
-            }
-            return BadRequest();
         }
+        return BadRequest();
+    }
 
-        [HttpPost]
-        [Produces("application/json", Type = typeof(ThreeViewModel))]
-        [Consumes("application/json")]
-        public IActionResult Post([FromBody]ThreeViewModel model)
+    [HttpPost]
+    [Produces("application/json", Type = typeof(ThreeViewModel))]
+    [Consumes("application/json")]
+    public IActionResult Post([FromBody] ThreeViewModel model)
+    {
+        try
         {
-            try
+            // 모델 유효성 검사
+            if (!ModelState.IsValid)
             {
-                // 모델 유효성 검사
-                if (!ModelState.IsValid)
-                {
-                    return BadRequest(ModelState); // 400 에러 출력
-                }
-                var m = _repository.Add(model);
-                return CreatedAtAction("Get", new { id = m.Id }, m); // 201
+                return BadRequest(ModelState); // 400 에러 출력
             }
-            catch 
-            {
-            }
-            return BadRequest(); 
+            var m = _repository.Add(model);
+            return CreatedAtAction("Get", new { id = m.Id }, m); // 201
         }
-
-        [HttpGet("{id:int}")]
-        public ThreeViewModel Get(int id)
+        catch
         {
-            return _repository.GetAll().Where(m => m.Id == id).Single(); 
         }
+        return BadRequest();
+    }
+
+    [HttpGet("{id:int}")]
+    public ThreeViewModel Get(int id)
+    {
+        return _repository.GetAll().Where(m => m.Id == id).Single();
     }
 }
