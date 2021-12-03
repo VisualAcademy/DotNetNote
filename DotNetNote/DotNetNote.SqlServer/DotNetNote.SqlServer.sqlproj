@@ -81,11 +81,11 @@
     <Folder Include="dbo\Tables\Points" />
     <Folder Include="dbo\Tables\RecruitManager" />
     <Folder Include="dbo\Tables\TabManager" />
-    <Folder Include="DotNetSale" />
-    <Folder Include="Ideas" />
-    <Folder Include="Blogs" />
-    <Folder Include="Heroes" />
-    <Folder Include="Notifications" />
+    <Folder Include="dbo\Tables\Blogs" />
+    <Folder Include="dbo\Tables\Notifications" />
+    <Folder Include="dbo\Tables\Ideas" />
+    <Folder Include="dbo\Tables\Heroes" />
+    <Folder Include="dbo\Tables\DotNetSale" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Users\Stored Procedures\GetUsers.sql" />
@@ -149,13 +149,13 @@
     <Build Include="dbo\Tables\Twos.sql" />
     <Build Include="dbo\Tables\Urls.sql" />
     <Build Include="dbo\Tables\Warehouses.sql" />
-    <Build Include="DotNetSale\01_Categories.sql" />
-    <Build Include="Ideas\Ideas.sql" />
-    <Build Include="Blogs\Blogs.sql" />
-    <Build Include="Blogs\Comments.sql" />
-    <Build Include="Blogs\Posts.sql" />
-    <Build Include="Blogs\BlogPosts.sql" />
-    <Build Include="Heroes\Heroes.sql" />
-    <Build Include="Notifications\MyNotifications.sql" />
+    <Build Include="dbo\Tables\Blogs\BlogPosts.sql" />
+    <Build Include="dbo\Tables\Blogs\Blogs.sql" />
+    <Build Include="dbo\Tables\Blogs\Comments.sql" />
+    <Build Include="dbo\Tables\Blogs\Posts.sql" />
+    <Build Include="dbo\Tables\Notifications\MyNotifications.sql" />
+    <Build Include="dbo\Tables\Ideas\Ideas.sql" />
+    <Build Include="dbo\Tables\Heroes\Heroes.sql" />
+    <Build Include="dbo\Tables\DotNetSale\01_Categories.sql" />
   </ItemGroup>
 </Project>
