@@ -1,4 +1,4 @@
-﻿namespace DotNetNote.Models
+﻿namespace DotNetNote.Models.Categories
 {
     // 모델 클래스: Category, CategoryModel, CategoryViewModel, CategoryDto, ...
     public class Category

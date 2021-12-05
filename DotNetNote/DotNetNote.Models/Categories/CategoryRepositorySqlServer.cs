@@ -1,7 +1,6 @@
-﻿using DotNetNote.Models;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-namespace DotNetSaleCom.Models
+namespace DotNetNote.Models.Categories
 {
     public class CategoryRepositorySqlServer : ICategoryRepository
     {

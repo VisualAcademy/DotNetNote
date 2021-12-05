@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using DotNetNote.Models;
-using DotNetSaleCom.Models;
+﻿using DotNetNote.Models.Categories;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DotNetSaleCom.Controllers
@@ -12,7 +10,7 @@ namespace DotNetSaleCom.Controllers
 
         public CategoryServicesController(ICategoryRepository repository)
         {
-            _repository = repository; 
+            _repository = repository;
         }
 
         [HttpGet]
@@ -20,7 +18,7 @@ namespace DotNetSaleCom.Controllers
         {
             //return (new CategoryRepositoryInMemory()).GetCategories();
             //return (new CategoryRepositorySqlServer()).GetCategories();
-            return _repository.GetCategories(); 
+            return _repository.GetCategories();
         }
     }
 }
