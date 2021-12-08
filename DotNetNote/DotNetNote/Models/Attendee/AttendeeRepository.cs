@@ -1,7 +1,6 @@
 ﻿using Dapper;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace DotNetNote.Models
@@ -27,7 +26,7 @@ namespace DotNetNote.Models
         public void Add(Attendee model)
         {
             var sql =
-                "Insert Into Attendees (UID, UserId, Name) " 
+                "Insert Into Attendees (UID, UserId, Name) "
                 + " Values (@UID, @UserId, @Name)";
             con.Execute(sql, model);
         }

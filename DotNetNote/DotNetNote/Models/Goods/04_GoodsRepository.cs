@@ -1,9 +1,8 @@
-﻿using Microsoft.Extensions.Configuration;
-using System.Collections.Generic;
-using System.Data;
+﻿using Dapper;
 using Microsoft.Data.SqlClient;
+using Microsoft.Extensions.Configuration;
+using System.Data;
 using System.Linq;
-using Dapper;
 
 namespace DotNetNote.Models
 {
@@ -14,13 +13,13 @@ namespace DotNetNote.Models
     public class GoodsRepository : IGoodsRepository
     {
         private readonly IConfiguration _configuration;
-        private IDbConnection db; 
-        
+        private IDbConnection db;
+
         public GoodsRepository(IConfiguration configuration)
         {
             _configuration = configuration;
             string connectionString = _configuration.GetSection("ConnectionString").Value;
-            db = new SqlConnection(connectionString); 
+            db = new SqlConnection(connectionString);
         }
 
         /// <summary>
@@ -33,7 +32,7 @@ namespace DotNetNote.Models
                 Select Cast(SCOPE_IDENTITY() As Int);
             ";
             model.GoodsId = db.Query<int>(sql, model).Single();
-            return model; 
+            return model;
         }
 
         /// <summary>
@@ -42,7 +41,7 @@ namespace DotNetNote.Models
         public List<GoodsBase> GetAllGoods()
         {
             string query = "Select * From Goods Order By GoodsId Desc";
-            return db.Query<GoodsBase>(query).ToList(); 
+            return db.Query<GoodsBase>(query).ToList();
         }
 
         /// <summary>
@@ -53,7 +52,7 @@ namespace DotNetNote.Models
             var q = "Select * From Goods Where GoodsId = @GoodsId";
             return db.Query<GoodsBase>(q, new { GoodsId = goodsId }).SingleOrDefault(); // null 반환 허용 
         }
-        
+
         /// <summary>
         /// 수정 메서드: Update, UpdateGoods, Edit, Modify 
         /// </summary>
@@ -84,7 +83,7 @@ namespace DotNetNote.Models
 
             // 실행
             db.Execute(query, parameters, commandType: CommandType.Text);
-            return model; 
+            return model;
         }
 
         /// <summary>
@@ -93,7 +92,7 @@ namespace DotNetNote.Models
         public void RemoveGoods(int id)
         {
             var q = "Delete From Goods Where GoodsId = @GoodsId";
-            db.Execute(q, new { GoodsId = id }); 
+            db.Execute(q, new { GoodsId = id });
         }
 
         ///// <summary>
@@ -110,7 +109,7 @@ namespace DotNetNote.Models
         /// </summary>
         public GoodsSet GetAllGoodsWithPaging(int pageNumber = 1, int pageSize = 10)
         {
-            GoodsSet goodsSet = new GoodsSet(); 
+            GoodsSet goodsSet = new GoodsSet();
 
             var q =
                 "Select Count(*) From Goods; " +
@@ -125,10 +124,10 @@ namespace DotNetNote.Models
                 var list = multiRecords.Read<GoodsBase>().ToList();
 
                 goodsSet.GoodsCount = count;
-                goodsSet.Goods = list; 
+                goodsSet.Goods = list;
             }
 
-            return goodsSet; 
+            return goodsSet;
         }
     }
 }

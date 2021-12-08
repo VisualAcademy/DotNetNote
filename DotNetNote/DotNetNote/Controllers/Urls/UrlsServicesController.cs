@@ -1,9 +1,7 @@
-﻿using DotNetNote.Models;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -117,10 +115,10 @@ namespace DotNetNote.Controllers
         [HttpPost]
         [Route("api/UrlsServices/PostUrl")]
         [AllowAnonymous]
-        public IActionResult PostUrl([FromBody]Url url)
+        public IActionResult PostUrl([FromBody] Url url)
         {
 
-            url.Created = DateTime.Now; 
+            url.Created = DateTime.Now;
 
             if (ModelState.IsValid)
             {
@@ -131,7 +129,7 @@ namespace DotNetNote.Controllers
 
 
                     _context.Urls.Add(url);
-                    _context.SaveChanges(); 
+                    _context.SaveChanges();
 
                     // 201 응답을 생성합니다.
                     var response = new HttpResponseMessage(HttpStatusCode.Created)

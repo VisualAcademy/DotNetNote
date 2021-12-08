@@ -1,6 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-// using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace DotNetNote.Controllers
@@ -19,7 +17,7 @@ namespace DotNetNote.Controllers
         //[HttpGet("{id=1000}")] // 기본 값
         [HttpGet("{id:int}")] // 제약조건
         //public string Get([FromRoute]int id, [FromQuery]string query)
-        public IActionResult Get([FromRoute]int id, [FromQuery]string query)
+        public IActionResult Get([FromRoute] int id, [FromQuery] string query)
         {
             //return $"넘어온 값: {id}, {query}";
             return Ok(new Dto { Id = id, Text = $"값: {id}" });
@@ -27,7 +25,7 @@ namespace DotNetNote.Controllers
 
         [HttpPost]
         //public void Post([FromBody]Dto value)
-        public IActionResult Post([FromBody]Dto value)
+        public IActionResult Post([FromBody] Dto value)
         {
             if (!ModelState.IsValid)
             {
@@ -42,7 +40,7 @@ namespace DotNetNote.Controllers
         }
 
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody]Dto value)
+        public void Put(int id, [FromBody] Dto value)
         {
 
         }

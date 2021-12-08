@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 
 namespace ApiHelloWorld.Controllers
@@ -49,7 +48,7 @@ namespace ApiHelloWorld.Controllers
         [HttpPost]
         [Produces("application/json", Type = typeof(Value))]
         [Consumes("application/json")]
-        public IActionResult Post([FromBody]Value value)
+        public IActionResult Post([FromBody] Value value)
         {
             // 모델 유효성 검사
             if (!ModelState.IsValid)
