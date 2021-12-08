@@ -1,5 +1,4 @@
-﻿using DotNetNote.Models;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace MemberManagement.Data
 {
@@ -16,7 +15,7 @@ namespace MemberManagement.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-        
+
         }
     }
 }
