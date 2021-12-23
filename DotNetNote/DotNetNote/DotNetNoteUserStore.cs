@@ -1,10 +1,8 @@
 ﻿using Dapper;
 using Microsoft.AspNetCore.Identity;
-using System;
-using System.Collections.Generic;
-using System.Data;
 using Microsoft.Data.SqlClient;
-using System.Linq;
+using System;
+using System.Data;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -16,12 +14,12 @@ namespace DotNetNoteCore
         {
             var con = new SqlConnection("server=(localdb)\\mssqllocaldb;database=DotNetNote;integrated security=true;");
             con.Open();
-            return con; 
+            return con;
         }
 
         public async Task<IdentityResult> CreateAsync(DotNetNoteUser user, CancellationToken cancellationToken)
         {
-            string sql = 
+            string sql =
                 "Insert Into DotNetNoteUsers(Id, UserName, NormalizedUserName, PasswordHash) " +
                 "Values(@Id, @UserName, @NormalizedUserName, @PasswordHash)";
             using (var con = GetDbConnection())
@@ -45,7 +43,7 @@ namespace DotNetNoteCore
 
         public void Dispose()
         {
-            
+
         }
 
         public async Task<DotNetNoteUser> FindByIdAsync(string userId, CancellationToken cancellationToken)
@@ -68,45 +66,45 @@ namespace DotNetNoteCore
 
         public Task<string> GetNormalizedUserNameAsync(DotNetNoteUser user, CancellationToken cancellationToken)
         {
-            return Task.FromResult(user.NormalizedUserName); 
+            return Task.FromResult(user.NormalizedUserName);
         }
 
         public Task<string> GetPasswordHashAsync(DotNetNoteUser user, CancellationToken cancellationToken)
         {
-            return Task.FromResult(user.PasswordHash); 
+            return Task.FromResult(user.PasswordHash);
         }
 
         public Task<string> GetUserIdAsync(DotNetNoteUser user, CancellationToken cancellationToken)
         {
-            return Task.FromResult(user.Id); 
+            return Task.FromResult(user.Id);
         }
 
         public Task<string> GetUserNameAsync(DotNetNoteUser user, CancellationToken cancellationToken)
         {
-            return Task.FromResult(user.UserName); 
+            return Task.FromResult(user.UserName);
         }
 
         public Task<bool> HasPasswordAsync(DotNetNoteUser user, CancellationToken cancellationToken)
         {
-            return Task.FromResult(user.PasswordHash != null); 
+            return Task.FromResult(user.PasswordHash != null);
         }
 
         public Task SetNormalizedUserNameAsync(DotNetNoteUser user, string normalizedName, CancellationToken cancellationToken)
         {
             user.NormalizedUserName = normalizedName;
-            return Task.CompletedTask; 
+            return Task.CompletedTask;
         }
 
         public Task SetPasswordHashAsync(DotNetNoteUser user, string passwordHash, CancellationToken cancellationToken)
         {
             user.PasswordHash = passwordHash;
-            return Task.CompletedTask; 
+            return Task.CompletedTask;
         }
 
         public Task SetUserNameAsync(DotNetNoteUser user, string userName, CancellationToken cancellationToken)
         {
             user.UserName = userName;
-            return Task.CompletedTask; 
+            return Task.CompletedTask;
         }
 
         public async Task<IdentityResult> UpdateAsync(DotNetNoteUser user, CancellationToken cancellationToken)
