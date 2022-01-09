@@ -453,8 +453,10 @@ public class Startup
 
         app.UseRouting();
 
+
         // Azure Web App 고유 경로 요청시 www.dotnetnote.com 경로로 영구 이동 
         app.UseRewriter(new RewriteOptions().Add(new RedirectAzureWebsitesRule()).AddRedirectToWwwPermanent());
+
 
         app.UseAuthentication();
         app.UseAuthorization();
@@ -625,6 +627,10 @@ public class Startup
     }
 }
 
+
+/// <summary>
+/// 메인 도메인으로 이동시키기 
+/// </summary>
 public class RedirectAzureWebsitesRule : IRule
 {
     public int StatusCode { get; } = (int)HttpStatusCode.MovedPermanently;
