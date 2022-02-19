@@ -46,13 +46,22 @@
         <!-- Global site tag (gtag.js) - Google Analytics -->
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-WMBPQEZ3RN"></script>
         <script>
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
 
-          gtag('config', 'G-WMBPQEZ3RN');
+            gtag('config', 'G-WMBPQEZ3RN');
         </script>
     </environment>
+
+    <script type="importmap">
+        {
+          "imports": {
+            "vue": "https://unpkg.com/vue@3/dist/vue.esm-browser.js"
+          }
+        }
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.26.0/axios.min.js"></script>
 </head>
 <body>
     <header>
@@ -67,7 +76,7 @@
                     <partial name="_LoginPartial" />
                     <ul class="navbar-nav flex-grow-1">
                         @*<li class="nav-item d-sm-none d-md-none d-lg-block">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                             </li>*@
                         <li class="dropdown nav-item d-sm-none d-md-block">
                             <a class="dropdown-toggle nav-link text-dark" href="#" role="button" id="ddlPages" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

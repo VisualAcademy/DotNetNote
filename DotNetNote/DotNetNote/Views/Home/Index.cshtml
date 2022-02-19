@@ -247,6 +247,36 @@
 </div>
 <br />
 
+
+<div class="row">
+    <div class="col-md-6">
+        <h3 class="MainSummaryTitle">
+            <a class="readMore" asp-controller="DotNetNote" asp-action="Index"
+               title="닷넷노트">리스트</a>
+            <i class="fa fa-table"></i>&nbsp;&nbsp;
+            <span class="sprite sprite_notice">
+                최근 글 리스트
+                <i style="font-size:small;">(with Web API + Vue.js)</i>
+            </span>
+        </h3>
+        <partial name="~/Views/DotNetNote/Widgets/_RecentlyNoteListVue.cshtml" />
+    </div>
+    <div class="col-md-6">
+        <h3 class="MainSummaryTitle">
+            <a class="readMore" asp-controller="DotNetNote" asp-action="Index"
+               title="닷넷노트">리스트</a>
+            <i class="fa fa-table"></i>&nbsp;&nbsp;
+            <span class="sprite sprite_notice">
+                최근 댓글 리스트
+                <i style="font-size:small;">(with Web API + Vue.js)</i>
+            </span>
+        </h3>
+        <partial name="~/Views/DotNetNote/Widgets/_RecentlyNoteCommentListVue.cshtml" />
+    </div>
+</div>
+<br />
+
+
 <div class="row">
     <div class="col-md-6">
         <h3 class="MainSummaryTitle">
