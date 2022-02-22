@@ -9,5 +9,7 @@ namespace DotNetNote.Data
             : base(options)
         {
         }
+
+        public DbSet<CabinetType> CabinetTypes { get; set; } = null!;
     }
 }
