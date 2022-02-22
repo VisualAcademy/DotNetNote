@@ -157,5 +157,6 @@
     <Build Include="dbo\Tables\Ideas\Ideas.sql" />
     <Build Include="dbo\Tables\Heroes\Heroes.sql" />
     <Build Include="dbo\Tables\DotNetSale\01_Categories.sql" />
+    <Build Include="dbo\Tables\CabinetTypes.sql" />
   </ItemGroup>
 </Project>
