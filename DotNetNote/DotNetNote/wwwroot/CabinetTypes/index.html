@@ -20,6 +20,14 @@
     <div id="appCabinetTypesVue" class="container">
         <h1>{{title}}</h1>
 
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" v-model="identification" />
+            <button class="btn btn-outline-secondary"
+                    v-on:click="btnAdd_Click">
+                Add
+            </button>
+        </div>
+
         <table class="table table-bordered table-hover">
             <colgroup>
                 <col style="width: 50%;">
@@ -37,10 +45,22 @@
             </thead>
             <tbody>
                 <tr v-for="vm in models" v-bind:key="vm.id">
-                    <td>{{vm.identification}}</td>
-                    <td>{{vm.show}}</td>
+                    <td>
+                        <span v-if="vm.show == true">
+                            {{vm.identification}}
+                        </span>
+                        <span v-else style="text-decoration: line-through;">
+                            {{vm.identification}}
+                        </span>
+                    </td>
+                    <td>
+                        <input type="checkbox" v-model="vm.show">
+                    </td>
                     <td></td>
-                    <td>...</td>
+                    <td>
+                        <a href="#" v-on:click="btnToggle_Click(vm)">Toggle</a> |
+                        <a href="#" v-on:click="btnDelete_Click(`${vm.id}`)">Delete</a>
+                    </td>
                 </tr>
             </tbody>
         </table>
@@ -57,11 +77,58 @@
                         { "id": 2, "identification": "이름 2", "show": false },
                         { "id": 3, "identification": "이름 3", "show": true }
                     ],
-                    models: []
+                    models: [],
+                    identification: "",
+                    show: true,
+                    adjusted: false
                 };
             },
+            methods: {
+                async btnAdd_Click() {
+                    // Crud: 데이터 저장
+                    await axios.post("/api/CabinetTypes", {
+                        identification: this.identification,
+                        show: this.show,
+                        adjusted: this.adjusted
+                    });
+
+                    this.identification = "";
+
+                    // 다시 읽어오기
+                    this.displayData();
+                },
+                async btnToggle_Click(vm) {
+                    // crUd: 데이터 수정
+                    await axios.put(`/api/CabinetTypes/${vm.id}`, {
+                        id: vm.id,
+                        identification: vm.identification,
+                        show: !vm.show,
+                        adjusted: vm.adjusted
+                    });
+
+                    // 다시 읽어오기
+                    this.displayData();
+                },
+                async btnDelete_Click(id) {
+                    if (!window.confirm("정말로 삭제하시겠습니까?")) {
+                        return false;
+                    }
+
+                    //cruD: 데이터 삭제
+                    await axios.delete(`/api/CabinetTypes/${id}`);
+
+                    // 다시 읽어오기
+                    this.displayData();
+                },
+                async displayData() {
+                    // cRud: 데이터 출력
+                    const result = await axios.get("/api/CabinetTypes");
+                    const models = result.data;
+                    this.models = models;
+                }
+            },
             async created() {
-                // cRud
+                // cRud: 데이터 출력
                 const result = await axios.get("/api/CabinetTypes");
                 const models = result.data;
                 this.models = models;
