@@ -1,13 +1,9 @@
 ﻿#nullable disable
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+using DotNetNote.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using DotNetNote.Data;
-using DotNetNote.Models;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace DotNetNote.Apis
 {
