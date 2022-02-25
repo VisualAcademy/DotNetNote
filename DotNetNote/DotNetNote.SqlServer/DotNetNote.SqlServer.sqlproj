@@ -86,6 +86,7 @@
     <Folder Include="dbo\Tables\Ideas" />
     <Folder Include="dbo\Tables\Heroes" />
     <Folder Include="dbo\Tables\DotNetSale" />
+    <Folder Include="dbo\Tables\Acts" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Users\Stored Procedures\GetUsers.sql" />
@@ -158,5 +159,6 @@
     <Build Include="dbo\Tables\Heroes\Heroes.sql" />
     <Build Include="dbo\Tables\DotNetSale\01_Categories.sql" />
     <Build Include="dbo\Tables\CabinetTypes.sql" />
+    <Build Include="dbo\Tables\Acts\ActionCategories.sql" />
   </ItemGroup>
 </Project>
