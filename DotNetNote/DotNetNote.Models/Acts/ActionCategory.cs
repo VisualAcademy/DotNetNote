@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Acts.Models
+﻿namespace Acts.Models
 {
     public partial class ActionCategory
     {
