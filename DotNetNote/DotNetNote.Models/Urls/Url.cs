@@ -12,19 +12,23 @@ namespace DotNetNote.Models
         /// 일련번호
         /// </summary>
         public int Id { get; set; }
+
         /// <summary>
         /// 도메인
         /// </summary>
         [Required]
         public string SiteUrl { get; set; }
+
         /// <summary>
         /// 비고
         /// </summary>
         public string Content { get; set; }
+
         /// <summary>
         /// 등록자
         /// </summary>
         public string UserName { get; set; }
+
         /// <summary>
         /// 등록일: Created, DateReleased, CreatedAt, ...
         /// </summary>

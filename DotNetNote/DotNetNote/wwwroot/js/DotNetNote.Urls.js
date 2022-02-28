@@ -1,9 +1,9 @@
 ﻿/**
- * @target 게시판 페이지 관리 모듈
+ * @target URL 관리 모듈
  */
 
 /**
- * 게시판 페이지 공지사항 관리 모듈 개체입니다.
+ * URL 관리 모듈 개체입니다.
  * 
  * @type {object}
  * @class urlManager
@@ -87,7 +87,7 @@ var urlManager = (function () {
                         $("#dnnMainIndex .page").html(html);
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
-                        console.log("공지사항 목록을 가져오던 중, 알 수 없는 오류가 발생했습니다.");
+                        console.log("URL 목록을 가져오던 중, 알 수 없는 오류가 발생했습니다.");
                     }
                 });
             } catch (e) {
@@ -187,7 +187,7 @@ var urlManager = (function () {
                         }
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
-                        console.log("공지사항 상세정보를 가져오던 중, 알 수 없는 오류가 발생했습니다.");
+                        console.log("URL 상세정보를 가져오던 중, 알 수 없는 오류가 발생했습니다.");
                     }
                 });
             } catch (e) {
@@ -265,7 +265,7 @@ var urlManager = (function () {
 
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
-                        console.log("도메인 상세정보를 가져오던 중, 알 수 없는 오류가 발생했습니다.");
+                        console.log("URL 상세정보를 가져오던 중, 알 수 없는 오류가 발생했습니다.");
                     }
                 });
             } catch (e) {
