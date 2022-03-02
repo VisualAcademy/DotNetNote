@@ -1,5 +1,6 @@
 ﻿using DotNetNote.Common;
 using DotNetNote.Components;
+using DotNetNote.Data;
 using DotNetNote.Models.Buyers;
 using DotNetNote.Models.Categories;
 using DotNetNote.Models.Companies;
@@ -262,7 +263,7 @@ public class Startup
         //    options.MinimumSameSitePolicy = SameSiteMode.None;
         //});
 
-        //services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+        services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
         //services.AddDefaultIdentity<IdentityUser>().AddDefaultUI(UIFramework.Bootstrap4).AddEntityFrameworkStores<ApplicationDbContext>();
 
 
