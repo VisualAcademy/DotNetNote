@@ -88,6 +88,7 @@
     <Folder Include="dbo\Tables\DotNetSale" />
     <Folder Include="dbo\Tables\Acts" />
     <Folder Include="dbo\Tables\Urls" />
+    <Folder Include="dbo\Tables\CabinetTypes" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Users\Stored Procedures\GetUsers.sql" />
@@ -158,8 +159,8 @@
     <Build Include="dbo\Tables\Ideas\Ideas.sql" />
     <Build Include="dbo\Tables\Heroes\Heroes.sql" />
     <Build Include="dbo\Tables\DotNetSale\01_Categories.sql" />
-    <Build Include="dbo\Tables\CabinetTypes.sql" />
     <Build Include="dbo\Tables\Acts\ActionCategories.sql" />
     <Build Include="dbo\Tables\Urls\Urls.sql" />
+    <Build Include="dbo\Tables\CabinetTypes\CabinetTypes.sql" />
   </ItemGroup>
 </Project>
