@@ -116,6 +116,7 @@
                     const models = result.data;
                     this.models = models;
 
+                    // axios로 서버에서 전송된 헤더값 받기
                     this.recordCount = result.headers["x-totalrecordcount"];
                     //console.log(this.recordCount);
                 },
