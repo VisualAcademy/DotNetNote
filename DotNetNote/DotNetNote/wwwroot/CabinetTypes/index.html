@@ -17,6 +17,111 @@
             }
         }
     </script>
+
+
+    <script type="module">
+        import { createApp } from 'vue';
+
+        import DulPager from './DulPager.js';
+
+        createApp({
+            components: {
+                DulPager
+            },
+            data() {
+                return {
+                    title: "Vue.js CRUD 연습",
+                    modelstest: [
+                        { "id": 1, "identification": "이름 1", "show": true },
+                        { "id": 2, "identification": "이름 2", "show": false },
+                        { "id": 3, "identification": "이름 3", "show": true }
+                    ],
+                    models: [],
+                    identification: "",
+                    show: true,
+                    adjusted: false,
+
+
+                    pageNumber: 1,
+                    pageSize: 5,
+                    pagerButtonCount: 5,
+                    recordCount: 0,
+                    pageIndex: 0
+
+                };
+            },
+            methods: {
+                async btnAdd_Click() {
+                    // Crud: 데이터 저장
+                    await axios.post("/api/CabinetTypes", {
+                        identification: this.identification,
+                        show: this.show,
+                        adjusted: this.adjusted
+                    });
+
+                    this.identification = "";
+
+                    // 다시 읽어오기
+                    this.displayData();
+                },
+                async btnToggle_Click(vm) {
+                    // crUd: 데이터 수정
+                    await axios.put(`/api/CabinetTypes/${vm.id}`, {
+                        id: vm.id,
+                        identification: vm.identification,
+                        show: !vm.show,
+                        adjusted: vm.adjusted
+                    });
+
+                    // 다시 읽어오기
+                    this.displayData();
+                },
+                async btnDelete_Click(id) {
+                    if (!window.confirm("정말로 삭제하시겠습니까?")) {
+                        return false;
+                    }
+
+                    //cruD: 데이터 삭제
+                    await axios.delete(`/api/CabinetTypes/${id}`);
+
+                    // 다시 읽어오기
+                    this.displayData();
+                },
+                async displayData_() {
+                    // cRud: 데이터 출력
+                    const result = await axios.get("/api/CabinetTypes");
+                    const models = result.data;
+                    this.models = models;
+                },
+                async displayData() {
+                    // cRud: 데이터 출력
+                    const result = await axios.get(`/api/CabinetTypes/Page/${this.pageNumber}/${this.pageSize}`);
+                    const models = result.data;
+                    this.models = models;
+
+                    this.recordCount = result.headers["x-totalrecordcount"];
+                    //console.log(this.recordCount);
+                },
+
+                // TODO:
+                pageIndexChanged(pageIndex) {
+                    //alert(pageIndex);
+                    this.pageNumber = pageIndex + 1;
+                    this.displayData(); 
+                },
+
+            },
+            async created() {
+                //// cRud: 데이터 출력
+                //const result = await axios.get("/api/CabinetTypes");
+                //const models = result.data;
+                //this.models = models;
+                this.displayData(); 
+            }
+        }).mount("#appCabinetTypesVue");
+    </script>
+
+
     <div id="appCabinetTypesVue" class="container">
         <h1>{{title}}</h1>
 
@@ -64,76 +169,18 @@
                 </tr>
             </tbody>
         </table>
+
+        <hr />
+
+        <dul-pager 
+            :page-number="pageNumber"
+            :page-size="pageSize"
+            :pager-button-count="pagerButtonCount"
+            :record-count="recordCount"
+            :page-index-changed="pageIndexChanged"
+        ></dul-pager>
+
     </div>
-    <script type="module">
-        import { createApp } from 'vue';
 
-        createApp({
-            data() {
-                return {
-                    title: "Vue.js CRUD 연습",
-                    modelstest: [
-                        { "id": 1, "identification": "이름 1", "show": true },
-                        { "id": 2, "identification": "이름 2", "show": false },
-                        { "id": 3, "identification": "이름 3", "show": true }
-                    ],
-                    models: [],
-                    identification: "",
-                    show: true,
-                    adjusted: false
-                };
-            },
-            methods: {
-                async btnAdd_Click() {
-                    // Crud: 데이터 저장
-                    await axios.post("/api/CabinetTypes", {
-                        identification: this.identification,
-                        show: this.show,
-                        adjusted: this.adjusted
-                    });
-
-                    this.identification = "";
-
-                    // 다시 읽어오기
-                    this.displayData();
-                },
-                async btnToggle_Click(vm) {
-                    // crUd: 데이터 수정
-                    await axios.put(`/api/CabinetTypes/${vm.id}`, {
-                        id: vm.id,
-                        identification: vm.identification,
-                        show: !vm.show,
-                        adjusted: vm.adjusted
-                    });
-
-                    // 다시 읽어오기
-                    this.displayData();
-                },
-                async btnDelete_Click(id) {
-                    if (!window.confirm("정말로 삭제하시겠습니까?")) {
-                        return false;
-                    }
-
-                    //cruD: 데이터 삭제
-                    await axios.delete(`/api/CabinetTypes/${id}`);
-
-                    // 다시 읽어오기
-                    this.displayData();
-                },
-                async displayData() {
-                    // cRud: 데이터 출력
-                    const result = await axios.get("/api/CabinetTypes");
-                    const models = result.data;
-                    this.models = models;
-                }
-            },
-            async created() {
-                // cRud: 데이터 출력
-                const result = await axios.get("/api/CabinetTypes");
-                const models = result.data;
-                this.models = models;
-            }
-        }).mount("#appCabinetTypesVue");
-    </script>
 </body>
 </html>
