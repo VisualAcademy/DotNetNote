@@ -22,11 +22,12 @@
     <script type="module">
         import { createApp } from 'vue';
 
-        import DulPager from './DulPager.js';
+        import DulPager from './DulPager.js'; // 페이저 컴포넌트
+        import DulSearchBox from "./DulSearchBox.js"; // 검색 컴포넌트 
 
         createApp({
             components: {
-                DulPager
+                DulPager, DulSearchBox
             },
             data() {
                 return {
@@ -46,7 +47,9 @@
                     pageSize: 5,
                     pagerButtonCount: 5,
                     recordCount: 0,
-                    pageIndex: 0
+                    pageIndex: 0,
+
+                    searchQuery: ""
 
                 };
             },
@@ -94,8 +97,18 @@
                     this.models = models;
                 },
                 async displayData() {
+
+                    let WEB_API_URI = "";
+                    if (this.searchQuery !== '') {
+                        WEB_API_URI = `/api/CabinetTypes/Search/${this.pageNumber}/${this.pageSize}?searchQuery=${this.searchQuery}`;
+                    }
+                    else {
+                        WEB_API_URI = `/api/CabinetTypes/Page/${this.pageNumber}/${this.pageSize}`;
+                    }
+
                     // cRud: 데이터 출력
-                    const result = await axios.get(`/api/CabinetTypes/Page/${this.pageNumber}/${this.pageSize}`);
+                    //const result = await axios.get(`/api/CabinetTypes/Page/${this.pageNumber}/${this.pageSize}`);
+                    const result = await axios.get(WEB_API_URI);
                     const models = result.data;
                     this.models = models;
 
@@ -109,6 +122,14 @@
                     this.pageNumber = pageIndex + 1;
                     this.displayData(); 
                 },
+
+                searchQueryChanged(searchQuery) {
+                    this.searchQuery = searchQuery;
+
+                    //console.log("부모", this.searchQuery);
+
+                    this.displayData(); 
+                }
 
             },
             async created() {
@@ -179,6 +200,13 @@
             :record-count="recordCount"
             :page-index-changed="pageIndexChanged"
         ></dul-pager>
+
+        <hr />
+
+        <dul-search-box
+            :search-query-changed="searchQueryChanged"
+        ></dul-search-box>
+        
 
     </div>
 

@@ -72,7 +72,7 @@ export default {
     methods: {
         pagerButtonClicked(pageNumber, e) {
             e.preventDefault();
-            console.log("Pager Component", pageNumber);
+            //console.log("Pager Component", pageNumber);
             this.pageIndexChanged(pageNumber - 1); // PageIndex를 부모 컴포넌트로 전송
         },
         pagerButtonClickedSimple(pageNumber, e) {
