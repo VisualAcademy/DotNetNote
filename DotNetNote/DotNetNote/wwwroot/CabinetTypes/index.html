@@ -7,6 +7,8 @@
     <title>Vue.js CRUD</title>
     <!-- CSS only -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
 </head>
 <body>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.26.0/axios.min.js"></script>
@@ -23,7 +25,7 @@
         import { createApp } from 'vue';
 
         import DulPager from './DulPager.js'; // 페이저 컴포넌트
-        import DulSearchBox from "./DulSearchBox.js"; // 검색 컴포넌트 
+        import DulSearchBox from "./DulSearchBox.js"; // 검색 컴포넌트
 
         createApp({
             components: {
@@ -49,7 +51,9 @@
                     recordCount: 0,
                     pageIndex: 0,
 
-                    searchQuery: ""
+                    searchQuery: "",
+
+                    showModal: false 
 
                 };
             },
@@ -120,7 +124,7 @@
                 pageIndexChanged(pageIndex) {
                     //alert(pageIndex);
                     this.pageNumber = pageIndex + 1;
-                    this.displayData(); 
+                    this.displayData();
                 },
 
                 searchQueryChanged(searchQuery) {
@@ -128,7 +132,7 @@
 
                     //console.log("부모", this.searchQuery);
 
-                    this.displayData(); 
+                    this.displayData();
                 }
 
             },
@@ -137,7 +141,7 @@
                 //const result = await axios.get("/api/CabinetTypes");
                 //const models = result.data;
                 //this.models = models;
-                this.displayData(); 
+                this.displayData();
             }
         }).mount("#appCabinetTypesVue");
     </script>
@@ -193,22 +197,48 @@
 
         <hr />
 
-        <dul-pager 
-            :page-number="pageNumber"
-            :page-size="pageSize"
-            :pager-button-count="pagerButtonCount"
-            :record-count="recordCount"
-            :page-index-changed="pageIndexChanged"
-        ></dul-pager>
+        <dul-pager :page-number="pageNumber"
+                   :page-size="pageSize"
+                   :pager-button-count="pagerButtonCount"
+                   :record-count="recordCount"
+                   :page-index-changed="pageIndexChanged"></dul-pager>
 
         <hr />
 
-        <dul-search-box
-            :search-query-changed="searchQueryChanged"
-        ></dul-search-box>
-        
+        <dul-search-box :search-query-changed="searchQueryChanged"></dul-search-box>
+
+        <hr />
+
+        <button v-on:click="showModal = !showModal">모달 보이기</button>
+
+        <!-- Modal -->
+        <div v-show="showModal" class="modal fade show" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="false"
+             style="display: block;">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        ...
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
 
     </div>
+
+
+
+
 
 </body>
 </html>
