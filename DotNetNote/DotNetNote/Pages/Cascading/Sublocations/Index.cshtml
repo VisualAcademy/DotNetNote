@@ -1,0 +1,80 @@
+﻿@page
+@model VisualAcademy.Pages.Cascading.Sublocations.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Sublocation[0].SublocationName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Sublocation[0].Active)
+            </th>
+@*            <th>
+                @Html.DisplayNameFor(model => model.Sublocation[0].Location)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Sublocation[0].Property)
+            </th>
+*@            <th>
+                @Html.DisplayNameFor(model => model.Sublocation[0].LocationRef)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Sublocation)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SublocationName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Active)
+                </td>
+@*                <td>
+                    @Html.DisplayFor(modelItem => item.Location)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Property)
+                </td>
+*@                <td>
+                    @{
+                        var locationName = "";
+                        if (item.LocationRef != null)
+                        {
+                            try
+                            {
+
+                                locationName = item.LocationRef?.Name ?? "(Unknown)";
+                            }
+                            catch (Exception)
+                            {
+                                locationName = "(Unknown)";
+                            }
+                        }
+                        else
+                        {
+                            locationName = "(Unknown)";
+                        }
+                    }
+                    @locationName
+                </td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

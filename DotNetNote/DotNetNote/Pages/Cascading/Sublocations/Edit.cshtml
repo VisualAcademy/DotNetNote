@@ -1,0 +1,55 @@
+﻿@page
+@model VisualAcademy.Pages.Cascading.Sublocations.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Sublocation</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Sublocation.Id" />
+            <div class="form-group">
+                <label asp-for="Sublocation.SublocationName" class="control-label"></label>
+                <input asp-for="Sublocation.SublocationName" class="form-control" />
+                <span asp-validation-for="Sublocation.SublocationName" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Sublocation.Active" /> @Html.DisplayNameFor(model => model.Sublocation.Active)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="Sublocation.Location" class="control-label"></label>
+                <input asp-for="Sublocation.Location" class="form-control" />
+                <span asp-validation-for="Sublocation.Location" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Sublocation.Property" class="control-label"></label>
+                <input asp-for="Sublocation.Property" class="form-control" />
+                <span asp-validation-for="Sublocation.Property" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Sublocation.LocationId" class="control-label"></label>
+                <select asp-for="Sublocation.LocationId" class="form-control" asp-items="ViewBag.LocationId"></select>
+                <span asp-validation-for="Sublocation.LocationId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

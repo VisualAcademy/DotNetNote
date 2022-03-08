@@ -89,6 +89,7 @@
     <Folder Include="dbo\Tables\Acts" />
     <Folder Include="dbo\Tables\Urls" />
     <Folder Include="dbo\Tables\CabinetTypes" />
+    <Folder Include="dbo\Tables\Cascading" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Users\Stored Procedures\GetUsers.sql" />
@@ -162,5 +163,8 @@
     <Build Include="dbo\Tables\Acts\ActionCategories.sql" />
     <Build Include="dbo\Tables\Urls\Urls.sql" />
     <Build Include="dbo\Tables\CabinetTypes\CabinetTypes.sql" />
+    <Build Include="dbo\Tables\Cascading\Location.sql" />
+    <Build Include="dbo\Tables\Cascading\Property.sql" />
+    <Build Include="dbo\Tables\Cascading\Sublocation.sql" />
   </ItemGroup>
 </Project>
