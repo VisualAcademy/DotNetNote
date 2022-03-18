@@ -433,7 +433,14 @@ public class Startup
         // ASP.NET Core 5.0과 jQuery 모달 팝업으로 특정 사용자에게 전송된 알림을 제공하는 초간단 알림 서비스 만들기
         // ---------------------------------------------------------------------------------------------------------------------------------- // 
         // 종속성 해결: IMyNotificationRepository의 인스턴스를 MyNotificationRepository로 생성
-        services.AddSingleton<IMyNotificationRepository>(new MyNotificationRepository(Configuration.GetConnectionString("DefaultConnection")));
+        if (DateTime.Now.Minute % 2 == 0)
+        {
+            services.AddSingleton<IMyNotificationRepository>(new MyNotificationRepository(Configuration.GetConnectionString("DefaultConnection")));
+        }
+        else
+        {
+            services.AddTransient<IMyNotificationRepository>(it =>  new MyNotificationRepository(Configuration.GetConnectionString("DefaultConnection")));
+        }
         // ---------------------------------------------------------------------------------------------------------------------------------- // 
         // </Notifications>
 
