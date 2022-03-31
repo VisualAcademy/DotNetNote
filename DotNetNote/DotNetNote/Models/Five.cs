@@ -1,11 +1,10 @@
 ﻿using Dapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Data;
-using Microsoft.Data.SqlClient;
 using System.Linq;
 
 namespace DotNetNote.Models
@@ -194,7 +193,7 @@ namespace DotNetNote.Models
         [HttpPost]
         [Produces("application/json", Type = typeof(Five))] // FiveForCreationDto 등으로 변경 사용 가능
         [Consumes("application/json")] // application/xml
-        public IActionResult Post([FromBody]Five model) // Deserialize, 생성 전용 DTO 클래스 사용 가능 
+        public IActionResult Post([FromBody] Five model) // Deserialize, 생성 전용 DTO 클래스 사용 가능 
         {
             try
             {

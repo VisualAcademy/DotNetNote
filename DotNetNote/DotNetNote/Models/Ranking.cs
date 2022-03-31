@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace AngularNote.Models
+﻿namespace AngularNote.Models
 {
     public class Ranking
     {
