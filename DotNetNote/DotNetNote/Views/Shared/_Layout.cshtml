@@ -4,6 +4,8 @@
 @*[2]*@
 @inject Microsoft.AspNetCore.Http.IHttpContextAccessor _context
 
+@using System.Globalization 
+
 <!DOCTYPE html>
 <html lang="en" class="ko ko-kr">
 <head>
@@ -204,6 +206,9 @@
             <p>Process Name: @System.Diagnostics.Process.GetCurrentProcess().ProcessName</p>
             @*[3]*@
             <div style="text-overflow: ellipsis; overflow: hidden;">@(_context.HttpContext.Request.Headers["User-Agent"].ToString())</div>
+            <div class="small text-center">
+                CurrentCulture: @CultureInfo.CurrentCulture, CurrentUICulture: @CultureInfo.CurrentUICulture 
+            </div>
         </div>
     </footer>
     @RenderSection("Scripts", required: false)
