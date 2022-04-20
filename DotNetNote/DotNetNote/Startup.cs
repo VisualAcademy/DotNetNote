@@ -235,6 +235,14 @@ public class Startup
             });
         });
 
+        //// .NET 6 코드 조각
+        //app.UseCors(it => 
+        //{
+        //    it.WithOrigins("https://localhost:xxxx");
+        //    it.AllowAnyHeader(); 
+        //    it.AllowAnyMethod();
+        //});
+
         ////[CORS] CORS 설정 공식 코드 1/2
         //services.AddCors(options =>
         //{
