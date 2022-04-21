@@ -97,6 +97,12 @@ public class Startup
         //services.AddDbContext<MemberDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
 
+        //// .NET 6 
+        //builder.Services.AddIdentity<ApplicationUser, ApplicationRole>(options => options.SignIn.RequireConfirmedAccount = true)
+        //    .AddEntityFrameworkStores<ApplicationDbContext>()
+        //    .AddDefaultTokenProviders();
+
+
         ////<세션 정보를 SQL Server에 저장하기 위한 절차>
         //services.AddDistributedSqlServerCache(options =>
         //{
