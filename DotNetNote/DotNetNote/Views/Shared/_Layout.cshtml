@@ -6,6 +6,20 @@
 
 @using System.Globalization 
 
+@using Microsoft.AspNetCore.Identity
+
+@using System.Security.Claims
+
+@{
+    // 최고 관리자 권한 체크 
+    bool isAdmin = false;
+    if (User.Identity.IsAuthenticated)
+    {
+        isAdmin = User.IsInRole("Administrators");
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+    }
+}
+
 <!DOCTYPE html>
 <html lang="en" class="ko ko-kr">
 <head>
