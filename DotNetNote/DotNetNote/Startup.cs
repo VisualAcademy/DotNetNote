@@ -47,9 +47,9 @@ public class Startup
         services.AddHttpContextAccessor(); //[1]
 
         //[!] MVC 사용을 위한 서비스 등록: 가장 기본적인 확장 메서드
-        services.AddControllersWithViews();     // MVC + Web API 사용 가능
-        services.AddRazorPages();               // Razor Pages 사용 가능
-        services.AddServerSideBlazor();         // Blazor Server 사용 가능
+        services.AddControllersWithViews();     //[1] MVC + Web API 사용 가능
+        services.AddRazorPages();               //[2] Razor Pages 사용 가능
+        services.AddServerSideBlazor();         //[3] Blazor Server 사용 가능
 
         //services.AddRazorPages(); //[!] Razor Pages 사용 설정 [1 of 2]
 
