@@ -633,7 +633,7 @@ public class Startup
 
             endpoints.MapRazorPages(); //[!] Razor Pages 사용 설정 [2 of 2]
 
-            // Blazor Server 사용 가능
+            //[!] Blazor Server 사용 가능
             endpoints.MapBlazorHub();
 
             #region 한글 출력 데모
