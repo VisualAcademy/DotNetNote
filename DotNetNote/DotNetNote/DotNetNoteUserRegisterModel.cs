@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace DotNetNoteCore
+namespace DotNetNote
 {
     public class DotNetNoteUserRegisterModel
     {
@@ -9,7 +9,7 @@ namespace DotNetNoteCore
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
-        [Compare("Password")] 
+        [Compare("Password")]
         [DataType(DataType.Password)]
         public string ConfirmPassword { get; set; }
     }
