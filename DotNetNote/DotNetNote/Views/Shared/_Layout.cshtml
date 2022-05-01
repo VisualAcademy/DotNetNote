@@ -48,8 +48,19 @@
     <!-- 페이저 관련 CSS: 한 번 만들어 놓고 계속 사용 -->
     <link href="~/css/memoengine.pager.css" rel="stylesheet" asp-append-version="false" />
 
-    <script src="~/lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js" asp-append-version="true"></script>
+    @*environment 태그 헬퍼 사용 예제*@
+    <environment names="Development">
+        @*개발 환경에서는 전체 버전의 jQuery와 Bootstrap 사용*@
+        <script src="~/lib/jquery/dist/jquery.js" asp-append-version="true"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js" asp-append-version="true"></script>
+    </environment>
+    <environment names="Production">
+        @*운영 환경에서는 최소 버전의 jQuery와 Bootstrap 사용*@
+        <script src="~/lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js" asp-append-version="true"></script>
+    </environment>
+
+
     <script src="~/js/site.js" asp-append-version="true"></script>
 
     @*<link href="~/lib/toastr/toastr.min.css" rel="stylesheet" />
