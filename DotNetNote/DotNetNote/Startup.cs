@@ -60,6 +60,8 @@ public class Startup
         //    .AddEntityFrameworkStores<ApplicationDbContext>();
 
 
+        //[!] 종속성 주입 관련해서 자세한 내용 고민없이 Addtransient() 확장 메서드를 사용: Microsoft 권장 사항
+
         //services.AddSingleton<ICompanyRepository>(new CompanyRepositoryAdo(Configuration["ConnectionStrings:DefaultConnection"]));
         //services.AddSingleton<ICompanyRepository>(new CompanyRepositoryDapper(Configuration["ConnectionStrings:DefaultConnection"]));
         services.AddDbContext<CompanyContext>(options =>
