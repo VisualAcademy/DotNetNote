@@ -89,6 +89,7 @@
     <Folder Include="dbo\Tables\Cascading" />
     <Folder Include="dbo\Stored Procedures\Users" />
     <Folder Include="dbo\Tables\Users" />
+    <Folder Include="dbo\Stored Procedures\DotNetKorea" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\Companies.sql" />
@@ -110,7 +111,6 @@
     <Build Include="dbo\Stored Procedures\DotNetNote\NotesList.sql" />
     <Build Include="dbo\Stored Procedures\DotNetNote\NotesSearchList.sql" />
     <Build Include="dbo\Stored Procedures\LogManager\GetLogsWithPaging.sql" />
-    <Build Include="dbo\Stored Procedures\AddPermission.sql" />
     <Build Include="dbo\Stored Procedures\Memos_Procedures.sql" />
     <Build Include="dbo\Stored Procedures\Signs_Procedures.sql" />
     <Build Include="dbo\Views\BoardManager\BoardViews.sql" />
@@ -165,5 +165,6 @@
     <Build Include="dbo\Tables\Users\Users.sql" />
     <Build Include="dbo\Stored Procedures\Users\GetUsers.sql" />
     <Build Include="dbo\Stored Procedures\Users\Users_Procedures.sql" />
+    <Build Include="dbo\Stored Procedures\DotNetKorea\AddPermission.sql" />
   </ItemGroup>
 </Project>
