@@ -1,5 +1,7 @@
 #nullable enable
-namespace MemoEngineCore.Services
+using DotNetNote.Controllers.Articles;
+
+namespace DotNetNote.Controllers.Articles
 {
     using MemoEngineCore.Models;
 

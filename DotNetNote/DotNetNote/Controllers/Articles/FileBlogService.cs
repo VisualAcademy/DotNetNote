@@ -1,5 +1,6 @@
 #nullable enable
-namespace MemoEngineCore.Services
+
+namespace DotNetNote.Controllers.Articles
 {
     using MemoEngineCore.Models;
     using Microsoft.AspNetCore.Hosting;
@@ -30,20 +31,20 @@ namespace MemoEngineCore.Services
             // C# 10의 새로운 기능 
             ArgumentNullException.ThrowIfNull(env);
 
-            this.folder = Path.Combine(env.WebRootPath, POSTS);
+            folder = Path.Combine(env.WebRootPath, POSTS);
 
-            this.Initialize();
+            Initialize();
         }
 
         public IEnumerable<Post> GetPosts()
         {
-            var posts = this.cache
-                .Where(p => p.PubDate <= DateTime.UtcNow && (p.IsPublished));
+            var posts = cache
+                .Where(p => p.PubDate <= DateTime.UtcNow && p.IsPublished);
 
             return posts;
         }
 
-        protected void SortCache() => this.cache.Sort((p1, p2) => p2.PubDate.CompareTo(p1.PubDate));
+        protected void SortCache() => cache.Sort((p1, p2) => p2.PubDate.CompareTo(p1.PubDate));
 
         private static void LoadCategories(Post post, XElement doc)
         {
@@ -63,22 +64,22 @@ namespace MemoEngineCore.Services
         private static string ReadValue(XElement doc, XName name, string defaultValue = "") =>
             doc.Element(name) is null ? defaultValue : doc.Element(name)?.Value ?? defaultValue;
 
-        private string GetFilePath(Post post) => Path.Combine(this.folder, $"{post.ID}.xml");
+        private string GetFilePath(Post post) => Path.Combine(folder, $"{post.ID}.xml");
 
         private void Initialize()
         {
-            this.LoadPosts();
-            this.SortCache();
+            LoadPosts();
+            SortCache();
         }
 
         private void LoadPosts()
         {
-            if (!Directory.Exists(this.folder))
+            if (!Directory.Exists(folder))
             {
-                Directory.CreateDirectory(this.folder);
+                Directory.CreateDirectory(folder);
             }
 
-            foreach (var file in Directory.EnumerateFiles(this.folder, "*.xml", SearchOption.TopDirectoryOnly))
+            foreach (var file in Directory.EnumerateFiles(folder, "*.xml", SearchOption.TopDirectoryOnly))
             {
                 var doc = XElement.Load(file);
 
@@ -101,7 +102,7 @@ namespace MemoEngineCore.Services
                 };
 
                 LoadCategories(post, doc);
-                this.cache.Add(post);
+                cache.Add(post);
             }
         }
     }
