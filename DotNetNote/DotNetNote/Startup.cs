@@ -64,14 +64,11 @@ public class Startup
 
         //services.AddSingleton<ICompanyRepository>(new CompanyRepositoryAdo(Configuration["ConnectionStrings:DefaultConnection"]));
         //services.AddSingleton<ICompanyRepository>(new CompanyRepositoryDapper(Configuration["ConnectionStrings:DefaultConnection"]));
-        services.AddDbContext<CompanyContext>(options =>
-            options.UseSqlServer(
-                Configuration.GetConnectionString("DefaultConnection")));
+        services.AddDbContext<CompanyContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
         services.AddTransient<ICompanyRepository, CompanyRepositoryEntityFramework>();
 
         //[!] Configuration: JSON 파일의 데이터를 POCO 클래스에 주입
-        services.Configure<DotNetNoteSettings>(
-            Configuration.GetSection("DotNetNoteSettings"));
+        services.Configure<DotNetNoteSettings>(Configuration.GetSection("DotNetNoteSettings"));
 
 
         ////[!] 디렉터리 브라우징 기능 제공(옵션)
@@ -382,8 +379,7 @@ public class Startup
         services.AddSingleton<ISingletonGuidService, SingletonGuidService>();
 
         //[CommunityCamp] 모듈 서비스 등록
-        services.AddTransient<ICommunityCampJoinMemberRepository,
-            CommunityCampJoinMemberRepository>();
+        services.AddTransient<ICommunityCampJoinMemberRepository, CommunityCampJoinMemberRepository>();
 
         //[DNN][1] 게시판 관련 서비스 등록            
         //[1] 생성자에 문자열로 연결 문자열 지정
@@ -654,6 +650,7 @@ public class Startup
 
 /// <summary>
 /// 메인 도메인으로 이동시키기 
+/// "dotnetnote.azurewebsites.net" 요청시 "www.dotnetnote.com" 경로로 이동 
 /// </summary>
 public class RedirectAzureWebsitesRule : IRule
 {
