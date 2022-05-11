@@ -104,6 +104,12 @@
     </div>
 </div>
 
+<div class="row text-center m-5">
+    <div class="col-md-12 event-countdown text-center mb-3">
+        <h4 class="countdown-intro mb-2 text-center mb-3">Microsoft BUILD 2022 행사까지 남은 시간:</h4>
+        <div id="countdown-box" class="countdown-box"></div>
+    </div>
+</div>
 
 @*블로그 포스트 리스트*@
 <div class="row">
@@ -131,7 +137,7 @@
             </span>
         </h3>
         @await Component.InvokeAsync(
-            "MainSummaryByCategory", new { category = "Notice" })
+        "MainSummaryByCategory", new { category = "Notice" })
     </div>
     <div class="col-md-6">
         <h3 class="MainSummaryTitle">
@@ -144,7 +150,7 @@
             </span>
         </h3>
         @await Component.InvokeAsync(
-            "MainSummaryByCategory", new { category = "Free" })
+        "MainSummaryByCategory", new { category = "Free" })
     </div>
 </div>
 <br />
@@ -364,9 +370,9 @@
 
 
 @*<div class="text-center">
-        <em>
-            <a href="http://angular.dul.me">앵귤러노트(http://angular.dul.me)</a> 사이트는 ASP.NET Core 6.0 + Angular 9.0 데모 사이트입니다.
-        </em>
+    <em>
+    <a href="http://angular.dul.me">앵귤러노트(http://angular.dul.me)</a> 사이트는 ASP.NET Core 6.0 + Angular 9.0 데모 사이트입니다.
+    </em>
     </div>*@
 
 
@@ -380,8 +386,49 @@
 @*@await Component.InvokeAsync("Copyright")*@
 
 @section Scripts{
-    <script src="~/app/DotNetNote/DotNetNoteApp.js"></script>
+
+<script>
+    var target_date = new Date("May 24, 2022").getTime();
+
+    var days, hours, minutes, seconds;
+
+    var countdown =  document.getElementById("countdown-box");
+    var days_span = document.createElement("SPAN");
+    days_span.className = 'days';
+    countdown.appendChild(days_span);
+    var hours_span = document.createElement("SPAN");
+    hours_span.className = 'hours';
+    countdown.appendChild(hours_span);
+    var minutes_span = document.createElement("SPAN");
+    minutes_span.className = 'minutes';
+    countdown.appendChild(minutes_span);
+    var secs_span = document.createElement("SPAN");
+    secs_span.className = 'secs';
+    countdown.appendChild(secs_span);
+
+    setInterval(function () {
+        var current_date = new Date().getTime();
+        var seconds_left = (target_date - current_date) / 1000;
+
+        days = parseInt(seconds_left / 86400);
+        seconds_left = seconds_left % 86400;
+
+        hours = parseInt(seconds_left / 3600);
+        seconds_left = seconds_left % 3600;
+
+        minutes = parseInt(seconds_left / 60);
+        seconds = parseInt(seconds_left % 60);
+
+        days_span.innerHTML = '<span class="number">' + days + '</span>' + '<span class="unit">일</span>';
+        hours_span.innerHTML = '<span class="number">' + hours + '</span>' + '<span class="unit">시간</span>';
+        minutes_span.innerHTML = '<span class="number">' + minutes + '</span>' + '<span class="unit">분</span>';
+        secs_span.innerHTML = '<span class="number">' + seconds + '</span>' + '<span class="unit">초</span>';
+
+    }, 1000);
+</script>
+
+<script src="~/app/DotNetNote/DotNetNoteApp.js"></script>
 
     @*Blazor Server 사용 가능 설정*@
-    <script src="/_framework/blazor.server.js"></script>
+<script src="/_framework/blazor.server.js"></script>
 }
