@@ -1,41 +1,39 @@
-﻿using DotNetNote.Models;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
-namespace DotNetNote.Controllers
+namespace DotNetNote.Controllers;
+
+[Route("api/[controller]")]
+public class TwoServiceController : Controller
 {
-    [Route("api/[controller]")]
-    public class TwoServiceController : Controller
+    private ITwoRepository _repository;
+
+    public TwoServiceController(ITwoRepository repository)
     {
-        private ITwoRepository _repository;
+        _repository = repository;
+    }
 
-        public TwoServiceController(ITwoRepository repository)
+    [HttpGet]
+    public IActionResult Get()
+    {
+        try
         {
-            _repository = repository;
-        }
-
-        [HttpGet]
-        public IActionResult Get()
-        {
-            try
+            var twos = _repository.GetAll();
+            if (twos == null)
             {
-                var twos = _repository.GetAll();
-                if (twos == null)
-                {
-                    return NotFound($"아무런 데이터가 없습니다.");
-                }
-                return Ok(twos); 
+                return NotFound($"아무런 데이터가 없습니다.");
             }
-            catch 
-            {
-
-            }
-            return BadRequest();
+            return Ok(twos);
         }
-
-        [HttpPost]
-        public TwoModel Post([FromBody]TwoModel model)
+        catch
         {
-            return _repository.Add(model);
+
         }
+        return BadRequest();
+    }
+
+    [HttpPost]
+    public TwoModel Post([FromBody] TwoModel model)
+    {
+        return _repository.Add(model);
     }
 }

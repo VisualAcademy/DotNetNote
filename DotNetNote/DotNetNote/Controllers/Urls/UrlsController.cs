@@ -1,31 +1,29 @@
-﻿using DotNetNote.Models;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
-namespace DotNetNote.Controllers
+namespace DotNetNote.Controllers;
+
+public class UrlsController : Controller
 {
-    public class UrlsController : Controller
+    private readonly IUrlRepository _repository;
+
+    public UrlsController(IUrlRepository repository)
     {
-        private readonly IUrlRepository _repository;
+        _repository = repository;
+    }
 
-        public UrlsController(IUrlRepository repository)
-        {
-            _repository = repository;
-        }
+    public IActionResult Index()
+    {
+        return View("~/Views/_MiniProjects/Urls/Index.cshtml");
+    }
 
-        public IActionResult Index()
-        {
-            return View("~/Views/_MiniProjects/Urls/Index.cshtml");
-        }
+    public IActionResult IsExistsMethodTest()
+    {
+        string dnk = "test@visualacademy.com";
 
-        public IActionResult IsExistsMethodTest()
-        {
-            string dnk = "test@visualacademy.com";
+        bool r = _repository.IsExists(dnk);
 
-            bool r = _repository.IsExists(dnk);
+        ViewBag.IsExists = r;
 
-            ViewBag.IsExists = r; 
-
-            return View("~/Views/_MiniProjects/Urls/IsExistsMethodTest.cshtml");
-        }
+        return View("~/Views/_MiniProjects/Urls/IsExistsMethodTest.cshtml");
     }
 }
