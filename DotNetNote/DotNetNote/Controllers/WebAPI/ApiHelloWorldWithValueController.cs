@@ -1,86 +1,86 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 
-namespace ApiHelloWorld.Controllers
+namespace ApiHelloWorld.Controllers;
+
+[Route("api/[controller]")]
+public class ApiHelloWorldWithValueController : Controller
 {
-    [Route("api/[controller]")]
-    public class ApiHelloWorldWithValueController : Controller
+    [HttpGet]
+    public IEnumerable<Value> Get()
     {
-        [HttpGet]
-        public IEnumerable<Value> Get()
-        {
-            //return new string[] { "안녕하세요.", "반갑습니다." };
-            return new Value[] {
-                new Value { Id = 1, Text = "안녕하세요" },
-                new Value { Id = 2, Text = "반갑습니다" },
-                new Value { Id = 3, Text = "또 만나요" }
-            };
-        }
-
-        [HttpGet("{id:int}")]
-        public Value Get(int id)
-        {
-            //return $"넘어온 값: {id}";
-            return new Value { Id = id, Text = $"넘어온 값: {id}" };
-        }
-
-        //[1]
-        //[HttpPost]
-        //public IActionResult Post([FromBody]Value value)
-        //{
-        //    // Chrome://apps의 POSTMAN, Swagger, Fiddler 등의 외부 도구로 테스트
-
-        //    // TODO: 넘어온 JSON 데이터를 DB에 저장 후 Id 값 반환
-
-        //    return CreatedAtAction("Get", new { id = value.Id }, value);
-        //}
-
-        ////[2] 
-        //[HttpPost]
-        //[Produces("application/json", Type = typeof(Value))]
-        //[Consumes("application/json")]
-        //public IActionResult Post([FromBody]Value value)
-        //{
-        //    return CreatedAtAction("Get", new { id = value.Id }, value);
-        //}
-
-        //[3] 
-        [HttpPost]
-        [Produces("application/json", Type = typeof(Value))]
-        [Consumes("application/json")]
-        public IActionResult Post([FromBody] Value value)
-        {
-            // 모델 유효성 검사
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState); // 400 에러 출력
-            }
-            return CreatedAtAction("Get", new { id = value.Id }, value); // 201
-        }
-
+        //return new string[] { "안녕하세요.", "반갑습니다." };
+        return new Value[] {
+            new Value { Id = 1, Text = "안녕하세요" },
+            new Value { Id = 2, Text = "반갑습니다" },
+            new Value { Id = 3, Text = "또 만나요" }
+        };
     }
 
-    // 모델 유효성 검사
-    public class Value
+    [HttpGet("{id:int}")]
+    public Value Get(int id)
     {
-        public int Id { get; set; }
-        [Required(ErrorMessage = "Text 속성은 필수입력값입니다.")]
-        public string Text { get; set; }
+        //return $"넘어온 값: {id}";
+        return new Value { Id = id, Text = $"넘어온 값: {id}" };
     }
 
-    //// 포맷터: JSON, XML
-    //public class Value
+    //[1]
+    //[HttpPost]
+    //public IActionResult Post([FromBody]Value value)
     //{
-    //    public int Id { get; set; }
-    //    public string Text { get; set; }
+    //    // Chrome://apps의 POSTMAN, Swagger, Fiddler 등의 외부 도구로 테스트
+
+    //    // TODO: 넘어온 JSON 데이터를 DB에 저장 후 Id 값 반환
+
+    //    return CreatedAtAction("Get", new { id = value.Id }, value);
     //}
 
-    [Route("[controller]/[action]")]
-    public class ApiHelloWorldDemoController : Controller
+    ////[2] 
+    //[HttpPost]
+    //[Produces("application/json", Type = typeof(Value))]
+    //[Consumes("application/json")]
+    //public IActionResult Post([FromBody]Value value)
+    //{
+    //    return CreatedAtAction("Get", new { id = value.Id }, value);
+    //}
+
+    //[3] 
+    [HttpPost]
+    [Produces("application/json", Type = typeof(Value))]
+    [Consumes("application/json")]
+    public IActionResult Post([FromBody] Value value)
     {
-        public IActionResult Index()
+        // 모델 유효성 검사
+        if (!ModelState.IsValid)
         {
-            string html = @"
+            return BadRequest(ModelState); // 400 에러 출력
+        }
+        return CreatedAtAction("Get", new { id = value.Id }, value); // 201
+    }
+
+}
+
+// 모델 유효성 검사
+public class Value
+{
+    public int Id { get; set; }
+    [Required(ErrorMessage = "Text 속성은 필수입력값입니다.")]
+    public string Text { get; set; }
+}
+
+//// 포맷터: JSON, XML
+//public class Value
+//{
+//    public int Id { get; set; }
+//    public string Text { get; set; }
+//}
+
+[Route("[controller]/[action]")]
+public class ApiHelloWorldDemoController : Controller
+{
+    public IActionResult Index()
+    {
+        string html = @"
 <html>
 <head>
     <title>jQuery로 JSON 사용하기</title>
@@ -108,20 +108,20 @@ namespace ApiHelloWorld.Controllers
 </html>
 ";
 
-            return new ContentResult()
-            {
-                Content = html,
-                ContentType = "text/html; charset=utf-8"
-            };
-        }
-    }
-
-    [Route("[controller]/[action]")]
-    public class ApiCorsDemoController : Controller
-    {
-        public IActionResult Index()
+        return new ContentResult()
         {
-            string html = @"
+            Content = html,
+            ContentType = "text/html; charset=utf-8"
+        };
+    }
+}
+
+[Route("[controller]/[action]")]
+public class ApiCorsDemoController : Controller
+{
+    public IActionResult Index()
+    {
+        string html = @"
 <html>
 <head>
     <title>CORS</title>
@@ -144,11 +144,10 @@ namespace ApiHelloWorld.Controllers
 </html>
 ";
 
-            return new ContentResult()
-            {
-                Content = html,
-                ContentType = "text/html; charset=utf-8"
-            };
-        }
+        return new ContentResult()
+        {
+            Content = html,
+            ContentType = "text/html; charset=utf-8"
+        };
     }
 }
