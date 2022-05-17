@@ -1,12 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace DotNetNote.Controllers
+namespace DotNetNote.Controllers;
+
+public class WebCampController : Controller
 {
-    public class WebCampController : Controller
+    public IActionResult Index()
     {
-        public IActionResult Index()
-        {
-            return View();
-        }
+        return View();
     }
 }
