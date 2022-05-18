@@ -16,10 +16,7 @@ public class CkEditorDemoController : Controller
         _environment = environment;
     }
 
-    public IActionResult Index()
-    {
-        return View();
-    }
+    public IActionResult Index() => View();
 
     [HttpPost]
     public IActionResult Index(string editor)
