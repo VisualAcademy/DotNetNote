@@ -74,8 +74,5 @@ public class CloudController : Controller
 
     public IActionResult Angular() => View();
 
-    public IActionResult Error()
-    {
-        return View();
-    }
+    public IActionResult Error() => View();
 }
