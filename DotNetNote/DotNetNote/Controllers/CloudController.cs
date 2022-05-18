@@ -72,10 +72,7 @@ public class CloudController : Controller
         return View();
     }
 
-    public IActionResult Angular()
-    {
-        return View();
-    }
+    public IActionResult Angular() => View();
 
     public IActionResult Error()
     {
