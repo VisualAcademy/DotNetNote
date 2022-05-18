@@ -7,10 +7,7 @@ public class BuyerTestController : Controller
 {
     private readonly IBuyerRepository buyerRepository;
 
-    public BuyerTestController(IBuyerRepository buyerRepository)
-    {
-        this.buyerRepository = buyerRepository;
-    }
+    public BuyerTestController(IBuyerRepository buyerRepository) => this.buyerRepository = buyerRepository;
 
     public IActionResult Index()
     {
