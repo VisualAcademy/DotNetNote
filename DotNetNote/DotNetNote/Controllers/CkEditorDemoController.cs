@@ -24,11 +24,7 @@ public class CkEditorDemoController : Controller
     }
 
 
-    public IActionResult UploadToAzureBlob()
-    {
-
-        return View();
-    }
+    public IActionResult UploadToAzureBlob() => View();
 
     [HttpPost]
     public async Task<ActionResult> UploadImage(
