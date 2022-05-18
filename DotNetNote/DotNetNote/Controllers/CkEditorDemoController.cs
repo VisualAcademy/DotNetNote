@@ -11,10 +11,7 @@ public class CkEditorDemoController : Controller
 {
     private IWebHostEnvironment _environment;
 
-    public CkEditorDemoController(IWebHostEnvironment environment)
-    {
-        _environment = environment;
-    }
+    public CkEditorDemoController(IWebHostEnvironment environment) => _environment = environment;
 
     public IActionResult Index() => View();
 
