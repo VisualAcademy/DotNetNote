@@ -9,10 +9,7 @@ public class CachingController : Controller
 {
     private IMemoryCache _cache;
 
-    public CachingController(IMemoryCache memoryCache)
-    {
-        _cache = memoryCache;
-    }
+    public CachingController(IMemoryCache memoryCache) => _cache = memoryCache;
 
     public IActionResult Index()
     {
