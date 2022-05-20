@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 
-namespace AngularNote.Controllers
+namespace DotNetNote.Controllers
 {
     [Route("api/[controller]")]
     [EnableCors("AllowAnyOrigin")]
