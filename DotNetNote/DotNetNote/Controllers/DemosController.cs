@@ -1,18 +1,17 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace DotNetNote.Controllers
-{
-    public class DemosController : Controller
-    {
-        // GET: /<controller>/
-        public IActionResult Index()
-        {
-            return View();
-        }
+namespace DotNetNote.Controllers;
 
-        public IActionResult FillDropDownListWithAjax()
-        {
-            return View(); 
-        }
+public class DemosController : Controller
+{
+    // GET: /<controller>/
+    public IActionResult Index()
+    {
+        return View();
+    }
+
+    public IActionResult FillDropDownListWithAjax()
+    {
+        return View(); 
     }
 }
