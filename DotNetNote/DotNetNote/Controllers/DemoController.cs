@@ -32,10 +32,7 @@ public class DemoController : Controller
         return View("TempDataDemo");
     }
 
-    public IActionResult TempDataDemo()
-    {
-        return View();
-    }
+    public IActionResult TempDataDemo() => View();
 
     public IActionResult JsonResultDemo()
     {
