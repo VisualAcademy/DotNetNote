@@ -19,10 +19,7 @@ public class ControllerDemoController : Controller
         return "String을 반환하는 액션 메서드";
     }
 
-    public DateTime DateTimeAction()
-    {
-        return DateTime.Now;
-    }
+    public DateTime DateTimeAction() => DateTime.Now;
 
     public IActionResult DefaultAction()
     {
