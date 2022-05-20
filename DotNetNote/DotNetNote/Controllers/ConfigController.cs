@@ -7,10 +7,7 @@ public class ConfigController : Controller
 {
     private IConfiguration _config;
 
-    public ConfigController(IConfiguration config)
-    {
-        _config = config;
-    }
+    public ConfigController(IConfiguration config) => _config = config;
 
     public string Index()
     {
