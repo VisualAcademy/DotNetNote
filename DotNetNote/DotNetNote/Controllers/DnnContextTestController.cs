@@ -1,21 +1,20 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 
-namespace DotNetNote.Controllers
+namespace DotNetNote.Controllers;
+
+public class DnnContextTestController : Controller
 {
-    public class DnnContextTestController : Controller
+    private readonly DotNetNoteContext _context;
+
+    public DnnContextTestController(DotNetNoteContext context)
     {
-        private readonly DotNetNoteContext _context;
+        _context = context;
+    }
 
-        public DnnContextTestController(DotNetNoteContext context)
-        {
-            _context = context;
-        }
-
-        public IActionResult Index()
-        {
-            var ideas = _context.Ideas.ToList();
-            return View(ideas);
-        }
+    public IActionResult Index()
+    {
+        var ideas = _context.Ideas.ToList();
+        return View(ideas);
     }
 }
