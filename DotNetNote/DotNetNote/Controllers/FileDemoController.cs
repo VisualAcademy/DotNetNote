@@ -63,10 +63,7 @@ public class FileDemoController : Controller
     /// 파일 업로드 폼 
     /// </summary>
     [HttpGet]
-    public IActionResult FileUploadFileDemo()
-    {
-        return View();
-    }
+    public IActionResult FileUploadFileDemo() => View();
 
     ///// <summary>
     ///// 파일 업로드 처리
