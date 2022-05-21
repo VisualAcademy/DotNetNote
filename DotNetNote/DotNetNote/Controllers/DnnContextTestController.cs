@@ -7,10 +7,7 @@ public class DnnContextTestController : Controller
 {
     private readonly DotNetNoteContext _context;
 
-    public DnnContextTestController(DotNetNoteContext context)
-    {
-        _context = context;
-    }
+    public DnnContextTestController(DotNetNoteContext context) => _context = context;
 
     public IActionResult Index()
     {
