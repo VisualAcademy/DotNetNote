@@ -10,10 +10,7 @@ public class FileDemoController : Controller
 {
     private IWebHostEnvironment _environment;
 
-    public FileDemoController(IWebHostEnvironment environment)
-    {
-        _environment = environment;
-    }
+    public FileDemoController(IWebHostEnvironment environment) => _environment = environment;
 
     /// <summary>
     /// 파일 업로드 폼 
