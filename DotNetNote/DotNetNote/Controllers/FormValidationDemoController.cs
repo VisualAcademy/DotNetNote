@@ -30,10 +30,7 @@ public class FormValidationDemoController : Controller
     //[3] 따라하기 3: MVC 헬퍼 메서드 사용하기
     #region Helper Method
     [HttpGet]
-    public IActionResult HelperMethod()
-    {
-        return View();
-    }
+    public IActionResult HelperMethod() => View();
 
     [HttpPost]
     public IActionResult HelperMethod(string txtName, string txtContent)
