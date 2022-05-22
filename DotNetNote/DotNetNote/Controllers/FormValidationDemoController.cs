@@ -44,10 +44,7 @@ public class FormValidationDemoController : Controller
 
     //[4] 따라하기 4: 강력한 형식의 뷰와 모델 바인딩 사용하기
     #region Strongly Type View + Model Binding
-    public IActionResult StronglyTypeView()
-    {
-        return View();
-    }
+    public IActionResult StronglyTypeView() => View();
 
     [HttpPost]
     public IActionResult StronglyTypeView(MaximModel model)
