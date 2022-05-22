@@ -71,6 +71,11 @@ public class FormValidationDemoController : Controller
     [HttpPost]
     public IActionResult ModelValidation(MaximModel model)
     {
+        if (model is null)
+        {
+            throw new ArgumentNullException(nameof(model));
+        }
+
         // 직접 유효성 검사
         if (string.IsNullOrEmpty(model.Name))
         {
