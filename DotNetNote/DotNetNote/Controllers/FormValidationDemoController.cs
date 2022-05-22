@@ -6,10 +6,7 @@ public class FormValidationDemoController : Controller
 {
     //[1] 따라하기 1: 폼 유효성 검사 테스트용 메인 페이지 작성 
     #region Main Page
-    public IActionResult Index()
-    {
-        return View();
-    }
+    public IActionResult Index() => View();
     #endregion
 
 
