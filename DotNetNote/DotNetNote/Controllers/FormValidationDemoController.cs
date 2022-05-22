@@ -13,10 +13,7 @@ public class FormValidationDemoController : Controller
 
     //[2] 따라하기 2: 순수 HTML과 JavaScript를 사용한 유효성 검사 
     #region HTML
-    public IActionResult Html()
-    {
-        return View();
-    }
+    public IActionResult Html() => View();
 
     // [HttpPost]
     public IActionResult HtmlProcess(string txtName, string txtContent)
