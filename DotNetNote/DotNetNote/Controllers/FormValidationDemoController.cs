@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace DotNetNote.Controllers;
 
@@ -49,6 +50,11 @@ public class FormValidationDemoController : Controller
     [HttpPost]
     public IActionResult StronglyTypeView(MaximModel model)
     {
+        if (model is null)
+        {
+            throw new ArgumentNullException(nameof(model));
+        }
+
         return View();
     }
     #endregion
