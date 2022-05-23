@@ -10,10 +10,7 @@ public class IdeaController : Controller
 {
     private IIdeaRepository _repository;
 
-    public IdeaController(IIdeaRepository repository)
-    {
-        _repository = repository;
-    }
+    public IdeaController(IIdeaRepository repository) => _repository = repository;
 
     [HttpGet]
     public IActionResult Index()
