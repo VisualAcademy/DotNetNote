@@ -63,10 +63,7 @@ public class FormValidationDemoController : Controller
 
     //[5] 따라하기 5: 모델 기반 유효성 검사 및 서버측 유효성 검사
     #region Model Validation + Server Validation
-    public IActionResult ModelValidation()
-    {
-        return View();
-    }
+    public IActionResult ModelValidation() => View();
 
     [HttpPost]
     public IActionResult ModelValidation(MaximModel model)
