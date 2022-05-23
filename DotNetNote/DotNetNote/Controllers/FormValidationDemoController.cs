@@ -98,10 +98,7 @@ public class FormValidationDemoController : Controller
         return View();
     }
 
-    public IActionResult Completed()
-    {
-        return View();
-    }
+    public IActionResult Completed() => View();
     #endregion
 
 
