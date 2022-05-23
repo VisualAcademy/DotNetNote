@@ -13,10 +13,8 @@ namespace DotNetNote.Controllers;
 public class IdeaServiceController : Controller
 {
     private IIdeaRepository _repository;
-    public IdeaServiceController(IIdeaRepository repository)
-    {
-        _repository = repository;
-    }
+
+    public IdeaServiceController(IIdeaRepository repository) => _repository = repository;
 
     [HttpGet]
     public IEnumerable<Idea> Get()
