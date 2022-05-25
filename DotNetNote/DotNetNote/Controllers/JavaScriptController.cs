@@ -9,8 +9,5 @@ public class JavaScriptController : Controller
         return View();
     }
 
-    public IActionResult Moment()
-    {
-        return View();
-    }
+    public IActionResult Moment() => View();
 }
