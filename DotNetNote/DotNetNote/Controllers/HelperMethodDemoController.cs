@@ -34,10 +34,7 @@ public class HelperMethodDemoController : Controller
     /// <summary>
     /// 선택 요소
     /// </summary>
-    public IActionResult SelectDemo()
-    {
-        return View();
-    }
+    public IActionResult SelectDemo() => View();
 
     /// <summary>
     /// 강력한 형식의 뷰: 특정 모델 클래스가 사용되는 뷰
