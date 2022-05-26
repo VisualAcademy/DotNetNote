@@ -105,10 +105,7 @@ public class FormValidationDemoController : Controller
 
     //[6] 따라하기 6: 클라이언트측 유효성 검사
     #region Client Validation
-    public IActionResult ClientValidation()
-    {
-        return View();
-    }
+    public IActionResult ClientValidation() => View();
 
     [HttpPost]
     public IActionResult ClientValidation(MaximModel model)
