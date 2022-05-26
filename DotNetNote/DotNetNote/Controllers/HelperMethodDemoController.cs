@@ -51,10 +51,7 @@ public class HelperMethodDemoController : Controller
     /// <summary>
     /// CSS class 속성 주기
     /// </summary>
-    public IActionResult CssClassDemo()
-    {
-        return View();
-    }
+    public IActionResult CssClassDemo() => View();
 
     /// <summary>
     /// 부분 페이지
