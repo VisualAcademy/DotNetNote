@@ -18,10 +18,7 @@ public class HelperMethodDemoController : Controller
     /// <summary>
     /// 폼 생성
     /// </summary>
-    public IActionResult FormDemo()
-    {
-        return View();
-    }
+    public IActionResult FormDemo() => View();
 
     /// <summary>
     /// 입력 요소
