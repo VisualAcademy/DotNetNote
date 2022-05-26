@@ -16,10 +16,7 @@ public class StorageManagerTestController : Controller
         this.storageManager = storageManager;
     }
 
-    public IActionResult Index()
-    {
-        return View();
-    }
+    public IActionResult Index() => View();
 
     [HttpPost]
     public async Task<IActionResult> Index(List<IFormFile> files)
