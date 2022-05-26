@@ -16,10 +16,7 @@ public class SingletonDemoController : Controller
     //[2] 생성자에 인터페이스 주입
     private readonly IInfoService _svc;
 
-    public SingletonDemoController(IInfoService svc)
-    {
-        _svc = svc;
-    }
+    public SingletonDemoController(IInfoService svc) => _svc = svc;
 
     public IActionResult ConstructorInjectionDemo()
     {
