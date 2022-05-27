@@ -10,10 +10,7 @@ public class HelperMethodDemoController : Controller
     /// <summary>
     /// 메인 링크
     /// </summary>
-    public IActionResult Index()
-    {
-        return View();
-    }
+    public IActionResult Index() => View();
 
     /// <summary>
     /// 폼 생성
