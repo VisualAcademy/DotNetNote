@@ -474,8 +474,12 @@ public class Startup
         app.UseRouting();
 
 
+
+        #region Azure Web App 고유 경로 요청시 www.dotnetnote.com 경로로 영구 이동
         // Azure Web App 고유 경로 요청시 www.dotnetnote.com 경로로 영구 이동 
-        app.UseRewriter(new RewriteOptions().Add(new RedirectAzureWebsitesRule()).AddRedirectToWwwPermanent());
+        app.UseRewriter(new RewriteOptions().Add(new RedirectAzureWebsitesRule()).AddRedirectToWwwPermanent()); 
+        #endregion
+
 
 
         app.UseAuthentication();
@@ -648,8 +652,10 @@ public class Startup
 }
 
 
+
+#region RedirectAzureWebsitesRule: 메인(닷컴) 도메인으로 이동시키기 
 /// <summary>
-/// 메인 도메인으로 이동시키기 
+/// 메인(닷컴) 도메인으로 이동시키기 
 /// "dotnetnote.azurewebsites.net" 요청시 "www.dotnetnote.com" 경로로 이동 
 /// </summary>
 public class RedirectAzureWebsitesRule : IRule
@@ -674,3 +680,4 @@ public class RedirectAzureWebsitesRule : IRule
         }
     }
 }
+#endregion
