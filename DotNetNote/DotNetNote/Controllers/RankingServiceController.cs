@@ -22,10 +22,7 @@ public class RankingServiceController : Controller
 
     // GET api/RankingService/1
     [HttpGet("{id}")]
-    public string Get(int id)
-    {
-        return "value";
-    }
+    public string Get(int id) => "value";
 
     // POST api/RankingService
     [HttpPost]
