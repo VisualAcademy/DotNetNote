@@ -10,20 +10,18 @@ using DotNetNote.Models.Ideas;
 using DotNetNote.Models.Notes;
 using DotNetNote.Models.Notifications;
 using DotNetNote.Models.RecruitManager;
+using DotNetNote.Rules;
 using DotNetNote.Services;
 using DotNetNote.Settings;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Rewrite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.Net.Http.Headers;
 using System;
-using System.Net;
 using System.Text;
 
 namespace DotNetNote;
@@ -650,34 +648,3 @@ public class Startup
         });
     }
 }
-
-
-
-#region RedirectAzureWebsitesRule: 메인(닷컴) 도메인으로 이동시키기 
-/// <summary>
-/// 메인(닷컴) 도메인으로 이동시키기 
-/// "dotnetnote.azurewebsites.net" 요청시 "www.dotnetnote.com" 경로로 이동 
-/// </summary>
-public class RedirectAzureWebsitesRule : IRule
-{
-    public int StatusCode { get; } = (int)HttpStatusCode.MovedPermanently;
-
-    public void ApplyRule(RewriteContext context)
-    {
-        HttpRequest request = context.HttpContext.Request;
-        HostString host = context.HttpContext.Request.Host;
-
-        if (host.HasValue && host.Value == "dotnetnote.azurewebsites.net")
-        {
-            HttpResponse response = context.HttpContext.Response;
-            response.StatusCode = StatusCode;
-            response.Headers[HeaderNames.Location] = request.Scheme + "://" + "www.dotnetnote.com" + request.PathBase + request.Path + request.QueryString;
-            context.Result = RuleResult.EndResponse;
-        }
-        else
-        {
-            context.Result = RuleResult.ContinueRules;
-        }
-    }
-}
-#endregion
