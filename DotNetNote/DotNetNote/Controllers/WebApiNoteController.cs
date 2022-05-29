@@ -17,8 +17,5 @@ public class WebApiNoteController : Controller
 
 public class WebApiNoteTestController : Controller
 {
-    public IActionResult GetByNumber()
-    {
-        return View();
-    }
+    public IActionResult GetByNumber() => View();
 }
