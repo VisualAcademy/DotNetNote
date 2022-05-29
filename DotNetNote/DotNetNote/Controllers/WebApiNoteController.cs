@@ -6,10 +6,7 @@ namespace DotNetNote.Controllers;
 public class WebApiNoteController : Controller
 {
     [HttpGet("{id}")]
-    public string Get(int id)
-    {
-        return $"넘어온 값: {id}";
-    }
+    public string Get(int id) => $"넘어온 값: {id}";
 
     [HttpGet]
     public double GetByNumber(int number) => number;
