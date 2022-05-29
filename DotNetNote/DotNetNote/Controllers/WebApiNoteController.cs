@@ -12,10 +12,7 @@ public class WebApiNoteController : Controller
     }
 
     [HttpGet]
-    public double GetByNumber(int number)
-    {
-        return number;
-    }
+    public double GetByNumber(int number) => number;
 }
 
 public class WebApiNoteTestController : Controller
