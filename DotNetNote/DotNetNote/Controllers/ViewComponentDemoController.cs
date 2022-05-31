@@ -14,10 +14,7 @@ public class ViewComponentDemoController : Controller
     /// <summary>
     /// TechListViewComponent 사용 데모
     /// </summary>
-    public IActionResult TechListDemo()
-    {
-        return View();
-    }
+    public IActionResult TechListDemo() => View();
 
 
     /// <summary>
