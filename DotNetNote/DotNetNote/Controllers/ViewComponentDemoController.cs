@@ -9,10 +9,7 @@ public class ViewComponentDemoController : Controller
     /// <summary>
     /// CopyrightViewComponent 출력 데모
     /// </summary>
-    public IActionResult CopyrightDemo()
-    {
-        return View();
-    }
+    public IActionResult CopyrightDemo() => View();
 
     /// <summary>
     /// TechListViewComponent 사용 데모
