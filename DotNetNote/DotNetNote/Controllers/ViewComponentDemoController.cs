@@ -20,10 +20,7 @@ public class ViewComponentDemoController : Controller
     /// <summary>
     /// SiteListViewComponent 사용 데모
     /// </summary>
-    public IActionResult SiteListDemo()
-    {
-        return View();
-    }
+    public IActionResult SiteListDemo() => View();
 
 
     /// <summary>
