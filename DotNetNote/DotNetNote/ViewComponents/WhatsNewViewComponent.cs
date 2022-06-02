@@ -8,10 +8,7 @@ public class WhatsNewViewComponent : ViewComponent
     // 게시판 리포지토리 개체 
     private INoteRepository _repository;
 
-    public WhatsNewViewComponent(INoteRepository repository)
-    {
-        _repository = repository;
-    }
+    public WhatsNewViewComponent(INoteRepository repository) => _repository = repository;
 
     public IViewComponentResult Invoke()
     {
