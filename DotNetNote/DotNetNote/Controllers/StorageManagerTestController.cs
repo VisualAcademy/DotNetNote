@@ -10,10 +10,7 @@ public class StorageManagerTestController : Controller
 {
     private readonly IStorageManager storageManager;
 
-    public StorageManagerTestController(IStorageManager storageManager)
-    {
-        this.storageManager = storageManager;
-    }
+    public StorageManagerTestController(IStorageManager storageManager) => this.storageManager = storageManager;
 
     public IActionResult Index() => View();
 
