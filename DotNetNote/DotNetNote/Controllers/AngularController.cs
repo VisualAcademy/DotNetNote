@@ -4,10 +4,7 @@ namespace DotNetNote.Controllers;
 
 public class AngularController : Controller
 {
-    public IActionResult Index()
-    {
-        return View();
-    }
+    public IActionResult Index() => View();
 
     public IActionResult Error()
     {
