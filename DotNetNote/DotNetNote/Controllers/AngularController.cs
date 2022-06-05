@@ -6,8 +6,5 @@ public class AngularController : Controller
 {
     public IActionResult Index() => View();
 
-    public IActionResult Error()
-    {
-        return View();
-    }
+    public IActionResult Error() => View();
 }
