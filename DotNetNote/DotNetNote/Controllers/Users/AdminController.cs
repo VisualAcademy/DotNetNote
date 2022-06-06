@@ -14,10 +14,7 @@ public class AdminController : Controller
     //    return "Admin 사용자만 볼 수 있음";
     //}
 
-    public IActionResult Index()
-    {
-        return View();
-    }
+    public IActionResult Index() => View();
 
     /// <summary>
     /// TODO: 게시판 관리자 페이지
