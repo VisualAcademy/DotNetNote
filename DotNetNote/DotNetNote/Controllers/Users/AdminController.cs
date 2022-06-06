@@ -19,10 +19,7 @@ public class AdminController : Controller
     /// <summary>
     /// TODO: 게시판 관리자 페이지
     /// </summary>
-    public IActionResult NoteManager()
-    {
-        return View();
-    }
+    public IActionResult NoteManager() => View();
 
     /// <summary>
     /// TODO: 사용자 관리자 페이지
