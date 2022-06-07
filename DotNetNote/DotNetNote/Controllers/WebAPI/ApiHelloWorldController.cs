@@ -18,8 +18,5 @@ public class ApiHelloWorldController : Controller
     //[HttpGet("{id}")]
     //[!] 모델 바인딩 + 인라인 제약 조건(:)
     [HttpGet("{id:int}")]
-    public string Get(int id)
-    {
-        return $"넘어온 값: {id}";
-    }
+    public string Get(int id) => $"넘어온 값: {id}";
 }
