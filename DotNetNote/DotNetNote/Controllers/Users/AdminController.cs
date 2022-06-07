@@ -24,8 +24,5 @@ public class AdminController : Controller
     /// <summary>
     /// TODO: 사용자 관리자 페이지
     /// </summary>
-    public IActionResult UserManager()
-    {
-        return View();
-    }
+    public IActionResult UserManager() => View();
 }
