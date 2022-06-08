@@ -8,10 +8,7 @@ public class ApiHelloWorldController : Controller
 {
     // api/ApiHelloWorld
     [HttpGet]
-    public IEnumerable<string> Get()
-    {
-        return new string[] { "안녕하세요.", "반갑습니다." };
-    }
+    public IEnumerable<string> Get() => new string[] { "안녕하세요.", "반갑습니다." };
 
     // api/ApiHelloWorld/id
     //[!] 라우트 매개변수
