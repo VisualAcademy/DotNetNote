@@ -8,10 +8,7 @@ public class ArticlesController : Controller
 {
     private readonly IBlogService _service;
 
-    public ArticlesController(IBlogService service)
-    {
-        this._service = service;
-    }
+    public ArticlesController(IBlogService service) => this._service = service;
 
     // GET: Articles
     public IActionResult Index()
