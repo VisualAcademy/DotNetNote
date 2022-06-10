@@ -31,10 +31,7 @@ namespace DotNetNote.Controllers
 
 
         [HttpGet]
-        public IActionResult PostWrite()
-        {
-            return View();
-        }
+        public IActionResult PostWrite() => View();
 
         [HttpPost]
         public IActionResult PostWrite(string title, string editor)
