@@ -1,5 +1,4 @@
 #nullable enable
-using DotNetNote.Controllers.Articles;
 
 namespace DotNetNote.Controllers.Articles;
 
