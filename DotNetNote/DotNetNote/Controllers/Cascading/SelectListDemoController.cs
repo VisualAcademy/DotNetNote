@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using DotNetNote.Data;
 using System.Linq;
 
-namespace VisualAcademy.Controllers
+namespace DotNetNote.Controllers.Cascading
 {
     public class SelectListDemoController : Controller
     {
@@ -11,7 +11,7 @@ namespace VisualAcademy.Controllers
 
         public SelectListDemoController(ApplicationDbContext context)
         {
-            this._context = context;
+            _context = context;
         }
 
         public IActionResult Index()
