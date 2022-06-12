@@ -9,10 +9,7 @@ public class SelectListDemoController : Controller
 {
     private readonly ApplicationDbContext _context;
 
-    public SelectListDemoController(ApplicationDbContext context)
-    {
-        _context = context;
-    }
+    public SelectListDemoController(ApplicationDbContext context) => _context = context;
 
     public IActionResult Index()
     {
