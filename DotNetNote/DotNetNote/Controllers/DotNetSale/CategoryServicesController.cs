@@ -8,10 +8,7 @@ public class CategoryServicesController : Controller
 {
     private readonly ICategoryRepository _repository;
 
-    public CategoryServicesController(ICategoryRepository repository)
-    {
-        _repository = repository;
-    }
+    public CategoryServicesController(ICategoryRepository repository) => _repository = repository;
 
     [HttpGet]
     public IEnumerable<Category> Get()
