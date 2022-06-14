@@ -1,7 +1,7 @@
 ﻿using DotNetNote.Models.Categories;
 using Microsoft.AspNetCore.Mvc;
 
-namespace DotNetSaleCom.Controllers
+namespace DotNetNote.Controllers.DotNetSale
 {
     [Route("api/[controller]")]
     public class CategoryServicesController : Controller
