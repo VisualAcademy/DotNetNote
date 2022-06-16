@@ -7,10 +7,7 @@ namespace DotNetNote.Controllers;
 /// </summary>
 public class RazorDemoController : Controller
 {
-    public IActionResult Index()
-    {
-        return View();
-    }
+    public IActionResult Index() => View();
 
     public IActionResult Demo1()
     {
