@@ -8,10 +8,7 @@ public class UserServiceController : Controller
 {
     private IUserRepository _repo;
 
-    public UserServiceController(IUserRepository repo)
-    {
-        _repo = repo;
-    }
+    public UserServiceController(IUserRepository repo) => _repo = repo;
 
     /// <summary>
     /// 아이디 중복 확인 Web API
