@@ -8,10 +8,7 @@ public class AppKeysController : Controller
 {
     private readonly AppKeyConfig appKeyConfig;
 
-    public AppKeysController(IOptions<AppKeyConfig> appKeyConfig)
-    {
-        this.appKeyConfig = appKeyConfig.Value;
-    }
+    public AppKeysController(IOptions<AppKeyConfig> appKeyConfig) => this.appKeyConfig = appKeyConfig.Value;
 
     public IActionResult Index()
     {
