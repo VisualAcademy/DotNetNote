@@ -8,10 +8,7 @@ public class OneServiceController : Controller
 {
     private IOneRepository _repository;
 
-    public OneServiceController(IOneRepository repository)
-    {
-        _repository = repository;
-    }
+    public OneServiceController(IOneRepository repository) => _repository = repository;
 
     [HttpGet]
     public IEnumerable<One> Get()
