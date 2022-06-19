@@ -6,10 +6,7 @@ public class OneController : Controller
 {
     private IOneRepository _repository;
 
-    public OneController(IOneRepository repository)
-    {
-        _repository = repository;
-    }
+    public OneController(IOneRepository repository) => _repository = repository;
 
     [HttpGet]
     public IActionResult Index()
