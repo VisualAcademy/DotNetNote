@@ -13,10 +13,7 @@ public class MyNotificationsController : Controller
     }
 
     #region MVC 액션 메서드
-    public IActionResult Index()
-    {
-        return View();
-    }
+    public IActionResult Index() => View();
 
     public IActionResult MyNotification()
     {
