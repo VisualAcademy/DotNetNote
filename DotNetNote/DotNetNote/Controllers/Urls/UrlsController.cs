@@ -8,10 +8,7 @@ public class UrlsController : Controller
 
     public UrlsController(IUrlRepository repository) => _repository = repository;
 
-    public IActionResult Index()
-    {
-        return View("~/Views/_MiniProjects/Urls/Index.cshtml");
-    }
+    public IActionResult Index() => View("~/Views/_MiniProjects/Urls/Index.cshtml");
 
     public IActionResult IsExistsMethodTest()
     {
