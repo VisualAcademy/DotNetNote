@@ -11,10 +11,7 @@ namespace DotNetNote.Controllers.RecruitManager
     {
         private IRecruitSettingRepository _repo;
 
-        public RecruitManagerController(IRecruitSettingRepository repo)
-        {
-            _repo = repo;
-        }
+        public RecruitManagerController(IRecruitSettingRepository repo) => _repo = repo;
 
         /// <summary>
         /// 기본 페이지 
