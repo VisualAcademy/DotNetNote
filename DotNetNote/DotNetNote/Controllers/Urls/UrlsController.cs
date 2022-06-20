@@ -6,10 +6,7 @@ public class UrlsController : Controller
 {
     private readonly IUrlRepository _repository;
 
-    public UrlsController(IUrlRepository repository)
-    {
-        _repository = repository;
-    }
+    public UrlsController(IUrlRepository repository) => _repository = repository;
 
     public IActionResult Index()
     {
