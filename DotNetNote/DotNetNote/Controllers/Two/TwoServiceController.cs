@@ -7,10 +7,7 @@ public class TwoServiceController : Controller
 {
     private ITwoRepository _repository;
 
-    public TwoServiceController(ITwoRepository repository)
-    {
-        _repository = repository;
-    }
+    public TwoServiceController(ITwoRepository repository) => _repository = repository;
 
     [HttpGet]
     public IActionResult Get()
