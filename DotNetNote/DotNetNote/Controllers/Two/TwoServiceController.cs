@@ -29,8 +29,5 @@ public class TwoServiceController : Controller
     }
 
     [HttpPost]
-    public TwoModel Post([FromBody] TwoModel model)
-    {
-        return _repository.Add(model);
-    }
+    public TwoModel Post([FromBody] TwoModel model) => _repository.Add(model);
 }
