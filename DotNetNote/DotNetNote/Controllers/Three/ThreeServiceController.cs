@@ -8,10 +8,7 @@ public class ThreeServiceController : Controller
 {
     private IThreeRepository _repository;
 
-    public ThreeServiceController(IThreeRepository repository)
-    {
-        _repository = repository;
-    }
+    public ThreeServiceController(IThreeRepository repository) => _repository = repository;
 
     [HttpGet]
     public IActionResult Get()
