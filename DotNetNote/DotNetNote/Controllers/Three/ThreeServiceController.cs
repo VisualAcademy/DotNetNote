@@ -51,8 +51,5 @@ public class ThreeServiceController : Controller
     }
 
     [HttpGet("{id:int}")]
-    public ThreeViewModel Get(int id)
-    {
-        return _repository.GetAll().Where(m => m.Id == id).Single();
-    }
+    public ThreeViewModel Get(int id) => _repository.GetAll().Where(m => m.Id == id).Single();
 }
