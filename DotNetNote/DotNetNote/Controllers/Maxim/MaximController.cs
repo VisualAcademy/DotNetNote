@@ -6,10 +6,7 @@ namespace DotNetNote.Controllers
     {
         private MaximServiceRepository _repo;
 
-        public MaximController(MaximServiceRepository maximService)
-        {
-            _repo = maximService;
-        }
+        public MaximController(MaximServiceRepository maximService) => _repo = maximService;
 
         // GET: Maxim
         public IActionResult Index()
