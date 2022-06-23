@@ -9,10 +9,7 @@ public class MaximController : Controller
     public MaximController(MaximServiceRepository maximService) => _repo = maximService;
 
     // GET: Maxim
-    public IActionResult Index()
-    {
-        return View(_repo.GetMaxims());
-    }
+    public IActionResult Index() => View(_repo.GetMaxims());
 
     public IActionResult Create()
     {
