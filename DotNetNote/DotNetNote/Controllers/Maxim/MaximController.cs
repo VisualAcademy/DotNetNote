@@ -1,30 +1,29 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace DotNetNote.Controllers
+namespace DotNetNote.Controllers;
+
+public class MaximController : Controller
 {
-    public class MaximController : Controller
+    private MaximServiceRepository _repo;
+
+    public MaximController(MaximServiceRepository maximService) => _repo = maximService;
+
+    // GET: Maxim
+    public IActionResult Index()
     {
-        private MaximServiceRepository _repo;
+        return View(_repo.GetMaxims());
+    }
 
-        public MaximController(MaximServiceRepository maximService) => _repo = maximService;
+    public IActionResult Create()
+    {
+        return View();
+    }
 
-        // GET: Maxim
-        public IActionResult Index()
-        {
-            return View(_repo.GetMaxims());
-        }
+    [HttpPost]
+    public IActionResult Create(Maxim model)
+    {
+        _repo.AddMaxim(model);
 
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public IActionResult Create(Maxim model)
-        {
-            _repo.AddMaxim(model);
-
-            return RedirectToAction("Index", "Maxim");
-        }
+        return RedirectToAction("Index", "Maxim");
     }
 }
