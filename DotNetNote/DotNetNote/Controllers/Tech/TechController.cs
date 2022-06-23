@@ -9,10 +9,7 @@ namespace DotNetNote.Controllers;
 
 public class TechController : Controller
 {
-    public IActionResult Index()
-    {
-        return View();
-    }
+    public IActionResult Index() => View();
 
     public async Task<IActionResult> GetTechAllWithHttpClient()
     {
