@@ -11,10 +11,7 @@ public class MaximController : Controller
     // GET: Maxim
     public IActionResult Index() => View(_repo.GetMaxims());
 
-    public IActionResult Create()
-    {
-        return View();
-    }
+    public IActionResult Create() => View();
 
     [HttpPost]
     public IActionResult Create(Maxim model)
