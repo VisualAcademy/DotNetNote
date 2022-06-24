@@ -7,10 +7,7 @@ public class MyNotificationsController : Controller
 {
     private readonly IMyNotificationRepository _repository;
 
-    public MyNotificationsController(IMyNotificationRepository repository)
-    {
-        _repository = repository;
-    }
+    public MyNotificationsController(IMyNotificationRepository repository) => _repository = repository;
 
     #region MVC 액션 메서드
     public IActionResult Index() => View();
