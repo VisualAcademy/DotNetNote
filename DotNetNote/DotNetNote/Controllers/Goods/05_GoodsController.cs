@@ -1,5 +1,4 @@
-﻿using DotNetNote.Models;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Dul.Web;
 
 namespace DotNetNote.Controllers
