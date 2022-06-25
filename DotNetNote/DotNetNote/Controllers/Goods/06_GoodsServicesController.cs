@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using DotNetNote.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DotNetNote.Controllers
