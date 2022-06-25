@@ -10,10 +10,7 @@ namespace DotNetNote.Controllers
     {
         private IGoodsRepository _repository;
 
-        public GoodsController(IGoodsRepository repository)
-        {
-            _repository = repository;
-        }
+        public GoodsController(IGoodsRepository repository) => _repository = repository;
 
         /// <summary>
         /// 리스트
