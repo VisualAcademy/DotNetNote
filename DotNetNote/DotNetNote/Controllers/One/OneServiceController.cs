@@ -14,10 +14,7 @@ public class OneServiceController : Controller
     public IEnumerable<One> Get() => _repository.GetAll().AsEnumerable();
 
     [HttpGet("{id}")]
-    public One Get(int id)
-    {
-        return Get().Where(o => o.Id == id).Single();
-    }
+    public One Get(int id) => Get().Where(o => o.Id == id).Single();
 
     [HttpPost]
     public One Post([FromBody] One model) => _repository.Add(model);
