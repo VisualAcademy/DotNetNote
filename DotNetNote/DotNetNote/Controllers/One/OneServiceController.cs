@@ -20,8 +20,5 @@ public class OneServiceController : Controller
     }
 
     [HttpPost]
-    public One Post([FromBody] One model)
-    {
-        return _repository.Add(model);
-    }
+    public One Post([FromBody] One model) => _repository.Add(model);
 }
