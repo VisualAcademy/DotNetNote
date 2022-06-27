@@ -11,10 +11,7 @@ public class OneServiceController : Controller
     public OneServiceController(IOneRepository repository) => _repository = repository;
 
     [HttpGet]
-    public IEnumerable<One> Get()
-    {
-        return _repository.GetAll().AsEnumerable();
-    }
+    public IEnumerable<One> Get() => _repository.GetAll().AsEnumerable();
 
     [HttpGet("{id}")]
     public One Get(int id)
