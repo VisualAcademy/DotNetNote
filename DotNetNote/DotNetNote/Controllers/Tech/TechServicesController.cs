@@ -15,10 +15,7 @@ public class TechServicesController : ControllerBase
 
     // GET: api/TechServices
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Tech>>> GetTeches()
-    {
-        return await _context.Teches.ToListAsync();
-    }
+    public async Task<ActionResult<IEnumerable<Tech>>> GetTeches() => await _context.Teches.ToListAsync();
 
     // GET: api/TechServices/5
     [HttpGet("{id}")]
