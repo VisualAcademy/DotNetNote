@@ -11,10 +11,7 @@ public class TechServicesController : ControllerBase
 {
     private readonly TechContext _context;
 
-    public TechServicesController(TechContext context)
-    {
-        _context = context;
-    }
+    public TechServicesController(TechContext context) => _context = context;
 
     // GET: api/TechServices
     [HttpGet]
