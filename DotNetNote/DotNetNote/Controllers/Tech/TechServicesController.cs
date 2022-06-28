@@ -87,8 +87,5 @@ public class TechServicesController : ControllerBase
         return tech;
     }
 
-    private bool TechExists(int id)
-    {
-        return _context.Teches.Any(e => e.Id == id);
-    }
+    private bool TechExists(int id) => _context.Teches.Any(e => e.Id == id);
 }
