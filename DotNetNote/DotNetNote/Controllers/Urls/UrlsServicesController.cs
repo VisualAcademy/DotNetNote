@@ -12,10 +12,7 @@ public class UrlsServicesController : Controller
 {
     private readonly DotNetNoteContext _context;
 
-    public UrlsServicesController(DotNetNoteContext context)
-    {
-        _context = context;
-    }
+    public UrlsServicesController(DotNetNoteContext context) => _context = context;
 
     /// <summary>
     /// URL 리스트 출력
