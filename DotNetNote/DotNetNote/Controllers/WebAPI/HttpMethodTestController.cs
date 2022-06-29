@@ -8,10 +8,7 @@ public class HttpMethodTestController : ControllerBase
 {
     // GET: api/<HttpMethodTestController>
     [HttpGet]
-    public IEnumerable<string> Get()
-    {
-        return new string[] { "value1", "value2" };
-    }
+    public IEnumerable<string> Get() => new string[] { "value1", "value2" };
 
     // GET api/<HttpMethodTestController>/5
     [HttpGet("{id}")]
