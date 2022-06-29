@@ -12,10 +12,7 @@ public class HttpMethodTestController : ControllerBase
 
     // GET api/<HttpMethodTestController>/5
     [HttpGet("{id}")]
-    public string Get(int id)
-    {
-        return $"value {id}";
-    }
+    public string Get(int id) => $"value {id}";
 
     // POST api/<HttpMethodTestController>
     [HttpPost]
