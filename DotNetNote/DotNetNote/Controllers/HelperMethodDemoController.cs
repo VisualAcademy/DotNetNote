@@ -20,10 +20,7 @@ public class HelperMethodDemoController : Controller
     /// <summary>
     /// 입력 요소
     /// </summary>
-    public IActionResult InputDemo()
-    {
-        return View();
-    }
+    public IActionResult InputDemo() => View();
 
     /// <summary>
     /// 선택 요소
@@ -53,10 +50,7 @@ public class HelperMethodDemoController : Controller
     /// <summary>
     /// 부분 페이지
     /// </summary>
-    public IActionResult PartialViewDemo()
-    {
-        return View();
-    }
+    public IActionResult PartialViewDemo() => View();
 }
 
 /// <summary>
