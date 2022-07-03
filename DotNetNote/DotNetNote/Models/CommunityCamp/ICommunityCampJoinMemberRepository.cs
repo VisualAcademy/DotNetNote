@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace DotNetNote.Models
+﻿namespace DotNetNote.Models
 {
     public interface ICommunityCampJoinMemberRepository
     {
