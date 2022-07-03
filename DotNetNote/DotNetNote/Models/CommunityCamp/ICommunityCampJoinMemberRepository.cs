@@ -1,9 +1,8 @@
-﻿namespace DotNetNote.Models
+﻿namespace DotNetNote.Models;
+
+public interface ICommunityCampJoinMemberRepository
 {
-    public interface ICommunityCampJoinMemberRepository
-    {
-        List<CommunityCampJoinMember> GetAll();
-        void AddMember(CommunityCampJoinMember model);
-        void DeleteMember(CommunityCampJoinMember model);
-    }
+    List<CommunityCampJoinMember> GetAll();
+    void AddMember(CommunityCampJoinMember model);
+    void DeleteMember(CommunityCampJoinMember model);
 }
