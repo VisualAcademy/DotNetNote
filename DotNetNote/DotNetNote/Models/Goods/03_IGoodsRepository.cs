@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace DotNetNote.Models
+﻿namespace DotNetNote.Models
 {
     /// <summary>
     /// [3] 인터페이스
