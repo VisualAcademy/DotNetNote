@@ -9,15 +9,21 @@ namespace DotNetNote.Models.RecruitManager
 {
     public interface IRecruitRegistrationRepository
     {
-        RecruitRegistration Add(RecruitRegistration model);         // 입력 
+        RecruitRegistration Add(RecruitRegistration model);         // 입력
+                                                                    // 
         List<RecruitRegistration> GetAll();                         // 출력
+
         RecruitRegistration GetById(int id);                        // 상세
+
         RecruitRegistration Update(RecruitRegistration model);      // 수정
+
         void Remove(int id);                                        // 삭제
 
         List<RecruitRegistration> GetAll(string boardName, int boardNum);
+
         List<RecruitRegistration> GetAllByRecruitSettingId(
             int recruitSettingId);
+
         void RemoveRecruitRegistration(
             string boardName, int boardNum, string username);
 
