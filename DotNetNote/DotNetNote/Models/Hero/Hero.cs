@@ -19,8 +19,11 @@ namespace DotNetNote.Models
     public class Hero
     {
         public int Id { get; set; }
+
         public string Name { get; set; }
+
         public string Icon { get; set; }
+
         public DateTimeOffset Created { get; set; }
     }
 
@@ -31,12 +34,17 @@ namespace DotNetNote.Models
     public interface IHeroRepository
     {
         Hero AddHero(Hero model);       // 입력: T Add(T model);
+
         List<Hero> GetAllHeroes();      // 출력: List<T> GetAll();
+
         Hero GetHeroById(int id);       // 상세: T GetById(int id);
+
         Hero UpdateHero(Hero model);    // 수정: T Update(T model);
+
         void RemoveHero(int id);        // 삭제: void Remove(int id); 
 
         int GetRecordCountHeroes();
+
         List<Hero> GetAllHeroesWithPaging(int pageIndex, int pageSize = 10);
 
         // 추가: 이미 등록된 영웅 이름인지 확인
@@ -134,7 +142,7 @@ namespace DotNetNote.Models
         /// (카운트 메서드 + 페이징 메서드) 형태는 GoodsManager 강좌를 참고할 것
         /// </summary>
         /// <param name="pageIndex">0, 1, 2, ...</param>
-        /// <param name="pageSize">한 페이지에 표시하 레코드 수</param>
+        /// <param name="pageSize">한 페이지에 표시하는 레코드 수</param>
         public List<Hero> GetAllHeroesWithPaging(int pageIndex, int pageSize = 10)
         {
             string sql = @"
