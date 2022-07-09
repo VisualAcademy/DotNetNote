@@ -11,7 +11,9 @@ namespace DotNetNote.Models.Samples
     public class Department
     {
         public int Id { get; set; }
+
         public string Name { get; set; }
+
         public ICollection<Employee> Type { get; set; }
     }
 
