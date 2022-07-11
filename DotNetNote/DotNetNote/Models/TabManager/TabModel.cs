@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace DotNetNote.Models
+﻿namespace DotNetNote.Models
 {
     /// <summary>
     /// 탭(Tab) 모델 클래스: Tab, TabModel, TabViewModel, ... 
