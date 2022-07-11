@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace DotNetNote.Models
+﻿namespace DotNetNote.Models
 {
     /// <summary>
     /// 탭 저장소에 대한 리포지토리 인터페이스
@@ -15,6 +13,7 @@ namespace DotNetNote.Models
         List<TabModel> GetAll(int communityId = 0);
         
         List<TabModel> GetAllByCommunityId(int communityId);
+
         List<TabModel> GetAllByCommunityId(int communityId, bool isVisible);
 
         void UpdateModel(List<TabModel> lst);
@@ -27,6 +26,7 @@ namespace DotNetNote.Models
         TabModel Add(TabModel model);
 
         List<TabModel> GetMenusByParentId(int parentId);
+
         List<TabModel> GetMenusByParentId(int parentId, int communityId);
 
         int UpdateTabOrder(int parentId, int communityId);
