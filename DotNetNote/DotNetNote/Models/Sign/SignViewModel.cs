@@ -1,8 +1,8 @@
-﻿namespace DotNetNote.Models
+﻿namespace DotNetNote.Models;
+
+public class SignViewModel
 {
-    public class SignViewModel
-    {
-        public string Email { get; set; }
-        public string Password { get; set; }
-    }
+    public string Email { get; set; }
+
+    public string Password { get; set; }
 }
