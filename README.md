@@ -49,9 +49,8 @@ Layout.cshtml 파일에 들어있는 구글 광고 링크는 제거하셔도 됩
 
 현재 소스를 제작하는 내용에 대한 유료 강좌는 다음 링크를 참고하세요. 
 
+데브렉: 
 http://www.devlec.com
-
-https://www.youtube.com/watch?v=xRz2DA8bbbc&list=PLO56HZSjrPTDtR6uKaE7mThbGAUgzvTJe
 
 
 ## ASP.NET Core 1.x 버전의 DotNetNote는 다음 경로에 있습니다.
