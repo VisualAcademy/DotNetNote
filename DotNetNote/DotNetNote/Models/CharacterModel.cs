@@ -13,7 +13,9 @@ namespace DotNetNote.Models
     public class CharacterModel
     {
         public int Id { get; set; }
+
         public string Username { get; set; }
+
         public int HeroId { get; set; }
     }
 
@@ -23,6 +25,7 @@ namespace DotNetNote.Models
     public interface ICharacterRepository
     {
         CharacterModel SetCharacter(CharacterModel model);
+
         CharacterModel GetCharacterByUsername(string username);
     }
 
@@ -50,7 +53,7 @@ namespace DotNetNote.Models
         /// </summary>
         public CharacterModel SetCharacter(CharacterModel model)
         {
-            string sql = ""; 
+            string sql = "";
             if (GetRecordCounts(model.Username) > 0)
             {
                 // 이미 저장된 캐릭터: Update
@@ -97,7 +100,7 @@ namespace DotNetNote.Models
             }
             else
             {
-                return null; 
+                return null;
             }
         }
     }
