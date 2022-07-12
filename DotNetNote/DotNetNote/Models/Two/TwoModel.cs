@@ -1,7 +1,6 @@
 ﻿using Dapper;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace DotNetNote.Models
@@ -12,6 +11,7 @@ namespace DotNetNote.Models
     public class TwoModel
     {
         public int Id { get; set; }
+
         public string Note { get; set; }
     }
 
@@ -21,6 +21,7 @@ namespace DotNetNote.Models
     public interface ITwoRepository
     {
         TwoModel Add(TwoModel model);
+
         List<TwoModel> GetAll();
     }
 
