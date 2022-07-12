@@ -1,6 +1,5 @@
 ﻿using Dapper;
 using Microsoft.Extensions.Configuration;
-using System.Collections.Generic;
 using System.Linq;
 using System;
 using Microsoft.Data.SqlClient;
@@ -13,6 +12,7 @@ namespace DotNetNote.Models
     public class ThreeViewModel
     {
         public int Id { get; set; }
+
         public string Note { get; set; }
     }
 
@@ -22,7 +22,9 @@ namespace DotNetNote.Models
     public interface IThreeRepository
     {
         ThreeViewModel Add(ThreeViewModel model);
+
         List<ThreeViewModel> GetAll();
+
         ThreeViewModel GetById(int id); 
     }
 
