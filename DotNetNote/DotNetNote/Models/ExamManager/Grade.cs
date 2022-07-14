@@ -1,9 +1,10 @@
-﻿namespace DotNetNote.Models
+﻿namespace DotNetNote.Models;
+
+public class Grade
 {
-    public class Grade
-    {
-        public double TotalPoints { get; set; }
-        public double Score { get; set; }
-        public Exam Exam { get; set; }
-    }
+    public double TotalPoints { get; set; }
+
+    public double Score { get; set; }
+
+    public Exam Exam { get; set; }
 }
