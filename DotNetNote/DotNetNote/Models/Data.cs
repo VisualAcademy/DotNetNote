@@ -6,7 +6,9 @@ namespace DotNetNote.Models
     public class DataModel
     {
         public int Id { get; set; }
+
         public string Name { get; set; }
+
         public string Title { get; set; }
     }
 
@@ -19,10 +21,7 @@ namespace DotNetNote.Models
             new DataModel { Id = 3, Name = "한상훈", Title = "또 만나요." },
         };
 
-        public List<DataModel> GetAll()
-        {
-            return _data;
-        }
+        public List<DataModel> GetAll() => _data;
 
         public DataModel GetDataById(int id)
         {
