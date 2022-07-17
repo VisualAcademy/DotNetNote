@@ -14,10 +14,7 @@ public class LocationsController : ControllerBase
 {
     private readonly ApplicationDbContext _context;
 
-    public LocationsController(ApplicationDbContext context)
-    {
-        _context = context;
-    }
+    public LocationsController(ApplicationDbContext context) => _context = context;
 
     // GET: api/Locations
     [HttpGet]
