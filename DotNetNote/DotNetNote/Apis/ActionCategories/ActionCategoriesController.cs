@@ -94,8 +94,5 @@ public class ActionCategoriesController : ControllerBase
         return NoContent();
     }
 
-    private bool ActionCategoryExists(long id)
-    {
-        return _context.ActionCategories.Any(e => e.Id == id);
-    }
+    private bool ActionCategoryExists(long id) => _context.ActionCategories.Any(e => e.Id == id);
 }
