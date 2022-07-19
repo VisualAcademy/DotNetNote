@@ -13,10 +13,7 @@ public class ActionCategoriesController : ControllerBase
 {
     private readonly ActContext _context;
 
-    public ActionCategoriesController(ActContext context)
-    {
-        _context = context;
-    }
+    public ActionCategoriesController(ActContext context) => _context = context;
 
     // GET: api/ActionCategories
     [HttpGet]
