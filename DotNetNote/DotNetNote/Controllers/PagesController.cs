@@ -10,13 +10,7 @@ public class PagesController : Controller
 
     public IActionResult NotFoundPage() => View();
 
-    public IActionResult NotAssigned()
-    {
-        return View();
-    }
+    public IActionResult NotAssigned() => View();
 
-    public IActionResult IntroDemo()
-    {
-        return View();
-    }
+    public IActionResult IntroDemo() => View();
 }
