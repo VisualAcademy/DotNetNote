@@ -15,10 +15,7 @@ namespace DotNetNote.Controllers
     {
         private MaximServiceRepository repo;
 
-        public MaximServiceController(MaximServiceRepository maximService)
-        {
-            repo = maximService;
-        }
+        public MaximServiceController(MaximServiceRepository maximService) => repo = maximService;
 
         // GET: api/MaximService
         //[1] Get 요청의 가장 기본적인 모양
