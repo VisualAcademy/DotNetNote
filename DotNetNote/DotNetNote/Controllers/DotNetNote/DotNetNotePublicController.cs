@@ -328,10 +328,7 @@ namespace DotNetNote.Controllers
         /// <summary>
         /// 게시판 삭제 완료 후 추가적인 처리할 때 페이지
         /// </summary>
-        public IActionResult DeleteCompleted()
-        {
-            return View();
-        }
+        public IActionResult DeleteCompleted() => View();
 
         /// <summary>
         /// 게시판 수정 폼
