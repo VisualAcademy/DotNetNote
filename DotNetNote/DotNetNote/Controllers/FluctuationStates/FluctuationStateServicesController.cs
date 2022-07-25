@@ -6,10 +6,7 @@ namespace DotNetNote.Controllers
     {
         private readonly IFluctuationStateRepository _repository;
 
-        public FluctuationStateServicesController()
-        {
-            _repository = new FluctuationStateRepositoryInMemory();
-        }
+        public FluctuationStateServicesController() => _repository = new FluctuationStateRepositoryInMemory();
 
         [HttpPost]
         [Route("api/FluctuationStateServices/GetFluctuationState")]
