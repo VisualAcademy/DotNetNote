@@ -1,5 +1,4 @@
-﻿using DotNetNote.Models;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace DotNetNote.Controllers;
 
@@ -22,10 +21,7 @@ public class AttendeeController : Controller
     }
 
     [HttpGet]
-    public IActionResult Create()
-    {
-        return View();
-    }
+    public IActionResult Create() => View();
 
     [HttpPost]
     public IActionResult Create(Attendee model)
