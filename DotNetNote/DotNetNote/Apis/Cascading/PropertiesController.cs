@@ -14,10 +14,7 @@ public class PropertiesController : ControllerBase
 {
     private readonly ApplicationDbContext _context;
 
-    public PropertiesController(ApplicationDbContext context)
-    {
-        _context = context;
-    }
+    public PropertiesController(ApplicationDbContext context) => _context = context;
 
     // GET: api/Properties
     [HttpGet]
