@@ -95,8 +95,5 @@ public class PropertiesController : ControllerBase
         return NoContent();
     }
 
-    private bool PropertyExists(int id)
-    {
-        return _context.Properties.Any(e => e.Id == id);
-    }
+    private bool PropertyExists(int id) => _context.Properties.Any(e => e.Id == id);
 }
