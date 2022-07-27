@@ -12,10 +12,7 @@ public class CompaniesController : Controller
         _repository = repository;
     }
 
-    public IActionResult Index()
-    {
-        return View();
-    }
+    public IActionResult Index() => View();
 
     [HttpPost]
     public IActionResult Index(string name)
