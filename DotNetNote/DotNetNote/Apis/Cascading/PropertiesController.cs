@@ -18,10 +18,7 @@ public class PropertiesController : ControllerBase
 
     // GET: api/Properties
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Property>>> GetProperties()
-    {
-        return await _context.Properties.ToListAsync();
-    }
+    public async Task<ActionResult<IEnumerable<Property>>> GetProperties() => await _context.Properties.ToListAsync();
 
     // GET: api/Properties/5
     [HttpGet("{id}")]
