@@ -18,10 +18,7 @@ public class LocationsController : ControllerBase
 
     // GET: api/Locations
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Location>>> GetLocations()
-    {
-        return await _context.Locations.ToListAsync();
-    }
+    public async Task<ActionResult<IEnumerable<Location>>> GetLocations() => await _context.Locations.ToListAsync();
 
     [HttpGet("Properties/{parentId}")]
     public async Task<ActionResult<IEnumerable<Location>>> GetLocationsByProperty(int parentId)
