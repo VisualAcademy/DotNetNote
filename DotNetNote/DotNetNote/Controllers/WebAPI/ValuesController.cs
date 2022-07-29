@@ -11,10 +11,7 @@ public class ValuesController : Controller
 
     // GET api/values/5
     [HttpGet("{id}")]
-    public string Get(int id)
-    {
-        return "value";
-    }
+    public string Get(int id) => "value";
 
     // POST api/values
     [HttpPost]
