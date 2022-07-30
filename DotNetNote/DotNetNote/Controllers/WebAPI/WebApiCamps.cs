@@ -12,10 +12,7 @@ public class WebApiCamps : Controller
     public IActionResult Get() => Ok(new { Id = 1, Name = "Web API" });
 
     [HttpGet("{id}")]
-    public string Get(int id)
-    {
-        return "value";
-    }
+    public string Get(int id) => "value";
 
     [HttpPost]
     public void Post([FromBody]string value)
