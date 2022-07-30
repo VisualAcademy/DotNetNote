@@ -9,10 +9,7 @@ namespace DotNetNote.Controllers;
 public class WebApiCamps : Controller
 {
     [HttpGet]
-    public IActionResult Get()
-    {
-        return Ok(new { Id = 1, Name = "Web API" }); 
-    }
+    public IActionResult Get() => Ok(new { Id = 1, Name = "Web API" });
 
     [HttpGet("{id}")]
     public string Get(int id)
