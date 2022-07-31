@@ -8,10 +8,7 @@ namespace DotNetNote.Controllers;
 public class WebApiDemoController : Controller
 {
     [HttpGet]
-    public JsonResult Get()
-    {
-        return Json(new { Name = "박용준" });
-    }
+    public JsonResult Get() => Json(new { Name = "박용준" });
 
     [HttpPost]
     public JsonResult Post([FromBody]WebApiDemoClass name)
