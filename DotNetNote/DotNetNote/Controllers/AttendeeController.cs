@@ -8,10 +8,7 @@ public class AttendeeController : Controller
 
     // 인터페이스를 통한 생성자 주입 방식 사용: 
     //     Startup.cs에서 services.AddTransient로 등록됨
-    public AttendeeController(IAttendeeRepository repository)
-    {
-        _repository = repository;
-    }
+    public AttendeeController(IAttendeeRepository repository) => _repository = repository;
 
     public IActionResult Index()
     {
