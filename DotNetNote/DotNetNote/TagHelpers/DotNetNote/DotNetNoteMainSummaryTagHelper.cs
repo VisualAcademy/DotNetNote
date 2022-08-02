@@ -12,11 +12,8 @@ namespace DotNetNote.TagHelpers
         /// 게시판 카테고리: Notice, Free, Data, Qna, ...
         /// </summary>
         public string Category { get; set; }
-        
-        public DotNetNoteMainSummaryTagHelper(INoteRepository repository)
-        {
-            _repository = repository;
-        }
+
+        public DotNetNoteMainSummaryTagHelper(INoteRepository repository) => _repository = repository;
 
         public override void Process(
             TagHelperContext context, TagHelperOutput output)
