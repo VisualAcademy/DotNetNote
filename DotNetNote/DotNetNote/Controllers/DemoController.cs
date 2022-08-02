@@ -14,10 +14,7 @@ public class DemoController : Controller
     /// Content() 반환값
     /// </summary>
     /// <returns></returns>
-    public IActionResult ContentResultDemo()
-    {
-        return Content("ContentResult 반환값");
-    }
+    public IActionResult ContentResultDemo() => Content("ContentResult 반환값");
 
     public IActionResult ObjectResultDemo()
     {
