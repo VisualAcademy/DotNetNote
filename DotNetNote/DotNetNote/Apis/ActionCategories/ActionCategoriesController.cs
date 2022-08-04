@@ -17,10 +17,7 @@ public class ActionCategoriesController : ControllerBase
 
     // GET: api/ActionCategories
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<ActionCategory>>> GetActionCategories()
-    {
-        return await _context.ActionCategories.ToListAsync();
-    }
+    public async Task<ActionResult<IEnumerable<ActionCategory>>> GetActionCategories() => await _context.ActionCategories.ToListAsync();
 
     // GET: api/ActionCategories/5
     [HttpGet("{id}")]
