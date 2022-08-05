@@ -21,10 +21,7 @@ namespace DotNetNote.Apis
 
         // GET: api/CabinetTypes
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<CabinetType>>> GetCabinetTypes()
-        {
-            return await _context.CabinetTypes.ToListAsync();
-        }
+        public async Task<ActionResult<IEnumerable<CabinetType>>> GetCabinetTypes() => await _context.CabinetTypes.ToListAsync();
 
         // GET: api/CabinetTypes/5
         [HttpGet("{id:long}")]
