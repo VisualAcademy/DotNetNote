@@ -95,10 +95,7 @@ namespace DotNetNote.Apis
             return NoContent();
         }
 
-        private bool CabinetTypeExists(long id)
-        {
-            return _context.CabinetTypes.Any(e => e.Id == id);
-        }
+        private bool CabinetTypeExists(long id) => _context.CabinetTypes.Any(e => e.Id == id);
 
         // 페이징
         // GET api/Entries/Page/1/10
