@@ -14,10 +14,7 @@ public class SublocationsController : ControllerBase
 {
     private readonly ApplicationDbContext _context;
 
-    public SublocationsController(ApplicationDbContext context)
-    {
-        _context = context;
-    }
+    public SublocationsController(ApplicationDbContext context) => _context = context;
 
     // GET: api/Sublocations
     [HttpGet]
