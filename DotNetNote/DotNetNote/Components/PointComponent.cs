@@ -166,10 +166,7 @@ public class PointStatusController : Controller
 {
     private IPointRepository _repository;
 
-    public PointStatusController(IPointRepository repository)
-    {
-        _repository = repository;
-    }
+    public PointStatusController(IPointRepository repository) => _repository = repository;
 
     [HttpGet]
     [Route("")]
