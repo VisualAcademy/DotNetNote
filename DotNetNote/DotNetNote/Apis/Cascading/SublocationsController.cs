@@ -18,10 +18,7 @@ public class SublocationsController : ControllerBase
 
     // GET: api/Sublocations
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Sublocation>>> GetSublocations()
-    {
-        return await _context.Sublocations.ToListAsync();
-    }
+    public async Task<ActionResult<IEnumerable<Sublocation>>> GetSublocations() => await _context.Sublocations.ToListAsync();
 
     [HttpGet("Locations/{parentId}")]
     public async Task<ActionResult<IEnumerable<Sublocation>>> GetSublocations(int parentId)
