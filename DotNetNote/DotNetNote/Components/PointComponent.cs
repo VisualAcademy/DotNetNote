@@ -140,10 +140,7 @@ public class PointServiceController : Controller
 
 public class PointLogController : Controller
 {
-    public IActionResult Index()
-    {
-        return View();
-    }
+    public IActionResult Index() => View();
 }
 
 [Route("api/[controller]")]
