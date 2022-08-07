@@ -8,10 +8,7 @@ public class FormPostDemoController : Controller
     /// 폼 데이터 전송 및 받기
     /// </summary>
     [HttpGet] // /FormPostDemo/Index
-    public IActionResult Index()
-    {
-        return View();
-    }
+    public IActionResult Index() => View();
 
     [HttpPost] // /FormPostDemo/Index
     public IActionResult Index(string name, string content)
