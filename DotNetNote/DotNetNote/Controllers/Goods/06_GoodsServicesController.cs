@@ -14,10 +14,7 @@ namespace DotNetNote.Controllers
         // @Inject
         private readonly IGoodsRepository _repository;
 
-        public GoodsServicesController(IGoodsRepository repository)
-        {
-            _repository = repository;
-        }
+        public GoodsServicesController(IGoodsRepository repository) => _repository = repository;
 
         // GET: api/<controller>
         [HttpGet]
