@@ -35,15 +35,12 @@ public class MyNotificationsController : Controller
         var noti = _repository.GetNotificationByUserid(userId);
 
         return View(noti);
-    } 
+    }
     #endregion
 
     #region Web API
     [Route("api/IsNotification")]
-    public bool IsNotification(int userId)
-    {
-        return _repository.IsNotification(userId);
-    }
+    public bool IsNotification(int userId) => _repository.IsNotification(userId);
 
     [Route("api/CompleteNotification")]
     public bool CompleteNotification(int userId)
