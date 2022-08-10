@@ -14,10 +14,7 @@ namespace DotNetNote.Apis
     {
         private readonly ApplicationDbContext _context;
 
-        public CabinetTypesController(ApplicationDbContext context)
-        {
-            _context = context;
-        }
+        public CabinetTypesController(ApplicationDbContext context) => _context = context;
 
         // GET: api/CabinetTypes
         [HttpGet]
