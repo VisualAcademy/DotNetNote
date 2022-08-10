@@ -11,10 +11,7 @@ namespace DotNetSale.Controllers
             return RedirectToAction(nameof(CategoryList));
         }
 
-        public IActionResult CategoryAdd()
-        {
-            return View();
-        }
+        public IActionResult CategoryAdd() => View();
 
         public IActionResult CategoryList()
         {
