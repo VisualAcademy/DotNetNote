@@ -99,8 +99,5 @@ public class SublocationsController : ControllerBase
         return NoContent();
     }
 
-    private bool SublocationExists(int id)
-    {
-        return _context.Sublocations.Any(e => e.Id == id);
-    }
+    private bool SublocationExists(int id) => _context.Sublocations.Any(e => e.Id == id);
 }
