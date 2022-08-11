@@ -206,10 +206,7 @@ public class TodosController : Controller
 {
     private readonly TodoContext _context;
 
-    public TodosController(TodoContext context)
-    {
-        _context = context;
-    }
+    public TodosController(TodoContext context) => _context = context;
 
     // GET: api/Todos
     [HttpGet]
