@@ -72,10 +72,7 @@ public class TodoController : Controller
     public TodoController(TodoContext context) => _context = context;
 
     // GET: Todo
-    public async Task<IActionResult> Index()
-    {
-        return View(await _context.Todos.ToListAsync());
-    }
+    public async Task<IActionResult> Index() => View(await _context.Todos.ToListAsync());
 
     // GET: Todo/Details/5
     public async Task<IActionResult> Details(int? id)
