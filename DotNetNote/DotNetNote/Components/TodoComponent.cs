@@ -96,10 +96,7 @@ public class TodoController : Controller
     }
 
     // GET: Todo/Create
-    public IActionResult Create()
-    {
-        return View();
-    }
+    public IActionResult Create() => View();
 
     // POST: Todo/Create
     // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
