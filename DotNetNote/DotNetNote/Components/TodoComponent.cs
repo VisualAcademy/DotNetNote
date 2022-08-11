@@ -69,10 +69,7 @@ public class TodoController : Controller
 {
     private readonly TodoContext _context;
 
-    public TodoController(TodoContext context)
-    {
-        _context = context;
-    }
+    public TodoController(TodoContext context) => _context = context;
 
     // GET: Todo
     public async Task<IActionResult> Index()
