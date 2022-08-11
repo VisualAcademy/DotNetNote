@@ -94,8 +94,5 @@ public class UserModelRepository : IUserModelRepository
     }
 
     // 특정 사용자 정보 캐싱 제거
-    public void RemoveUserInforCache(int uid)
-    {
-        _cache.Remove($"GetUsers_{uid}");
-    }
+    public void RemoveUserInforCache(int uid) => _cache.Remove($"GetUsers_{uid}");
 }
