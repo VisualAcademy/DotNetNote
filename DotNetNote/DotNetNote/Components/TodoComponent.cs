@@ -20,7 +20,7 @@ public class Todo
 {
     public int Id { get; set; }
     public string Title { get; set; }
-    public bool IsDone { get; set; } = false;
+    public bool IsDone { get; set; } = false; // IsComplete 속성명도 많이 사용
 }
 
 /// <summary>
