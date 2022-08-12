@@ -191,10 +191,7 @@ public class TodoController : Controller
         return RedirectToAction(nameof(Index));
     }
 
-    private bool TodoExists(int id)
-    {
-        return _context.Todos.Any(e => e.Id == id);
-    }
+    private bool TodoExists(int id) => _context.Todos.Any(e => e.Id == id);
 }
 
 /// <summary>
