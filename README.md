@@ -2,7 +2,7 @@
 
 ASP.NET Core 6.0 개발, 강의, 집필 소스 모음
 
-ASP.NET & Core를 다루는 기술 책의 닷넷코어 파트 소스 결과물
+`ASP.NET & Core를 다루는 기술` 책의 닷넷코어 파트 소스 결과물
 
 
 DotNetNote 이름으로 만들어진 소스의 시작은 박용준 강사가 집필한 ASP.NET & Core를 다루는 기술 책의 .NET Core 파트의 최종 결과물로부터 계속 버전업되어
