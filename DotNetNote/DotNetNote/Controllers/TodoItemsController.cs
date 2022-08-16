@@ -18,12 +18,7 @@ public class TodoItemsController : ControllerBase
 
     // GET: api/TodoItems
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<TodoItemDTO>>> GetTodoItems()
-    {
-        return await _context.TodoItems
-            .Select(x => ItemToDTO(x))
-            .ToListAsync();
-    }
+    public async Task<ActionResult<IEnumerable<TodoItemDTO>>> GetTodoItems() => await _context.TodoItems.Select(x => ItemToDTO(x)).ToListAsync();
 
     [HttpGet("{id}")]
     public async Task<ActionResult<TodoItemDTO>> GetTodoItem(long id)
