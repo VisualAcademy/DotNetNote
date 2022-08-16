@@ -6,10 +6,7 @@ public class TwelveController : Controller
 {
     private readonly ITwelveRepository _repository;
 
-    public TwelveController(ITwelveRepository repository)
-    {
-        _repository = repository;
-    }
+    public TwelveController(ITwelveRepository repository) => _repository = repository;
 
     public IActionResult Index()
     {
