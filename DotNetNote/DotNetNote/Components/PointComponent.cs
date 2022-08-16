@@ -62,11 +62,9 @@ public class PointRepository : IPointRepository
         throw new NotImplementedException();
     }
 
-    public int GetTotalPointByUserId(int userId = 1234)
-    {
+    public int GetTotalPointByUserId(int userId = 1234) =>
         //TODO: 실제 데이터베이스 연동하는 코드
-        return 1234;
-    }
+        1234;
 }
 
 public class PointRepositoryInMemory : IPointRepository
