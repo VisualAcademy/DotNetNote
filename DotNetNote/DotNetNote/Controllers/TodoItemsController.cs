@@ -99,7 +99,7 @@ public class TodoItemsController : ControllerBase
          _context.TodoItems.Any(e => e.Id == id);
 
     private static TodoItemDTO ItemToDTO(TodoItem todoItem) =>
-        new TodoItemDTO
+        new()
         {
             Id = todoItem.Id,
             Name = todoItem.Name,
