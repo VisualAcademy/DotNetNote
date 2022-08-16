@@ -94,10 +94,7 @@ public class PointController : Controller
 {
     private IPointRepository _repository;
 
-    public PointController(IPointRepository repository)
-    {
-        _repository = repository;
-    }
+    public PointController(IPointRepository repository) => _repository = repository;
 
     public IActionResult Index()
     {
