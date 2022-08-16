@@ -207,10 +207,7 @@ public class TodosController : Controller
 
     // GET: api/Todos
     [HttpGet]
-    public IEnumerable<Todo> GetTodos()
-    {
-        return _context.Todos;
-    }
+    public IEnumerable<Todo> GetTodos() => _context.Todos;
 
     // GET: api/Todos/5
     [HttpGet("{id}")]
