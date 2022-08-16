@@ -8,10 +8,7 @@ public class TwelveController : Controller
 
     public TwelveController(ITwelveRepository repository) => _repository = repository;
 
-    public IActionResult Index()
-    {
-        return View();
-    }
+    public IActionResult Index() => View();
 
     public IActionResult SeedTest()
     {
