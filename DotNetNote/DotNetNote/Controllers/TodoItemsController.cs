@@ -14,10 +14,7 @@ public class TodoItemsController : ControllerBase
 {
     private readonly TodoContext _context;
 
-    public TodoItemsController(TodoContext context)
-    {
-        _context = context;
-    }
+    public TodoItemsController(TodoContext context) => _context = context;
 
     // GET: api/TodoItems
     [HttpGet]
