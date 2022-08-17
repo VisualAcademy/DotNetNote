@@ -87,8 +87,5 @@ public class AspNetCoreIdentityTestController : Controller
     }
 
     [HttpGet]
-    public IActionResult Greetings()
-    {
-        return View();
-    }
+    public IActionResult Greetings() => View();
 }
