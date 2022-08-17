@@ -69,10 +69,7 @@ public class PointRepository : IPointRepository
 
 public class PointRepositoryInMemory : IPointRepository
 {
-    public PointStatus GetPointStatusByUser()
-    {
-        return new PointStatus() { Gold = 10, Silver = 123, Bronze = 345 };
-    }
+    public PointStatus GetPointStatusByUser() => new PointStatus() { Gold = 10, Silver = 123, Bronze = 345 };
 
     public int GetTotalPointByUserId(int userId = 1234)
     {
