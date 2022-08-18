@@ -12,10 +12,7 @@ public class TechesApiController : Controller
     public TechesApiController(ITechRepository repo) => _repo = repo;
 
     [HttpGet]
-    public IEnumerable<Tech> GetTech()
-    {
-        return _repo.GetTechs();
-    }
+    public IEnumerable<Tech> GetTech() => _repo.GetTechs();
 
     [HttpPost]
     public Tech PostTech([FromBody] Tech tech)
