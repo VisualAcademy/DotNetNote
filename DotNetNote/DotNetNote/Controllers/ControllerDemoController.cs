@@ -14,10 +14,7 @@ public class ControllerDemoController : Controller
         // 아무런 값도 출력하지 않음
     }
 
-    public string StringAction()
-    {
-        return "String을 반환하는 액션 메서드";
-    }
+    public string StringAction() => "String을 반환하는 액션 메서드";
 
     public DateTime DateTimeAction() => DateTime.Now;
 
