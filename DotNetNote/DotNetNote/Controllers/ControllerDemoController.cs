@@ -18,8 +18,5 @@ public class ControllerDemoController : Controller
 
     public DateTime DateTimeAction() => DateTime.Now;
 
-    public IActionResult DefaultAction()
-    {
-        return View(); // 컨트롤러/액션메서드
-    }
+    public IActionResult DefaultAction() => View(); // 컨트롤러/액션메서드
 }
