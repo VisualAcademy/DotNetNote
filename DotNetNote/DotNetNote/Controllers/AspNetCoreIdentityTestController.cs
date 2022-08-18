@@ -56,10 +56,7 @@ public class AspNetCoreIdentityTestController : Controller
     }
 
     [HttpGet]
-    public IActionResult Login()
-    {
-        return View();
-    }
+    public IActionResult Login() => View();
 
     [HttpPost]
     public async Task<IActionResult> Login(DotNetNoteLoginModel model)
