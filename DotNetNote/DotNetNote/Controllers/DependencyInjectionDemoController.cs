@@ -47,8 +47,5 @@ public class DependencyInjectionDemoController : Controller
         return View();
     }
 
-    public IActionResult AtInjectDemo()
-    {
-        return View(); 
-    }
+    public IActionResult AtInjectDemo() => View();
 }
