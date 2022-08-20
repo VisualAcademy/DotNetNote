@@ -1,112 +1,111 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Dul.Web;
 
-namespace DotNetNote.Controllers
+namespace DotNetNote.Controllers;
+
+/// <summary>
+/// [5] 컨트롤러 클래스: ASP.NET Core - MVC 파트 
+/// </summary>
+public class GoodsController : Controller
 {
+    private IGoodsRepository _repository;
+
+    public GoodsController(IGoodsRepository repository) => _repository = repository;
+
     /// <summary>
-    /// [5] 컨트롤러 클래스: ASP.NET Core - MVC 파트 
+    /// 리스트
     /// </summary>
-    public class GoodsController : Controller
+    public IActionResult Index(int page = 1)
     {
-        private IGoodsRepository _repository;
+        int pageSize = 10; 
+        var goodsSet = _repository.GetAllGoodsWithPaging(page, pageSize);
 
-        public GoodsController(IGoodsRepository repository) => _repository = repository;
+        ViewBag.PageNumber = page;
 
-        /// <summary>
-        /// 리스트
-        /// </summary>
-        public IActionResult Index(int page = 1)
+        // 페이저 컨트롤 적용
+        ViewBag.PageModel = new PagerBase
         {
-            int pageSize = 10; 
-            var goodsSet = _repository.GetAllGoodsWithPaging(page, pageSize);
+            Url = "Goods/Index",
+            RecordCount = goodsSet.GoodsCount,
+            PageSize = pageSize,
+            PageNumber = page,
 
-            ViewBag.PageNumber = page;
+            SearchMode = false,
+            SearchField = "",
+            SearchQuery = ""
+        };
 
-            // 페이저 컨트롤 적용
-            ViewBag.PageModel = new PagerBase
-            {
-                Url = "Goods/Index",
-                RecordCount = goodsSet.GoodsCount,
-                PageSize = pageSize,
-                PageNumber = page,
+        return View(goodsSet);
+    }
+    //public IActionResult Index(int pageNumber = 1)
+    //{
+    //    var goodsSet = _repository.GetAllGoodsWithPaging(pageNumber, 10);
 
-                SearchMode = false,
-                SearchField = "",
-                SearchQuery = ""
-            };
+    //    ViewBag.PageNumber = pageNumber; 
 
-            return View(goodsSet);
-        }
-        //public IActionResult Index(int pageNumber = 1)
-        //{
-        //    var goodsSet = _repository.GetAllGoodsWithPaging(pageNumber, 10);
+    //    return View(goodsSet);
+    //}
 
-        //    ViewBag.PageNumber = pageNumber; 
+    #region 입력
+    /// <summary>
+    /// 입력 폼
+    /// </summary>
+    [HttpGet]
+    public IActionResult Create()
+    {
+        return View();
+    }
 
-        //    return View(goodsSet);
-        //}
-
-        #region 입력
-        /// <summary>
-        /// 입력 폼
-        /// </summary>
-        [HttpGet]
-        public IActionResult Create()
+    /// <summary>
+    /// 입력 처리 
+    /// </summary>
+    [HttpPost]
+    public IActionResult Create(string goodsName, string goodsDescription)
+    {
+        GoodsBase model = new GoodsBase()
         {
-            return View();
-        }
+            GoodsName = goodsName,
+            GoodsDescription = goodsDescription
+        };
 
-        /// <summary>
-        /// 입력 처리 
-        /// </summary>
-        [HttpPost]
-        public IActionResult Create(string goodsName, string goodsDescription)
-        {
-            GoodsBase model = new GoodsBase()
-            {
-                GoodsName = goodsName,
-                GoodsDescription = goodsDescription
-            };
+        _repository.AddGoods(model);
 
-            _repository.AddGoods(model);
+        //return Redirect("/Goods"); // 리스트 페이지로 이동
+        return RedirectToAction(nameof(Index));
+    } 
+    #endregion
 
-            //return Redirect("/Goods"); // 리스트 페이지로 이동
-            return RedirectToAction(nameof(Index));
-        } 
-        #endregion
+    /// <summary>
+    /// 상세 보기 
+    /// </summary>
+    public IActionResult Details(int id)
+    {
+        var goods = _repository.GetGoodsById(id);
+        return View(goods); 
+    }
 
-        /// <summary>
-        /// 상세 보기 
-        /// </summary>
-        public IActionResult Details(int id)
-        {
-            var goods = _repository.GetGoodsById(id);
-            return View(goods); 
-        }
+    /// <summary>
+    /// 수정 처리
+    /// </summary>
+    [HttpPost]
+    public IActionResult Edit(int goodsId, string goodsName, string goodsDescription)
+    {
+        var goods = new GoodsBase {
+            GoodsId = goodsId, GoodsName = goodsName, GoodsDescription = goodsDescription
+        };
 
-        /// <summary>
-        /// 수정 처리
-        /// </summary>
-        [HttpPost]
-        public IActionResult Edit(int goodsId, string goodsName, string goodsDescription)
-        {
-            var goods = new GoodsBase {
-                GoodsId = goodsId, GoodsName = goodsName, GoodsDescription = goodsDescription
-            };
+        _repository.UpdateGoods(goods);
 
-            _repository.UpdateGoods(goods);
+        return RedirectToAction(nameof(Details), new { Id = goodsId }); 
+    }
 
-            return RedirectToAction(nameof(Details), new { Id = goodsId }); 
-        }
-
-        /// <summary>
-        /// 삭제 처리 
-        /// </summary>
-        [HttpGet]
-        public IActionResult Delete(int id)
-        {
-            _repository.RemoveGoods(id);
-            return RedirectToAction(nameof(Index)); 
-        }
+    /// <summary>
+    /// 삭제 처리 
+    /// </summary>
+    [HttpGet]
+    public IActionResult Delete(int id)
+    {
+        _repository.RemoveGoods(id);
+        return RedirectToAction(nameof(Index)); 
     }
 }
