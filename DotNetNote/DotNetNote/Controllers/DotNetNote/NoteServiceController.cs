@@ -1,21 +1,20 @@
 ﻿using DotNetNote.Models.Notes;
 using Microsoft.AspNetCore.Mvc;
 
-namespace DotNetNote.Controllers
+namespace DotNetNote.Controllers;
+
+[Route("api/[controller]")]
+public class NoteServiceController : Controller
 {
-    [Route("api/[controller]")]
-    public class NoteServiceController : Controller
+    private readonly INoteRepository _repository;
+
+    public NoteServiceController(INoteRepository repository) => _repository = repository;
+
+    [HttpGet]
+    public IEnumerable<Note> Get()
     {
-        private readonly INoteRepository _repository;
-
-        public NoteServiceController(INoteRepository repository) => _repository = repository;
-
-        [HttpGet]
-        public IEnumerable<Note> Get()
-        {
-            // 최근 글 리스트 반환
-            //return _repository.GetRecentPosts();      // 캐싱 적용 전
-            return _repository.GetRecentPostsCache();   // 캐싱 적용 후
-        }
+        // 최근 글 리스트 반환
+        //return _repository.GetRecentPosts();      // 캐싱 적용 전
+        return _repository.GetRecentPostsCache();   // 캐싱 적용 후
     }
 }
