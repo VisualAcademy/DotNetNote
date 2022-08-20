@@ -9,10 +9,7 @@ namespace DotNetNote.Controllers
     {
         private readonly INoteRepository _repository;
 
-        public NoteServiceController(INoteRepository repository)
-        {
-            _repository = repository;
-        }
+        public NoteServiceController(INoteRepository repository) => _repository = repository;
 
         [HttpGet]
         public IEnumerable<Note> Get()
