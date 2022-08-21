@@ -9,10 +9,7 @@ namespace DotNetNote.Controllers
     {
         private INoteCommentRepository _repository;
 
-        public NoteCommentServiceController(INoteCommentRepository repository)
-        {
-            _repository = repository;
-        }
+        public NoteCommentServiceController(INoteCommentRepository repository) => _repository = repository;
 
         // 최근 댓글 리스트 반환
         [HttpGet]
