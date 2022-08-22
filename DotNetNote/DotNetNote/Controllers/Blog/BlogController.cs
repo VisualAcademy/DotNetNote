@@ -697,10 +697,7 @@ public class BlogController : Controller
     /// <summary>
     /// (참고) 최근 글 리스트 Web API 테스트 페이지
     /// </summary>
-    public IActionResult NoteServiceDemo()
-    {
-        return View();
-    }
+    public IActionResult NoteServiceDemo() => View();
 
     /// <summary>
     /// (참고) 최근 댓글 리스트 Web API 테스트 페이지
