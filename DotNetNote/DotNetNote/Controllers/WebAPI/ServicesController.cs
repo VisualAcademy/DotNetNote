@@ -8,10 +8,7 @@ public class ServicesController : ControllerBase
 {
     [HttpGet]
     [Produces("application/json")]
-    public IEnumerable<string> Get()
-    {
-        return new string[] { "안녕하세요.", "반갑습니다." };
-    }
+    public IEnumerable<string> Get() => new string[] { "안녕하세요.", "반갑습니다." };
 
     //[HttpGet("{id?}")] // 생략 가능
     //[HttpGet("{id=1000}")] // 기본 값
