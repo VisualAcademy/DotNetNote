@@ -86,10 +86,7 @@ public class AccountApiDemoController : Controller
     /// <summary>
     /// 로그인 처리: 이메일/암호가 맞으면 true 반환
     /// </summary>
-    private bool LoginProcess(LoginViewModel login)
-    {
-        return true;
-    }
+    private bool LoginProcess(LoginViewModel login) => true;
 
     //[Authorize]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
