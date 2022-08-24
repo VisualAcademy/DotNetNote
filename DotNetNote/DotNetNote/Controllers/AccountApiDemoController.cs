@@ -91,9 +91,7 @@ public class AccountApiDemoController : Controller
     //[Authorize]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [HttpGet("LoginTest")]
-    public IActionResult LoginTest()
-    {
+    public IActionResult LoginTest() =>
         //var username = HttpContext.User.Claims.First().Value;
-        return Ok("인증됨");
-    }
+        Ok("인증됨");
 }
