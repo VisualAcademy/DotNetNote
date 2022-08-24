@@ -5,10 +5,7 @@ namespace DotNetNote.Controllers;
 
 public class UseMvcDemoController : Controller
 {
-    public string StringResultDemo()
-    {
-        return "/UseMvcDemp/StringResultDemo 경로로 실행됨";
-    }
+    public string StringResultDemo() => "/UseMvcDemp/StringResultDemo 경로로 실행됨";
 
     public DateTime DateTimeDemo() => DateTime.Now;
 
