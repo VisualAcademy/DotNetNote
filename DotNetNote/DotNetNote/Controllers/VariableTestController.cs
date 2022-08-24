@@ -8,10 +8,7 @@ public class VariableTestController : Controller
 {
     private readonly IVariableRepository _repository;
 
-    public VariableTestController(IVariableRepository repository)
-    {
-        _repository = repository;
-    }
+    public VariableTestController(IVariableRepository repository) => _repository = repository;
 
     // GET: /<controller>/
     public IActionResult Index()
