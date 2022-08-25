@@ -26,8 +26,5 @@ public class ViewComponentDemoController : Controller
     /// <summary>
     /// 최근 댓글 리스트 출력 데모
     /// </summary>
-    public IActionResult RecentlyCommentListDemo()
-    {
-        return View();
-    }
+    public IActionResult RecentlyCommentListDemo() => View();
 }
