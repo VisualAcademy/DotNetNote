@@ -7,7 +7,7 @@
     {
         public long Id { get; set; }
 
-        public string? Identification { get; set; }
+        public string? Identification { get; set; } = null!;
 
         public bool? Show { get; set; }
 
