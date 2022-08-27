@@ -59,10 +59,7 @@ namespace DotNetNote.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<BoardSummaryModel> Get()
-        {
-            return _repository.GetAll();
-        }
+        public IEnumerable<BoardSummaryModel> Get() => _repository.GetAll();
 
         [HttpGet("{alias}", Name = "GetByBoardSummaryModel")]
         public IEnumerable<BoardSummaryModel> Get(string alias)
