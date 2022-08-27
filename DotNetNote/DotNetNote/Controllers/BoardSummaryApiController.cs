@@ -53,10 +53,7 @@ namespace DotNetNote.Controllers
     {
         private BoardSummaryRepository _repository;
 
-        public BoardSummaryApiController()
-        {
-            _repository = new BoardSummaryRepository();
-        }
+        public BoardSummaryApiController() => _repository = new BoardSummaryRepository();
 
         [HttpGet]
         public IEnumerable<BoardSummaryModel> Get() => _repository.GetAll();
