@@ -12,10 +12,7 @@ public class BlobController : Controller
     // https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration/?view=aspnetcore-5.0
     private IConfiguration _config;
 
-    public BlobController(IConfiguration config)
-    {
-        _config = config;
-    }
+    public BlobController(IConfiguration config) => _config = config;
 
     /// <summary>
     /// // https://docs.microsoft.com/ko-kr/azure/visual-studio/vs-storage-aspnet5-getting-started-blobs
