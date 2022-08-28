@@ -8,10 +8,7 @@ public class MemberController : Controller
 {
     private MemberDbContext _memberDbContext;
 
-    public MemberController(MemberDbContext memberDbContext)
-    {
-        _memberDbContext = memberDbContext;
-    }
+    public MemberController(MemberDbContext memberDbContext) => _memberDbContext = memberDbContext;
 
     public IActionResult Index()
     {
