@@ -70,9 +70,6 @@ namespace DotNetNote.Controllers
 
     public class MyRankingServiceTestController : Controller
     {
-        public IActionResult Index()
-        {
-            return View(); 
-        }
+        public IActionResult Index() => View();
     }
 }
