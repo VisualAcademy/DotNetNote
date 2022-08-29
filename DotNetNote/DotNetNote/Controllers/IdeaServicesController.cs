@@ -19,12 +19,10 @@ public class IdeaServicesController : Controller
     /// /api/IdeaServices 
     /// </summary>
     [HttpGet]
-    public IEnumerable<Idea> Get()
-    {
+    public IEnumerable<Idea> Get() =>
         // cRud
         //return _repository.GetAll().AsEnumerable();
-        return _repository.GetAll().ToList();
-    }
+        _repository.GetAll().ToList();
 
     /// <summary>
     /// /api/IdeaServices/1234
