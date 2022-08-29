@@ -16,11 +16,9 @@ public class IdeaServiceController : Controller
     public IdeaServiceController(IIdeaRepository repository) => _repository = repository;
 
     [HttpGet]
-    public IEnumerable<Idea> Get()
-    {
+    public IEnumerable<Idea> Get() =>
         // cRud
-        return _repository.GetAll().AsEnumerable();
-    }
+        _repository.GetAll().AsEnumerable();
 
     [HttpGet("{id}")]
     public Idea Get(int id)
