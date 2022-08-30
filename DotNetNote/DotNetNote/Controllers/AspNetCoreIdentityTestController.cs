@@ -14,10 +14,7 @@ public class AspNetCoreIdentityTestController : Controller
 {
     private readonly UserManager<DotNetNoteUser> userManager;
 
-    public AspNetCoreIdentityTestController(UserManager<DotNetNoteUser> userManager)
-    {
-        this.userManager = userManager;
-    }
+    public AspNetCoreIdentityTestController(UserManager<DotNetNoteUser> userManager) => this.userManager = userManager;
 
     // GET: /<controller>/
     public IActionResult Index() => View();
