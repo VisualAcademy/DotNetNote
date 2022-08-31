@@ -7,10 +7,7 @@ public class CompaniesController : Controller
 {
     private ICompanyRepository _repository;
 
-    public CompaniesController(ICompanyRepository repository)
-    {
-        _repository = repository;
-    }
+    public CompaniesController(ICompanyRepository repository) => _repository = repository;
 
     public IActionResult Index() => View();
 
