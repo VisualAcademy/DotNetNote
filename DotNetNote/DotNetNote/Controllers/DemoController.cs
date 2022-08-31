@@ -31,10 +31,7 @@ public class DemoController : Controller
 
     public IActionResult TempDataDemo() => View();
 
-    public IActionResult JsonResultDemo()
-    {
-        return Json(new { Foo = "Bar" });
-    }
+    public IActionResult JsonResultDemo() => Json(new { Foo = "Bar" });
 
     public string SendMailDemo()
     {
