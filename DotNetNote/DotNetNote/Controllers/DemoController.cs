@@ -33,10 +33,7 @@ public class DemoController : Controller
 
     public IActionResult JsonResultDemo() => Json(new { Foo = "Bar" });
 
-    public string SendMailDemo()
-    {
-        return "전송 완료";
-    }
+    public string SendMailDemo() => "전송 완료";
 
     public IActionResult EnvironmentAndFramework()
     {
