@@ -35,10 +35,7 @@ public class DemoController : Controller
 
     public string SendMailDemo() => "전송 완료";
 
-    public IActionResult EnvironmentAndFramework()
-    {
-        return View();
-    }
+    public IActionResult EnvironmentAndFramework() => View();
 
     public IActionResult RedirectPermanentDemo()
     {
