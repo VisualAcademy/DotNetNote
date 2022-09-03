@@ -195,10 +195,7 @@ public class AccountController : Controller
 
     [HttpGet]
     [AllowAnonymous]
-    public IActionResult Lockout()
-    {
-        return View();
-    }
+    public IActionResult Lockout() => View();
 
     [HttpGet]
     [AllowAnonymous]
