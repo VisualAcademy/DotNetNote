@@ -37,10 +37,7 @@ public class DemoController : Controller
 
     public IActionResult EnvironmentAndFramework() => View();
 
-    public IActionResult RedirectPermanentDemo()
-    {
-        return RedirectPermanent("/");
-    }
+    public IActionResult RedirectPermanentDemo() => RedirectPermanent("/");
 
     /// <summary>
     /// 컨트롤러에서 컬렉션 형태의 데이터를 뷰 페이지로 전송하기
