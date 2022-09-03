@@ -341,10 +341,7 @@ public class AccountController : Controller
 
     [HttpGet]
     [AllowAnonymous]
-    public IActionResult ForgotPassword()
-    {
-        return View();
-    }
+    public IActionResult ForgotPassword() => View();
 
     [HttpPost]
     [AllowAnonymous]
