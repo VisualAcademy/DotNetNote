@@ -74,8 +74,5 @@ public class TeamController : Controller
 
     public IActionResult Member() => View();
 
-    public IActionResult Agenda()
-    {
-        return View();
-    }
+    public IActionResult Agenda() => View();
 }
