@@ -23,10 +23,7 @@ namespace DotNetNote.Models
 
         public List<DataModel> GetAll() => _data;
 
-        public DataModel GetDataById(int id)
-        {
-            return _data.Where(n => n.Id == id).SingleOrDefault();
-        }
+        public DataModel GetDataById(int id) => _data.Where(n => n.Id == id).SingleOrDefault();
 
         public List<DataModel> GetDataByName(string name)
         {
