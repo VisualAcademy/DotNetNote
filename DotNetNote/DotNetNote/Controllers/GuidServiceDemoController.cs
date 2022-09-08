@@ -51,8 +51,5 @@ public class GuidServiceDemoController : Controller
     public IActionResult AtInject() => View();
 
     //[6] 3가지 컨테이너 비교
-    public IActionResult AtInjectCompare()
-    {
-        return View();
-    }
+    public IActionResult AtInjectCompare() => View();
 }
