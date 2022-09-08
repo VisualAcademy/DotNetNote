@@ -48,10 +48,7 @@ public class GuidServiceDemoController : Controller
     }
 
     //[5] @inject 키워드로 뷰에 직접 주입
-    public IActionResult AtInject()
-    {
-        return View();
-    }
+    public IActionResult AtInject() => View();
 
     //[6] 3가지 컨테이너 비교
     public IActionResult AtInjectCompare()
