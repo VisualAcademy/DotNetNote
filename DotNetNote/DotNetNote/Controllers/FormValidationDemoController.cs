@@ -124,10 +124,7 @@ public class FormValidationDemoController : Controller
 
     //[7] 따라하기 7: 태그 헬퍼 사용하기
     #region TagHelper
-    public IActionResult TagHelperValidation()
-    {
-        return View();
-    }
+    public IActionResult TagHelperValidation() => View();
 
     [HttpPost]
     public IActionResult TagHelperValidation(MaximModel model)
