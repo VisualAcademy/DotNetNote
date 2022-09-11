@@ -8,10 +8,7 @@ public class LoggingDemoController : Controller
 {
     private readonly ILogger<LoggingDemoController> _logger;
 
-    public LoggingDemoController(ILogger<LoggingDemoController> logger)
-    {
-        _logger = logger; // 생성자 주입 방식으로 ILogger 개체 사용
-    }
+    public LoggingDemoController(ILogger<LoggingDemoController> logger) => _logger = logger; // 생성자 주입 방식으로 ILogger 개체 사용
 
     public IActionResult Index()
     {
