@@ -11,8 +11,5 @@ public class RazorDemoController : Controller
 
     public IActionResult Demo1() => View();
 
-    public IActionResult Demo2()
-    {
-        return View();
-    }
+    public IActionResult Demo2() => View();
 }
