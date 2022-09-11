@@ -18,9 +18,7 @@ public class PersonServiceController : Controller
     }
 
     [HttpPost]
-    public PersonModel Post([FromBody] PersonModel model)
-    {
+    public PersonModel Post([FromBody] PersonModel model) =>
         // 중단점 설정 후 크롬 확장 도구인 POSTMAN으로 테스트
-        return model;
-    }
+        model;
 }
