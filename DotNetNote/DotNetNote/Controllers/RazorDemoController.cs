@@ -9,10 +9,7 @@ public class RazorDemoController : Controller
 {
     public IActionResult Index() => View();
 
-    public IActionResult Demo1()
-    {
-        return View();
-    }
+    public IActionResult Demo1() => View();
 
     public IActionResult Demo2()
     {
