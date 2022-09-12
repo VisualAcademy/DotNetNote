@@ -7,8 +7,5 @@ namespace DotNetNote.Controllers;
 public class RouteDemoController
 {
     [Route(""), Route("Index")]
-    public string Index()
-    {
-        return "어트리뷰트 라우팅";
-    }
+    public string Index() => "어트리뷰트 라우팅";
 }
