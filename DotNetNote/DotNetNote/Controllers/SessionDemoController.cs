@@ -66,9 +66,6 @@ public static class SessionExtensions
         return JsonConvert.DeserializeObject<T>(data);
     }
 
-    public static void SetComplexData(
-        this ISession session, string key, object value)
-    {
-        session.SetString(key, JsonConvert.SerializeObject(value));
-    }
+    public static void SetComplexData(this ISession session, string key, object value) 
+        => session.SetString(key, JsonConvert.SerializeObject(value));
 }  
