@@ -578,10 +578,8 @@ public class BlogController : Controller
     /// </summary>
     public FileResult ImageDown(int id)
     {
-        string fileName = "";
-
         // 넘겨져 온 번호에 해당하는 파일명 가져오기(보안때문에... 파일명 숨김)
-        fileName = _repository.GetFileNameById(id);
+        string fileName = _repository.GetFileNameById(id);
 
         if (fileName == null)
         {
