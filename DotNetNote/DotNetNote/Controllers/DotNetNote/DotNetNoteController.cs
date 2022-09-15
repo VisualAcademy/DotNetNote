@@ -265,7 +265,7 @@ public class DotNetNoteController : Controller
             encoding = ContentEncodingType.Text;
         }
 
-        string encodedContent = "";
+        string encodedContent;
         switch (encoding)
         {
             // Text : 소스 그대로 표현: text/plain, Plain-Text
