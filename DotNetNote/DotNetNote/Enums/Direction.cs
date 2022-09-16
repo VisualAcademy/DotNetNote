@@ -1,10 +1,9 @@
-﻿namespace DotNetNote.Enums
+﻿namespace DotNetNote.Enums;
+
+public enum Direction
 {
-    public enum Direction
-    {
-        Up,
-        Down,
-        Left,
-        Right
-    }
+    Up,
+    Down,
+    Left,
+    Right
 }
