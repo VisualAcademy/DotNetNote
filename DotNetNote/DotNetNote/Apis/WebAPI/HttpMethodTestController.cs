@@ -3,7 +3,7 @@
 namespace DotNetNote.Apis.WebAPI;
 
 /// <summary>
-/// HttpMethodTestController_닷넷 6 Web API 기본 템플릿을 사용하여 Get, Post, Put, Delete 메서드 테스트
+/// 동영상 강의: HttpMethodTestController_닷넷 6 Web API 기본 템플릿을 사용하여 Get, Post, Put, Delete 메서드 테스트
 /// </summary>
 [Route("api/[controller]")]
 [ApiController]
