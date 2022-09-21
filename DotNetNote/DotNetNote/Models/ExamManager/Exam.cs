@@ -35,10 +35,7 @@ namespace DotNetNote.Models
             }
         }
 
-        public void AddQuestion(Question question)
-        {
-            _questions.Add(question);
-        }
+        public void AddQuestion(Question question) => _questions.Add(question);
 
         public double TotalPoints
         {
