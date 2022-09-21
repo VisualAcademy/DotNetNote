@@ -18,11 +18,8 @@ public class CommunityCampJoinMemberRepository :
             .GetSection("DefaultConnection").GetSection("ConnectionString").Value);
     }
 
-    public List<CommunityCampJoinMember> GetAll()
-    {
-        return con.Query<CommunityCampJoinMember>(
+    public List<CommunityCampJoinMember> GetAll() => con.Query<CommunityCampJoinMember>(
             "Select * From CommunityCampJoinMembers Order By Id Asc").ToList();
-    }
 
     public void AddMember(CommunityCampJoinMember model)
     {
