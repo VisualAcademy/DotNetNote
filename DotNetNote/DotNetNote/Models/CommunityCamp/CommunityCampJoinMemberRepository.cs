@@ -21,13 +21,10 @@ public class CommunityCampJoinMemberRepository :
     public List<CommunityCampJoinMember> GetAll() => con.Query<CommunityCampJoinMember>(
             "Select * From CommunityCampJoinMembers Order By Id Asc").ToList();
 
-    public void AddMember(CommunityCampJoinMember model)
-    {
-        con.Execute("Insert Into CommunityCampJoinMembers " 
-            + " (CommunityName, Name, Mobile, Email, Size, CreationDate) " 
+    public void AddMember(CommunityCampJoinMember model) => con.Execute("Insert Into CommunityCampJoinMembers "
+            + " (CommunityName, Name, Mobile, Email, Size, CreationDate) "
             + " Values (@CommunityName, @Name, @Mobile, @Email, @Size, GetDate())",
             model);
-    }
 
     public void DeleteMember(CommunityCampJoinMember model)
     {
