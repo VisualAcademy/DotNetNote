@@ -12,10 +12,7 @@ namespace Acts.Pages.ActionCategories
 
         public CreateModel(ActContext context) => _context = context;
 
-        public IActionResult OnGet()
-        {
-            return Page();
-        }
+        public IActionResult OnGet() => Page();
 
         [BindProperty]
         public ActionCategory ActionCategory { get; set; }
