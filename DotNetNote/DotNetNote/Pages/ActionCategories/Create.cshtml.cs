@@ -10,7 +10,7 @@ namespace Acts.Pages.ActionCategories
     {
         private readonly Acts.Models.ActContext _context;
 
-        public CreateModel(Acts.Models.ActContext context)
+        public CreateModel(ActContext context)
         {
             _context = context;
         }
