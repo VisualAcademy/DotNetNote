@@ -11,10 +11,7 @@ public class DeleteModel : PageModel
 {
     private readonly ActContext _context;
 
-    public DeleteModel(ActContext context)
-    {
-        _context = context;
-    }
+    public DeleteModel(ActContext context) => _context = context;
 
     [BindProperty]
     public ActionCategory ActionCategory { get; set; }
