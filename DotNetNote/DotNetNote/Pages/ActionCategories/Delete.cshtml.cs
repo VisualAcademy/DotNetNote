@@ -11,7 +11,7 @@ public class DeleteModel : PageModel
 {
     private readonly Acts.Models.ActContext _context;
 
-    public DeleteModel(Acts.Models.ActContext context)
+    public DeleteModel(ActContext context)
     {
         _context = context;
     }
