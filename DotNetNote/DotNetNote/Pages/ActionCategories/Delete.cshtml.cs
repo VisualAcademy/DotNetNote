@@ -9,7 +9,7 @@ namespace Acts.Pages.ActionCategories;
 
 public class DeleteModel : PageModel
 {
-    private readonly Acts.Models.ActContext _context;
+    private readonly ActContext _context;
 
     public DeleteModel(ActContext context)
     {
