@@ -12,10 +12,7 @@ public class EditModel : PageModel
 {
     private readonly Acts.Models.ActContext _context;
 
-    public EditModel(Acts.Models.ActContext context)
-    {
-        _context = context;
-    }
+    public EditModel(Acts.Models.ActContext context) => _context = context;
 
     [BindProperty]
     public ActionCategory ActionCategory { get; set; }
