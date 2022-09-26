@@ -5,33 +5,32 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Acts.Models;
 
-namespace Acts.Pages.ActionCategories
+namespace Acts.Pages.ActionCategories;
+
+public class DetailsModel : PageModel
 {
-    public class DetailsModel : PageModel
+    private readonly Acts.Models.ActContext _context;
+
+    public DetailsModel(Acts.Models.ActContext context)
     {
-        private readonly Acts.Models.ActContext _context;
+        _context = context;
+    }
 
-        public DetailsModel(Acts.Models.ActContext context)
+    public ActionCategory ActionCategory { get; set; }
+
+    public async Task<IActionResult> OnGetAsync(long? id)
+    {
+        if (id == null)
         {
-            _context = context;
+            return NotFound();
         }
 
-        public ActionCategory ActionCategory { get; set; }
+        ActionCategory = await _context.ActionCategories.FirstOrDefaultAsync(m => m.Id == id);
 
-        public async Task<IActionResult> OnGetAsync(long? id)
+        if (ActionCategory == null)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            ActionCategory = await _context.ActionCategories.FirstOrDefaultAsync(m => m.Id == id);
-
-            if (ActionCategory == null)
-            {
-                return NotFound();
-            }
-            return Page();
+            return NotFound();
         }
+        return Page();
     }
 }
