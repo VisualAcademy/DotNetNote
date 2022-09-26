@@ -6,69 +6,68 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Acts.Models;
 
-namespace Acts.Pages.ActionCategories
-{
-    public class EditModel : PageModel
-    {
-        private readonly Acts.Models.ActContext _context;
+namespace Acts.Pages.ActionCategories;
 
-        public EditModel(Acts.Models.ActContext context)
+public class EditModel : PageModel
+{
+    private readonly Acts.Models.ActContext _context;
+
+    public EditModel(Acts.Models.ActContext context)
+    {
+        _context = context;
+    }
+
+    [BindProperty]
+    public ActionCategory ActionCategory { get; set; }
+
+    public async Task<IActionResult> OnGetAsync(long? id)
+    {
+        if (id == null)
         {
-            _context = context;
+            return NotFound();
         }
 
-        [BindProperty]
-        public ActionCategory ActionCategory { get; set; }
+        ActionCategory = await _context.ActionCategories.FirstOrDefaultAsync(m => m.Id == id);
 
-        public async Task<IActionResult> OnGetAsync(long? id)
+        if (ActionCategory == null)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            return NotFound();
+        }
+        return Page();
+    }
 
-            ActionCategory = await _context.ActionCategories.FirstOrDefaultAsync(m => m.Id == id);
-
-            if (ActionCategory == null)
-            {
-                return NotFound();
-            }
+    // To protect from overposting attacks, enable the specific properties you want to bind to.
+    // For more details, see https://aka.ms/RazorPagesCRUD.
+    public async Task<IActionResult> OnPostAsync()
+    {
+        if (!ModelState.IsValid)
+        {
             return Page();
         }
 
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
+        _context.Attach(ActionCategory).State = EntityState.Modified;
+
+        try
         {
-            if (!ModelState.IsValid)
+            await _context.SaveChangesAsync();
+        }
+        catch (DbUpdateConcurrencyException)
+        {
+            if (!ActionCategoryExists(ActionCategory.Id))
             {
-                return Page();
+                return NotFound();
             }
-
-            _context.Attach(ActionCategory).State = EntityState.Modified;
-
-            try
+            else
             {
-                await _context.SaveChangesAsync();
+                throw;
             }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ActionCategoryExists(ActionCategory.Id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return RedirectToPage("./Index");
         }
 
-        private bool ActionCategoryExists(long id)
-        {
-            return _context.ActionCategories.Any(e => e.Id == id);
-        }
+        return RedirectToPage("./Index");
+    }
+
+    private bool ActionCategoryExists(long id)
+    {
+        return _context.ActionCategories.Any(e => e.Id == id);
     }
 }
