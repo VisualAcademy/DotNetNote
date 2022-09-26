@@ -11,10 +11,7 @@ public class DetailsModel : PageModel
 {
     private readonly ActContext _context;
 
-    public DetailsModel(Acts.Models.ActContext context)
-    {
-        _context = context;
-    }
+    public DetailsModel(Acts.Models.ActContext context) => _context = context;
 
     public ActionCategory ActionCategory { get; set; }
 
