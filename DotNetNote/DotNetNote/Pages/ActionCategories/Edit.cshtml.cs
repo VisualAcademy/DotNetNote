@@ -63,8 +63,5 @@ public class EditModel : PageModel
         return RedirectToPage("./Index");
     }
 
-    private bool ActionCategoryExists(long id)
-    {
-        return _context.ActionCategories.Any(e => e.Id == id);
-    }
+    private bool ActionCategoryExists(long id) => _context.ActionCategories.Any(e => e.Id == id);
 }
