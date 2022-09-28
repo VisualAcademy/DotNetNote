@@ -3,37 +3,36 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace DotNetNote.Pages.CabinetTypes
+namespace DotNetNote.Pages.CabinetTypes;
+
+public class CreateModel : PageModel
 {
-    public class CreateModel : PageModel
+    private readonly DotNetNote.Data.ApplicationDbContext _context;
+
+    public CreateModel(DotNetNote.Data.ApplicationDbContext context)
     {
-        private readonly DotNetNote.Data.ApplicationDbContext _context;
+        _context = context;
+    }
 
-        public CreateModel(DotNetNote.Data.ApplicationDbContext context)
-        {
-            _context = context;
-        }
+    public IActionResult OnGet()
+    {
+        return Page();
+    }
 
-        public IActionResult OnGet()
+    [BindProperty]
+    public CabinetType CabinetType { get; set; }
+
+    // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
+    public async Task<IActionResult> OnPostAsync()
+    {
+        if (!ModelState.IsValid)
         {
             return Page();
         }
 
-        [BindProperty]
-        public CabinetType CabinetType { get; set; }
+        _context.CabinetTypes.Add(CabinetType);
+        await _context.SaveChangesAsync();
 
-        // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
-        public async Task<IActionResult> OnPostAsync()
-        {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
-
-            _context.CabinetTypes.Add(CabinetType);
-            await _context.SaveChangesAsync();
-
-            return RedirectToPage("./Index");
-        }
+        return RedirectToPage("./Index");
     }
 }
