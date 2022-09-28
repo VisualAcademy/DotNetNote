@@ -11,10 +11,7 @@ public class CreateModel : PageModel
 
     public CreateModel(Data.ApplicationDbContext context) => _context = context;
 
-    public IActionResult OnGet()
-    {
-        return Page();
-    }
+    public IActionResult OnGet() => Page();
 
     [BindProperty]
     public CabinetType CabinetType { get; set; }
