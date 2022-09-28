@@ -10,7 +10,7 @@ public class DeleteModel : PageModel
 {
     private readonly DotNetNote.Data.ApplicationDbContext _context;
 
-    public DeleteModel(DotNetNote.Data.ApplicationDbContext context)
+    public DeleteModel(Data.ApplicationDbContext context)
     {
         _context = context;
     }
