@@ -9,7 +9,7 @@ public class CreateModel : PageModel
 {
     private readonly DotNetNote.Data.ApplicationDbContext _context;
 
-    public CreateModel(DotNetNote.Data.ApplicationDbContext context)
+    public CreateModel(Data.ApplicationDbContext context)
     {
         _context = context;
     }
