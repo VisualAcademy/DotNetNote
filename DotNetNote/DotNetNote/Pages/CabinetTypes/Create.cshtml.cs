@@ -7,7 +7,7 @@ namespace DotNetNote.Pages.CabinetTypes;
 
 public class CreateModel : PageModel
 {
-    private readonly DotNetNote.Data.ApplicationDbContext _context;
+    private readonly Data.ApplicationDbContext _context;
 
     public CreateModel(Data.ApplicationDbContext context)
     {
