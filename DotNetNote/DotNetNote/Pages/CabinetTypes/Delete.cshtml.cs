@@ -4,52 +4,51 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
-namespace DotNetNote.Pages.CabinetTypes
+namespace DotNetNote.Pages.CabinetTypes;
+
+public class DeleteModel : PageModel
 {
-    public class DeleteModel : PageModel
+    private readonly DotNetNote.Data.ApplicationDbContext _context;
+
+    public DeleteModel(DotNetNote.Data.ApplicationDbContext context)
     {
-        private readonly DotNetNote.Data.ApplicationDbContext _context;
+        _context = context;
+    }
 
-        public DeleteModel(DotNetNote.Data.ApplicationDbContext context)
+    [BindProperty]
+    public CabinetType CabinetType { get; set; }
+
+    public async Task<IActionResult> OnGetAsync(long? id)
+    {
+        if (id == null)
         {
-            _context = context;
+            return NotFound();
         }
 
-        [BindProperty]
-        public CabinetType CabinetType { get; set; }
+        CabinetType = await _context.CabinetTypes.FirstOrDefaultAsync(m => m.Id == id);
 
-        public async Task<IActionResult> OnGetAsync(long? id)
+        if (CabinetType == null)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            return NotFound();
+        }
+        return Page();
+    }
 
-            CabinetType = await _context.CabinetTypes.FirstOrDefaultAsync(m => m.Id == id);
-
-            if (CabinetType == null)
-            {
-                return NotFound();
-            }
-            return Page();
+    public async Task<IActionResult> OnPostAsync(long? id)
+    {
+        if (id == null)
+        {
+            return NotFound();
         }
 
-        public async Task<IActionResult> OnPostAsync(long? id)
+        CabinetType = await _context.CabinetTypes.FindAsync(id);
+
+        if (CabinetType != null)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            CabinetType = await _context.CabinetTypes.FindAsync(id);
-
-            if (CabinetType != null)
-            {
-                _context.CabinetTypes.Remove(CabinetType);
-                await _context.SaveChangesAsync();
-            }
-
-            return RedirectToPage("./Index");
+            _context.CabinetTypes.Remove(CabinetType);
+            await _context.SaveChangesAsync();
         }
+
+        return RedirectToPage("./Index");
     }
 }
