@@ -10,10 +10,7 @@ public class DeleteModel : PageModel
 {
     private readonly DotNetNote.Data.ApplicationDbContext _context;
 
-    public DeleteModel(Data.ApplicationDbContext context)
-    {
-        _context = context;
-    }
+    public DeleteModel(Data.ApplicationDbContext context) => _context = context;
 
     [BindProperty]
     public CabinetType CabinetType { get; set; }
