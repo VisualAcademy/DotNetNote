@@ -4,33 +4,32 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
-namespace DotNetNote.Pages.CabinetTypes
+namespace DotNetNote.Pages.CabinetTypes;
+
+public class DetailsModel : PageModel
 {
-    public class DetailsModel : PageModel
+    private readonly DotNetNote.Data.ApplicationDbContext _context;
+
+    public DetailsModel(DotNetNote.Data.ApplicationDbContext context)
     {
-        private readonly DotNetNote.Data.ApplicationDbContext _context;
+        _context = context;
+    }
 
-        public DetailsModel(DotNetNote.Data.ApplicationDbContext context)
+    public CabinetType CabinetType { get; set; }
+
+    public async Task<IActionResult> OnGetAsync(long? id)
+    {
+        if (id == null)
         {
-            _context = context;
+            return NotFound();
         }
 
-        public CabinetType CabinetType { get; set; }
+        CabinetType = await _context.CabinetTypes.FirstOrDefaultAsync(m => m.Id == id);
 
-        public async Task<IActionResult> OnGetAsync(long? id)
+        if (CabinetType == null)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            CabinetType = await _context.CabinetTypes.FirstOrDefaultAsync(m => m.Id == id);
-
-            if (CabinetType == null)
-            {
-                return NotFound();
-            }
-            return Page();
+            return NotFound();
         }
+        return Page();
     }
 }
