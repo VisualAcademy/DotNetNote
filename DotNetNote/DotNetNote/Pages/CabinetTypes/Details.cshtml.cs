@@ -10,10 +10,7 @@ public class DetailsModel : PageModel
 {
     private readonly DotNetNote.Data.ApplicationDbContext _context;
 
-    public DetailsModel(Data.ApplicationDbContext context)
-    {
-        _context = context;
-    }
+    public DetailsModel(Data.ApplicationDbContext context) => _context = context;
 
     public CabinetType CabinetType { get; set; }
 
