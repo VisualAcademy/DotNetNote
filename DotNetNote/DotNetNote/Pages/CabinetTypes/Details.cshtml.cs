@@ -10,7 +10,7 @@ public class DetailsModel : PageModel
 {
     private readonly DotNetNote.Data.ApplicationDbContext _context;
 
-    public DetailsModel(DotNetNote.Data.ApplicationDbContext context)
+    public DetailsModel(Data.ApplicationDbContext context)
     {
         _context = context;
     }
