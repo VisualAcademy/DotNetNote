@@ -9,10 +9,7 @@ namespace DotNetNote.Pages.CabinetTypes
     {
         private readonly Data.ApplicationDbContext _context;
 
-        public IndexModel(DotNetNote.Data.ApplicationDbContext context)
-        {
-            _context = context;
-        }
+        public IndexModel(DotNetNote.Data.ApplicationDbContext context) => _context = context;
 
         public IList<CabinetType> CabinetType { get;set; }
 
