@@ -5,69 +5,68 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
-namespace DotNetNote.Pages.CabinetTypes
-{
-    public class EditModel : PageModel
-    {
-        private readonly DotNetNote.Data.ApplicationDbContext _context;
+namespace DotNetNote.Pages.CabinetTypes;
 
-        public EditModel(DotNetNote.Data.ApplicationDbContext context)
+public class EditModel : PageModel
+{
+    private readonly DotNetNote.Data.ApplicationDbContext _context;
+
+    public EditModel(DotNetNote.Data.ApplicationDbContext context)
+    {
+        _context = context;
+    }
+
+    [BindProperty]
+    public CabinetType CabinetType { get; set; }
+
+    public async Task<IActionResult> OnGetAsync(long? id)
+    {
+        if (id == null)
         {
-            _context = context;
+            return NotFound();
         }
 
-        [BindProperty]
-        public CabinetType CabinetType { get; set; }
+        CabinetType = await _context.CabinetTypes.FirstOrDefaultAsync(m => m.Id == id);
 
-        public async Task<IActionResult> OnGetAsync(long? id)
+        if (CabinetType == null)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            return NotFound();
+        }
+        return Page();
+    }
 
-            CabinetType = await _context.CabinetTypes.FirstOrDefaultAsync(m => m.Id == id);
-
-            if (CabinetType == null)
-            {
-                return NotFound();
-            }
+    // To protect from overposting attacks, enable the specific properties you want to bind to.
+    // For more details, see https://aka.ms/RazorPagesCRUD.
+    public async Task<IActionResult> OnPostAsync()
+    {
+        if (!ModelState.IsValid)
+        {
             return Page();
         }
 
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
+        _context.Attach(CabinetType).State = EntityState.Modified;
+
+        try
         {
-            if (!ModelState.IsValid)
+            await _context.SaveChangesAsync();
+        }
+        catch (DbUpdateConcurrencyException)
+        {
+            if (!CabinetTypeExists(CabinetType.Id))
             {
-                return Page();
+                return NotFound();
             }
-
-            _context.Attach(CabinetType).State = EntityState.Modified;
-
-            try
+            else
             {
-                await _context.SaveChangesAsync();
+                throw;
             }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!CabinetTypeExists(CabinetType.Id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return RedirectToPage("./Index");
         }
 
-        private bool CabinetTypeExists(long id)
-        {
-            return _context.CabinetTypes.Any(e => e.Id == id);
-        }
+        return RedirectToPage("./Index");
+    }
+
+    private bool CabinetTypeExists(long id)
+    {
+        return _context.CabinetTypes.Any(e => e.Id == id);
     }
 }
