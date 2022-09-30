@@ -62,8 +62,5 @@ public class EditModel : PageModel
         return RedirectToPage("./Index");
     }
 
-    private bool CabinetTypeExists(long id)
-    {
-        return _context.CabinetTypes.Any(e => e.Id == id);
-    }
+    private bool CabinetTypeExists(long id) => _context.CabinetTypes.Any(e => e.Id == id);
 }
