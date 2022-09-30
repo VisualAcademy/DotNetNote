@@ -11,7 +11,7 @@ public class EditModel : PageModel
 {
     private readonly Data.ApplicationDbContext _context;
 
-    public EditModel(DotNetNote.Data.ApplicationDbContext context)
+    public EditModel(Data.ApplicationDbContext context)
     {
         _context = context;
     }
