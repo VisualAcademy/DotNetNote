@@ -13,9 +13,6 @@ namespace DotNetNote.Pages.CabinetTypes
 
         public IList<CabinetType> CabinetType { get;set; }
 
-        public async Task OnGetAsync()
-        {
-            CabinetType = await _context.CabinetTypes.ToListAsync();
-        }
+        public async Task OnGetAsync() => CabinetType = await _context.CabinetTypes.ToListAsync();
     }
 }
