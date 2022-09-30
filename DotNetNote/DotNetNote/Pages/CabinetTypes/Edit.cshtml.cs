@@ -11,10 +11,7 @@ public class EditModel : PageModel
 {
     private readonly Data.ApplicationDbContext _context;
 
-    public EditModel(Data.ApplicationDbContext context)
-    {
-        _context = context;
-    }
+    public EditModel(Data.ApplicationDbContext context) => _context = context;
 
     [BindProperty]
     public CabinetType CabinetType { get; set; }
