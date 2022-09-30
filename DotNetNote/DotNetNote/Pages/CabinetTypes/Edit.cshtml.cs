@@ -9,7 +9,7 @@ namespace DotNetNote.Pages.CabinetTypes;
 
 public class EditModel : PageModel
 {
-    private readonly DotNetNote.Data.ApplicationDbContext _context;
+    private readonly Data.ApplicationDbContext _context;
 
     public EditModel(DotNetNote.Data.ApplicationDbContext context)
     {
