@@ -11,10 +11,7 @@ namespace VisualAcademy.Pages.Cascading.Locations
     {
         private readonly DotNetNote.Data.ApplicationDbContext _context;
 
-        public DetailsModel(DotNetNote.Data.ApplicationDbContext context)
-        {
-            _context = context;
-        }
+        public DetailsModel(DotNetNote.Data.ApplicationDbContext context) => _context = context;
 
         public Location Location { get; set; }
 
