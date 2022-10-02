@@ -66,8 +66,5 @@ public class EditModel : PageModel
         return RedirectToPage("./Index");
     }
 
-    private bool LocationExists(int id)
-    {
-        return _context.Locations.Any(e => e.Id == id);
-    }
+    private bool LocationExists(int id) => _context.Locations.Any(e => e.Id == id);
 }
