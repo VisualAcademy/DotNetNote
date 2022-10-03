@@ -12,10 +12,7 @@ public class CreateModel : PageModel
 
     public CreateModel(DotNetNote.Data.ApplicationDbContext context) => _context = context;
 
-    public IActionResult OnGet()
-    {
-        return Page();
-    }
+    public IActionResult OnGet() => Page();
 
     [BindProperty]
     public Property Property { get; set; }
