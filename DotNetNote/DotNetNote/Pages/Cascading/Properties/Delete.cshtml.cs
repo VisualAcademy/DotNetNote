@@ -5,52 +5,51 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using VisualAcademy.Models;
 
-namespace VisualAcademy.Pages.Cascading.Properties
+namespace VisualAcademy.Pages.Cascading.Properties;
+
+public class DeleteModel : PageModel
 {
-    public class DeleteModel : PageModel
+    private readonly DotNetNote.Data.ApplicationDbContext _context;
+
+    public DeleteModel(DotNetNote.Data.ApplicationDbContext context)
     {
-        private readonly DotNetNote.Data.ApplicationDbContext _context;
+        _context = context;
+    }
 
-        public DeleteModel(DotNetNote.Data.ApplicationDbContext context)
+    [BindProperty]
+    public Property Property { get; set; }
+
+    public async Task<IActionResult> OnGetAsync(int? id)
+    {
+        if (id == null)
         {
-            _context = context;
+            return NotFound();
         }
 
-        [BindProperty]
-        public Property Property { get; set; }
+        Property = await _context.Properties.FirstOrDefaultAsync(m => m.Id == id);
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        if (Property == null)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            return NotFound();
+        }
+        return Page();
+    }
 
-            Property = await _context.Properties.FirstOrDefaultAsync(m => m.Id == id);
-
-            if (Property == null)
-            {
-                return NotFound();
-            }
-            return Page();
+    public async Task<IActionResult> OnPostAsync(int? id)
+    {
+        if (id == null)
+        {
+            return NotFound();
         }
 
-        public async Task<IActionResult> OnPostAsync(int? id)
+        Property = await _context.Properties.FindAsync(id);
+
+        if (Property != null)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            Property = await _context.Properties.FindAsync(id);
-
-            if (Property != null)
-            {
-                _context.Properties.Remove(Property);
-                await _context.SaveChangesAsync();
-            }
-
-            return RedirectToPage("./Index");
+            _context.Properties.Remove(Property);
+            await _context.SaveChangesAsync();
         }
+
+        return RedirectToPage("./Index");
     }
 }
