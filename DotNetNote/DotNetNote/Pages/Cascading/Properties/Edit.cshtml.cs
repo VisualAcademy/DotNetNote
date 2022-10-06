@@ -12,10 +12,7 @@ namespace VisualAcademy.Pages.Cascading.Properties
     {
         private readonly DotNetNote.Data.ApplicationDbContext _context;
 
-        public EditModel(DotNetNote.Data.ApplicationDbContext context)
-        {
-            _context = context;
-        }
+        public EditModel(DotNetNote.Data.ApplicationDbContext context) => _context = context;
 
         [BindProperty]
         public Property Property { get; set; }
