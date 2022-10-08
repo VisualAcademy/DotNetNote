@@ -14,8 +14,5 @@ public class IndexModel : PageModel
 
     public IList<Property> Property { get;set; }
 
-    public async Task OnGetAsync()
-    {
-        Property = await _context.Properties.ToListAsync();
-    }
+    public async Task OnGetAsync() => Property = await _context.Properties.ToListAsync();
 }
