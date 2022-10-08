@@ -6,63 +6,62 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using VisualAcademy.Models;
 
-namespace VisualAcademy.Pages.Cascading.Properties
+namespace VisualAcademy.Pages.Cascading.Properties;
+
+public class EditModel : PageModel
 {
-    public class EditModel : PageModel
+    private readonly DotNetNote.Data.ApplicationDbContext _context;
+
+    public EditModel(DotNetNote.Data.ApplicationDbContext context) => _context = context;
+
+    [BindProperty]
+    public Property Property { get; set; }
+
+    public async Task<IActionResult> OnGetAsync(int? id)
     {
-        private readonly DotNetNote.Data.ApplicationDbContext _context;
-
-        public EditModel(DotNetNote.Data.ApplicationDbContext context) => _context = context;
-
-        [BindProperty]
-        public Property Property { get; set; }
-
-        public async Task<IActionResult> OnGetAsync(int? id)
+        if (id == null)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            return NotFound();
+        }
 
-            Property = await _context.Properties.FirstOrDefaultAsync(m => m.Id == id);
+        Property = await _context.Properties.FirstOrDefaultAsync(m => m.Id == id);
 
-            if (Property == null)
-            {
-                return NotFound();
-            }
+        if (Property == null)
+        {
+            return NotFound();
+        }
+        return Page();
+    }
+
+    // To protect from overposting attacks, enable the specific properties you want to bind to.
+    // For more details, see https://aka.ms/RazorPagesCRUD.
+    public async Task<IActionResult> OnPostAsync()
+    {
+        if (!ModelState.IsValid)
+        {
             return Page();
         }
 
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
+        _context.Attach(Property).State = EntityState.Modified;
+
+        try
         {
-            if (!ModelState.IsValid)
+            await _context.SaveChangesAsync();
+        }
+        catch (DbUpdateConcurrencyException)
+        {
+            if (!PropertyExists(Property.Id))
             {
-                return Page();
+                return NotFound();
             }
-
-            _context.Attach(Property).State = EntityState.Modified;
-
-            try
+            else
             {
-                await _context.SaveChangesAsync();
+                throw;
             }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!PropertyExists(Property.Id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return RedirectToPage("./Index");
         }
 
-        private bool PropertyExists(int id) => _context.Properties.Any(e => e.Id == id);
+        return RedirectToPage("./Index");
     }
+
+    private bool PropertyExists(int id) => _context.Properties.Any(e => e.Id == id);
 }
