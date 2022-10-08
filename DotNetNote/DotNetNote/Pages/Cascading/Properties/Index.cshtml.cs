@@ -10,10 +10,7 @@ public class IndexModel : PageModel
 {
     private readonly DotNetNote.Data.ApplicationDbContext _context;
 
-    public IndexModel(DotNetNote.Data.ApplicationDbContext context)
-    {
-        _context = context;
-    }
+    public IndexModel(DotNetNote.Data.ApplicationDbContext context) => _context = context;
 
     public IList<Property> Property { get;set; }
 
