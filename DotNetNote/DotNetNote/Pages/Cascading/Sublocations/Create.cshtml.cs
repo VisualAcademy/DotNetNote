@@ -5,38 +5,37 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using VisualAcademy.Models;
 
-namespace VisualAcademy.Pages.Cascading.Sublocations
+namespace VisualAcademy.Pages.Cascading.Sublocations;
+
+public class CreateModel : PageModel
 {
-    public class CreateModel : PageModel
+    private readonly DotNetNote.Data.ApplicationDbContext _context;
+
+    public CreateModel(DotNetNote.Data.ApplicationDbContext context)
     {
-        private readonly DotNetNote.Data.ApplicationDbContext _context;
+        _context = context;
+    }
 
-        public CreateModel(DotNetNote.Data.ApplicationDbContext context)
-        {
-            _context = context;
-        }
+    public IActionResult OnGet()
+    {
+        ViewData["LocationId"] = new SelectList(_context.Locations, "Id", "Name");
+        return Page();
+    }
 
-        public IActionResult OnGet()
+    [BindProperty]
+    public Sublocation Sublocation { get; set; }
+
+    // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
+    public async Task<IActionResult> OnPostAsync()
+    {
+        if (!ModelState.IsValid)
         {
-            ViewData["LocationId"] = new SelectList(_context.Locations, "Id", "Name");
             return Page();
         }
 
-        [BindProperty]
-        public Sublocation Sublocation { get; set; }
+        _context.Sublocations.Add(Sublocation);
+        await _context.SaveChangesAsync();
 
-        // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
-        public async Task<IActionResult> OnPostAsync()
-        {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
-
-            _context.Sublocations.Add(Sublocation);
-            await _context.SaveChangesAsync();
-
-            return RedirectToPage("./Index");
-        }
+        return RedirectToPage("./Index");
     }
 }
