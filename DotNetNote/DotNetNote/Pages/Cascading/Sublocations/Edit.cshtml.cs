@@ -13,10 +13,7 @@ public class EditModel : PageModel
 {
     private readonly DotNetNote.Data.ApplicationDbContext _context;
 
-    public EditModel(DotNetNote.Data.ApplicationDbContext context)
-    {
-        _context = context;
-    }
+    public EditModel(DotNetNote.Data.ApplicationDbContext context) => _context = context;
 
     [BindProperty]
     public Sublocation Sublocation { get; set; }
