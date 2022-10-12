@@ -9,10 +9,8 @@ public class StronglyTypedConfigurationController : Controller
     // 강력한 형식의 클래스의 인스턴스 생성
     private DotNetNoteSettings _dnnSettings;
     public StronglyTypedConfigurationController(
-        IOptions<DotNetNoteSettings> options)
-    {
-        _dnnSettings = options.Value;
-    }
+        IOptions<DotNetNoteSettings> options) => 
+            _dnnSettings = options.Value;
 
     public IActionResult Index()
     {
