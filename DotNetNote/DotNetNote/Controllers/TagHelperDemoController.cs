@@ -9,10 +9,7 @@ public class TagHelperDemoController : Controller
     /// <summary>
     /// environment 태그 헬퍼 사용하기
     /// </summary>
-    public IActionResult EnvironmentDemo()
-    {
-        return View();
-    }
+    public IActionResult EnvironmentDemo() => View();
 
     /// <summary>
     /// 내장 태그 헬퍼에 접두사 붙이기
