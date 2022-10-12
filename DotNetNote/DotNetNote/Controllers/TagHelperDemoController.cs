@@ -4,10 +4,7 @@ namespace DotNetNote.Controllers;
 
 public class TagHelperDemoController : Controller
 {
-    public IActionResult Index()
-    {
-        return View();
-    }
+    public IActionResult Index() => View();
 
     /// <summary>
     /// environment 태그 헬퍼 사용하기
