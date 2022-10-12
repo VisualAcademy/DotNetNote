@@ -14,10 +14,7 @@ public class TagHelperDemoController : Controller
     /// <summary>
     /// 내장 태그 헬퍼에 접두사 붙이기
     /// </summary>
-    public IActionResult PrefixDemo()
-    {
-        return View();
-    }
+    public IActionResult PrefixDemo() => View();
 
     /// <summary>
     /// 사용자 정의 태그 헬퍼 테스트
