@@ -19,10 +19,7 @@ public class TagHelperDemoController : Controller
     /// <summary>
     /// 사용자 정의 태그 헬퍼 테스트
     /// </summary>
-    public IActionResult MyTagHelperDemo()
-    {
-        return View();
-    }
+    public IActionResult MyTagHelperDemo() => View();
 
     /// <summary>
     /// 커스텀 태그 헬퍼
