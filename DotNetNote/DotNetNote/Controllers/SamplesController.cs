@@ -6,10 +6,7 @@ public class SamplesController : Controller
 {
     public IActionResult Index() => View();
 
-    public IActionResult AnimateCss()
-    {
-        return View();
-    }
+    public IActionResult AnimateCss() => View();
 
     /// <summary>
     /// PersonServiceController 테스트 
