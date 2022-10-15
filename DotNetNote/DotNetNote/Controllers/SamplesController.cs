@@ -11,10 +11,7 @@ public class SamplesController : Controller
     /// <summary>
     /// PersonServiceController 테스트 
     /// </summary>
-    public IActionResult PersonSerivceTest()
-    {
-        return View();
-    }
+    public IActionResult PersonSerivceTest() => View();
 
     /// <summary>
     /// jQuery UI 테스트
