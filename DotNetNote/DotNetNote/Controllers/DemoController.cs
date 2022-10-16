@@ -4,11 +4,9 @@ namespace DotNetNote.Controllers;
 
 public class DemoController : Controller
 {
-    public IActionResult Index()
-    {
+    public IActionResult Index() =>
         //return Content("Demo Page");
-        return View();
-    }
+        View();
 
     /// <summary>
     /// Content() 반환값
