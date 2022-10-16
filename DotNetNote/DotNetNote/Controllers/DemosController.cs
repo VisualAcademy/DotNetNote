@@ -7,8 +7,5 @@ public class DemosController : Controller
     // GET: /<controller>/
     public IActionResult Index() => View();
 
-    public IActionResult FillDropDownListWithAjax()
-    {
-        return View(); 
-    }
+    public IActionResult FillDropDownListWithAjax() => View();
 }
