@@ -65,9 +65,6 @@
         /// ToString 메서드 오버라이드
         /// </summary>
         /// <returns>TabName</returns>
-        public override string ToString()
-        {
-            return TabName;
-        }
+        public override string ToString() => TabName;
     }
 }
