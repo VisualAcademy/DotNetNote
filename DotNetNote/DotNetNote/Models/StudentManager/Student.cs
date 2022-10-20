@@ -39,10 +39,7 @@ namespace DotNetNote.Models.StudentManager
         public StudentServiceController() => _repository = new StudentRepository();
 
         [HttpGet("")]
-        public IEnumerable<Student> Get()
-        {
-            return _repository.GetAllInMemory().AsEnumerable();
-        }
+        public IEnumerable<Student> Get() => _repository.GetAllInMemory().AsEnumerable();
 
         [HttpGet("{id}")]
         public Student GetById(int id)
