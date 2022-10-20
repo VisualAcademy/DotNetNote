@@ -36,10 +36,7 @@ namespace DotNetNote.Models.StudentManager
     {
         private readonly StudentRepository _repository;
 
-        public StudentServiceController()
-        {
-            _repository = new StudentRepository();
-        }
+        public StudentServiceController() => _repository = new StudentRepository();
 
         [HttpGet("")]
         public IEnumerable<Student> Get()
