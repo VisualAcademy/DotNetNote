@@ -10,7 +10,7 @@ using System.Linq;
 namespace DotNetNote.Models
 {
     /// <summary>
-    /// 모델 클래스
+    /// [1] 모델 클래스
     /// </summary>
     public class Four
     {
@@ -21,7 +21,7 @@ namespace DotNetNote.Models
     }
 
     /// <summary>
-    /// 인터페이스 
+    /// [2] 인터페이스 
     /// </summary>
     public interface IFourRepository
     {
@@ -33,7 +33,7 @@ namespace DotNetNote.Models
     }
 
     /// <summary>
-    /// 리포지토리 클래스 
+    /// [3] 리포지토리 클래스 
     /// </summary>
     public class FourRepository : IFourRepository
     {
@@ -90,6 +90,9 @@ namespace DotNetNote.Models
         }
     }
 
+    /// <summary>
+    /// [4] Web API 컨트롤러 클래스: Angular / jQuery 등의 프론트엔드에서 접근할 Web API
+    /// </summary>
     // 컨벤션 기반 라우팅 대신에 어트리뷰트 라우팅 추천 
     //[Route("api/fours")] // 직접 API 이름을 지정할 때 
     [Route("api/[controller]")]
