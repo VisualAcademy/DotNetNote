@@ -16,7 +16,7 @@ namespace DotNetNote.Models.Exams
     }
 
     /// <summary>
-    /// 모델 클래스
+    /// [1] 모델 클래스
     /// </summary>
     public class Question
     {
@@ -27,7 +27,7 @@ namespace DotNetNote.Models.Exams
     }
 
     /// <summary>
-    /// 인터페이스 
+    /// [2] 인터페이스 
     /// </summary>
     public interface IQuestionRepository
     {
@@ -42,7 +42,7 @@ namespace DotNetNote.Models.Exams
     }
 
     /// <summary>
-    /// 리포지토리 클래스 
+    /// [3] 리포지토리 클래스 
     /// </summary>
     public class QuestionRepository : IQuestionRepository
     {
@@ -161,7 +161,7 @@ namespace DotNetNote.Models.Exams
     }
 
     /// <summary>
-    /// Web API 컨트롤러 클래스
+    /// [4] Web API 컨트롤러 클래스
     /// 복수형 사용 권장 
     /// 컨벤션 기반 라우팅 대신에 특성(어트리뷰트) 라우팅 추천
     /// </summary>
