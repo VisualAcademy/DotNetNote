@@ -10,7 +10,7 @@ using System.Linq;
 namespace DotNetNote.Models
 {
     /// <summary>
-    /// 모델 클래스
+    /// [1] 모델 클래스
     /// </summary>
     public class Five
     {
@@ -21,7 +21,7 @@ namespace DotNetNote.Models
     }
 
     /// <summary>
-    /// 인터페이스 
+    /// [2] 인터페이스 
     /// </summary>
     public interface IFiveRepository
     {
@@ -36,7 +36,7 @@ namespace DotNetNote.Models
     }
 
     /// <summary>
-    /// 리포지토리 클래스
+    /// [3] 리포지토리 클래스
     /// </summary>
     public class FiveRepository : IFiveRepository
     {
@@ -139,6 +139,9 @@ namespace DotNetNote.Models
         }
     }
 
+    /// <summary>
+    /// [4] Web API 컨트롤러 클래스 
+    /// </summary>
     // 컨벤션 기반 라우팅 대신에 어트리뷰트 라우팅 추천
     //[Route("api/fives")] // 직접 API 이름을 지정할 때
     [Route("api/[controller]")]
