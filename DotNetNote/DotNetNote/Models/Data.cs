@@ -3,6 +3,9 @@ using System.Threading.Tasks;
 
 namespace DotNetNote.Models
 {
+    /// <summary>
+    /// 모델 클래스
+    /// </summary>
     public class DataModel
     {
         public int Id { get; set; }
@@ -12,6 +15,9 @@ namespace DotNetNote.Models
         public string Title { get; set; }
     }
 
+    /// <summary>
+    /// 서비스 클래스(리포지토리 클래스)
+    /// </summary>
     public class DataService
     {
         private readonly List<DataModel> _data = new List<DataModel>()
