@@ -7,7 +7,7 @@ using Microsoft.Data.SqlClient;
 namespace DotNetNote.Models
 {
     /// <summary>
-    /// 모델 클래스
+    /// [1] 모델 클래스
     /// </summary>
     public class ThreeViewModel
     {
@@ -17,7 +17,7 @@ namespace DotNetNote.Models
     }
 
     /// <summary>
-    /// 리포지토리 인터페이스 
+    /// [2] 리포지토리 인터페이스 
     /// </summary>
     public interface IThreeRepository
     {
@@ -29,7 +29,7 @@ namespace DotNetNote.Models
     }
 
     /// <summary>
-    /// 리포지토리 클래스 
+    /// [3] 리포지토리 클래스 
     /// </summary>
     public class ThreeRepository : IThreeRepository
     {
