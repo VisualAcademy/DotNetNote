@@ -10,10 +10,7 @@ namespace DotNetNote.Models.Buyers
     {
         private readonly IDbConnection db;
 
-        public BuyerRepository(string connectionString)
-        {
-            db = new SqlConnection(connectionString);
-        }
+        public BuyerRepository(string connectionString) => db = new SqlConnection(connectionString);
 
         public Buyer GetBuyer(string buyerId)
         {
