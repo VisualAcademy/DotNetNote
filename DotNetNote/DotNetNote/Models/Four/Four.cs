@@ -100,10 +100,7 @@ namespace DotNetNote.Models
     {
         private IFourRepository _repository;
 
-        public FourServiceController(IFourRepository repository)
-        {
-            _repository = repository;
-        }
+        public FourServiceController(IFourRepository repository) => _repository = repository;
 
         [HttpGet]
         public IActionResult Get()
