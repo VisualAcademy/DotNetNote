@@ -18,11 +18,9 @@ public class ApiHelloWorldWithValueController : Controller
     }
 
     [HttpGet("{id:int}")]
-    public Value Get(int id)
-    {
+    public Value Get(int id) =>
         //return $"넘어온 값: {id}";
-        return new Value { Id = id, Text = $"넘어온 값: {id}" };
-    }
+        new Value { Id = id, Text = $"넘어온 값: {id}" };
 
     //[1]
     //[HttpPost]
