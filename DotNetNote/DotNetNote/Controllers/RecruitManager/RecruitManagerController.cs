@@ -16,11 +16,9 @@ public class RecruitManagerController : Controller
     /// <summary>
     /// 기본 페이지 
     /// </summary>
-    public IActionResult Index()
-    {
+    public IActionResult Index() =>
         //return View();
-        return View("~/Views/_MiniProjects/RecruitManager/Index.cshtml");
-    }
+        View("~/Views/_MiniProjects/RecruitManager/Index.cshtml");
 
     #region 모집 추가
     [HttpGet]
