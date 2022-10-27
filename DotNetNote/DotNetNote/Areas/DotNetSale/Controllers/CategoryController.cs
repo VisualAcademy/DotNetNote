@@ -11,9 +11,6 @@ namespace DotNetSale.Controllers
 
         public IActionResult CategoryAdd() => View();
 
-        public IActionResult CategoryList()
-        {
-            return View(); 
-        }
+        public IActionResult CategoryList() => View();
     }
 }
