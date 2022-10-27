@@ -1,5 +1,4 @@
-﻿using DotNetSale.Models;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using CategoryRepositoryInMemory = DotNetSale.Models.CategoryRepositoryInMemory;
 
 namespace DotNetSale.Controllers
