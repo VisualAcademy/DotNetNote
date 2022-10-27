@@ -1,13 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace DotNetSale.Controllers
+namespace DotNetSale.Controllers;
+
+[Area("DotNetSale")]
+public class CompanyController : Controller
 {
-    [Area("DotNetSale")]
-    public class CompanyController : Controller
+    public IActionResult Index()
     {
-        public IActionResult Index()
-        {
-            return View();
-        }
+        return View();
     }
 }
