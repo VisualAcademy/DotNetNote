@@ -1,21 +1,20 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using CategoryRepositoryInMemory = DotNetSale.Models.CategoryRepositoryInMemory;
 
-namespace DotNetSale.Controllers
+namespace DotNetSale.Controllers;
+
+[Area("DotNetSale")]
+public class DemoController : Controller
 {
-    [Area("DotNetSale")]
-    public class DemoController : Controller
+    public IActionResult Index() => View();
+
+    public IActionResult Category()
     {
-        public IActionResult Index() => View();
+        CategoryRepositoryInMemory repository = new CategoryRepositoryInMemory();
 
-        public IActionResult Category()
-        {
-            CategoryRepositoryInMemory repository = new CategoryRepositoryInMemory();
+        var categories = repository.GetAll();
 
-            var categories = repository.GetAll();
-
-            return View(categories);
-            //return View();
-        }
+        return View(categories);
+        //return View();
     }
 }
