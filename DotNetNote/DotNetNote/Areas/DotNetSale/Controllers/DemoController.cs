@@ -6,10 +6,7 @@ namespace DotNetSale.Controllers
     [Area("DotNetSale")]
     public class DemoController : Controller
     {
-        public IActionResult Index()
-        {
-            return View();
-        }
+        public IActionResult Index() => View();
 
         public IActionResult Category()
         {
