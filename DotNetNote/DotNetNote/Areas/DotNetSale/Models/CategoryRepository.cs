@@ -6,7 +6,6 @@
 */
 using Dapper;
 using Microsoft.Data.SqlClient;
-using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Linq;
