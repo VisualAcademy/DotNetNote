@@ -16,10 +16,8 @@ namespace DotNetSale.Models
     public class CategoryRepository : ICategoryRepository
     {
         private IDbConnection db;
-        public CategoryRepository()
-        {
-            db = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString);
-        }
+
+        public CategoryRepository() => db = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString);
 
         /// <summary>
         /// 카테고리(대분류) 등록
