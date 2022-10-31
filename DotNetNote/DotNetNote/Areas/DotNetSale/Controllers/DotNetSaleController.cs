@@ -7,10 +7,7 @@ public class DotNetSaleController : Controller
 {
     public IActionResult Index() => View();
 
-    public IActionResult CategoryAdd()
-    {
-        return View();
-    }
+    public IActionResult CategoryAdd() => View();
 
     public IActionResult CategoryList()
     {
