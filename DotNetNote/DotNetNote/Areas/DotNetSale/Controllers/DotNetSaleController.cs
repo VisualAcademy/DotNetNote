@@ -12,10 +12,7 @@ public class DotNetSaleController : Controller
     public IActionResult CategoryList() => View();
 
     [HttpGet]
-    public IActionResult ProductAdd()
-    {
-        return View(); 
-    }
+    public IActionResult ProductAdd() => View();
 
     [HttpGet]
     public IActionResult ProductsList(int categoryId = 0)
