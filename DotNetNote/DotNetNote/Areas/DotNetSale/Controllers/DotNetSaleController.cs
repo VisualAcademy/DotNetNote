@@ -42,10 +42,7 @@ public class DotNetSaleController : Controller
     }
 
     [HttpGet]
-    public IActionResult ShoppingCart()
-    {
-        return View(); 
-    }
+    public IActionResult ShoppingCart() => View();
 
     [HttpPost]
     public IActionResult ShoppingCart(
