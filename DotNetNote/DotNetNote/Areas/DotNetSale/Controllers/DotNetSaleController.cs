@@ -22,10 +22,7 @@ public class DotNetSaleController : Controller
         return View();
     }
 
-    public IActionResult ProductPages()
-    {
-        return View(); 
-    }
+    public IActionResult ProductPages() => View();
 
     [HttpGet]
     public IActionResult ReviewList(int productId = 0)
