@@ -1,5 +1,4 @@
 ﻿using Microsoft.Data.SqlClient;
-using System.Collections.Generic;
 
 namespace DotNetSale.Models
 {
