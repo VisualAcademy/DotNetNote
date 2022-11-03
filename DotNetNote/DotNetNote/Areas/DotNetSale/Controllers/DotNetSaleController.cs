@@ -55,10 +55,7 @@ public class DotNetSaleController : Controller
     }
 
     [HttpGet]
-    public IActionResult SearchForm()
-    {
-        return View();
-    }
+    public IActionResult SearchForm() => View();
 
     [HttpPost]
     public IActionResult SearchResults(string modelName)
