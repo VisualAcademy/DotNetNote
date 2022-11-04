@@ -7,17 +7,16 @@
 using Microsoft.Data.SqlClient;
 using System.Collections.Generic;
 
-namespace DotNetSale.Models
-{
-    public interface ICategoryRepository
-    {
-        /// <summary>
-        /// 카테고리 전체 정보 읽어오기
-        /// </summary>
-        List<Category> GetAll();
-        List<Category> GetCategories();
-        void AddCategory(string categoryName);
+namespace DotNetSale.Models;
 
-        SqlDataReader GetProductCategories();
-    }
+public interface ICategoryRepository
+{
+    /// <summary>
+    /// 카테고리 전체 정보 읽어오기
+    /// </summary>
+    List<Category> GetAll();
+    List<Category> GetCategories();
+    void AddCategory(string categoryName);
+
+    SqlDataReader GetProductCategories();
 }
