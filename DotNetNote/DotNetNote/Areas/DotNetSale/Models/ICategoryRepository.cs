@@ -5,7 +5,6 @@
     수정일: 2020-11-01
 */
 using Microsoft.Data.SqlClient;
-using System.Collections.Generic;
 
 namespace DotNetSale.Models;
 
