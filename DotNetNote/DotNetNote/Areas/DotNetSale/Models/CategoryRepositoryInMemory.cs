@@ -4,10 +4,7 @@ namespace DotNetSale.Models;
 
 public class CategoryRepositoryInMemory : ICategoryRepository
 {
-    public void AddCategory(string categoryName)
-    {
-        throw new System.NotImplementedException();
-    }
+    public void AddCategory(string categoryName) => throw new System.NotImplementedException();
 
     public List<Category> GetAll()
     {
