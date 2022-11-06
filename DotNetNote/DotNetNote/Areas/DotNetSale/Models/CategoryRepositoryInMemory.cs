@@ -18,10 +18,7 @@ public class CategoryRepositoryInMemory : ICategoryRepository
         return categories;
     }
 
-    public List<Category> GetCategories()
-    {
-        throw new System.NotImplementedException();
-    }
+    public List<Category> GetCategories() => throw new System.NotImplementedException();
 
     public SqlDataReader GetProductCategories()
     {
