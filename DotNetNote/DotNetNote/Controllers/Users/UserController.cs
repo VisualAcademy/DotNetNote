@@ -115,6 +115,7 @@ public class UserController : Controller
                     new Claim(ClaimTypes.Name, model.UserId), 
                     //new Claim(ClaimTypes.Email, model.UserId), //
 
+                    //[3] Administrators 이름으로 관리자 권한(Policy) 설정 관련
                     // 기본 역할 지정, "Role" 기능에 "Users" 값 부여
                     new Claim(ClaimTypes.Role, "Users") // 추가 정보 기록
                 };
