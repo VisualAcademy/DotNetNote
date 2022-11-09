@@ -1,5 +1,4 @@
-﻿using AttendeeApp.Models;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Attendee = AttendeeApp.Models.Attendee;
 using IAttendeeRepository = AttendeeApp.Models.IAttendeeRepository;
 
