@@ -65,5 +65,6 @@ https://github.com/VisualAcademy/DotNetNoteV31
 ## ASP.NET Core 5.0 버전의 DotNetNote는 다음 리포지토리에 있습니다.
 https://github.com/VisualAcademy/DotNetNote.V5
 
-
+## ASP.NET Core 6.0 버전의 DotNetNote는 다음 리포지토리에 있습니다.
+https://github.com/VisualAcademy/DotNetNote.V6.0
 
