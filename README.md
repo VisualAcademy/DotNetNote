@@ -1,30 +1,32 @@
-# DotNetNote 6.0 - 닷넷노트 6.0
+# DotNetNote 7.0 - 닷넷노트 7.0
 
-ASP.NET Core 6.0 개발, 강의, 집필 소스 모음
+ASP.NET Core 7.0 개발, 강의, 집필 소스 모음
 
 `ASP.NET & Core를 다루는 기술` 책의 닷넷코어 파트 소스 결과물
 
 
 DotNetNote 이름으로 만들어진 소스의 시작은 박용준 강사가 집필한 ASP.NET & Core를 다루는 기술 책의 .NET Core 파트의 최종 결과물로부터 계속 버전업되어
 
-1.0 버전부터 현재 6.0 버전까지 업데이트가 되고 있습니다.
+1.0 버전부터 현재 7.0 버전까지 업데이트가 되고 있습니다.
 
 특별한 경우가 아니면 버전 업데이트에 맞는 수정만할 뿐이지, 새롭게 추가되는 기능은 없습니다.
 
 
-## ASP.NET Core 6.0 전체 강의 소스
+## ASP.NET Core 7.0 전체 강의 소스
 
-박용준 강사가 진행하는 ASP.NET Core 6.0 강의의 전체 소스는 현재 리포지토리에 들어 있습니다. 
+박용준 강사가 진행하는 ASP.NET Core 7.0 강의의 전체 소스는 현재 리포지토리에 들어 있습니다. 
 
-ASP.NET Core 6.0 이전 버전에서 업그레이드한 소스이므로 Program.cs 파일과 Startup.cs 파일을 함께 사용합니다. 
+ASP.NET Core 7.0 이전 버전에서 업그레이드한 소스이므로 Program.cs 파일과 Startup.cs 파일을 함께 사용합니다. 
 
-.NET 6의 Top Level Statement를 사용하여 Program.cs 파일 하나만으로도 동일하게 구현할 수 있으니,
+.NET 7의 Top Level Statement를 사용하여 Program.cs 파일 하나만으로도 동일하게 구현할 수 있으니,
 
-.NET 6 프로젝트 템플릿을 사용하면 그 방법을 그대로 사용하면 됩니다. 
+.NET 7 프로젝트 템플릿을 사용하면 그 방법을 그대로 사용하면 됩니다. 
+
 
 ## ASP.NET & Core를 다루는 기술 - 닷넷코어 파트 전체 소스
 
 ASP.NET & Core를 다루는 기술 책의 닷넷코어 파트 전체 소스의 최신 버전은 현재 리포지토리에 적용되어 있습니다.
+
 
 ## 강의 데모 사이트: 닷넷노트닷컴
 
@@ -65,5 +67,6 @@ https://github.com/VisualAcademy/DotNetNoteV31
 ## ASP.NET Core 5.0 버전의 DotNetNote는 다음 리포지토리에 있습니다.
 https://github.com/VisualAcademy/DotNetNote.V5
 
-
+## ASP.NET Core 6.0 버전의 DotNetNote는 다음 리포지토리에 있습니다.
+https://github.com/VisualAcademy/DotNetNote.V6.0
 

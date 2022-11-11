@@ -1,4 +1,5 @@
-﻿--[4] 게시판(DotNetNote)에 글을 답변: ReplyNote, NotesReply
+﻿-- 답변형 게시판 답변 기능 구현 로직
+--[4] 게시판(DotNetNote)에 글을 답변: ReplyNote, NotesReply
 Create Proc dbo.ReplyNote
     @Name       NVarChar(25), 
     @PostIp     NVarChar(15), 
