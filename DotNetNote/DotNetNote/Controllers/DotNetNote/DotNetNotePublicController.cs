@@ -650,8 +650,5 @@ public class DotNetNotePublicController : Controller
     /// <summary>
     /// (참고) 최근 댓글 리스트 Web API 테스트 페이지
     /// </summary>
-    public IActionResult NoteCommentServiceDemo()
-    {
-        return View();
-    }
+    public IActionResult NoteCommentServiceDemo() => View();
 }
