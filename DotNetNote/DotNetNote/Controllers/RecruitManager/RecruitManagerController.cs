@@ -22,11 +22,9 @@ public class RecruitManagerController : Controller
 
     #region 모집 추가
     [HttpGet]
-    public IActionResult RecruitSettingCreate()
-    {
+    public IActionResult RecruitSettingCreate() =>
         //return View();
-        return View("~/Views/_MiniProjects/RecruitManager/RecruitSettingCreate.cshtml");
-    }
+        View("~/Views/_MiniProjects/RecruitManager/RecruitSettingCreate.cshtml");
 
     [HttpPost]
     public async Task<IActionResult> RecruitSettingCreate(RecruitSetting model)
