@@ -51,10 +51,7 @@ public class GoodsController : Controller
     /// 입력 폼
     /// </summary>
     [HttpGet]
-    public IActionResult Create()
-    {
-        return View();
-    }
+    public IActionResult Create() => View();
 
     /// <summary>
     /// 입력 처리 
