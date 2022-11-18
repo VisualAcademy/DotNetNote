@@ -57,8 +57,5 @@ public class TagHelperDemoController : Controller
     /// <summary>
     /// 마크다운 뷰어
     /// </summary>
-    public IActionResult MarkdownViewerDemo()
-    {
-        return View();
-    }
+    public IActionResult MarkdownViewerDemo() => View();
 }
