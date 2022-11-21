@@ -24,10 +24,7 @@ public class TagHelperDemoController : Controller
     /// <summary>
     /// 커스텀 태그 헬퍼
     /// </summary>
-    public IActionResult EmailLinkDemo()
-    {
-        return View();
-    }
+    public IActionResult EmailLinkDemo() => View();
 
     /// <summary>
     /// 유닉스 시간 변경기 태그 헬퍼 사용 테스트
