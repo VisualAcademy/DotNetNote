@@ -29,10 +29,7 @@ public class TagHelperDemoController : Controller
     /// <summary>
     /// 유닉스 시간 변경기 태그 헬퍼 사용 테스트
     /// </summary>
-    public IActionResult TagHelperDemo()
-    {
-        return View();
-    }
+    public IActionResult TagHelperDemo() => View();
 
     /// <summary>
     /// 페이징 헬퍼
