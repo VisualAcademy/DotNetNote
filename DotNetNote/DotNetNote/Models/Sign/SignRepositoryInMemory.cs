@@ -14,8 +14,5 @@ public class SignRepositoryInMemory : ISignRepository
         return new SignBase { SignId = 1234, Email = email, Name = "홍길동", Username = email };
     }
 
-    public bool IsAuthenticated(SignViewModel model)
-    {
-        return true; 
-    }
+    public bool IsAuthenticated(SignViewModel model) => true;
 }
