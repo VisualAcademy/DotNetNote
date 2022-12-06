@@ -1,9 +1,8 @@
-﻿namespace AttendeeApp.Models
+﻿namespace AttendeeApp.Models;
+
+public interface IAttendeeRepository
 {
-    public interface IAttendeeRepository
-    {
-        List<Attendee> GetAll();
-        void Add(Attendee model);
-        void Delete(Attendee model);
-    }
+    List<Attendee> GetAll();
+    void Add(Attendee model);
+    void Delete(Attendee model);
 }
