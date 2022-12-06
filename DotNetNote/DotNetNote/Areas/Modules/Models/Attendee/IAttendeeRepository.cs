@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace AttendeeApp.Models
+﻿namespace AttendeeApp.Models
 {
     public interface IAttendeeRepository
     {
