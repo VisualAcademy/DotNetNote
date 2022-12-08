@@ -1,10 +1,9 @@
-﻿namespace DotNetNote.Services
+﻿namespace DotNetNote.Services;
+
+public class InfoService : IInfoService
 {
-    public class InfoService : IInfoService
+    public string GetUrl()
     {
-        public string GetUrl()
-        {
-            return "http://www.gilbut.co.kr";
-        }
+        return "http://www.gilbut.co.kr";
     }
 }
