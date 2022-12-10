@@ -2,8 +2,5 @@
 
 public class InfoService : IInfoService
 {
-    public string GetUrl()
-    {
-        return "http://www.gilbut.co.kr";
-    }
+    public string GetUrl() => "http://www.gilbut.co.kr";
 }
