@@ -1,9 +1,10 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using DotNetNoteCore.Services;
+using Microsoft.Extensions.Configuration;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 using System.Threading.Tasks;
 
-namespace DotNetNoteCore.Services
+namespace DotNetNote.Services
 {
     public class EmailManager : IEmailManager
     {
