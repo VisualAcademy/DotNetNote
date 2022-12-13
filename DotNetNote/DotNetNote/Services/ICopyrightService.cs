@@ -1,10 +1,9 @@
-﻿namespace DotNetNote.Services
+﻿namespace DotNetNote.Services;
+
+/// <summary>
+/// 인터페이스
+/// </summary>
+public interface ICopyrightService
 {
-    /// <summary>
-    /// 인터페이스
-    /// </summary>
-    public interface ICopyrightService
-    {
-        string GetCopyrightString();
-    }
+    string GetCopyrightString();
 }
