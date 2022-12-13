@@ -4,10 +4,7 @@ namespace DotNetNote.Services
 {
     public class GuidService : IGuidService
     {
-        public Guid GetGuid()
-        {
-            return Guid.NewGuid(); 
-        }
+        public Guid GetGuid() => Guid.NewGuid();
     }
 
     public interface IGuidService
