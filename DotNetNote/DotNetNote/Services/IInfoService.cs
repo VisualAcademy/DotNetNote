@@ -1,7 +1,6 @@
-﻿namespace DotNetNote.Services
+﻿namespace DotNetNote.Services;
+
+public interface IInfoService
 {
-    public interface IInfoService
-    {
-        string GetUrl();
-    }
+    string GetUrl();
 }
