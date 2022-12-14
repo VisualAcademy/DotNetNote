@@ -1,9 +1,8 @@
 ﻿using System.Threading.Tasks;
 
-namespace DotNetNote.Services
+namespace DotNetNote.Services;
+
+public interface IEmailSender
 {
-    public interface IEmailSender
-    {
-        Task SendEmailAsync(string email, string subject, string message);
-    }
+    Task SendEmailAsync(string email, string subject, string message);
 }
