@@ -1,52 +1,51 @@
 ﻿using System;
 
-namespace DotNetNote.Services
+namespace DotNetNote.Services;
+
+public class GuidService : IGuidService
 {
-    public class GuidService : IGuidService
+    public Guid GetGuid() => Guid.NewGuid();
+}
+
+public interface IGuidService
+{
+    Guid GetGuid();
+}
+
+public interface ITransientGuidService : IGuidService
+{
+
+}
+public interface IScopedGuidService : IGuidService
+{
+
+}
+public interface ISingletonGuidService : IGuidService
+{
+
+}
+
+public class TransientGuidService : GuidServiceBase, ITransientGuidService
+{
+
+}
+public class ScopedGuidService : GuidServiceBase, IScopedGuidService
+{
+
+}
+public class SingletonGuidService : GuidServiceBase, ISingletonGuidService
+{
+
+}
+public class GuidServiceBase : IGuidService
+{
+    private Guid _guid;
+    public GuidServiceBase()
     {
-        public Guid GetGuid() => Guid.NewGuid();
+        _guid = Guid.NewGuid(); // 개체 생성 시점의 Guid값 반환
     }
-
-    public interface IGuidService
+    public Guid GetGuid()
     {
-        Guid GetGuid();
-    }
-
-    public interface ITransientGuidService : IGuidService
-    {
-
-    }
-    public interface IScopedGuidService : IGuidService
-    {
-
-    }
-    public interface ISingletonGuidService : IGuidService
-    {
-
-    }
-
-    public class TransientGuidService : GuidServiceBase, ITransientGuidService
-    {
-
-    }
-    public class ScopedGuidService : GuidServiceBase, IScopedGuidService
-    {
-
-    }
-    public class SingletonGuidService : GuidServiceBase, ISingletonGuidService
-    {
-
-    }
-    public class GuidServiceBase : IGuidService
-    {
-        private Guid _guid;
-        public GuidServiceBase()
-        {
-            _guid = Guid.NewGuid(); // 개체 생성 시점의 Guid값 반환
-        }
-        public Guid GetGuid()
-        {
-            return _guid;
-        }
+        return _guid;
     }
 }
