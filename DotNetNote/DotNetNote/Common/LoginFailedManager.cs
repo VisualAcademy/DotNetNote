@@ -22,10 +22,7 @@ public class LoginFailedManager : ILoginFailedManager
 {
     private ILoginFailedRepository _repo;
 
-    public LoginFailedManager(ILoginFailedRepository repo)
-    {
-        _repo = repo;
-    }
+    public LoginFailedManager(ILoginFailedRepository repo) => _repo = repo;
 
     public void ClearLoginFailed(string username)
     {
