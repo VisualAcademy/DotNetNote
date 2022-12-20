@@ -24,10 +24,7 @@ public class LoginFailedManager : ILoginFailedManager
 
     public LoginFailedManager(ILoginFailedRepository repo) => _repo = repo;
 
-    public void ClearLoginFailed(string username)
-    {
-        _repo.ClearLogin(username);
-    }
+    public void ClearLoginFailed(string username) => _repo.ClearLogin(username);
 
     public bool IsLoginFailed(string username)
     {
