@@ -412,10 +412,7 @@ public class AccountController : Controller
 
     [HttpGet]
     [AllowAnonymous]
-    public IActionResult ResetPasswordConfirmation()
-    {
-        return View();
-    }
+    public IActionResult ResetPasswordConfirmation() => View();
 
 
     [HttpGet]
