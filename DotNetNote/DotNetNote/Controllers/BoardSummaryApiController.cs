@@ -39,10 +39,7 @@ namespace DotNetNote.Controllers
             return lists; 
         }
 
-        public List<BoardSummaryModel> GetByAlias(string alias)
-        {
-            return GetAll().Where(b => b.Alias == alias).ToList(); 
-        }
+        public List<BoardSummaryModel> GetByAlias(string alias) => GetAll().Where(b => b.Alias == alias).ToList();
     }
 
     //[3] Web API
