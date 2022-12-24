@@ -68,10 +68,8 @@ public class Startup
         //[!] Configuration: JSON 파일의 데이터를 POCO 클래스에 주입
         services.Configure<DotNetNoteSettings>(Configuration.GetSection("DotNetNoteSettings"));
 
-
-        ////[!] 디렉터리 브라우징 기능 제공(옵션)
+        ////[!] 디렉터리 브라우징 기능 제공(옵션): 특별한 경우가 아니면 사용 금지 
         //services.AddDirectoryBrowser();
-
 
         #region TodoComponent
         // <TodoComponent>
@@ -85,20 +83,16 @@ public class Startup
         // </TodoComponent> 
         #endregion
 
-
         ////[!] 인 메모리 데이터베이스 사용 사용자 관리
         //services.AddDbContext<AccountContext>(opt => opt.UseInMemoryDatabase("AccountContext"));
 
-
         ////[강의] AspNetCore21_MemberManagement_EF Core로 회원 입출력 기능 구현하기
         //services.AddDbContext<MemberDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-
 
         //// .NET 6 
         //builder.Services.AddIdentity<ApplicationUser, ApplicationRole>(options => options.SignIn.RequireConfirmedAccount = true)
         //    .AddEntityFrameworkStores<ApplicationDbContext>()
         //    .AddDefaultTokenProviders();
-
 
         ////<세션 정보를 SQL Server에 저장하기 위한 절차>
         //services.AddDistributedSqlServerCache(options =>
@@ -137,7 +131,6 @@ public class Startup
                 options.AccessDeniedPath = "/User/Forbidden/";
             })
 
-
         // JWT 토큰 인증 관련 코드 
         .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
         {
@@ -160,7 +153,6 @@ public class Startup
         // JWT 토큰 인증 관련 코드 
         // 의존성 해결: ISignRepository => SignRepositoryInMemory
         services.AddTransient<ISignRepository, SignRepositoryInMemory>();
-
 
         //// _httpContextAccessor.IsAuthenticated 등 사용 
         //services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
@@ -227,8 +219,6 @@ public class Startup
             options.AddPolicy("Administrators", policy => policy.RequireRole("Users").RequireClaim("UserId", Configuration.GetSection("DotNetNoteSettings").GetSection("SiteAdmin").Value));
         });
 
-
-
         #region CORS
         //[CORS] Angular, React 등의 SPA를 위한 CORS(Cross Origin Resource Sharing) 설정 1/2
         services.AddCors(options =>
@@ -266,8 +256,6 @@ public class Startup
         //});
         #endregion
 
-
-
         //services.Configure<CookiePolicyOptions>(options =>
         //{
         //    // This lambda determines whether user consent for non-essential cookies is needed for a given request.
@@ -277,7 +265,6 @@ public class Startup
 
         services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
         //services.AddDefaultIdentity<IdentityUser>().AddDefaultUI(UIFramework.Bootstrap4).AddEntityFrameworkStores<ApplicationDbContext>();
-
 
         // Identity 옵션 설정
         services.Configure<IdentityOptions>(options =>
@@ -294,7 +281,6 @@ public class Startup
             // 사용자 설정
             options.User.RequireUniqueEmail = true;
         });
-
 
         // ============================================================================== // 
         // 새로운 DbContext 추가
@@ -474,18 +460,13 @@ public class Startup
 
         app.UseRouting();
 
-
-
         #region Azure Web App 고유 경로 요청시 www.dotnetnote.com 경로로 영구 이동
         // Azure Web App 고유 경로 요청시 www.dotnetnote.com 경로로 영구 이동 
         app.UseRewriter(new RewriteOptions().Add(new RedirectAzureWebsitesRule()).AddRedirectToWwwPermanent()); 
         #endregion
 
-
-
         app.UseAuthentication();
         app.UseAuthorization();
-
 
         ////[!] 기본 제공 로깅
         ////loggerFactory.AddConsole(Configuration.GetSection("Logging"));
@@ -508,7 +489,6 @@ public class Startup
         //    //app.UseHsts();
         //}
 
-
         // <TodoComponent>
         //[!] IServiceProvider를 사용하여 임시 데이터 저장하기
         var todo = serviceProvider.GetService<TodoContext>();
@@ -517,12 +497,10 @@ public class Startup
         todo.SaveChanges();
         // </TodoComponent>
 
-
         #region [2] TempData와 Session 개체 사용 
         //[DNN] TempData 개체 사용
         app.UseSession(); //[!] 세션 개체 사용, 반드시 UseMvc() 이전에 호출되어야 함 
         #endregion
-
 
         //// 미들웨어 추가
 
