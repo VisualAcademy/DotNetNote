@@ -14,11 +14,9 @@ public class ServicesController : ControllerBase
     //[HttpGet("{id=1000}")] // 기본 값
     [HttpGet("{id:int}")] // 제약조건
     //public string Get([FromRoute]int id, [FromQuery]string query)
-    public IActionResult Get([FromRoute] int id, [FromQuery] string query)
-    {
+    public IActionResult Get([FromRoute] int id, [FromQuery] string query) =>
         //return $"넘어온 값: {id}, {query}";
-        return Ok(new Dto { Id = id, Text = $"값: {id}" });
-    }
+        Ok(new Dto { Id = id, Text = $"값: {id}" });
 
     [HttpPost]
     //public void Post([FromBody]Dto value)
