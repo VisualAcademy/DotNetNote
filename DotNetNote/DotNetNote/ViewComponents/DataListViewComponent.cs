@@ -11,11 +11,14 @@ namespace DotNetNote.ViewComponents
             return View(data);
         }
 
-        private Task<IEnumerable<DataModel>> GetByNameAsync(string name)
-        {
-            return Task.FromResult(GetByName(name));
-        }
+        /// <summary>
+        /// 비동기 메서드 
+        /// </summary>
+        private Task<IEnumerable<DataModel>> GetByNameAsync(string name) => Task.FromResult(GetByName(name));
 
+        /// <summary>
+        /// 동기 메서드
+        /// </summary>
         private IEnumerable<DataModel> GetByName(string name)
         {
             DataService service = new DataService();
