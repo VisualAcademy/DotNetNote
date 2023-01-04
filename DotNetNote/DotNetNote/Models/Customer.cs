@@ -1,4 +1,4 @@
-﻿namespace AngularNote.Models
+﻿namespace DotNetNote.Models
 {
     public class Customer
     {

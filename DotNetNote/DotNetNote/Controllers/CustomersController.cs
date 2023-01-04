@@ -1,5 +1,4 @@
-﻿using AngularNote.Models;
-using Microsoft.AspNetCore.Cors;
+﻿using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DotNetNote.Controllers;
