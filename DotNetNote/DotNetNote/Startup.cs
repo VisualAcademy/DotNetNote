@@ -124,7 +124,7 @@ public class Startup
         ////[1] ASP.NET Core 쿠키 인증: 단순형 => 학습은 쿠키 인증으로 시작하되, 실제 사용은 ASP.NET Core Identity를 권장, 이후로의 모든 강의는 Identity 사용
         //services.AddAuthentication("Cookies").AddCookie();
         // 쿠키 인증 적용 최소한의 코드 
-        services.AddAuthentication("Cookies")
+        services.AddAuthentication("Cookies") // CookieAuthenticationDefaults.AuthenticationScheme
             .AddCookie(options =>
             {
                 options.LoginPath = "/User/Login/";
