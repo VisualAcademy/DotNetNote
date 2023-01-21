@@ -173,10 +173,7 @@ public class BlobStorageManager : IStorageManager
         }
     }
 
-    public string GetFolderPath(string ownerType, long ownerID, string fileType)
-    {
-        return ownerType + "/" + ownerID + "/" + fileType;
-    }
+    public string GetFolderPath(string ownerType, long ownerID, string fileType) => ownerType + "/" + ownerID + "/" + fileType;
 
     public string GetFolderPath(string ownerType, string ownerID, string fileType)
     {
