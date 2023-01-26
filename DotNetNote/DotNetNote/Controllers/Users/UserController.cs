@@ -142,7 +142,7 @@ public class UserController : Controller
                     IsPersistent = true
                 };
 
-                //[3] ClaimsPrincipal(identity)
+                //[3] ClaimsPrincipal(identity) => 뷰 페이지에서 @User 개체가 ClaimsPrincipal 개체를 담고 있음
                 var principal = new ClaimsPrincipal(ci); 
 
                 //[4] 로그인 처리 완료 
