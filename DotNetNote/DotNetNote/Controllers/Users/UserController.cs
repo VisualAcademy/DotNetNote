@@ -163,7 +163,8 @@ public class UserController : Controller
                 //HttpContext.Session.SetString("Username", model.UserId);
                 #endregion
 
-                return LocalRedirect("/User/Index");
+                // 반드시 LocalRedire() 메서드 사용
+                return LocalRedirect("/User/Index"); // (model.ReturnUrl)
             }
             #endregion
         }
@@ -182,6 +183,7 @@ public class UserController : Controller
         //await HttpContext.SignOutAsync("Cookies"); 
         #endregion
 
+        //[!] 로그아웃 공식 코드 
         await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme); // 쿠키 인증 로그아웃
         //await HttpContext.SignOutAsync(OpenIdConnectDefaults.AuthenticationScheme); // 토큰 인증 로그아웃 
         //HttpContext.Session.Clear(); // 세션 인증 로그아웃
