@@ -104,13 +104,16 @@ public class UserController : Controller
                 .EncryptPassword(model.Password);
             if (_repository.IsCorrectUser(model.UserId, encryptPassword))
             {
+
+                #region 로그인 처리
+                //[1] List<Claim>
                 //[!] 인증 부여: 인증된 사용자의 주요 정보(Name, Role, ...)를 기록
                 var claims = new List<Claim>()
                 {
                     // 로그인 아이디 지정
                     new Claim("UserId", model.UserId),
 
-                    new Claim(ClaimTypes.NameIdentifier, model.UserId),
+                    new Claim(ClaimTypes.NameIdentifier, model.UserId), // 이 속성이 UserId 메인 속성
 
                     new Claim(ClaimTypes.Name, model.UserId), 
                     //new Claim(ClaimTypes.Email, model.UserId), //
@@ -120,6 +123,7 @@ public class UserController : Controller
                     new Claim(ClaimTypes.Role, "Users") // 추가 정보 기록
                 };
 
+                //[2] ClaimsIdentity 
                 //var ci = new ClaimsIdentity(claims, (new Dul.Security.CryptorEngine()).EncryptPassword(model.Password));
                 var ci = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
@@ -134,11 +138,18 @@ public class UserController : Controller
                     IssuedUtc = DateTimeOffset.UtcNow,
                     IsPersistent = true
                 };
+
+                //[3] ClaimsPrincipal(identity)
+                var principal = new ClaimsPrincipal(ci); 
+
+                //[4] 로그인 처리 완료 
                 //await HttpContext.SignInAsync("Cookies", new ClaimsPrincipal(ci), new AuthenticationProperties { IsPersistent = true });
                 //await HttpContext.SignInAsync("Cookies", new ClaimsPrincipal(ci), authenticationProperties);
                 //await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(ci)); // 기본
-                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme
-                    , new ClaimsPrincipal(ci), authenticationProperties); // 옵션
+                await HttpContext.SignInAsync(
+                    CookieAuthenticationDefaults.AuthenticationScheme,
+                    principal,
+                    authenticationProperties); // 옵션
 
                 ////[참고] ASP.NET Core Identity에서 로그인하는 모양
                 //var identity = new ClaimsIdentity("Cookies");
@@ -150,6 +161,7 @@ public class UserController : Controller
                 // 추가: 세션에 로그인 사용자 정보 저장
                 // 세션 인증 로그인: 인증 방식으로 세션 사용 금지
                 //HttpContext.Session.SetString("Username", model.UserId);
+                #endregion
 
                 return LocalRedirect("/User/Index");
             }
