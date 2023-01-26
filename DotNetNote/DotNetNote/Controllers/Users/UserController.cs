@@ -12,6 +12,9 @@ using System.Threading.Tasks;
 
 namespace DotNetNote.Controllers;
 
+/// <summary>
+/// 쿠키 인증(Identity Cookie)을 사용한 회원 가입, 로그인, 로그아웃, 로그인 정보 표시 
+/// </summary>
 public class UserController : Controller
 {
     //[User][6][1]
