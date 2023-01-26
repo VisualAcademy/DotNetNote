@@ -465,6 +465,7 @@ public class Startup
         app.UseRewriter(new RewriteOptions().Add(new RedirectAzureWebsitesRule()).AddRedirectToWwwPermanent()); 
         #endregion
 
+        // 쿠키 인증 관련 미들웨어 2개 추가 
         app.UseAuthentication();
         app.UseAuthorization();
 
