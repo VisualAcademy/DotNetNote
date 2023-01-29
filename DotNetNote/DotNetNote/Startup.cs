@@ -42,7 +42,7 @@ public class Startup
         services.AddDbContext<TodoApi.Models.TodoContext>(opt => opt.UseInMemoryDatabase("TodoList"));
 
         //services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-        services.AddHttpContextAccessor(); //[1]
+        services.AddHttpContextAccessor(); //[1] 뷰 페이지 이외에서 User 개체에 접근하려면 HCA 개체 주입
 
         //[!] MVC 사용을 위한 서비스 등록: 가장 기본적인 확장 메서드
         services.AddControllersWithViews();     //[1] MVC + Web API 사용 가능
