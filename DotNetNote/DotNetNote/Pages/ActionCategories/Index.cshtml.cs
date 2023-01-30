@@ -14,8 +14,5 @@ public class IndexModel : PageModel
 
     public IList<ActionCategory> ActionCategory { get;set; }
 
-    public async Task OnGetAsync()
-    {
-        ActionCategory = await _context.ActionCategories.ToListAsync();
-    }
+    public async Task OnGetAsync() => ActionCategory = await _context.ActionCategories.ToListAsync();
 }
