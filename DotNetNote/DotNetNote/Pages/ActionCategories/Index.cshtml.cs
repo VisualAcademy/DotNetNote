@@ -10,10 +10,7 @@ public class IndexModel : PageModel
 {
     private readonly Acts.Models.ActContext _context;
 
-    public IndexModel(Acts.Models.ActContext context)
-    {
-        _context = context;
-    }
+    public IndexModel(Acts.Models.ActContext context) => _context = context;
 
     public IList<ActionCategory> ActionCategory { get;set; }
 
