@@ -34,10 +34,7 @@ public class TagHelperDemoController : Controller
     /// <summary>
     /// ÆäÀÌÂ¡ ÇïÆÛ
     /// </summary>
-    public IActionResult PagingHelperDemo()
-    {
-        return View();
-    }
+    public IActionResult PagingHelperDemo() => View();
 
     /// <summary>
     /// Cache ÅÂ±× ÇïÆÛ 
