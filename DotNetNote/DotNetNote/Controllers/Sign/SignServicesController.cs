@@ -69,6 +69,7 @@ public class SignServicesController : Controller
         });
     }
 
+    // https://www.memoengine.com/blog/aspnet-core-jwt-%ED%86%A0%ED%81%B0-%EC%83%9D%EC%84%B1-%EA%B5%90%EA%B3%BC%EC%84%9C-%EC%BD%94%EB%93%9C/
     /// <summary>
     /// 토큰 생성: JWT 토큰 생성 교과서 코드
     /// TODO: Claim 추가 및  JwtSecurityToken에 issuer 등의 추가 매개 변수 지정
