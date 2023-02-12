@@ -39,10 +39,7 @@ public class TagHelperDemoController : Controller
     /// <summary>
     /// Cache ÅÂ±× ÇïÆÛ 
     /// </summary>
-    public IActionResult CacheDemo()
-    {
-        return View();
-    }
+    public IActionResult CacheDemo() => View();
 
 
     /// <summary>
