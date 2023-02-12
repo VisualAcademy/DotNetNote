@@ -426,10 +426,7 @@ public class ManageController : Controller
     }
 
     [HttpGet]
-    public IActionResult ResetAuthenticatorWarning()
-    {
-        return View(nameof(ResetAuthenticator));
-    }
+    public IActionResult ResetAuthenticatorWarning() => View(nameof(ResetAuthenticator));
 
     [HttpPost]
     [ValidateAntiForgeryToken]
