@@ -10,8 +10,8 @@ namespace DotNetNote.Controllers
         // Maxim 관련 데이터를 관리하기 위함입니다.
         private MaximServiceRepository _repo;
 
-        // MaximController 생성자에서 MaximServiceRepository 객체를 받아 _repo 필드에 할당합니다.
-        // 이로써, MaximController 객체가 생성될 때 MaximServiceRepository 객체가 함께 주입됩니다.
+        // MaximController 생성자에서 MaximServiceRepository 개체를 받아 _repo 필드에 할당합니다.
+        // 이로써, MaximController 개체가 생성될 때 MaximServiceRepository 개체가 함께 주입됩니다.
         public MaximController(MaximServiceRepository maximService) => _repo = maximService;
 
         // Index 메서드는 HTTP GET 요청에 응답하여 View를 반환합니다.
