@@ -107,3 +107,17 @@
 
 @*Category 기본값은 Free(자유 게시판)로 설정*@
 <input type="hidden" asp-for="Category" value="Free" />
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('form').submit(function () {
+                $(this).find(':input[type=submit]').prop('disabled', true);
+            });
+        });
+    </script>
+}
