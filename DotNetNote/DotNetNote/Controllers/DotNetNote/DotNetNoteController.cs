@@ -216,6 +216,7 @@ public class DotNetNoteController : Controller
     }
     #endregion
 
+    #region 파일 강제 다운로드
     /// <summary>
     /// 게시판 파일 강제 다운로드 기능(/BoardDown/:Id)
     /// </summary>
@@ -243,6 +244,7 @@ public class DotNetNoteController : Controller
             return null;
         }
     }
+    #endregion
 
     #region Details - 게시판의 상세 보기 페이지(Details, BoardView)
     /// <summary>
