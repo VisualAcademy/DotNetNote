@@ -111,6 +111,10 @@
         <a asp-action="Pinned" asp-route-id="@Model.Id" class="btn btn-danger">
             공지로 올리기
         </a>
+
+        <button id="adminDeleteBtn" data-id="@Model.Id" class="btn btn-warning">
+            관리자 삭제 데모용
+        </button>
     }
     <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-default">
         삭제
@@ -137,4 +141,27 @@
             });
         </script>
     }
+
+    <script>
+        $(function () {
+            $("#adminDeleteBtn").click(function () {
+                var postId = $(this).data("id");
+
+                $.ajax({
+                    url: '/api/DotNetNoteService/Delete/' + postId, // URL은 동일하게 유지
+                    method: 'POST', // DELETE 대신 POST를 사용
+                    data: JSON.stringify({ password: '@ViewBag.AdminDeletePassword' }), // JSON 문자열로 변환
+                    contentType: 'application/json', // Content-Type을 지정
+                    success: function () {
+                        // 삭제 성공 후 Index 페이지로 리디렉션
+                        window.location.href = '/DotNetNote/Index';
+                    },
+                    error: function (err) {
+                        // 오류 처리
+                        alert("삭제 중 오류가 발생했습니다.");
+                    }
+                });
+            });
+        });
+    </script>
 }

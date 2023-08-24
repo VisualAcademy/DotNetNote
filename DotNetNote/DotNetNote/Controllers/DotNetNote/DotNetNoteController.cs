@@ -311,6 +311,8 @@ public class DotNetNoteController : Controller
         vm.BoardId = note.Id;
         ViewBag.CommentListAndId = vm;
 
+        ViewBag.AdminDeletePassword = note.Password; // 단지 테스트용...
+
         return View(note);
     }
     #endregion
