@@ -21,11 +21,9 @@ public class SublocationsController : ControllerBase
     public async Task<ActionResult<IEnumerable<Sublocation>>> GetSublocations() => await _context.Sublocations.ToListAsync();
 
     [HttpGet("Locations/{parentId}")]
-    public async Task<ActionResult<IEnumerable<Sublocation>>> GetSublocations(int parentId)
-    {
+    public async Task<ActionResult<IEnumerable<Sublocation>>> GetSublocations(int parentId) =>
         // 특정 Locations에 해당하는 Sublocations만 읽어오기 
-        return await _context.Sublocations.Where(s => s.LocationId == parentId).ToListAsync();
-    }
+        await _context.Sublocations.Where(s => s.LocationId == parentId).ToListAsync();
 
     // GET: api/Sublocations/5
     [HttpGet("{id}")]
