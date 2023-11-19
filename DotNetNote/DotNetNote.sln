@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNetNote.Models", "DotNet
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "DotNetNote.SqlServer", "DotNetNote.SqlServer\DotNetNote.SqlServer.sqlproj", "{F0C55BF3-07C9-4DFC-9A49-23F33273AF5A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNetNote.V70", "DotNetNote.V70\DotNetNote.V70.csproj", "{939CBB41-096B-40E8-B34E-3443745AA71D}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNetNote", "DotNetNote\DotNetNote.csproj", "{D769F0BF-C5CF-4F24-A09B-8C1486974167}"
 EndProject
 Global
@@ -27,10 +25,6 @@ Global
 		{F0C55BF3-07C9-4DFC-9A49-23F33273AF5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F0C55BF3-07C9-4DFC-9A49-23F33273AF5A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F0C55BF3-07C9-4DFC-9A49-23F33273AF5A}.Release|Any CPU.Deploy.0 = Release|Any CPU
-		{939CBB41-096B-40E8-B34E-3443745AA71D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{939CBB41-096B-40E8-B34E-3443745AA71D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{939CBB41-096B-40E8-B34E-3443745AA71D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{939CBB41-096B-40E8-B34E-3443745AA71D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D769F0BF-C5CF-4F24-A09B-8C1486974167}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D769F0BF-C5CF-4F24-A09B-8C1486974167}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D769F0BF-C5CF-4F24-A09B-8C1486974167}.Release|Any CPU.ActiveCfg = Release|Any CPU
