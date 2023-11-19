@@ -27,9 +27,26 @@ using System.Text;
 var builder = WebApplication.CreateBuilder(args);
 
 // ConfigureServices
+builder.Services.AddDbContext<DotNetNote.Components.TodoContext>(options =>
+    options.UseInMemoryDatabase("TodoList"));
 ConfigureServices(builder.Services, builder.Configuration);
 
 var app = builder.Build();
+
+// <TodoComponent>
+using (var scope = app.Services.CreateScope())
+{
+    var scopedServices = scope.ServiceProvider;
+    var todo = scopedServices.GetRequiredService<DotNetNote.Components.TodoContext>();
+    // 여기서 todoContext 사용
+    if (todo != null)
+    {
+        todo.Todos.Add(new DotNetNote.Components.Todo { Id = -2, Title = "Angular", IsDone = false });
+        todo.Todos.Add(new DotNetNote.Components.Todo { Id = -1, Title = "ASP.NET Core", IsDone = true });
+        todo.SaveChanges();
+    }
+}
+// </TodoComponent>
 
 // Configure
 Configure(app, app.Environment, app.Services);
@@ -38,7 +55,7 @@ app.Run();
 
 void ConfigureServices(IServiceCollection services, IConfiguration Configuration)
 {
-    services.AddDbContext<TodoApi.Models.TodoContext>(opt => opt.UseInMemoryDatabase("TodoList"));
+    //services.AddDbContext<DotNetNote.Components.TodoContext>(opt => opt.UseInMemoryDatabase("TodoList"));
     services.AddHttpContextAccessor();
     services.AddControllersWithViews();
     services.AddRazorPages();
@@ -125,16 +142,6 @@ void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvide
         endpoints.MapRazorPages();
         endpoints.MapBlazorHub();
     });
-
-    //// <TodoComponent>
-    //var todo = serviceProvider.GetService<TodoApi.Models.TodoContext>();
-    //if (todo != null)
-    //{
-    //    todo.Todos.Add(new TodoApi.Models.Todo { Id = -2, Title = "Angular", IsDone = false });
-    //    todo.Todos.Add(new TodoApi.Models.Todo { Id = -1, Title = "ASP.NET Core", IsDone = true });
-    //    todo.SaveChanges();
-    //}
-    //// </TodoComponent>
 }
 
 void DependencyInjectionContainer(IServiceCollection services, IConfiguration Configuration)
@@ -180,7 +187,9 @@ void DependencyInjectionContainer(IServiceCollection services, IConfiguration Co
     services.AddTransient<DotNetSale.Models.ICategoryRepository, DotNetSale.Models.CategoryRepositoryInMemory>();
     services.AddTransient<IGoodsRepository, GoodsRepository>();
     services.AddSingleton<ICompanyRepository>(new CompanyRepositoryAdo(Configuration["ConnectionStrings:DefaultConnection"]));
-    //services.AddTransient<IMyNotificationRepository>(new MyNotificationRepository(Configuration.GetConnectionString("DefaultConnection")));
+    services.AddTransient<IMyNotificationRepository>(
+        serviceProvider => new MyNotificationRepository(Configuration.GetConnectionString("DefaultConnection"))
+    );
     services.AddTransient<IUrlRepository, UrlRepository>();
     services.AddTransient<IBlogService, FileBlogService>();
 }
