@@ -1,0 +1,57 @@
+﻿/* 페이저 관련 스타일 */
+.mePager {
+    width: 100%;
+    height: 36px;
+    margin-top: 40px;
+    text-align: center;
+}
+
+    .mePager a {
+        display: inline-block;
+        width: 36px;
+        height: 36px;
+        border: 1px solid #b4b4b4;
+        font-size: 13px;
+        color: #666;
+        text-align: center;
+        line-height: 36px;
+    }
+
+    .mePager button {
+        display: inline-block;
+        width: 36px;
+        height: 36px;
+        border: 1px solid #b4b4b4;
+        font-size: 11px;
+        color: #666;
+        text-align: center;
+        line-height: 36px;
+        background-color: whitesmoke;
+    }
+
+    .mePager a.first {
+        font-size: 8pt;
+        vertical-align: top;
+    }
+
+
+    .mePager a.last {
+        font-size: 8pt;
+        vertical-align: top;
+    }
+
+    .mePager a.prev {
+        font-size: 8pt;
+        vertical-align: top;
+    }
+
+    .mePager a.next {
+        font-size: 8pt;
+        vertical-align: top;
+    }
+
+    .mePager a.on {
+        background: #333;
+        border-color: #333;
+        color: #fff
+    }

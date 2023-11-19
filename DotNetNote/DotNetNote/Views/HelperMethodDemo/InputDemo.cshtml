@@ -1,0 +1,24 @@
+﻿@{ 
+    //Layout = null;
+}
+
+<h3>텍스트 박스</h3>
+@Html.TextBox("txtInput")
+
+<h3>비밀 번호</h3>
+@Html.Password("txtPassword")
+
+<h3>텍스트 영역</h3>
+@Html.TextArea("txtContent", "값", 2, 20, null)
+
+<h3>체크 박스</h3>
+@Html.CheckBox("chkSelect", false)
+
+<h3>라디오 버튼</h3>
+@Html.RadioButton("optGender", "M", true)<span>남</span>
+@Html.RadioButton("optGender", "F", false)<span>여</span>
+
+<h3>히든 필드</h3>
+@Html.Hidden("txtSecurity", "숨김 필드")
+
+

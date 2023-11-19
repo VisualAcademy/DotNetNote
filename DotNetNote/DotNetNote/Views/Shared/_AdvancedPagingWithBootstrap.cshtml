@@ -1,0 +1,172 @@
+﻿@using DotNetNote.Models
+@using Dul.Web
+
+@model PagerBase
+
+@{
+    string Url = Model.Url;
+    int RecordCount = Model.RecordCount;
+    int PageSize = Model.PageSize;
+    //int PageCount = ((RecordCount - 1) / PageSize) + 1;
+    int PageCount = Convert.ToInt32(System.Math.Ceiling(RecordCount / (double)PageSize));
+    int PageNumber = Model.PageNumber;
+    int PagerButtonCount = Model.PagerButtonCount;
+    bool SearchMode = Model.SearchMode;
+    string SearchField = Model.SearchField;
+    string SearchQuery = Model.SearchQuery;
+}
+<ul class="pagination pagination-sm">
+    @if (PageNumber == 1)
+    {
+        <li>
+            <a href="#" class="first">
+                처음
+            </a>
+        </li>
+    }
+    else
+    {
+        // 검색 모드이면 추가적으로 SearchField와 SearchQuery를 전송함
+        if (SearchMode)
+        {
+            <li>
+                <a href="/@Url?Page=1&SearchField=@SearchField&SearchQuery=@SearchQuery" class="first">
+                    처음
+                </a>
+            </li>
+        }
+        else
+        {
+            <li>
+                <a href="/@Url?Page=1" class="first">
+                    처음
+                </a>
+            </li>
+        }
+    }
+
+    @if (PageNumber > PagerButtonCount)
+    {
+        if (SearchMode)
+        {
+            <li>
+                <a href="/@Url?Page=@(((PageNumber - 1) / (int)PagerButtonCount) * PagerButtonCount)&SearchField=@SearchField&SearchQuery=@SearchQuery" class="prev">
+                    이전
+                </a>
+            </li>
+        }
+        else
+        {
+            <li>
+                <a href="/@Url?Page=@(((PageNumber - 1) / (int)PagerButtonCount) * PagerButtonCount)" class="prev">
+                    이전
+                </a>
+            </li>
+        }
+    }
+    else
+    {
+        <li>
+            <a href="#" class="prev">
+                이전
+            </a>
+        </li>
+    }
+
+    @{
+        int i = 0;
+    }
+    @for (i = (((PageNumber - 1) / (int)PagerButtonCount) * PagerButtonCount + 1); i <= ((((PageNumber - 1) / (int)PagerButtonCount) + 1) * PagerButtonCount); i++)
+    {
+        if (i > PageCount)
+        {
+            break; // 페이지 수보다 크면 종료
+        }
+
+        // 현재 보고 있는 페이지면 링크 제거
+        if (i == PageNumber)
+        {
+            <li class="active">
+                <a href="#">
+                    @i
+                </a>
+            </li>
+        }
+        else
+        {
+            if (SearchMode)
+            {
+                <li>
+                    <a href="/@Url?Page=@i&SearchField=@SearchField&SearchQuery=@SearchQuery">
+                        @i
+                    </a>
+                </li>
+            }
+            else
+            {
+                <li>
+                    <a href="/@Url?Page=@i">
+                        @i
+                    </a>
+                </li>
+            }
+        }
+    }
+
+    @*다음 링크*@
+    @if (i <= PageCount)
+    {
+        if (SearchMode)
+        {
+            <li>
+                <a href="/@Url?Page=@(((PageNumber - 1) / (int)PagerButtonCount) * PagerButtonCount + (PagerButtonCount + 1))&SearchField=@SearchField&SearchQuery=@SearchQuery" class="next">
+                    다음
+                </a>
+            </li>
+        }
+        else
+        {
+            <li>
+                <a href="/@Url?Page=@(((PageNumber - 1) / (int)PagerButtonCount) * PagerButtonCount + (PagerButtonCount + 1))" class="next">
+                    다음
+                </a>
+            </li>
+        }
+    }
+    else
+    {
+        <li>
+            <a href="#" class="next">
+                다음
+            </a>
+        </li>
+    }
+
+    @if (i < PageCount)
+    {
+        if (SearchMode)
+        {
+            <li>
+                <a href="/@Url?Page=@PageCount&SearchField=@SearchField&SearchQuery=@SearchQuery" class="last">
+                    마지막
+                </a>
+            </li>
+        }
+        else
+        {
+            <li>
+                <a href="/@Url?Page=@PageCount" class="last">
+                    마지막
+                </a>
+            </li>
+        }
+    }
+    else
+    {
+        <li>
+            <a href="#" class="last">
+                마지막
+            </a>
+        </li>
+    }
+</ul>

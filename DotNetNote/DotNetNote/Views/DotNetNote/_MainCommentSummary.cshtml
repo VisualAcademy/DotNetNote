@@ -1,0 +1,24 @@
+﻿@model List<NoteComment>
+
+@if (Model != null && Model.Count > 0)
+{
+    @foreach (var m in Model)
+    {
+        <div class="post_item">
+            <div class="post_item_text">
+                <span class="post_date">@m.PostDate.ToString("yyyy-MM-dd")</span>
+                <span class="post_title">
+                    <a href="/DotNetNote/Details/@m.BoardId">
+                        @Dul.StringLibrary.CutStringUnicode(@m.Opinion, 33)
+                    </a>
+                </span>
+            </div>
+        </div>
+    }
+}
+else
+{
+    <div class="text-center">
+        항목이 없습니다.
+    </div>
+}

@@ -1,0 +1,17 @@
+﻿@model Grade
+
+<h2>Grade</h2>
+
+시험 이름: @Model.Exam.Name
+
+<br />
+
+총 문제 수: @Model.Exam.Questions.Count
+<br />
+점수: @Model.Score / @Model.Exam.TotalPoints
+<br />
+
+@foreach (var question in Model.Exam.Questions)
+{
+    await Html.RenderPartialAsync("_Question", question);
+}

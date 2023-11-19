@@ -1,0 +1,140 @@
+﻿@using DotNetNote.Models
+@using Dul.Web
+
+@model PagerBase
+
+@{
+    string Url = Model.Url;
+    int RecordCount = Model.RecordCount;
+    int PageSize = Model.PageSize;
+    int PageCount = ((RecordCount - 1) / PageSize) + 1;
+    int PageNumber = Model.PageNumber;
+    int PagerButtonCount = Model.PagerButtonCount;
+    bool SearchMode = Model.SearchMode;
+    string SearchFiled = Model.SearchField;
+    string SearchQuery = Model.SearchQuery;
+}
+<div class="mePager">
+    @if (PageNumber == 1)
+    {
+        <a href="#" class="first">
+            처음
+        </a>
+    }
+    else
+    {
+        // 검색 모드이면 추가적으로 SearchField와 SearchQuery를 전송함
+        if (SearchMode)
+        {
+            <a href="/@Url?Page=1&SearchField=@SearchFiled&SearchQuery=@SearchQuery" class="first">
+                처음
+            </a>
+        }
+        else
+        {
+            <a href="/@Url?Page=1" class="first">
+                처음
+            </a>
+        }
+    }
+
+    @if (PageNumber > PagerButtonCount)
+    {
+        if (SearchMode)
+        {
+            <a href="/@Url?Page=@(((PageNumber - 1) / (int)PagerButtonCount) * PagerButtonCount)&SearchField=@SearchFiled&SearchQuery=@SearchQuery" class="prev">
+                이전
+            </a>
+        }
+        else
+        {
+            <a href="/@Url?Page=@(((PageNumber - 1) / (int)PagerButtonCount) * PagerButtonCount)" class="prev">
+                이전
+            </a>
+        }
+    }
+    else
+    {
+        <a href="#" class="prev">
+            이전
+        </a>
+    }
+
+    @{
+        int i = 0;
+    }
+    @for (i = (((PageNumber - 1) / (int)PagerButtonCount) * PagerButtonCount + 1); i <= ((((PageNumber - 1) / (int)PagerButtonCount) + 1) * PagerButtonCount); i++)
+    {
+        if (i > PageCount)
+        {
+            break; // 페이지 수보다 크면 종료
+        }
+
+        // 현재 보고 있는 페이지면 링크 제거
+        if (i == PageNumber)
+        {
+            <a href="#" class="on">
+                @i
+            </a>
+        }
+        else
+        {
+            if (SearchMode)
+            {
+                <a href="/@Url?Page=@i&SearchField=@SearchFiled&SearchQuery=@SearchQuery">
+                    @i
+                </a>
+            }
+            else
+            {
+                <a href="/@Url?Page=@i">
+                    @i
+                </a>
+            }
+        }
+    }
+
+    @if (i <= PageCount)
+    {
+        if (SearchMode)
+        {
+            <a href="/@Url?Page=@(((PageNumber - 1) / (int)PagerButtonCount) * PagerButtonCount + (PagerButtonCount + 1))&SearchField=@SearchFiled&SearchQuery=@SearchQuery" class="next">
+                다음
+            </a>
+        }
+        else
+        {
+            <a href="/@Url?Page=@(((PageNumber - 1) / (int)PagerButtonCount) * PagerButtonCount + (PagerButtonCount + 1))" class="next">
+                다음
+            </a>
+        }
+    }
+    else
+    {
+        <a href="#" class="next">
+            다음
+        </a>
+    }
+
+    @if (i <= PageCount)
+    {
+        if (SearchMode)
+        {
+            <a href="/@Url?Page=@PageCount&SearchField=@SearchFiled&SearchQuery=@SearchQuery" class="last">
+                마지막
+            </a>
+        }
+        else
+        {
+            <a href="/@Url?Page=@PageCount" class="last">
+                마지막
+            </a>
+        }
+    }
+    else
+    {
+        <a href="#" class="last">
+            마지막
+        </a>
+    }
+</div>

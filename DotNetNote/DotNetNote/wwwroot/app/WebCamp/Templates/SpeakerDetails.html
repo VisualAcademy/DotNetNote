@@ -1,0 +1,31 @@
+﻿<h2>{{ title }} <span class="glyphicon glyphicon-thumbs-up"></span></h2>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-2 col-xs-3">
+            <img src="http://placeimg.com/100/100/any" />
+        </div>
+        <div class="col-md-10 col-xs-9">
+            <h3>{{ speakers[id].name }}</h3>
+            <h4>{{ speakers[id].title }}</h4>
+            <p>{{ speakers[id].description }}</p>
+        </div>
+    </div>
+    <div class="row">
+        <ul class="pager">
+            <li>
+                <a href="#/SpeakerDetails/{{ prev }}" 
+                   class="btn btn-lg btn-left">이전</a>
+            </li>
+            <li>
+                <a href="#/SpeakerDetails/{{ next }}"
+                   class="btn btn-lg btn-right">다음</a>
+            </li>
+        </ul>
+    </div>
+    <div class="row">
+        <a href="#SpeakerList" class="btn btn-info btn-lg btn-block">
+            &laquo; 스피커 리스트
+        </a>
+    </div>
+</div>

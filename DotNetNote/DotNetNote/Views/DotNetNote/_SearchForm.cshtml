@@ -1,0 +1,13 @@
+﻿
+<form asp-controller="DotNetNote" asp-action="Index" method="get">
+    <select name="SearchField" id="SearchField" class="form-control"
+            style="width:80px;display:inline-block;">
+        <option value="Name">이름</option>
+        <option value="Title">제목</option>
+        <option value="Content">내용</option>
+    </select>
+    <input type="text" name="SearchQuery" id="SearchQuery" value=""
+           class="form-control" style="width:200px;display:inline-block;" />
+    <input type="submit" name="btnSearch" value="검 색"
+           class="form-control" style="width:100px;display:inline-block;" />
+</form>

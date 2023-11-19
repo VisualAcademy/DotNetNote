@@ -1,0 +1,14 @@
+﻿@using DotNetNote.Models.Ideas
+
+@model List<Idea>
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<ul>
+    @foreach (var idea in Model)
+    {
+        <li>@idea.Id  - @idea.Note</li>
+    }
+</ul>

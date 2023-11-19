@@ -1,0 +1,19 @@
+﻿@using DotNetNote.Models.Ideas
+
+@*//[6] ASP.NET 뷰 페이지*@
+@model List<Idea>
+
+<h1>아이디어 관리자</h1>
+<ul>
+    @foreach (var idea in Model)
+    {
+        <li>
+            @idea.Id - @idea.Note
+        </li>
+    }
+</ul>
+
+<form action="/Idea/Index" method="post">
+    <input type="text" name="Note" />
+    <input type="submit" value="아이디어 저장" />
+</form>

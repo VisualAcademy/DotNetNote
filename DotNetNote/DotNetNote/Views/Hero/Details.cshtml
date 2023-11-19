@@ -1,0 +1,39 @@
+﻿@{
+    Layout = null;
+}
+
+@model Hero
+
+<h1>상세 보기</h1>
+
+<form class="form-horizontal" role="form" action="/Hero/Edit" method="post">
+    <div class="form-group">
+        <label class="col-sm-2 control-label" for="id">번호</label>
+        <div class="col-sm-10">
+            @Model.Id
+            <input type="hidden" name="id" id="id" value="@Model.Id" />
+        </div>
+    </div>
+   
+    <div class="form-group">
+        <label class="col-sm-2 control-label" for="name">이름</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="name" name="name" placeholder="이름" value="@Model.Name">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label" for="icon">캐릭터 아이콘</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="icon" name="icon" placeholder="캐릭터 아이콘" value="@Model.Icon">
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-default">수정</button>
+            <a href="/Hero/Delete/@Model.Id">삭제</a>
+            <a href="/Hero/Index">리스트</a>
+        </div>
+    </div>
+</form>
+
+

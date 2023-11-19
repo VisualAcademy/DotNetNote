@@ -1,0 +1,25 @@
+﻿@model GoodsSet 
+@using Dul.Web
+
+<link href="~/css/memoengine.pager.css" rel="stylesheet" />
+
+<h2>제품 리스트</h2>
+
+<a href="/Goods/Create">추가</a> 
+
+<span>@ViewBag.PageNumber 페이지, 총 @(Model.GoodsCount)개</span>
+
+<ul>
+    @foreach (var goods in Model.Goods)
+    {
+    <li>
+        <a href="/Goods/Details/@goods.GoodsId">
+            @goods.GoodsId - @goods.GoodsName
+        </a>
+    </li>
+    }
+</ul>
+
+<hr />
+
+@await Html.PartialAsync("_AdvancedPagingWithCss", ViewBag.PageModel as PagerBase)

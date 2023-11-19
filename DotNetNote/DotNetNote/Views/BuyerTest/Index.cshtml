@@ -1,0 +1,18 @@
+﻿@model List<DotNetNote.Models.Buyers.Buyer>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Buyer List</h1>
+
+<ul>
+@foreach (var buyer in Model)
+{
+    <li>
+        <a href="/BuyerTest/Details?BuyerId=@buyer.BuyerId">
+            @buyer.BuyerId - @buyer.BuyerName - @buyer.BuyerCode
+        </a>
+    </li>
+}
+</ul>

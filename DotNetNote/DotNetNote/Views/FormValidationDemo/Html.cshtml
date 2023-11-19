@@ -1,0 +1,32 @@
+﻿@{ 
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>순수 HTML</title>
+    <script>
+        function CheckForm() {
+            var name = document.getElementById("txtName");
+            var content = document.getElementById("txtContent");
+            if (name.value.length < 1 || content.value.length < 1) {
+                window.alert("이름과 내용을 입력하시오.");
+                name.focus();
+                name.select();
+                return false;
+            }
+            return true; 
+        }
+    </script>
+</head>
+<body>
+<h2>HTML 태그로 폼 구성</h2>
+
+<form action="/FormValidationDemo/HtmlProcess" method="post" 
+        onsubmit="return CheckForm();">
+    이름: <input type="text" name="txtName" id="txtName" value="" /><br />
+    내용: <input type="text" name="txtContent" id="txtContent" value="" /><br />
+    <input type="submit" value="입력" />
+</form>
+</body>
+</html>

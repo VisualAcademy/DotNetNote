@@ -1,0 +1,23 @@
+﻿@{ 
+    Layout = null;
+}
+
+<h1>장바구니</h1>
+
+<form action="/DotNetSale/ShoppingCart"
+      method="post">
+    <input type="text" id="productId"
+           name="productId" />
+    <input type="text" id="quantity"
+           name="quantity" />
+    <input type="submit" value="업데이트" />
+</form>
+
+@if (ViewBag.ProductId > 0 && ViewBag.Quantity > 0)
+{
+    <hr />
+    <ul>
+        <li>상품번호: @ViewData["ProductId"]</li>
+        <li>수량: @ViewBag.Quantity</li>
+    </ul>
+}

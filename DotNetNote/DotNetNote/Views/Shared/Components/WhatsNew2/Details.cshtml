@@ -1,0 +1,25 @@
+﻿@model List<Note>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>제목</th>
+            <th>작성자</th>
+            <th>작성일</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var m in Model)
+        {
+            <tr>
+                <td>@m.Title</td>
+                <td>@m.Name</td>
+                <td>@m.PostDate.ToString("yyyy-MM-dd")</td>
+            </tr>            
+        }
+    </tbody>
+</table>
+
+<ul>
+</ul>

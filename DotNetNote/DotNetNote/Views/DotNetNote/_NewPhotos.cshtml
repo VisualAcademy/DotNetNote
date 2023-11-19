@@ -1,0 +1,58 @@
+﻿@model List<Note>
+
+<!-- 최근 올라온 사진 -->
+<div class="row">
+    <div class="col-lg-12">
+        <h3><i class="fa fa-picture-o"></i> 최근 올라온 사진</h3>
+    </div>
+</div>
+<div class="row text-center">
+    @foreach (var photo in Model)
+    {
+        <div class="col-md-3 col-sm-6">
+            <div class="thumbnail">
+                <div style="height:160px;">
+                    @*<a href="/DotNetNote/Details/@photo.Id"><img src="~/files/@photo.FileName" alt="" style="width:250px;height:150px" class="img-responsive"></a>*@
+
+                    @if (photo.FileSize > (1048576 / 2))
+                    {
+                        <a href="/DotNetNote/Details/@photo.Id">
+                            <img src="https://via.placeholder.com/250x150?text=Big Size" alt="">
+                        </a>
+                    }
+                    else
+                    {
+                        <a href="/DotNetNote/Details/@photo.Id">
+                            <img src="/DotNetNote/ImageDown/@photo.Id" alt="" style="width:250px;height:150px" class="img-responsive">
+                        </a>
+                    }
+                </div>
+                <div class="caption">
+                    <a href="/DotNetNote/Details/@photo.Id">
+                        @Dul.StringLibrary.CutStringUnicode(
+                            photo.Title, 20)
+                    </a>
+                </div>
+            </div>
+        </div>
+    }
+
+    @if (Model.Count < 4)
+    {
+        for (int i = Model.Count; i < 4; i++)
+        {
+            <div class="col-md-3 col-sm-6">
+                <div class="thumbnail">
+                    <div style="height:160px;">
+                        <a href="#">
+                            <img src="https://via.placeholder.com/250x150?text=No Image" alt="">
+                        </a>
+                    </div>
+                    <div class="caption">
+                        <h4>&nbsp;</h4>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+</div>

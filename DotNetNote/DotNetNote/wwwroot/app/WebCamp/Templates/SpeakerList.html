@@ -1,0 +1,18 @@
+﻿<h2>{{ title }} <span class="glyphicon glyphicon-thumbs-up"></span></h2>
+
+<div class="container">
+    <div class="row">
+        <div ng-repeat="speaker in speakers">
+            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 thumbnail">
+                <a href="#/SpeakerDetails/{{ speakers.indexOf(speaker) }}" 
+                   class="pull-right">
+                    <img src="http://placeimg.com/100/100/any"
+                            alt="{{ speaker.name }}" class="img-thumbnail" />
+                </a>
+                <h3>{{ speaker.name }}</h3>
+                <span>{{ speaker.title }}</span>
+                <div class="clearfix visible-xs"></div>
+            </div>
+        </div>
+    </div>
+</div>

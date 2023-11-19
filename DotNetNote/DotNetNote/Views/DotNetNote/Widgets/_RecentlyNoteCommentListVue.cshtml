@@ -1,0 +1,30 @@
+﻿<div id="appRecentlyCommentListVue">
+    <div v-for="note in notes" v-bind:key="note.id" class="post_item">
+        <div class="post_item_text">
+            <span class="post_date">
+                {{note.postDate}}
+            </span>
+            <span class="post_title">
+                <a v-bind:href="`/DotNetNote/Details/${note.boardId}`">{{note.opinion.substring(0, 31)}}</a>
+            </span>
+        </div>
+    </div>
+</div>
+
+<script type="module">
+    import { createApp } from 'vue'
+
+    createApp({
+        data() {
+            return {
+                title: '댓글 리스트 with Vue.js',
+                notes: []
+            }
+        },
+        async created() {
+            const result = await axios.get("/api/NoteCommentService");
+            const notes = result.data; 
+            this.notes = notes; 
+        }
+    }).mount('#appRecentlyCommentListVue')
+</script>

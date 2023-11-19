@@ -1,0 +1,38 @@
+﻿@{
+    Layout = null;
+}
+
+<h2>조건문과 반복문</h2>
+@{
+    int age = 21;
+}
+<div>
+    나이 : @age
+    (
+    @if (age % 2 == 0)
+    {
+        <span>짝수</span> <text>나이</text>
+    }
+    else
+    {
+        <text>홀수</text> @:나이
+    }
+    )
+</div>
+<div>
+    @for (int i = 0; i < 10; i++)
+    {
+        <span>@i&nbsp;</span>
+    }
+</div>
+
+<h2>인코딩 출력</h2>
+@{
+    var js = "<script>document.write('레이저 표현식');</script>";
+}
+<div>
+    @js, @Html.Raw(js)
+</div>
+
+<h2>경로 해결</h2>
+<a href="~/Home/Index">Home</a>

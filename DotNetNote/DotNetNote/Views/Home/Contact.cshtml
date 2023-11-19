@@ -1,0 +1,28 @@
+﻿@{
+    ViewData["Title"] = "연락처";
+}
+<h2>@ViewData["Title"].</h2>
+<h3>@ViewData["Message"]</h3>
+
+<div class="alert alert-warning alert-dismissable">
+    <button type="button" class="close"
+            data-dismiss="alert" aria-hidden="true">
+        ×
+    </button>
+    이 사이트 제작을 위한 모든 단계는
+    <strong>데브렉</strong>에서 동영상 강좌로 제공됩니다.
+    관심 있으신 분들은
+    <a href="http://www.devlec.com" class="alert-link">데브렉 사이트</a>를
+    참조하시기 바랍니다.
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <h3><i class="fa fa-wrench"></i> 현재 사이트에서 사용된 기술 리스트</h3>
+        @await Component.InvokeAsync("TechList")
+    </div>
+    <div class="col-md-6">
+        <h3><i class="fa fa-sitemap"></i> 현재 사이트와 관련된 추천 사이트</h3>
+        @await Component.InvokeAsync("SiteList")
+    </div>
+</div>

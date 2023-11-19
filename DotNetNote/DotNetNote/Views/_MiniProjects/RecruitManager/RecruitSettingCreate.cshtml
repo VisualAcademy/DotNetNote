@@ -1,0 +1,104 @@
+﻿@model RecruitSetting
+
+@section scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
+<h1>모집 추가</h1>
+
+<a href="/RecruitManager/RecruitSettingList" class="btn btn-primary">
+    모집 설정 리스트
+</a>
+
+<form asp-controller="RecruitManager"
+      asp-action="RecruitSettingCreate"
+      method="post"
+      class="form-horizontal"
+      role="form">
+
+    @*<코드조각>레이블, 텍스트박스, 유효성 검사 메시지 3개의 필수 코드 모양</코드조각>*@
+    <div class="form-group">
+        <label class="col-sm-2 control-label"
+               asp-for="BoardName"></label>
+        <div class="col-sm-10">
+            <input asp-for="BoardName" class="form-control" />
+            <span asp-validation-for="BoardName" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-2 control-label"
+               asp-for="BoardNum"></label>
+        <div class="col-sm-10">
+            <input asp-for="BoardNum" class="form-control" />
+            <span asp-validation-for="BoardNum" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-2 control-label"
+               asp-for="BoardTitle"></label>
+        <div class="col-sm-10">
+            <input asp-for="BoardTitle" class="form-control" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-2 control-label"
+               asp-for="BoardContent"></label>
+        <div class="col-sm-10">
+            <input asp-for="BoardContent" class="form-control" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-2 control-label"
+               asp-for="StartDate"></label>
+        <div class="col-sm-10">
+            <input asp-for="StartDate" class="form-control"
+                   value="@DateTime.Now.AddDays(-1).ToString("yyyy-MM-dd")" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-2 control-label"
+               asp-for="EventDate"></label>
+        <div class="col-sm-10">
+            <input asp-for="EventDate" class="form-control"
+                   value="@DateTime.Now.AddDays(0).ToString("yyyy-MM-dd")" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-2 control-label"
+               asp-for="EndDate"></label>
+        <div class="col-sm-10">
+            <input asp-for="EndDate" class="form-control"
+                   value="@DateTime.Now.AddDays(1).ToString("yyyy-MM-dd")" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-2 control-label"
+               asp-for="MaxCount"></label>
+        <div class="col-sm-10">
+            <input asp-for="MaxCount" class="form-control" value="10" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-2 control-label"
+               asp-for="Remarks"></label>
+        <div class="col-sm-10">
+            <input asp-for="Remarks" class="form-control" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-default">저장</button>
+        </div>
+    </div>
+</form>

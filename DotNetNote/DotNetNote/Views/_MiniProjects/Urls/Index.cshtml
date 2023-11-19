@@ -1,0 +1,269 @@
+﻿@{
+    Layout = null;
+}
+
+<link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+<link href="~/css/memoengine.pager.css" rel="stylesheet" />
+<link href="~/css/DotNetNote.Urls.css" rel="stylesheet" />
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+<script src="~/lib/jquery-validation/dist/additional-methods.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
+
+<div class="container">
+
+    <!-- dnnMainIndex -->
+    <div id="dnnMainIndex">
+        <div class="contWrap">
+            <p class="title">도메인 관리자</p>
+            <!-- list -->
+            <div class="tableWrap" id="divDotNetNoteIndex">
+
+                <div class="row">
+                    <div class="hidden-xs col-sm-6 col-md-8">
+
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-4 text-right">
+                        <div class="input-group mb-2">
+                            <input type="text" class="form-control" placeholder="URL" aria-label="URL" aria-describedby="URL Search" id="txtSearch">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary" type="button" id="btnSearch">검색</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="table">
+                    <table>
+                        <colgroup>
+                            <col style="width:8%;" />
+                            <col style="width:66%;" />
+                            <col style="width:8%;" />
+                            <col style="width:8%;" />
+                            <col style="width:10%;" />
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th>NO</th>
+                                <th>URL</th>
+                                <th>DATE</th>
+                                <th class="d-none d-sm-table-cell">NAME</th>
+                                <th>&nbsp;</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+                <div class="page mePager"></div>
+                <div class="text-right">
+                    <input type="button" id="btnAddWithPopup" name="btnAddWithPopup" value="추가" class="btn btn-primary" />
+                </div>
+                <div id="pnlInsert" style="display: none;">
+                    제목:
+                    내용:
+                    작성자:
+                    <hr />
+                    <div class="text-right">
+                        <input type="button" id="btnCancel" name="btnCancel" value="취소" class="btn btn-secondary" />
+                    </div>
+                </div>
+            </div>
+            <!--// list -->
+            <!-- view -->
+            <div class="view" id="divDotNetNoteView">
+                <div class="tit">&nbsp;</div>
+                <div class="cont">&nbsp;</div>
+                @*<div class="fileWrap">
+                    <div class="fileTit">&nbsp;</div>
+                    <div class="fileCont">&nbsp;</div>
+                </div>*@
+                <ul class="util" style="list-style: none;">
+                    <li class="prev">&nbsp;</li>
+                    <li class="next">&nbsp;</li>
+                </ul>
+                <div class="btnWrap text-right">
+                    <button class="btn btn-secondary" id="btnIndex">List</button>
+                </div>
+            </div>
+            <!--// view -->
+        </div>
+    </div>
+    <!--// dnnMainIndex -->
+
+</div>
+
+<!-- dnnCreateForm modal block -->
+<div id="dnnCreateForm" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-primary modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">데이터 <span id="lblSaveOrUpdate">등록</span>하기</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="frmDotNetNoteCreate" name="frmDotNetNoteCreate">
+
+                    <div class="form-group row" id="divId" style="display: none;">
+                        <label for="id" class="col-sm-3 col-form-label">번호</label>
+                        <div class="col-sm-9">
+                            <input id="id" name="id" type="text" class="form-control" required maxlength="100" value="-1" disabled>
+                            <div class="invalid-feedback"></div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="userName" class="col-sm-3 col-form-label">이름</label>
+                        <div class="col-sm-9">
+                            <input id="userName" name="userName" type="text" class="form-control" required maxlength="100">
+                            <div class="invalid-feedback"></div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="siteUrl" class="col-sm-3 col-form-label">도메인</label>
+                        <div class="col-sm-9">
+                            <input id="siteUrl" name="siteUrl" type="text" class="form-control" required maxlength="100">
+                            <div class="invalid-feedback"></div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="content" class="col-sm-3 col-form-label">비고</label>
+                        <div class="col-sm-9">
+                            <input id="content" name="content" type="text" class="form-control" required maxlength="100">
+                            <div class="invalid-feedback"></div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+                <button type="button" class="btn btn-primary" id="btnSave">등록</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /dnnCreateForm modal block -->
+@*// _Layout.cshtml 페이지의 Scripts 이름의 섹션에 들어갈 영역*@
+
+<script src="~/js/DotNetNote.Urls.js"></script>
+
+<script>
+    // 도메인 관리자를 초기화하고 이벤트 핸들러를 설정합니다.
+
+    // [1] URL 리스트 출력
+    urlManager.renderUrlList();
+
+    // [2] 검색 버튼 이벤트 처리기
+    $("#btnSearch").click(function () {
+        urlManager.renderUrlList();
+    });
+
+    // [3] 검색 텍스트박스 엔터 이벤트 처리기
+    $("#txtSearch").keydown(function (event) {
+        if (event.keyCode == 13) {
+            urlManager.renderUrlList();
+        }
+    });
+
+    // [4] 새로운 항목 입력 모달 팝업 띄우기
+    $("#btnAddWithPopup").click(function () {
+        $("#id").val(-1);
+        $("#divId").hide(); // 번호 영역은 숨기고 -1 전달하기
+        $("#btnSave").text("등록");
+        $("#lblSaveOrUpdate").text("등록");
+        $("#frmDotNetNoteCreate")[0].reset(); // 폼의 내용을 리셋
+        $("#dnnCreateForm").modal('show'); // 입력 및 수정 폼 모달 창 열기
+    });
+
+    // [5] 리스트 버튼 클릭 이벤트
+    $("#btnIndex").click(function () {
+        $("#divDotNetNoteIndex").show();
+        $("#divDotNetNoteView").hide();
+    });
+
+    // [6] 저장 또는 수정 버튼 Click 이벤트 핸들러 설정
+    $("#btnSave").click(function (e, from) {
+
+        if ($("#frmDotNetNoteCreate").valid()) {
+
+            //[a] disabled 항목을 제거 후
+            var myform = $('#frmDotNetNoteCreate');
+            var disabled = myform.find(':input:disabled').removeAttr('disabled');
+
+            //[b] jQuery 플러그인 사용: serializeObject()
+            var json = JSON.stringify($('#frmDotNetNoteCreate').serializeObject());
+            //console.log(json);
+
+            //[3] disabled 항목을 다시 추가
+            disabled.attr('disabled', 'disabled');
+
+            //[c] 전송
+            $.ajax({
+                url: "/api/UrlsServices/PostUrl",
+                cache: false,
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                data: json,
+                statusCode: {
+                    201: function (data) {
+
+                        // Id를 가져옵니다.
+                        var id = parseInt($("#id").val(), 10);
+
+                        if (id < 0) {
+                            alert("저장되었습니다.");
+                        }
+                        else {
+                            alert("수정되었습니다.");
+                        }
+
+                        $("#frmDotNetNoteCreate")[0].reset();
+                        $("#dnnCreateForm").modal("hide");
+                        urlManager.renderUrlList();
+
+                    }
+                }
+            })
+                .done(function (data, textStatus, jqXHR) {
+                    //console.log(data.modified);
+
+                    if (data.modified == false) {
+                        alert("수정되지 않았습니다.");
+                    }
+
+                })
+                .fail(function (jqXHR, textStatus, errorThrown) {
+                });
+
+        }
+    });
+
+    // [7] 페이저 버튼 클릭 이벤트
+    $("#dnnMainIndex .page").on("click", "button", urlManager.moveUrlList);
+
+    (function ($) {
+        $.fn.serializeObject = function () {
+            "use strict";
+
+            var result = {};
+            var extend = function (i, element) {
+                var node = result[element.name];
+
+                if ('undefined' !== typeof node && node !== null) {
+                    if ($.isArray(node)) {
+                        node.push(element.value);
+                    } else {
+                        result[element.name] = [node, element.value];
+                    }
+                } else {
+                    result[element.name] = element.value;
+                }
+            };
+
+            $.each(this.serializeArray(), extend);
+            return result;
+        };
+    })(jQuery);
+</script>

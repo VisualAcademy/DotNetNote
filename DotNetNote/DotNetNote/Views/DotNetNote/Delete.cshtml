@@ -1,0 +1,49 @@
+﻿@section Scripts {
+    <!-- http://bootboxjs.com -->
+    <script src="~/lib/bootbox/bootbox.js"></script>
+}
+
+<script>
+    function ConfirmDelete() {
+        var varFlag = false;
+        var txtId = document.getElementById("password");
+        if (txtId.value.length == 0) {
+            bootbox.alert("비밀번호를 입력하세요.", function () { });
+            txtId.focus();
+            return false;
+        }
+
+        varFlag = false;
+        bootbox.confirm("현재 글을 삭제하시겠습니까?", function (result) {
+            if (result == true) {
+                //document.forms[0].submit();
+                document.getElementById("frmDeleteForm").submit(); 
+            }
+        });
+        return varFlag;
+    }
+</script>
+
+<h2 style="text-align:center;">게시판</h2>
+<span style="color:#ff0000;">
+    글 삭제 - 글을 삭제하려면 글 작성시에 기록하였던 비밀번호가 필요합니다.
+</span>
+<hr />
+<div style="text-align: center;">
+    <form id="frmDeleteForm" asp-action="Delete" 
+          method="post" onsubmit="return ConfirmDelete();">
+        <span class="text-danger">@ViewBag.Id</span>번 글을 지우시겠습니까?
+        <input type="hidden" name="id" id="id" value="@ViewBag.Id" />
+        <br />
+        비밀번호 :
+        <input type="password" name="password" id="password" 
+               style="width:120px;display:inline-block;" class="form-control" />
+        <input type="submit" value="지우기" class="btn btn-danger" 
+               style="display:inline-block;" />
+        <a asp-action="Details" asp-route-id="@ViewBag.Id" 
+           class="btn btn-default">취소</a>
+        <br />
+        <span class="text-danger">@ViewBag.Message</span>
+        <br />
+    </form>
+</div>

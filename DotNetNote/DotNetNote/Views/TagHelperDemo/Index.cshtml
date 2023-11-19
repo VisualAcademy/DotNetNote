@@ -1,0 +1,15 @@
+﻿@{
+    Layout = null;
+}
+<h3>순수 HTML로 링크 만들기</h3>
+<ul>
+    <li><a href="/TagHelperDemo/EnvironmentDemo">environment 태그 헬퍼</a></li>
+    <li><a href="/TagHelperDemo/PrefixDemo">태그 헬퍼에 접두사 붙이기</a></li>
+</ul>
+
+<h3>태그 헬퍼로 링크 만들기</h3>
+<ul>
+    <li><a asp-action="EnvironmentDemo">environment 태그 헬퍼</a></li>
+    <li><a asp-controller="TagHelperDemo" 
+           asp-action="EnvironmentDemo">environment 태그 헬퍼</a></li>
+</ul>

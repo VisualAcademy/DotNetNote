@@ -1,0 +1,131 @@
+﻿@using DotNetNote.Models
+
+@{
+    ViewData["Title"] = "커뮤니티 캠프";
+}
+
+@model List<CommunityCampJoinMember>
+
+<h2>참가자 리스트</h2>
+
+<a asp-controller="CommunityCamp" asp-action="Create" 
+   class="btn btn-info">참가 등록하기</a>
+<hr />
+
+<table class=
+"table table-bordered table-hover table-condensed table-responsive table-striped">
+    <tr>
+        <th>커뮤니티</th>
+        <th>이름</th>
+        <th>연락처</th>
+        <th>이메일</th>
+        <th>티셔츠 사이즈</th>
+    </tr>
+    @foreach (var members in Model)
+    {
+        <tr>
+            <td>@members.CommunityName</td>
+            <td>@members.Name</td>
+            <td>@members.Mobile</td>
+            <td>@members.Email</td>
+            <td>@members.Size</td>
+        </tr>
+    }
+</table>
+
+<div class="container">
+<div class="row">
+<div class="col-md-12">
+<div class="panel panel-default">
+<div class="panel-heading">ASP.NET Korea 참여자 리스트</div>
+<div class="panel-body">
+
+<table class=
+"table table-bordered table-hover table-condensed table-responsive table-striped">
+    <tr>
+        <th>커뮤니티</th>
+        <th>이름</th>
+        <th>연락처</th>
+        <th>이메일</th>
+        <th>티셔츠 사이즈</th>
+    </tr>
+    @foreach (var aspnetkorea in Model.Where(m => m.CommunityName 
+        == "ASP.NET Korea").OrderBy(m => m.Id).Take(15))
+    {
+        <tr>
+            <td>@aspnetkorea.CommunityName</td>
+            <td>@aspnetkorea.Name</td>
+            <td>@aspnetkorea.Mobile</td>
+            <td>@aspnetkorea.Email</td>
+            <td>@aspnetkorea.Size</td>
+        </tr>
+    }
+</table>
+
+</div>
+</div>
+</div>
+<div class="col-md-12">
+<div class="panel panel-default">
+<div class="panel-heading">Taeyo.NET 참여자 리스트</div>
+<div class="panel-body">
+
+<table class=
+"table table-bordered table-hover table-condensed table-responsive table-striped">
+    <tr>
+        <th>커뮤니티</th>
+        <th>이름</th>
+        <th>연락처</th>
+        <th>이메일</th>
+        <th>티셔츠 사이즈</th>
+    </tr>
+    @foreach (var taeyonetkorea in Model.Where(m => m.CommunityName 
+        == "Taeyo.NET").OrderBy(m => m.Id).Take(15))
+    {
+        <tr>
+            <td>@taeyonetkorea.CommunityName</td>
+            <td>@taeyonetkorea.Name</td>
+            <td>@taeyonetkorea.Mobile</td>
+            <td>@taeyonetkorea.Email</td>
+            <td>@taeyonetkorea.Size</td>
+        </tr>
+    }
+</table>
+
+</div>
+</div>
+</div>
+</div>
+@*<div class="row">
+    <div class="col-md-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">ASP.NET Korea 대기자 리스트</div>
+            <div class="panel-body">
+                @foreach (var aspnetkorea in Model.Where(m => m.CommunityName == "ASP.NET Korea").OrderBy(m => m.Id).Skip(15).Take(10))
+                {
+                    <div class="col-md-3">
+                        @aspnetkorea.Name
+                        <a asp-controller="CommunityCamp" asp-action="Delete" title="취소"><i class="glyphicon glyphicon-remove-sign"></i></a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Taeyo.NET 대기자 리스트
+            </div>
+            <div class="panel-body">
+                @foreach (var taeyonetkorea in Model.Where(m => m.CommunityName == "Taeyo.NET").OrderBy(m => m.Id).Skip(15).Take(10))
+                {
+                    <div class="col-md-3">
+                        @taeyonetkorea.Name
+                        <a asp-controller="CommunityCamp" asp-action="Delete" title="취소"><i class="glyphicon glyphicon-remove-sign"></i></a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>*@
+</div>

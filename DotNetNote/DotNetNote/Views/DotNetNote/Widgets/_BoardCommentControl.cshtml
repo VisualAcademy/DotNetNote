@@ -1,0 +1,90 @@
+﻿@model NoteCommentViewModel
+
+<table style="padding: 10px;margin-left:20px;margin-right:20px;width:95%;">
+    @foreach (var comment in Model.NoteCommentList)
+    {
+        <tr style="border-bottom: 1px dotted silver;">
+            <td style="width: 80px;">
+                @comment.Name
+            </td>
+            <td style="width: 350px;">
+                @Html.Raw(comment.Opinion.Replace("\r\n", "<br />"))
+            </td>
+            <td style="width: 180px;">
+                @comment.PostDate
+            </td>
+            <td style="width: 10px;text-align:center;">
+                <a title="댓글 삭제" href="/DotNetNote/CommentDelete?BoardId=@Model.BoardId&Id=@comment.Id">
+                    <img src="/images/dnn/icon_delete_red.gif" border="0">
+                </a>
+            </td>
+        </tr>
+    }
+</table>
+<br />
+<script>
+    // 모델 메타데이터를 사용하지 않고, 직접 클라이언트 측 코드 사용
+    function CheckCommentForm() {
+        var name = document.getElementById("txtName");
+        var pwd = document.getElementById("txtPassword");
+        var content = document.getElementById("txtOpinion");
+        if (name.value.length < 1 || content.value.length < 1
+            || pwd.value.length < 1) {
+            window.alert("이름과 암호 그리고 의견을 입력하시오.");
+            name.focus();
+            return false;
+        }
+        return true;
+    }
+</script>
+<form asp-controller="DotNetNote" asp-action="CommentAdd" method="post"
+      onsubmit="return CheckCommentForm();">
+    <input type="hidden" name="BoardId" value="@Model.BoardId" />
+    <table style="width: 500px; margin-left: auto;">
+        <tr>
+            <td style="width: 64px; text-align:right;">
+                이 름 :
+            </td>
+            <td style="width: 128px;">
+                <input type="text" name="txtName" id="txtName"
+                       class="form-control"
+                       style="width:128px;display:inline-block;" />
+            </td>
+            <td style="width: 64px; text-align:right;">
+                암 호 :
+            </td>
+            <td style="width: 128px;">
+                <input type="password" name="txtPassword" id="txtPassword"
+                       class="form-control"
+                       style="width:128px;display:inline-block;" />
+            </td>
+            <td style="width: 128px; text-align:right;">
+
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <input type="submit" value="의견남기기"
+                           class="form-control btn btn-primary"
+                           style="width:96px;display:inline-block;" />
+                }
+                else
+                {
+                    <input type="button" name="btnDisabled"
+                           value="로그인 필요" disabled class="btn btn-default disabled" />
+                }
+
+            </td>
+        </tr>
+        <tr>
+            <td style="width: 64px; text-align:right;">
+                의 견 :
+            </td>
+            <td colspan="4" style="width: 448px;">
+                <textarea rows="3" cols="70" name="txtOpinion" id="txtOpinion"
+                          class="form-control"
+                          style="width:448px; display:inline-block;"></textarea>
+            </td>
+        </tr>
+    </table>
+</form>
+
+<hr />

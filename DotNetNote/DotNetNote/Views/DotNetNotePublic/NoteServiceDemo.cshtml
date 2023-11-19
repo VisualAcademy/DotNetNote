@@ -1,0 +1,19 @@
+﻿@{ 
+    Layout = null;
+}
+
+<div id="theRecentlyNoteList"></div>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script>
+    $(function () {
+        $.getJSON("/api/NoteService", function (data) {
+            var strRecentlyNoteList = "<ul>";
+            $.each(data, function (index, entry) {
+                strRecentlyNoteList +=
+                    "<li><a href=\"/DotNetNote/Details/" + entry.id + "\">" + entry.title + "</a></li>"
+            });
+            strRecentlyNoteList += "</ul>";
+            $("#theRecentlyNoteList").html(strRecentlyNoteList);
+        });
+    });
+</script>

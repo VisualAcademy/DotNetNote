@@ -1,0 +1,25 @@
+﻿@{
+    Layout = null; 
+}
+
+<div ng-app="TechApp">
+    <div ng-controller="TechController">
+        <h2>{{ title }}</h2>
+
+        <h3>출력</h3>
+        <ul ng-repeat="t in teches">
+            <li>{{ t.title }}</li>
+        </ul>
+
+        <h3>입력</h3>
+        <div>
+            기술명: <input type="text" name="Title" ng-model="NewTech.Title" />
+            <input type="button" name="btnAdd" value="저장"
+                   class="btn btn-primary" ng-click="add()" />
+        </div>
+    </div>
+</div>
+
+<script src="~/lib/angular/angular.js"></script>
+<script src="~/app/Tech/TechApp.js"></script>
+<script src="~/app/Tech/TechController.js"></script>

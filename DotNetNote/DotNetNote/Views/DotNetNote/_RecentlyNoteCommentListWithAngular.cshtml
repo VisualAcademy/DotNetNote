@@ -1,0 +1,17 @@
+﻿<div ng-controller="RecentlyCommentListWithAngular">
+    <div ng-if="comments.length > 0">
+        <div class="post_item" ng-repeat="n in comments">
+            <div class="post_item_text">
+                <span class="post_date">{{ n.postDate.substring(0, 10)  }}</span>
+                <span class="post_title">
+                    <a href="/DotNetNote/Details/{{ n.boardId }}">
+                        {{ n.opinion.substring(0, 31) }}
+                    </a>
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="text-center" ng-if="comments.length == 0">
+        항목이 없습니다.
+    </div>
+</div>

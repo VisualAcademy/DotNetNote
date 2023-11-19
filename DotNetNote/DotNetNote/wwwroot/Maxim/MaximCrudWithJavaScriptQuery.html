@@ -1,0 +1,167 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>jQuery와 ASP.NET Web API를 사용한 CRUD 구현하기</title>
+    <script src="/lib/jquery/dist/jquery.js"></script>
+    <script type="text/javascript">
+        // ASP.NET Web API와 jQuery Ajax를 사용한 CRUD 기능 구현
+
+        // Web API 주소
+        var API_URL = "/api/maximservice/";
+
+        // 상태 클리어
+        function clearStatus() {
+            $("#lblError").html('');
+        }
+        function clearField() {
+            $("#name").val('');
+            $("#content").val('');
+        }
+
+        //[!] 데이터 조회 전용 함수
+        function displayData() {
+            $('#lstMaxims').html('');
+            // cRud : Read
+            // 전체 명언 리스트를 읽어서 출력
+            $.getJSON(API_URL, function (data) {
+                //console.log(data.length); // 데이터의 개수
+                $.each(data, function (key, val) {
+                    var str = val.id + ", " + val.name + ", " + val.content;
+                    $("<li />", { html: str }).appendTo("#lstMaxims");
+                });
+            });
+        }
+
+        // Page_Load
+        $(function () {
+
+            // 전체 레코드 출력
+            displayData();
+
+            // Crud : Create
+            $("#btnAdd").click(function () {
+                clearStatus();
+                //[a] 데이터 받기
+                var name = $('#name').val();
+                var content = $('#content').val();
+                //[b] JSON 개체로 묶기 : " + 변수 + "
+                var json =
+                    "{name:\"" + name + "\", content:\"" + content + "\"}";
+                //[c] 전송
+                $.ajax({
+                    url: API_URL,
+                    cache: false,
+                    type: 'POST',
+                    contentType: 'application/json; charset=utf-8',
+                    data: json,
+                    statusCode: {
+                        201: function (data) {
+                            var str = data.id + ", " + data.name
+                                + ", " + data.content;
+                            $("<li />", { html: str }).appendTo("#lstMaxims");
+                        }
+                    }
+                });
+                clearField();
+            });
+
+            // cRud : Retrieve(조회)
+            $("#btnFind").click(function () {
+                clearStatus();
+                clearField();
+                // id값 가져오기
+                var id = $("#id").val();
+                // 특정 번호에 해당하는 명언 정보를 읽어서 출력
+                $.getJSON(API_URL + id, function (data) {
+                    $("#name").val(data.name);
+                    $("#content").val(data.content);
+                }).fail(function (xhr, sts, err) {
+                    $("#lblError").html("에러 : " + err);
+                });
+            });
+
+            // crUd : PUT
+            $("#btnUpdate").click(function () {
+                clearStatus();
+                //[!] ID 값 받기
+                var id = $("#id").val();
+                //[a] 데이터 받기
+                var name = $('#name').val();
+                var content = $('#content').val();
+                //[b] JSON 개체로 묶기 : " + 변수 + "
+                var json =
+                    "{id:\"" + id + "\", name:\"" + name + "\", content:\""
+                    + content + "\"}";
+                //[c] 전송
+                $.ajax({
+                    url: API_URL + id, // /api/maximservice/3
+                    cache: false,
+                    type: 'PUT',
+                    contentType: 'application/json; charset=utf-8',
+                    data: json,
+                    success: function () {
+                        displayData(); // 데이터가 수정되었으면 다시 출력
+                    }
+                }).fail(function (xhr, textStatus, err) {
+                    $('#lblError').html("에러 : " + err);
+                });
+                clearField();
+            });
+
+            // cruD : DELETE
+            $("#btnDelete").click(function () {
+                clearStatus();
+                //[!] ID 값 받기
+                var id = $("#id").val();
+                //[c] 전송
+                $.ajax({
+                    url: API_URL + id, // /api/maximservice/3
+                    cache: false,
+                    type: 'DELETE',
+                    contentType: 'application/json; charset=utf-8',
+                    data: {},
+                    success: function () {
+                        displayData();
+                    }
+                }).fail(function (xhr, textStatus, err) {
+                    $("#lblError").html("에러 : " + err);
+                });
+                clearField();
+            });
+        }); // end of Page_Load
+    </script>
+</head>
+<body>
+    <h2>명언 리스트</h2>
+    <div>
+        <h3>명언 리스트</h3>
+        <ul id="lstMaxims"></ul>
+    </div>
+    <div>
+        <h3>명언 상세</h3>
+        <div>
+            <label for="id">번호: </label>
+            <input type="text" name="id" id="id" value="" />
+        </div>
+        <div>
+            <label for="name">이름: </label>
+            <input type="text" name="name" id="name" value="" />
+        </div>
+        <div>
+            <label for="content">내용: </label>
+            <input type="text" name="content" id="content" value="" />
+        </div>
+        <div>
+            <input type="button" name="btnAdd" id="btnAdd" value="추가" />
+            <input type="button" name="btnFind" id="btnFind" 
+                value="찾기(번호검색)" />
+            <input type="button" name="btnUpdate" id="btnUpdate" value="수정" />
+            <input type="button" name="btnDelete" id="btnDelete" value="삭제" />
+        </div>
+    </div>
+    <div>
+        <p id="lblError" style="color:red;"></p>
+    </div>
+</body>
+</html>

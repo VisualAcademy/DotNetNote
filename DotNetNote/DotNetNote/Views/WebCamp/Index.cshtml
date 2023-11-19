@@ -1,0 +1,77 @@
+﻿@{
+    ViewData["Title"] = "웹캠프 세션 스피커 리스트";
+}
+
+<div class="row">
+    <div class="visible-lg col-lg-2">
+        <img src="~/images/Banner-WC.png" class="img-responsive" />
+    </div>
+    <div class="col-lg-8 col-md-12">
+        <div class="row">
+            <div class="jumbotron">
+                <h1>웹 캠프 @DateTime.Now.Year</h1>
+                <p>
+                    "오픈소스 및 크로스 플랫폼 개발자와의 소통"
+                    WebCamp @DateTime.Now.Year 개발자 컨퍼런스에 초대합니다!
+                </p>
+                <p>
+                    <a href="#" class="btn btn-info btn-lg">
+                        Learn more &raquo;
+                    </a>
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4 col-md-4 col-sm-6">
+                <h2>Angular</h2>
+                <p>AnguarJS는 JavaScript MVC/SPA 프레임워크입니다.</p>
+                <p>
+                    <a href="http://www.angularjs.org"
+                       class="btn btn-primary">Learn more &raquo;</a>
+                </p>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-6">
+                <h2>Bootstrap</h2>
+                <p>Bootstrap은 UI 프레임워크입니다.</p>
+                <p>
+                    <a href="http://www.getbootstrap.com"
+                       class="btn btn-default">Learn more &raquo;</a>
+                </p>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-6">
+                <h2>C#(ASP.NET)</h2>
+                <p>크로스 플랫폼 개발 환경입니다.</p>
+                <p>
+                    <a href="http://www.asp.net"
+                       class="btn btn-danger">Learn more &raquo;</a>
+                </p>
+            </div>
+        </div>
+        <div class="row visible-lg">
+            <div class="alert alert-danger text-center">
+                <h4>양쪽 배너는 큰 화면(1200px 이상)에서만 보입니다.</h4>
+            </div>
+        </div>
+    </div>
+    <div class="visible-lg col-lg-2">
+        <img src="~/images/Banner-RED.png" class="img-responsive" />
+    </div>
+</div>
+
+<hr />
+
+<div ng-app="WebCampApp">
+    <div ng-controller="WebCampController">
+        <h1>{{ title }}</h1>
+    </div>
+
+    <div ng-view></div>
+
+</div>
+
+@section scripts {
+    <script src="~/lib/angular-animate/angular-animate.min.js"></script>
+    <script src="~/lib/angular-route/angular-route.min.js"></script>
+    <script src="~/app/WebCamp/WebCampApp.js"></script>
+    <script src="~/app/WebCamp/WebCampController.js"></script>
+}

@@ -1,0 +1,22 @@
+﻿@{ 
+    Layout = null;
+}
+
+<div id="divRecentlyCommentList"></div>
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script>
+    $(function () {
+        $.getJSON("/api/NoteCommentService", function (data) {
+            var noteCommentList = "<ul>";
+            $.each(data, function (index, entry) {
+                noteCommentList +=
+                    "<li><a href=\"/DotNetNote/Details/" + entry.boardId + "\">"
+                    + entry.opinion + "</a></li>"
+            });
+            noteCommentList += "</ul>";
+
+            $("#divRecentlyCommentList").html(noteCommentList);
+        });
+    });
+</script>
