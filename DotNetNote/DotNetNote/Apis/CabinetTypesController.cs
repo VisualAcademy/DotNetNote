@@ -111,9 +111,9 @@ public class CabinetTypesController : ControllerBase
                 return NotFound($"아무런 데이터가 없습니다.");
             }
 
-            // 응답 헤더에 총 레코드 수를 담아서 출력
-            Response.Headers.Add("X-TotalRecordCount", totalRecords.ToString());
-            Response.Headers.Add("Access-Control-Expose-Headers", "X-TotalRecordCount");
+            // 응답 헤더 설정을 위한 인덱서 사용. 인덱서는 키가 이미 존재하면 값을 업데이트하고, 존재하지 않으면 새 항목을 추가한다. 이로 인해 중복 키 오류를 방지하고 코드의 유연성을 높인다.
+            Response.Headers["X-TotalRecordCount"] = totalRecords.ToString();
+            Response.Headers["Access-Control-Expose-Headers"] = "X-TotalRecordCount";
 
             //return Ok(resultSet.Records);
             var ʘ‿ʘ = models; // 재미를 위해서 
@@ -125,6 +125,7 @@ public class CabinetTypesController : ControllerBase
             return BadRequest();
         }
     }
+
     // 검색
     // GET api/Entries/Page/1/10
     [HttpGet("Search/{pageNumber:int}/{pageSize:int}")]
