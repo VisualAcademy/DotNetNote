@@ -169,8 +169,10 @@ namespace DotNetNote.Controllers
                     return NotFound("아무런 데이터가 없습니다.");
                 }
 
-                // 응답 헤더에 총 레코드 수를 담아서 출력
-                Response.Headers.Add("X-TotalRecordCount", goodsSet.GoodsCount.ToString());
+                //// 응답 헤더에 총 레코드 수를 담아서 출력
+                //Response.Headers.Add("X-TotalRecordCount", goodsSet.GoodsCount.ToString());
+                // 응답 헤더에 총 레코드 수를 인덱서를 사용하여 설정
+                Response.Headers["X-TotalRecordCount"] = goodsSet.GoodsCount.ToString();
 
                 return Ok(goodsSet.Goods); // 200 OK
             }
