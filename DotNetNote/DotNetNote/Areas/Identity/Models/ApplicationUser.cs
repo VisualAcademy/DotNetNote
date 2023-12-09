@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿#nullable enable
+using Microsoft.AspNetCore.Identity;
 
 namespace DotNetNote.Areas.Identity.Models;
 
