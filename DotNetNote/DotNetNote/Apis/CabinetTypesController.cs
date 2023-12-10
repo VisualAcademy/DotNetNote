@@ -143,9 +143,12 @@ public class CabinetTypesController : ControllerBase
                 return NotFound($"아무런 데이터가 없습니다.");
             }
 
-            // 응답 헤더에 총 레코드 수를 담아서 출력
-            Response.Headers.Add("X-TotalRecordCount", totalRecords.ToString());
-            Response.Headers.Add("Access-Control-Expose-Headers", "X-TotalRecordCount");
+            //// 응답 헤더에 총 레코드 수를 담아서 출력
+            //Response.Headers.Add("X-TotalRecordCount", totalRecords.ToString());
+            //Response.Headers.Add("Access-Control-Expose-Headers", "X-TotalRecordCount");
+            // 응답 헤더에 총 레코드 수를 담아서 출력 (인덱서 사용)
+            Response.Headers["X-TotalRecordCount"] = totalRecords.ToString();
+            Response.Headers["Access-Control-Expose-Headers"] = "X-TotalRecordCount";
 
             //return Ok(resultSet.Records);
             var ʘ‿ʘ = models; // 재미를 위해서 
