@@ -1,4 +1,5 @@
-﻿namespace Acts.Models
+﻿#nullable enable
+namespace Acts.Models
 {
     public partial class ActionCategory
     {
