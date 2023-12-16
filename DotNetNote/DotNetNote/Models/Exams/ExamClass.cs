@@ -338,8 +338,8 @@ public class QuestionServiceController : Controller
             }
 
             // 응답 헤더에 총 레코드 수를 담아서 출력
-            Response.Headers.Add(
-                "X-TotalRecordCount", _repository.GetRecordCount().ToString());
+            //Response.Headers.Add("X-TotalRecordCount", _repository.GetRecordCount().ToString());
+            Response.Headers["X-TotalRecordCount"] = _repository.GetRecordCount().ToString();
 
             return Ok(models); // 200 
         }
