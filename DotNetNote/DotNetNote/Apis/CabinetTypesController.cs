@@ -2,6 +2,7 @@
 using DotNetNote.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,8 +14,14 @@ namespace DotNetNote.Apis;
 public class CabinetTypesController : ControllerBase
 {
     private readonly ApplicationDbContext _context;
+    private readonly ILogger<CabinetTypesController> _logger; // Declare the logger
 
-    public CabinetTypesController(ApplicationDbContext context) => _context = context;
+    // Modify the constructor to accept ILogger<CabinetTypesController>
+    public CabinetTypesController(ApplicationDbContext context, ILogger<CabinetTypesController> logger)
+    {
+        _context = context;
+        _logger = logger; // Initialize the logger
+    }
 
     // GET: api/CabinetTypes
     [HttpGet]
@@ -121,7 +128,7 @@ public class CabinetTypesController : ControllerBase
         }
         catch (Exception ಠ_ಠ) // Look of Disapproval
         {
-            //_logger?.LogError($"ERROR({nameof(GetAll)}): {ಠ_ಠ.Message}");
+            _logger?.LogError($"ERROR({nameof(GetAll)}): {ಠ_ಠ.Message}");
             return BadRequest();
         }
     }
