@@ -300,8 +300,9 @@ namespace DotNetNote.Models
                 }
 
                 // 응답 헤더에 총 레코드 수를 담아서 출력
-                Response.Headers.Add(
-                    "X-TotalRecordCount", _repository.GetRecordCount().ToString());
+                //Response.Headers.Add("X-TotalRecordCount", _repository.GetRecordCount().ToString());
+                // 응답 헤더에 총 레코드 수를 담아서 출력 (인덱서 사용 방식으로 변경)
+                Response.Headers["X-TotalRecordCount"] = _repository.GetRecordCount().ToString();
 
                 return Ok(fives); // 200 
             }
