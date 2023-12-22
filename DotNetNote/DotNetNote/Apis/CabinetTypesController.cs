@@ -163,7 +163,7 @@ public class CabinetTypesController : ControllerBase
         }
         catch (Exception ಠ_ಠ) // Look of Disapproval
         {
-            //_logger?.LogError($"ERROR({nameof(GetAll)}): {ಠ_ಠ.Message}");
+            _logger?.LogError($"ERROR({nameof(GetAll)}): {ಠ_ಠ.Message}");
             return BadRequest();
         }
     }
