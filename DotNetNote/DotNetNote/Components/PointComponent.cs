@@ -142,17 +142,13 @@ public class PointLogServiceController : Controller
 /// 포인트 상태 정보를 반환하는 Web API
 /// </summary>
 [Route("api/[controller]")]
-public class PointStatusController : Controller
+public class PointStatusController(IPointRepository repository) : Controller
 {
-    private IPointRepository _repository;
-
-    public PointStatusController(IPointRepository repository) => _repository = repository;
-
     [HttpGet]
     [Route("")]
     public IActionResult Get()
     {
-        var point = _repository.GetPointStatusByUser();
+        var point = repository.GetPointStatusByUser();
         return Ok(point);
     }
 }
