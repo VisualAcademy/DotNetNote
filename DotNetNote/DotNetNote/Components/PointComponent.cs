@@ -100,17 +100,13 @@ public class PointController(IPointRepository repository) : Controller
 }
 
 [Route("api/[controller]")]
-public class PointServiceController : Controller
+public class PointServiceController(IPointRepository repository) : Controller
 {
-    private IPointRepository _repository;
-
-    public PointServiceController(IPointRepository repository) => _repository = repository;
-
     [HttpGet]
     [Route("")]
     public IActionResult Get()
     {
-        var myPoint = _repository.GetTotalPointByUserId();
+        var myPoint = repository.GetTotalPointByUserId();
         var json = new { Point = myPoint };
         return Ok(json);
     }
@@ -119,7 +115,7 @@ public class PointServiceController : Controller
     [Route("{userId:int}")]
     public IActionResult Get(int userId)
     {
-        var myPoint = _repository.GetTotalPointByUserId(userId);
+        var myPoint = repository.GetTotalPointByUserId(userId);
         var json = new { Point = myPoint };
         return Ok(json);
     }
