@@ -87,11 +87,9 @@ public class PointLogRepository : IPointLogRepository
 
 }
 
-public class PointController : Controller
+public class PointController(IPointRepository repository) : Controller
 {
-    private IPointRepository _repository;
-
-    public PointController(IPointRepository repository) => _repository = repository;
+    private IPointRepository _repository = repository;
 
     public IActionResult Index()
     {
