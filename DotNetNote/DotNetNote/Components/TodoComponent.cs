@@ -60,14 +60,11 @@ public class TodoRepository : ITodoRepository
 /// <summary>
 /// MVC 컨트롤러
 /// </summary>
-public class TodoController : Controller
+public class TodoController(TodoContext context) : Controller
 {
-    private readonly TodoContext _context;
-
-    public TodoController(TodoContext context) => _context = context;
 
     // GET: Todo
-    public async Task<IActionResult> Index() => View(await _context.Todos.ToListAsync());
+    public async Task<IActionResult> Index() => View(await context.Todos.ToListAsync());
 
     // GET: Todo/Details/5
     public async Task<IActionResult> Details(int? id)
@@ -77,7 +74,7 @@ public class TodoController : Controller
             return NotFound();
         }
 
-        var todo = await _context.Todos
+        var todo = await context.Todos
             .SingleOrDefaultAsync(m => m.Id == id);
         if (todo == null)
         {
@@ -99,8 +96,8 @@ public class TodoController : Controller
     {
         if (ModelState.IsValid)
         {
-            _context.Add(todo);
-            await _context.SaveChangesAsync();
+            context.Add(todo);
+            await context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
         return View(todo);
@@ -114,7 +111,7 @@ public class TodoController : Controller
             return NotFound();
         }
 
-        var todo = await _context.Todos.SingleOrDefaultAsync(m => m.Id == id);
+        var todo = await context.Todos.SingleOrDefaultAsync(m => m.Id == id);
         if (todo == null)
         {
             return NotFound();
@@ -138,8 +135,8 @@ public class TodoController : Controller
         {
             try
             {
-                _context.Update(todo);
-                await _context.SaveChangesAsync();
+                context.Update(todo);
+                await context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -165,7 +162,7 @@ public class TodoController : Controller
             return NotFound();
         }
 
-        var todo = await _context.Todos
+        var todo = await context.Todos
             .SingleOrDefaultAsync(m => m.Id == id);
         if (todo == null)
         {
@@ -180,13 +177,13 @@ public class TodoController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteConfirmed(int id)
     {
-        var todo = await _context.Todos.SingleOrDefaultAsync(m => m.Id == id);
-        _context.Todos.Remove(todo);
-        await _context.SaveChangesAsync();
+        var todo = await context.Todos.SingleOrDefaultAsync(m => m.Id == id);
+        context.Todos.Remove(todo);
+        await context.SaveChangesAsync();
         return RedirectToAction(nameof(Index));
     }
 
-    private bool TodoExists(int id) => _context.Todos.Any(e => e.Id == id);
+    private bool TodoExists(int id) => context.Todos.Any(e => e.Id == id);
 }
 
 /// <summary>
