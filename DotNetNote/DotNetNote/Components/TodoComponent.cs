@@ -191,11 +191,9 @@ public class TodoController(TodoContext context) : Controller
 /// </summary>
 [Produces("application/json")]
 [Route("api/Todos")]
-public class TodosController : Controller
+public class TodosController(TodoContext context) : Controller
 {
-    private readonly TodoContext _context;
-
-    public TodosController(TodoContext context) => _context = context;
+    private readonly TodoContext _context = context;
 
     // GET: api/Todos
     [HttpGet]
