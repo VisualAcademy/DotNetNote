@@ -36,13 +36,8 @@ public class TodoItem
 /// <summary>
 /// Todo 컨텍스트 클래스
 /// </summary>
-public class TodoContext : DbContext
+public class TodoContext(DbContextOptions<TodoContext> options) : DbContext(options)
 {
-    public TodoContext(DbContextOptions<TodoContext> options) : base(options)
-    {
-        // Empty
-    }
-
     public DbSet<Todo> Todos { get; set; }
 }
 
