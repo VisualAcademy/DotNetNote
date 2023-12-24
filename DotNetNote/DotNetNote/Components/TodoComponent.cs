@@ -193,7 +193,6 @@ public class TodoController(TodoContext context) : Controller
 [Route("api/Todos")]
 public class TodosController(TodoContext context) : Controller
 {
-
     // GET: api/Todos
     [HttpGet]
     public IEnumerable<Todo> GetTodos() => context.Todos;
