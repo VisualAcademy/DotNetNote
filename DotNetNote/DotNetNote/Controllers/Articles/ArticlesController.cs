@@ -4,16 +4,12 @@ using System.Linq;
 
 namespace DotNetNote.Controllers;
 
-public class ArticlesController : Controller
+public class ArticlesController(IBlogService service) : Controller
 {
-    private readonly IBlogService _service;
-
-    public ArticlesController(IBlogService service) => this._service = service;
-
     // GET: Articles
     public IActionResult Index()
     {
-        var posts = _service.GetPosts().ToList();
+        var posts = service.GetPosts().ToList();
 
         return View(posts);
     }
