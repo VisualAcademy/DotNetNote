@@ -6,12 +6,8 @@ using System.Threading.Tasks;
 
 namespace DotNetNote.Controllers;
 
-public class FileDemoController : Controller
+public class FileDemoController(IWebHostEnvironment environment) : Controller
 {
-    private IWebHostEnvironment _environment;
-
-    public FileDemoController(IWebHostEnvironment environment) => _environment = environment;
-
     /// <summary>
     /// 파일 업로드 폼 
     /// </summary>
@@ -26,7 +22,7 @@ public class FileDemoController : Controller
     public async Task<IActionResult> FileUploadDemo(
         ICollection<IFormFile> files)
     {
-        var uploadFolder = Path.Combine(_environment.WebRootPath, "files");
+        var uploadFolder = Path.Combine(environment.WebRootPath, "files");
 
         foreach (var file in files)
         {
@@ -54,7 +50,7 @@ public class FileDemoController : Controller
     {
         byte[] fileBytes = System.IO.File.ReadAllBytes(
             Path.Combine(
-                _environment.WebRootPath, "files") + "\\" + fileName);
+                environment.WebRootPath, "files") + "\\" + fileName);
 
         return File(fileBytes, "application/octet-stream", fileName);
     }
