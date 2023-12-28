@@ -4,16 +4,12 @@
 
 namespace DotNetNote.Controllers;
 
-public class VariableTestController : Controller
+public class VariableTestController(IVariableRepository repository) : Controller
 {
-    private readonly IVariableRepository _repository;
-
-    public VariableTestController(IVariableRepository repository) => _repository = repository;
-
     // GET: /<controller>/
     public IActionResult Index()
     {
-        var variables = _repository.GetAll();
+        var variables = repository.GetAll();
         ViewBag.Variables = variables;
         return View();
     }
