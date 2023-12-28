@@ -3,15 +3,11 @@ using System.Linq;
 
 namespace DotNetNote.Controllers;
 
-public class DnnContextTestController : Controller
+public class DnnContextTestController(DotNetNoteContext context) : Controller
 {
-    private readonly DotNetNoteContext _context;
-
-    public DnnContextTestController(DotNetNoteContext context) => _context = context;
-
     public IActionResult Index()
     {
-        var ideas = _context.Ideas.ToList();
+        var ideas = context.Ideas.ToList();
         return View(ideas);
     }
 }
