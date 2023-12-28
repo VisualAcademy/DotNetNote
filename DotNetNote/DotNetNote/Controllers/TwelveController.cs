@@ -2,11 +2,9 @@
 
 namespace DotNetNote.Controllers;
 
-public class TwelveController : Controller
+public class TwelveController(ITwelveRepository repository) : Controller
 {
-    private readonly ITwelveRepository _repository;
-
-    public TwelveController(ITwelveRepository repository) => _repository = repository;
+    private readonly ITwelveRepository _repository = repository;
 
     public IActionResult Index() => View();
 
