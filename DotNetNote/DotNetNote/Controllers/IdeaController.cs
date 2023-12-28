@@ -6,16 +6,12 @@ namespace DotNetNote.Controllers;
 /// <summary>
 /// [5] ASP.NET 컨트롤러 클래스
 /// </summary>
-public class IdeaController : Controller
+public class IdeaController(IIdeaRepository repository) : Controller
 {
-    private IIdeaRepository _repository;
-
-    public IdeaController(IIdeaRepository repository) => _repository = repository;
-
     [HttpGet]
     public IActionResult Index()
     {
-        var ideas = _repository.GetAll();
+        var ideas = repository.GetAll();
         return View(ideas);
     }
 
@@ -24,7 +20,7 @@ public class IdeaController : Controller
     {
         if (ModelState.IsValid)
         {
-            model = _repository.Add(model);
+            model = repository.Add(model);
             return RedirectToAction(nameof(Index));
         }
         else
