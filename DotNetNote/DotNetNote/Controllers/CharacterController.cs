@@ -7,23 +7,14 @@ using Microsoft.AspNetCore.Mvc;
 namespace DotNetNote.Controllers;
 
 [Authorize]
-public class CharacterController : Controller
+public class CharacterController(IHeroRepository hero, ICharacterRepository character) : Controller
 {
-    private IHeroRepository _hero;
-    private ICharacterRepository _character;
-
-    public CharacterController(IHeroRepository hero, ICharacterRepository character)
-    {
-        _hero = hero;
-        _character = character;
-    }
-
     public IActionResult Index()
     {
-        var heroes = _hero.GetAllHeroes();
+        var heroes = hero.GetAllHeroes();
 
         var username = User.FindFirst("UserId").Value; // 사용자 아이디 
-        var myCharacter = _character.GetCharacterByUsername(username);
+        var myCharacter = character.GetCharacterByUsername(username);
         if (myCharacter != null)
         {
             ViewBag.MyCharacter = myCharacter;
@@ -40,7 +31,7 @@ public class CharacterController : Controller
 
         var model = new CharacterModel() { Username = username, HeroId = heroId };
 
-        _character.SetCharacter(model);
+        character.SetCharacter(model);
 
         ViewBag.ChoiceHero = hero.ToString();
         return View();
