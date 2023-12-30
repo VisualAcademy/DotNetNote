@@ -19,7 +19,7 @@ public class SingletonDemoController(IInfoService svc) : Controller
 
     public IActionResult InfoServiceDemo()
     {
-        InfoService svc = new InfoService();
+        InfoService svc = new();
         ViewData["Url"] = svc.GetUrl();
         return View("Index");
     }
