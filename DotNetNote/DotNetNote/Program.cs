@@ -155,8 +155,12 @@ void DependencyInjectionContainer(IServiceCollection services, IConfiguration Co
     services.AddTransient<IVariableRepository, VariableRepositoryInMemory>();
     services.AddTransient<IIdeaRepository, IdeaRepository>();
     services.AddTransient<DotNetNote.Models.DataFinder>();
+
+    // AddSingleton 메서드로 의존성 주입 사용하기_DI 사용을 위한 기본 설정 단계 살펴보기
+    // AddSingletonDemoController.cs 클래스에서 IInfoService 인터페이스 사용
     services.AddSingleton<InfoService>();
     services.AddSingleton<IInfoService, InfoService>();
+
     services.AddTransient<ICopyrightService, CopyrightService>();
     services.AddSingleton<CopyrightService>();
     services.AddTransient<GuidService>();
