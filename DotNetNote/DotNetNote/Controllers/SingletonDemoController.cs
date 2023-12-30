@@ -13,6 +13,7 @@ public class SingletonDemoController(IInfoService svc) : Controller
 
     public IActionResult Index()
     {
+        // ViewData를 사용하여 뷰로 데이터 전달
         ViewData["Url"] = "www.gilbut.co.kr";
         return View();
     }
