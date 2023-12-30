@@ -158,6 +158,7 @@ void DependencyInjectionContainer(IServiceCollection services, IConfiguration Co
 
     // AddSingleton 메서드로 의존성 주입 사용하기_DI 사용을 위한 기본 설정 단계 살펴보기
     // AddSingletonDemoController.cs 클래스에서 IInfoService 인터페이스 사용
+    //[DI] InfoService 클래스 의존성 주입
     services.AddSingleton<InfoService>();
     services.AddSingleton<IInfoService, InfoService>();
 
