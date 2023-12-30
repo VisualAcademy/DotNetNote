@@ -1,4 +1,5 @@
-﻿using DotNetNote.Models.ManageViewModels;
+﻿using DotNetNote.Data;
+using DotNetNote.Models.ManageViewModels;
 using DotNetNote.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;

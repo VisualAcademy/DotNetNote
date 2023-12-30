@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using DotNetNote.Models;
+using DotNetNote.Data;
 
 namespace VisualAcademy.Areas.Identity.Pages.Account
 {

@@ -1,4 +1,4 @@
-﻿using DotNetNote.Models;
+﻿using DotNetNote.Data;
 using DotNetNote.Models.AccountViewModels;
 using DotNetNote.Services;
 using Microsoft.AspNetCore.Authentication;

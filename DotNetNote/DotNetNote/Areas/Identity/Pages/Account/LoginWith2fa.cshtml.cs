@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
-using DotNetNote.Models;
+using DotNetNote.Data;
 
 namespace VisualAcademy.Areas.Identity.Pages.Account
 {
