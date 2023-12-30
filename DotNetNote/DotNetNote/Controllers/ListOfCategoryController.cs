@@ -7,6 +7,7 @@ public class ListOfCategoryController(ICategoryRepository repository) : Controll
 {
     //private readonly ICategoryRepository _repository;
     //public ListOfCategoryController(ICategoryRepository repository) => _repository = repository;
+
     public IActionResult Index()
     {
         // var categoryRepository = new CategoryRepositoryInMemory();
