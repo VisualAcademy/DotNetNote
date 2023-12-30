@@ -3,36 +3,24 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DotNetNote.Controllers;
 
-public class SingletonDemoController : Controller
+public class SingletonDemoController(IInfoService svc) : Controller
 {
-    //[1] 생성자에 클래스 주입
-    //private readonly InfoService _svc;
-
-    //public SingletonDemoController(InfoService svc)
-    //{
-    //    _svc = svc;
-    //}
-
-    //[2] 생성자에 인터페이스 주입
-    private readonly IInfoService _svc;
-
-    public SingletonDemoController(IInfoService svc) => _svc = svc;
-
     public IActionResult ConstructorInjectionDemo()
     {
-        ViewData["Url"] = _svc.GetUrl();
+        ViewData["Url"] = svc.GetUrl();
         return View("Index");
     }
 
     public IActionResult Index()
     {
+        // ViewData를 사용하여 뷰로 데이터 전달
         ViewData["Url"] = "www.gilbut.co.kr";
         return View();
     }
 
     public IActionResult InfoServiceDemo()
     {
-        InfoService svc = new InfoService();
+        InfoService svc = new();
         ViewData["Url"] = svc.GetUrl();
         return View("Index");
     }
