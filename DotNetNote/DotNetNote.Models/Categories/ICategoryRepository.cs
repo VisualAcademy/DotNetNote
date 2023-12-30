@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace DotNetNote.Models.Categories
+namespace DotNetNote.Models.Categories;
+
+public interface ICategoryRepository
 {
-    public interface ICategoryRepository
-    {
-        List<Category> GetCategories();
-    }
+    List<Category> GetCategories();
 }
