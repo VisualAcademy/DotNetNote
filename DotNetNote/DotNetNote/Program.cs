@@ -184,6 +184,7 @@ void DependencyInjectionContainer(IServiceCollection services, IConfiguration Co
     services.AddTransient<IPointRepository, PointRepositoryInMemory>();
     services.AddTransient<IPointLogRepository, PointLogRepository>();
 
+    // 종속성 주입(의존성 주입, DI)을 사용하여 컬렉션 컬렉션 형태의 데이터 출력하기
     // ListOfCategoryController.cs 클래스에서 ICategoryRepository 인터페이스 사용
     services.AddTransient<ICategoryRepository, CategoryRepositoryInMemory>();
 
