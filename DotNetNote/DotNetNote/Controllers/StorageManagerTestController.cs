@@ -6,12 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DotNetNote.Controllers;
 
-public class StorageManagerTestController : Controller
+public class StorageManagerTestController(IStorageManager storageManager) : Controller
 {
-    private readonly IStorageManager storageManager;
-
-    public StorageManagerTestController(IStorageManager storageManager) => this.storageManager = storageManager;
-
     public IActionResult Index() => View();
 
     [HttpPost]
