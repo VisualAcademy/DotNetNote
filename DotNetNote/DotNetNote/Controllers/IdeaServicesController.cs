@@ -9,12 +9,8 @@ namespace DotNetNote.Controllers;
 /// [5] Web API 컨트롤러 클래스 
 /// </summary>
 [Route("api/[controller]")]
-public class IdeaServicesController : Controller
+public class IdeaServicesController(IIdeaRepository repository) : Controller
 {
-    private IIdeaRepository _repository;
-
-    public IdeaServicesController(IIdeaRepository repository) => _repository = repository;
-
     /// <summary>
     /// /api/IdeaServices 
     /// </summary>
@@ -22,7 +18,7 @@ public class IdeaServicesController : Controller
     public IEnumerable<Idea> Get() =>
         // cRud
         //return _repository.GetAll().AsEnumerable();
-        _repository.GetAll().ToList();
+        repository.GetAll().ToList();
 
     /// <summary>
     /// /api/IdeaServices/1234
@@ -30,7 +26,7 @@ public class IdeaServicesController : Controller
     [HttpGet("{id}")]
     public Idea Get(int id)
     {
-        var idea = _repository.GetAll().Where(m => m.Id == id).SingleOrDefault();
+        var idea = repository.GetAll().Where(m => m.Id == id).SingleOrDefault();
         if (idea == null)
         {
             Response.StatusCode = (int)HttpStatusCode.NotFound;
@@ -48,7 +44,7 @@ public class IdeaServicesController : Controller
         if (ModelState.IsValid)
         {
             // Crud
-            var m = _repository.Add(model);
+            var m = repository.Add(model);
 
             Response.StatusCode = (int)HttpStatusCode.Created;
             return Json(m);
