@@ -10,12 +10,8 @@ namespace DotNetNote.Controllers;
 /// 기본 뼈대 만드는 것은 Web API 스캐폴딩으로 구현 후 각각의 코드를 구현
 /// </summary>
 [Route("api/[controller]")]
-public class MaximServiceController : Controller
+public class MaximServiceController(MaximServiceRepository maximService) : Controller
 {
-    private MaximServiceRepository repo;
-
-    public MaximServiceController(MaximServiceRepository maximService) => repo = maximService;
-
     // GET: api/MaximService
     //[1] Get 요청의 가장 기본적인 모양
     //[HttpGet("")]
@@ -30,7 +26,7 @@ public class MaximServiceController : Controller
     {
         try
         {
-            var maxims = repo.GetMaxims().AsEnumerable();
+            var maxims = maximService.GetMaxims().AsEnumerable();
             return Ok(maxims);
         }
         catch
@@ -61,7 +57,7 @@ public class MaximServiceController : Controller
         try
         {
             // 데이터 조회
-            Maxim maxim = repo.GetMaximById(id);
+            Maxim maxim = maximService.GetMaximById(id);
             if (maxim == null)
             {
                 // 에러에 대한 정보를 전달
@@ -82,7 +78,7 @@ public class MaximServiceController : Controller
         if (ModelState.IsValid)
         {
             // 데이터 입력
-            var m = repo.AddMaxim(maxim);
+            var m = maximService.AddMaxim(maxim);
 
             Response.StatusCode = (int)HttpStatusCode.Created;
             return Json(m);
@@ -112,7 +108,7 @@ public class MaximServiceController : Controller
         try
         {
             // 데이터 수정
-            repo.UpdateMaxim(maxim);
+            maximService.UpdateMaxim(maxim);
         }
         catch (Exception ex)
         {
@@ -128,7 +124,7 @@ public class MaximServiceController : Controller
     [HttpDelete("{id}")]
     public JsonResult Delete(int id)
     {
-        Maxim maxim = repo.GetMaximById(id);
+        Maxim maxim = maximService.GetMaximById(id);
         if (maxim == null)
         {
             Response.StatusCode = (int)HttpStatusCode.NotFound;
@@ -138,7 +134,7 @@ public class MaximServiceController : Controller
         try
         {
             // 데이터 삭제
-            repo.RemoveMaxim(id);
+            maximService.RemoveMaxim(id);
         }
         catch (Exception ex)
         {
