@@ -7,12 +7,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DotNetNote.Pages.CabinetTypes;
 
-public class EditModel : PageModel
+public class EditModel(Data.ApplicationDbContext context) : PageModel
 {
-    private readonly Data.ApplicationDbContext _context;
-
-    public EditModel(Data.ApplicationDbContext context) => _context = context;
-
     [BindProperty]
     public CabinetType CabinetType { get; set; }
 
@@ -23,7 +19,7 @@ public class EditModel : PageModel
             return NotFound();
         }
 
-        CabinetType = await _context.CabinetTypes.FirstOrDefaultAsync(m => m.Id == id);
+        CabinetType = await context.CabinetTypes.FirstOrDefaultAsync(m => m.Id == id);
 
         if (CabinetType == null)
         {
@@ -41,11 +37,11 @@ public class EditModel : PageModel
             return Page();
         }
 
-        _context.Attach(CabinetType).State = EntityState.Modified;
+        context.Attach(CabinetType).State = EntityState.Modified;
 
         try
         {
-            await _context.SaveChangesAsync();
+            await context.SaveChangesAsync();
         }
         catch (DbUpdateConcurrencyException)
         {
@@ -62,5 +58,5 @@ public class EditModel : PageModel
         return RedirectToPage("./Index");
     }
 
-    private bool CabinetTypeExists(long id) => _context.CabinetTypes.Any(e => e.Id == id);
+    private bool CabinetTypeExists(long id) => context.CabinetTypes.Any(e => e.Id == id);
 }
