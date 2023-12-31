@@ -4,15 +4,11 @@ using System.Linq;
 
 namespace DotNetNote.Controllers;
 
-public class MemberController : Controller
+public class MemberController(MemberDbContext memberDbContext) : Controller
 {
-    private MemberDbContext _memberDbContext;
-
-    public MemberController(MemberDbContext memberDbContext) => _memberDbContext = memberDbContext;
-
     public IActionResult Index()
     {
-        var members = _memberDbContext.Members.OrderByDescending(m => m.Id).ToList();
+        var members = memberDbContext.Members.OrderByDescending(m => m.Id).ToList();
 
         return View(members);
     }
@@ -22,8 +18,8 @@ public class MemberController : Controller
     {
         var member = new Member { FirstName = firstName };
 
-        _memberDbContext.Add(member);
-        _memberDbContext.SaveChanges();
+        memberDbContext.Add(member);
+        memberDbContext.SaveChanges();
 
         return RedirectToAction(nameof(Index));
     }
