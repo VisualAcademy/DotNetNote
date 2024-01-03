@@ -9,21 +9,17 @@ namespace DotNetNote.Controllers;
 /// [7] ASP.NET Core Web API
 /// </summary>
 [Route("api/[controller]")]
-public class IdeaServiceController : Controller
+public class IdeaServiceController(IIdeaRepository repository) : Controller
 {
-    private IIdeaRepository _repository;
-
-    public IdeaServiceController(IIdeaRepository repository) => _repository = repository;
-
     [HttpGet]
     public IEnumerable<Idea> Get() =>
         // cRud
-        _repository.GetAll().AsEnumerable();
+        repository.GetAll().AsEnumerable();
 
     [HttpGet("{id}")]
     public Idea Get(int id)
     {
-        var idea = _repository.GetAll().Where(m => m.Id == id).SingleOrDefault();
+        var idea = repository.GetAll().Where(m => m.Id == id).SingleOrDefault();
         if (idea == null)
         {
             Response.StatusCode = (int)HttpStatusCode.NotFound;
@@ -38,7 +34,7 @@ public class IdeaServiceController : Controller
         if (ModelState.IsValid)
         {
             // Crud
-            var m = _repository.Add(model);
+            var m = repository.Add(model);
 
             Response.StatusCode = (int)HttpStatusCode.Created;
             return Json(m);
