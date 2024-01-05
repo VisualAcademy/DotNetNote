@@ -6,30 +6,19 @@ using Microsoft.Extensions.Options;
 
 namespace DotNetNote.Controllers;
 
-public class TeamController : Controller
+public class TeamController(
+    IOptions<DotNetNoteSettings> options,
+    INoteRepository repository,
+    INoteCommentRepository commentRepo,
+    ILogger<TeamController> logger
+        ) : Controller
 {
     // 강력한 형식의 클래스의 인스턴스 생성
-    private DotNetNoteSettings _dnnSettings;
-    private readonly INoteRepository _repository; // 게시판 
-    private readonly INoteCommentRepository _commentRepo; // 댓글
-    private readonly ILogger<TeamController> _logger;
-
-    public TeamController(
-        IOptions<DotNetNoteSettings> options,
-        INoteRepository repository,
-        INoteCommentRepository commentRepo,
-        ILogger<TeamController> logger
-        )
-    {
-        _dnnSettings = options.Value; // Value 속성으로 인스턴스화된 개체 반환
-        _repository = repository;
-        _commentRepo = commentRepo;
-        _logger = logger;
-    }
+    private DotNetNoteSettings _dnnSettings = options.Value;
 
     public IActionResult Index()
     {
-        _logger.LogInformation("HOME - Index 페이지가 로드되었습니다.");
+        logger.LogInformation("HOME - Index 페이지가 로드되었습니다.");
 
         // ViewData[] 또는 ViewBag. 개체로 뷰 페이지로 값 전송 
         ViewBag.SiteName = "팀 사이트";
@@ -45,28 +34,28 @@ public class TeamController : Controller
         //};
         //ViewData["Photos"] = photos;            
         //[b] 실제 데이터베이스의 데이터 전송
-        ViewData["Photos"] = _repository.GetNewPhotos(); // 캐싱 사용 후
+        ViewData["Photos"] = repository.GetNewPhotos(); // 캐싱 사용 후
 
         ViewData["Notice"] =
-            _repository.GetNoteSummaryByCategoryCache("Notice"); // 공지사항
+            repository.GetNoteSummaryByCategoryCache("Notice"); // 공지사항
         ViewData["Free"] =
-            _repository.GetNoteSummaryByCategoryCache("Free"); // 자유게시판
+            repository.GetNoteSummaryByCategoryCache("Free"); // 자유게시판
         ViewData["Data"] =
-            _repository.GetNoteSummaryByCategoryCache("Data"); // 자료실
+            repository.GetNoteSummaryByCategoryCache("Data"); // 자료실
         ViewData["Qna"] =
-            _repository.GetNoteSummaryByCategoryCache("Qna"); // Q&A
+            repository.GetNoteSummaryByCategoryCache("Qna"); // Q&A
 
         ViewData["RecentPost"] =
-            _repository.GetRecentPosts(); // 최근 글 리스트
+            repository.GetRecentPosts(); // 최근 글 리스트
 
         try
         {
             ViewData["RecentComment"] =
-                _commentRepo.GetRecentComments(); // 최근 댓글 리스트
+                commentRepo.GetRecentComments(); // 최근 댓글 리스트
         }
         catch (System.Exception ex)
         {
-            _logger.LogError($"최근 댓글 리스트 가져오기 에러: {ex.Message}");
+            logger.LogError($"최근 댓글 리스트 가져오기 에러: {ex.Message}");
         }
 
         return View();
