@@ -9,21 +9,17 @@ namespace Acts.Controllers.ActionCategories;
 
 [Route("api/[controller]")]
 [ApiController]
-public class ActionCategoriesController : ControllerBase
+public class ActionCategoriesController(ActContext context) : ControllerBase
 {
-    private readonly ActContext _context;
-
-    public ActionCategoriesController(ActContext context) => _context = context;
-
     // GET: api/ActionCategories
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<ActionCategory>>> GetActionCategories() => await _context.ActionCategories.ToListAsync();
+    public async Task<ActionResult<IEnumerable<ActionCategory>>> GetActionCategories() => await context.ActionCategories.ToListAsync();
 
     // GET: api/ActionCategories/5
     [HttpGet("{id}")]
     public async Task<ActionResult<ActionCategory>> GetActionCategory(long id)
     {
-        var actionCategory = await _context.ActionCategories.FindAsync(id);
+        var actionCategory = await context.ActionCategories.FindAsync(id);
 
         if (actionCategory == null)
         {
@@ -43,11 +39,11 @@ public class ActionCategoriesController : ControllerBase
             return BadRequest();
         }
 
-        _context.Entry(actionCategory).State = EntityState.Modified;
+        context.Entry(actionCategory).State = EntityState.Modified;
 
         try
         {
-            await _context.SaveChangesAsync();
+            await context.SaveChangesAsync();
         }
         catch (DbUpdateConcurrencyException)
         {
@@ -69,8 +65,8 @@ public class ActionCategoriesController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<ActionCategory>> PostActionCategory(ActionCategory actionCategory)
     {
-        _context.ActionCategories.Add(actionCategory);
-        await _context.SaveChangesAsync();
+        context.ActionCategories.Add(actionCategory);
+        await context.SaveChangesAsync();
 
         return CreatedAtAction("GetActionCategory", new { id = actionCategory.Id }, actionCategory);
     }
@@ -79,17 +75,17 @@ public class ActionCategoriesController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteActionCategory(long id)
     {
-        var actionCategory = await _context.ActionCategories.FindAsync(id);
+        var actionCategory = await context.ActionCategories.FindAsync(id);
         if (actionCategory == null)
         {
             return NotFound();
         }
 
-        _context.ActionCategories.Remove(actionCategory);
-        await _context.SaveChangesAsync();
+        context.ActionCategories.Remove(actionCategory);
+        await context.SaveChangesAsync();
 
         return NoContent();
     }
 
-    private bool ActionCategoryExists(long id) => _context.ActionCategories.Any(e => e.Id == id);
+    private bool ActionCategoryExists(long id) => context.ActionCategories.Any(e => e.Id == id);
 }
