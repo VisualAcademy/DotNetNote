@@ -33,8 +33,5 @@ namespace DotNetNote.Controllers
         }
     }
 
-    public class DeleteViewModel
-    {
-        public string Password { get; set; }
-    }
+    public record DeleteViewModel(string Password);
 }
