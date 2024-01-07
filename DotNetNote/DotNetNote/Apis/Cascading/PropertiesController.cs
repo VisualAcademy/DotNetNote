@@ -10,21 +10,17 @@ namespace VisualAcademy.Apis;
 
 [Route("api/[controller]")]
 [ApiController]
-public class PropertiesController : ControllerBase
+public class PropertiesController(ApplicationDbContext context) : ControllerBase
 {
-    private readonly ApplicationDbContext _context;
-
-    public PropertiesController(ApplicationDbContext context) => _context = context;
-
     // GET: api/Properties
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Property>>> GetProperties() => await _context.Properties.ToListAsync();
+    public async Task<ActionResult<IEnumerable<Property>>> GetProperties() => await context.Properties.ToListAsync();
 
     // GET: api/Properties/5
     [HttpGet("{id}")]
     public async Task<ActionResult<Property>> GetProperty(int id)
     {
-        var @property = await _context.Properties.FindAsync(id);
+        var @property = await context.Properties.FindAsync(id);
 
         if (@property == null)
         {
@@ -44,11 +40,11 @@ public class PropertiesController : ControllerBase
             return BadRequest();
         }
 
-        _context.Entry(@property).State = EntityState.Modified;
+        context.Entry(@property).State = EntityState.Modified;
 
         try
         {
-            await _context.SaveChangesAsync();
+            await context.SaveChangesAsync();
         }
         catch (DbUpdateConcurrencyException)
         {
@@ -70,8 +66,8 @@ public class PropertiesController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<Property>> PostProperty(Property @property)
     {
-        _context.Properties.Add(@property);
-        await _context.SaveChangesAsync();
+        context.Properties.Add(@property);
+        await context.SaveChangesAsync();
 
         return CreatedAtAction("GetProperty", new { id = @property.Id }, @property);
     }
@@ -80,17 +76,17 @@ public class PropertiesController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteProperty(int id)
     {
-        var @property = await _context.Properties.FindAsync(id);
+        var @property = await context.Properties.FindAsync(id);
         if (@property == null)
         {
             return NotFound();
         }
 
-        _context.Properties.Remove(@property);
-        await _context.SaveChangesAsync();
+        context.Properties.Remove(@property);
+        await context.SaveChangesAsync();
 
         return NoContent();
     }
 
-    private bool PropertyExists(int id) => _context.Properties.Any(e => e.Id == id);
+    private bool PropertyExists(int id) => context.Properties.Any(e => e.Id == id);
 }
