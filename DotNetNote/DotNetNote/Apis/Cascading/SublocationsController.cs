@@ -10,26 +10,22 @@ namespace VisualAcademy.Apis;
 
 [Route("api/[controller]")]
 [ApiController]
-public class SublocationsController : ControllerBase
+public class SublocationsController(ApplicationDbContext context) : ControllerBase
 {
-    private readonly ApplicationDbContext _context;
-
-    public SublocationsController(ApplicationDbContext context) => _context = context;
-
     // GET: api/Sublocations
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Sublocation>>> GetSublocations() => await _context.Sublocations.ToListAsync();
+    public async Task<ActionResult<IEnumerable<Sublocation>>> GetSublocations() => await context.Sublocations.ToListAsync();
 
     [HttpGet("Locations/{parentId}")]
     public async Task<ActionResult<IEnumerable<Sublocation>>> GetSublocations(int parentId) =>
         // 특정 Locations에 해당하는 Sublocations만 읽어오기 
-        await _context.Sublocations.Where(s => s.LocationId == parentId).ToListAsync();
+        await context.Sublocations.Where(s => s.LocationId == parentId).ToListAsync();
 
     // GET: api/Sublocations/5
     [HttpGet("{id}")]
     public async Task<ActionResult<Sublocation>> GetSublocation(int id)
     {
-        var sublocation = await _context.Sublocations.FindAsync(id);
+        var sublocation = await context.Sublocations.FindAsync(id);
 
         if (sublocation == null)
         {
@@ -49,11 +45,11 @@ public class SublocationsController : ControllerBase
             return BadRequest();
         }
 
-        _context.Entry(sublocation).State = EntityState.Modified;
+        context.Entry(sublocation).State = EntityState.Modified;
 
         try
         {
-            await _context.SaveChangesAsync();
+            await context.SaveChangesAsync();
         }
         catch (DbUpdateConcurrencyException)
         {
@@ -75,8 +71,8 @@ public class SublocationsController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<Sublocation>> PostSublocation(Sublocation sublocation)
     {
-        _context.Sublocations.Add(sublocation);
-        await _context.SaveChangesAsync();
+        context.Sublocations.Add(sublocation);
+        await context.SaveChangesAsync();
 
         return CreatedAtAction("GetSublocation", new { id = sublocation.Id }, sublocation);
     }
@@ -85,17 +81,17 @@ public class SublocationsController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteSublocation(int id)
     {
-        var sublocation = await _context.Sublocations.FindAsync(id);
+        var sublocation = await context.Sublocations.FindAsync(id);
         if (sublocation == null)
         {
             return NotFound();
         }
 
-        _context.Sublocations.Remove(sublocation);
-        await _context.SaveChangesAsync();
+        context.Sublocations.Remove(sublocation);
+        await context.SaveChangesAsync();
 
         return NoContent();
     }
 
-    private bool SublocationExists(int id) => _context.Sublocations.Any(e => e.Id == id);
+    private bool SublocationExists(int id) => context.Sublocations.Any(e => e.Id == id);
 }
