@@ -18,44 +18,40 @@ public interface ILoginFailedManager
 /// <summary>
 /// 리포지토리 클래스: LoginFailedManager, LoginFailedRepository, LoginFailedService, ...
 /// </summary>
-public class LoginFailedManager : ILoginFailedManager
+public class LoginFailedManager(ILoginFailedRepository repo) : ILoginFailedManager
 {
-    private ILoginFailedRepository _repo;
-
-    public LoginFailedManager(ILoginFailedRepository repo) => _repo = repo;
-
-    public void ClearLoginFailed(string username) => _repo.ClearLogin(username);
+    public void ClearLoginFailed(string username) => repo.ClearLogin(username);
 
     public bool IsLoginFailed(string username)
     {
-        if (_repo.IsLoginUser(username))
+        if (repo.IsLoginUser(username))
         {
             // 로그인 유저
             // 카운터가 5 이상이고 최근 10분내 로그인 시도면
             // TODO: 
-            if (_repo.IsFiveOverCount(username) && _repo.IsLastLoginTenMinute(username))
+            if (repo.IsFiveOverCount(username) && repo.IsLastLoginTenMinute(username))
             {
                 // 조회 
                 return true; // 계정 잠금
             }
             // 카운터가 5 이상이고 최근 10분이 지났으면 => 클리어
-            else if (_repo.IsFiveOverCount(username)
-                && !_repo.IsLastLoginTenMinute(username))
+            else if (repo.IsFiveOverCount(username)
+                && !repo.IsLastLoginTenMinute(username))
             {
-                _repo.ClearLogin(username);
+                repo.ClearLogin(username);
                 return false;
             }
             else
             {
                 // 업데이트
-                _repo.UpdateLoginCount(username);
+                repo.UpdateLoginCount(username);
                 return false; // 아직은 계정 잠금 전 
             }
         }
         else
         {
             // 처음 로그인
-            _repo.AddLogin(new UserLog() { Username = username });
+            repo.AddLogin(new UserLog() { Username = username });
             return false; // 로그인 성공
         }
         //return true; // 로그인 실패 
