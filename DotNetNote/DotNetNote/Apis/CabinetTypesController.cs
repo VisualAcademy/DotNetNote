@@ -11,27 +11,17 @@ namespace DotNetNote.Apis;
 
 [Route("api/[controller]")]
 [ApiController]
-public class CabinetTypesController : ControllerBase
+public class CabinetTypesController(ApplicationDbContext context, ILogger<CabinetTypesController> logger) : ControllerBase
 {
-    private readonly ApplicationDbContext _context;
-    private readonly ILogger<CabinetTypesController> _logger; // Declare the logger
-
-    // Modify the constructor to accept ILogger<CabinetTypesController>
-    public CabinetTypesController(ApplicationDbContext context, ILogger<CabinetTypesController> logger)
-    {
-        _context = context;
-        _logger = logger; // Initialize the logger
-    }
-
     // GET: api/CabinetTypes
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<CabinetType>>> GetCabinetTypes() => await _context.CabinetTypes.ToListAsync();
+    public async Task<ActionResult<IEnumerable<CabinetType>>> GetCabinetTypes() => await context.CabinetTypes.ToListAsync();
 
     // GET: api/CabinetTypes/5
     [HttpGet("{id:long}")]
     public async Task<ActionResult<CabinetType>> GetCabinetType(long id)
     {
-        var cabinetType = await _context.CabinetTypes.FindAsync(id);
+        var cabinetType = await context.CabinetTypes.FindAsync(id);
 
         if (cabinetType == null)
         {
@@ -51,11 +41,11 @@ public class CabinetTypesController : ControllerBase
             return BadRequest();
         }
 
-        _context.Entry(cabinetType).State = EntityState.Modified;
+        context.Entry(cabinetType).State = EntityState.Modified;
 
         try
         {
-            await _context.SaveChangesAsync();
+            await context.SaveChangesAsync();
         }
         catch (DbUpdateConcurrencyException)
         {
@@ -77,8 +67,8 @@ public class CabinetTypesController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<CabinetType>> PostCabinetType(CabinetType cabinetType)
     {
-        _context.CabinetTypes.Add(cabinetType);
-        await _context.SaveChangesAsync();
+        context.CabinetTypes.Add(cabinetType);
+        await context.SaveChangesAsync();
 
         return CreatedAtAction("GetCabinetType", new { id = cabinetType.Id }, cabinetType);
     }
@@ -87,19 +77,19 @@ public class CabinetTypesController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteCabinetType(long id)
     {
-        var cabinetType = await _context.CabinetTypes.FindAsync(id);
+        var cabinetType = await context.CabinetTypes.FindAsync(id);
         if (cabinetType == null)
         {
             return NotFound();
         }
 
-        _context.CabinetTypes.Remove(cabinetType);
-        await _context.SaveChangesAsync();
+        context.CabinetTypes.Remove(cabinetType);
+        await context.SaveChangesAsync();
 
         return NoContent();
     }
 
-    private bool CabinetTypeExists(long id) => _context.CabinetTypes.Any(e => e.Id == id);
+    private bool CabinetTypeExists(long id) => context.CabinetTypes.Any(e => e.Id == id);
 
     // 페이징
     // GET api/Entries/Page/1/10
@@ -111,8 +101,8 @@ public class CabinetTypesController : ControllerBase
             // 페이지 번호는 1, 2, 3 사용, 리포지토리에서는 0, 1, 2 사용
             int pageIndex = pageNumber > 0 ? pageNumber - 1 : 0;
 
-            var totalRecords = await _context.CabinetTypes.CountAsync();
-            var models = await _context.CabinetTypes.OrderByDescending(n => n.Id).Skip(pageIndex * pageSize).Take(pageSize).ToListAsync();
+            var totalRecords = await context.CabinetTypes.CountAsync();
+            var models = await context.CabinetTypes.OrderByDescending(n => n.Id).Skip(pageIndex * pageSize).Take(pageSize).ToListAsync();
             if (models == null)
             {
                 return NotFound($"아무런 데이터가 없습니다.");
@@ -128,7 +118,7 @@ public class CabinetTypesController : ControllerBase
         }
         catch (Exception ಠ_ಠ) // Look of Disapproval
         {
-            _logger?.LogError($"ERROR({nameof(GetAll)}): {ಠ_ಠ.Message}");
+            logger?.LogError($"ERROR({nameof(GetAll)}): {ಠ_ಠ.Message}");
             return BadRequest();
         }
     }
@@ -143,8 +133,8 @@ public class CabinetTypesController : ControllerBase
             // 페이지 번호는 1, 2, 3 사용, 리포지토리에서는 0, 1, 2 사용
             int pageIndex = pageNumber > 0 ? pageNumber - 1 : 0;
 
-            var totalRecords = await _context.CabinetTypes.Where(s => s.Identification.Contains(searchQuery)).CountAsync();
-            var models = await _context.CabinetTypes.Where(s => s.Identification.Contains(searchQuery)).OrderByDescending(n => n.Id).Skip(pageIndex * pageSize).Take(pageSize).ToListAsync();
+            var totalRecords = await context.CabinetTypes.Where(s => s.Identification.Contains(searchQuery)).CountAsync();
+            var models = await context.CabinetTypes.Where(s => s.Identification.Contains(searchQuery)).OrderByDescending(n => n.Id).Skip(pageIndex * pageSize).Take(pageSize).ToListAsync();
             if (models == null)
             {
                 return NotFound($"아무런 데이터가 없습니다.");
@@ -163,7 +153,7 @@ public class CabinetTypesController : ControllerBase
         }
         catch (Exception ಠ_ಠ) // Look of Disapproval
         {
-            _logger?.LogError($"ERROR({nameof(GetAll)}): {ಠ_ಠ.Message}");
+            logger?.LogError($"ERROR({nameof(GetAll)}): {ಠ_ಠ.Message}");
             return BadRequest();
         }
     }
