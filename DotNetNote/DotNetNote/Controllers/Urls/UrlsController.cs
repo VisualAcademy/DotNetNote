@@ -2,19 +2,15 @@
 
 namespace DotNetNote.Controllers;
 
-public class UrlsController : Controller
+public class UrlsController(IUrlRepository repository) : Controller
 {
-    private readonly IUrlRepository _repository;
-
-    public UrlsController(IUrlRepository repository) => _repository = repository;
-
     public IActionResult Index() => View("~/Views/_MiniProjects/Urls/Index.cshtml");
 
     public IActionResult IsExistsMethodTest()
     {
         string dnk = "test@visualacademy.com";
 
-        bool r = _repository.IsExists(dnk);
+        bool r = repository.IsExists(dnk);
 
         ViewBag.IsExists = r;
 
