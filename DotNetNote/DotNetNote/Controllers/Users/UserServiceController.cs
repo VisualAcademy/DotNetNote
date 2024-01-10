@@ -4,12 +4,8 @@ using System;
 namespace DotNetNote.Controllers;
 
 [Route("api/[controller]")]
-public class UserServiceController : Controller
+public class UserServiceController(IUserRepository repo) : Controller
 {
-    private IUserRepository _repo;
-
-    public UserServiceController(IUserRepository repo) => _repo = repo;
-
     /// <summary>
     /// 아이디 중복 확인 Web API
     /// </summary>
@@ -20,7 +16,7 @@ public class UserServiceController : Controller
     {
         try
         {
-            var model = _repo.GetUserByUserId(username);
+            var model = repo.GetUserByUserId(username);
             if (model.UserId == null) // TODO: 모델 클래스로 null 값 체크?
             {
                 return NotFound($"{username} 아이디가 없습니다."); // 404 Not Found
