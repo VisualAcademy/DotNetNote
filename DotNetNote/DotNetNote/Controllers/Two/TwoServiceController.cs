@@ -3,18 +3,14 @@
 namespace DotNetNote.Controllers;
 
 [Route("api/[controller]")]
-public class TwoServiceController : Controller
+public class TwoServiceController(ITwoRepository repository) : Controller
 {
-    private ITwoRepository _repository;
-
-    public TwoServiceController(ITwoRepository repository) => _repository = repository;
-
     [HttpGet]
     public IActionResult Get()
     {
         try
         {
-            var twos = _repository.GetAll();
+            var twos = repository.GetAll();
             if (twos == null)
             {
                 return NotFound($"아무런 데이터가 없습니다.");
@@ -29,5 +25,5 @@ public class TwoServiceController : Controller
     }
 
     [HttpPost]
-    public TwoModel Post([FromBody] TwoModel model) => _repository.Add(model);
+    public TwoModel Post([FromBody] TwoModel model) => repository.Add(model);
 }
