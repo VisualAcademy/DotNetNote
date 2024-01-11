@@ -4,18 +4,14 @@ using System.Linq;
 namespace DotNetNote.Controllers;
 
 [Route("api/[controller]")]
-public class ThreeServiceController : Controller
+public class ThreeServiceController(IThreeRepository repository) : Controller
 {
-    private IThreeRepository _repository;
-
-    public ThreeServiceController(IThreeRepository repository) => _repository = repository;
-
     [HttpGet]
     public IActionResult Get()
     {
         try
         {
-            var threes = _repository.GetAll();
+            var threes = repository.GetAll();
             if (threes == null)
             {
                 return NotFound($"아무런 데이터가 없습니다.");
@@ -41,7 +37,7 @@ public class ThreeServiceController : Controller
             {
                 return BadRequest(ModelState); // 400 에러 출력
             }
-            var m = _repository.Add(model);
+            var m = repository.Add(model);
             return CreatedAtAction("Get", new { id = m.Id }, m); // 201
         }
         catch
@@ -51,5 +47,5 @@ public class ThreeServiceController : Controller
     }
 
     [HttpGet("{id:int}")]
-    public ThreeViewModel Get(int id) => _repository.GetAll().Where(m => m.Id == id).Single();
+    public ThreeViewModel Get(int id) => repository.GetAll().Where(m => m.Id == id).Single();
 }
