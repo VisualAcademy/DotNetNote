@@ -16,18 +16,8 @@ namespace DotNetNote.Controllers;
 
 [Produces("application/json")]
 [Route("api/SignServices")]
-public class SignServicesController : Controller
+public class SignServicesController(ISignRepository repo, IConfiguration config) : Controller
 {
-    private readonly ISignRepository _repository;
-    // https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration
-    private readonly IConfiguration _configuration;
-
-    public SignServicesController(ISignRepository repo, IConfiguration config)
-    {
-        _repository = repo;
-        _configuration = config;
-    }
-
     /// <summary>
     /// 회원 로그인
     /// </summary>
@@ -52,7 +42,7 @@ public class SignServicesController : Controller
     [HttpPost("Register")]
     public IActionResult Register([FromBody] SignViewModel model)
     {
-        var sign = _repository.AddSign(model);
+        var sign = repo.AddSign(model);
 
         if (sign == null)
         {
@@ -85,7 +75,7 @@ public class SignServicesController : Controller
         };
 
         //[2] 보안키 생성
-        var key = _configuration.GetSection("SymmetricSecurityKey").Value;
+        var key = config.GetSection("SymmetricSecurityKey").Value;
         var securityKey =
             new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key));
         var signingCredentials =
@@ -112,7 +102,7 @@ public class SignServicesController : Controller
     private bool IsLogin(SignViewModel model)
     {
         //return true; // 일단 무조건 통과
-        return _repository.IsAuthenticated(model);
+        return repo.IsAuthenticated(model);
     }
 
     [HttpGet("LoginTest")]
@@ -135,7 +125,7 @@ public class SignServicesController : Controller
         var email = HttpContext.User.Claims.First().Value;
 
         // 현재 접속중인 사용자의 상세 정보 가져오기
-        var sign = _repository.GetSignByEmail(email);
+        var sign = repo.GetSignByEmail(email);
 
         return Ok(sign);
     }
