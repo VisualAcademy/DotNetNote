@@ -7,21 +7,17 @@ namespace DotNetNote.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class TechServicesController : ControllerBase
+public class TechServicesController(TechContext context) : ControllerBase
 {
-    private readonly TechContext _context;
-
-    public TechServicesController(TechContext context) => _context = context;
-
     // GET: api/TechServices
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Tech>>> GetTeches() => await _context.Teches.ToListAsync();
+    public async Task<ActionResult<IEnumerable<Tech>>> GetTeches() => await context.Teches.ToListAsync();
 
     // GET: api/TechServices/5
     [HttpGet("{id}")]
     public async Task<ActionResult<Tech>> GetTech(int id)
     {
-        var tech = await _context.Teches.FindAsync(id);
+        var tech = await context.Teches.FindAsync(id);
 
         if (tech == null)
         {
@@ -40,11 +36,11 @@ public class TechServicesController : ControllerBase
             return BadRequest();
         }
 
-        _context.Entry(tech).State = EntityState.Modified;
+        context.Entry(tech).State = EntityState.Modified;
 
         try
         {
-            await _context.SaveChangesAsync();
+            await context.SaveChangesAsync();
         }
         catch (DbUpdateConcurrencyException)
         {
@@ -65,8 +61,8 @@ public class TechServicesController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<Tech>> PostTech(Tech tech)
     {
-        _context.Teches.Add(tech);
-        await _context.SaveChangesAsync();
+        context.Teches.Add(tech);
+        await context.SaveChangesAsync();
 
         return CreatedAtAction("GetTech", new { id = tech.Id }, tech);
     }
@@ -75,17 +71,17 @@ public class TechServicesController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<ActionResult<Tech>> DeleteTech(int id)
     {
-        var tech = await _context.Teches.FindAsync(id);
+        var tech = await context.Teches.FindAsync(id);
         if (tech == null)
         {
             return NotFound();
         }
 
-        _context.Teches.Remove(tech);
-        await _context.SaveChangesAsync();
+        context.Teches.Remove(tech);
+        await context.SaveChangesAsync();
 
         return tech;
     }
 
-    private bool TechExists(int id) => _context.Teches.Any(e => e.Id == id);
+    private bool TechExists(int id) => context.Teches.Any(e => e.Id == id);
 }
