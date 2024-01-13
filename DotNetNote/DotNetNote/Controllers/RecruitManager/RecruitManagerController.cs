@@ -7,12 +7,8 @@ using System.Threading.Tasks;
 namespace DotNetNote.Controllers.RecruitManager;
 
 [Authorize] // 로그인된 사용자만 테스트 가능 
-public class RecruitManagerController : Controller
+public class RecruitManagerController(IRecruitSettingRepository repo) : Controller
 {
-    private IRecruitSettingRepository _repo;
-
-    public RecruitManagerController(IRecruitSettingRepository repo) => _repo = repo;
-
     /// <summary>
     /// 기본 페이지 
     /// </summary>
@@ -34,7 +30,7 @@ public class RecruitManagerController : Controller
         {
             // 실제 데이터베이스 저장
             //_repo.Add(model);
-            await _repo.AddAsync(model);
+            await repo.AddAsync(model);
 
             return RedirectToAction(nameof(RecruitSettingList));
         }
@@ -51,7 +47,7 @@ public class RecruitManagerController : Controller
     {
         // 전체 레코드
         //var recruits = _repo.GetAll(); // 동기 방식
-        var recruits = await _repo.GetAllAsync(); // 비동기 방식 
+        var recruits = await repo.GetAllAsync(); // 비동기 방식 
 
         //return View(recruits); 
         return View("~/Views/_MiniProjects/RecruitManager/RecruitSettingList.cshtml", recruits);
@@ -65,7 +61,7 @@ public class RecruitManagerController : Controller
         ViewData["Id"] = id.ToString();
 
         //var recruit = _repo.GetById(id); 
-        var recruit = await _repo.GetByIdAsync(id);
+        var recruit = await repo.GetByIdAsync(id);
 
         //return View(recruit);
         return View("~/Views/_MiniProjects/RecruitManager/RecruitSettingDetail.cshtml", recruit);
@@ -82,7 +78,7 @@ public class RecruitManagerController : Controller
             // 데이터 수정
             if (ModelState.IsValid)
             {
-                _repo.Update(model);
+                repo.Update(model);
             }
 
             // 수정 후 상세 보기 페이지로 이동 
@@ -95,7 +91,7 @@ public class RecruitManagerController : Controller
             if (ModelState.IsValid)
             {
                 // 히든 필드에 들어있는 Id 값에 해당하는 레코드 삭제
-                _repo.Remove(model.Id);
+                repo.Remove(model.Id);
             }
 
             // 삭제 후 리스트 페이지로 이동 
@@ -115,16 +111,16 @@ public class RecruitManagerController : Controller
 
         // 현재 게시판 관련된 모집 정보가 설정이 되어 있는지 확인
         ViewBag.IsRecruitSettings =
-            _repo.IsRecruitSettings(boardName, boardNum);
+            repo.IsRecruitSettings(boardName, boardNum);
 
         // 종료된 모집인지 확인
         //ViewBag.IsClosedRecruit = false;
         ViewBag.IsClosedRecruit = 
-            _repo.IsClosedRecruit(boardName, boardNum);
+            repo.IsClosedRecruit(boardName, boardNum);
 
         // 마감된 모집인지 확인
         ViewBag.IsFinishedRecruit =
-            _repo.IsFinishedRecruit(boardName, boardNum);
+            repo.IsFinishedRecruit(boardName, boardNum);
 
 
         //return View();
