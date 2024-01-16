@@ -3,12 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DotNetNote.Controllers;
 
-public class MyNotificationsController : Controller
+public class MyNotificationsController(IMyNotificationRepository repository) : Controller
 {
-    private readonly IMyNotificationRepository _repository;
-
-    public MyNotificationsController(IMyNotificationRepository repository) => _repository = repository;
-
     #region MVC 액션 메서드
     public IActionResult Index() => View();
 
@@ -32,7 +28,7 @@ public class MyNotificationsController : Controller
 
         ViewBag.UserId = userId;
 
-        var noti = _repository.GetNotificationByUserid(userId);
+        var noti = repository.GetNotificationByUserid(userId);
 
         return View(noti);
     }
@@ -40,12 +36,12 @@ public class MyNotificationsController : Controller
 
     #region Web API
     [Route("api/IsNotification")]
-    public bool IsNotification(int userId) => _repository.IsNotification(userId);
+    public bool IsNotification(int userId) => repository.IsNotification(userId);
 
     [Route("api/CompleteNotification")]
     public bool CompleteNotification(int userId)
     {
-        _repository.CompleteNotificationByUserid(userId);
+        repository.CompleteNotificationByUserid(userId);
         return true;
     } 
     #endregion
