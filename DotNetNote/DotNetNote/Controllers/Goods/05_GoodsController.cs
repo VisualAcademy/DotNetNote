@@ -6,19 +6,15 @@ namespace DotNetNote.Controllers;
 /// <summary>
 /// [5] 컨트롤러 클래스: ASP.NET Core - MVC 파트 
 /// </summary>
-public class GoodsController : Controller
+public class GoodsController(IGoodsRepository repository) : Controller
 {
-    private IGoodsRepository _repository;
-
-    public GoodsController(IGoodsRepository repository) => _repository = repository;
-
     /// <summary>
     /// 리스트
     /// </summary>
     public IActionResult Index(int page = 1)
     {
         int pageSize = 10; 
-        var goodsSet = _repository.GetAllGoodsWithPaging(page, pageSize);
+        var goodsSet = repository.GetAllGoodsWithPaging(page, pageSize);
 
         ViewBag.PageNumber = page;
 
@@ -65,7 +61,7 @@ public class GoodsController : Controller
             GoodsDescription = goodsDescription
         };
 
-        _repository.AddGoods(model);
+        repository.AddGoods(model);
 
         //return Redirect("/Goods"); // 리스트 페이지로 이동
         return RedirectToAction(nameof(Index));
@@ -77,7 +73,7 @@ public class GoodsController : Controller
     /// </summary>
     public IActionResult Details(int id)
     {
-        var goods = _repository.GetGoodsById(id);
+        var goods = repository.GetGoodsById(id);
         return View(goods); 
     }
 
@@ -91,7 +87,7 @@ public class GoodsController : Controller
             GoodsId = goodsId, GoodsName = goodsName, GoodsDescription = goodsDescription
         };
 
-        _repository.UpdateGoods(goods);
+        repository.UpdateGoods(goods);
 
         return RedirectToAction(nameof(Details), new { Id = goodsId }); 
     }
@@ -102,7 +98,7 @@ public class GoodsController : Controller
     [HttpGet]
     public IActionResult Delete(int id)
     {
-        _repository.RemoveGoods(id);
+        repository.RemoveGoods(id);
         return RedirectToAction(nameof(Index)); 
     }
 }
