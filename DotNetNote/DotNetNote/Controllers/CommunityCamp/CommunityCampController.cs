@@ -3,19 +3,13 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DotNetNote.Controllers.CommunityCamp;
 
-public class CommunityCampController : Controller
+public class CommunityCampController(
+    ICommunityCampJoinMemberRepository repository) : Controller
 {
-    private ICommunityCampJoinMemberRepository _repository;
-
-    // 인터페이스를 통한 생성자 주입 방식 사용: 
-    //     Startup.cs에서 services.AddTransient로 등록됨
-    public CommunityCampController(
-        ICommunityCampJoinMemberRepository repository) => _repository = repository;
-
     public IActionResult Index()
     {
         // 모든 데이터 출력
-        var list = _repository.GetAll();
+        var list = repository.GetAll();
 
         return View(list);
     }
@@ -38,7 +32,7 @@ public class CommunityCampController : Controller
                 $"커뮤니티: {model.CommunityName}, 이름: {model.Name}";
 
             // 저장
-            _repository.AddMember(model);
+            repository.AddMember(model);
             TempData["Message"] = "데이터가 저장되었습니다.";
 
             return RedirectToAction("Index");
@@ -56,7 +50,7 @@ public class CommunityCampController : Controller
         if (ModelState.IsValid)
         {
             // 저장
-            _repository.DeleteMember(model);
+            repository.DeleteMember(model);
             TempData["Message"] = "데이터가 삭제되었습니다.";
 
             return RedirectToAction("Index");
@@ -69,7 +63,7 @@ public class CommunityCampController : Controller
     public IActionResult ComCampAdmin()
     {
         // 관리자 페이지
-        var list = _repository.GetAll();
+        var list = repository.GetAll();
 
         return View(list);
     }
