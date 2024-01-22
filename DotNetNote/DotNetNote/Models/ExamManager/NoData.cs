@@ -1,7 +1,6 @@
-﻿namespace DotNetNote.Models
+﻿namespace DotNetNote.Models;
+
+public class NoData
 {
-    public class NoData
-    {
-        public string Message { get; set; }
-    }
+    public string Message { get; set; }
 }
