@@ -79,10 +79,7 @@ public class DotNetNoteUserStore : IUserStore<DotNetNoteUser>, IUserPasswordStor
         return Task.FromResult(user.Id);
     }
 
-    public Task<string> GetUserNameAsync(DotNetNoteUser user, CancellationToken cancellationToken)
-    {
-        return Task.FromResult(user.UserName);
-    }
+    public Task<string> GetUserNameAsync(DotNetNoteUser user, CancellationToken cancellationToken) => Task.FromResult(user.UserName);
 
     public Task<bool> HasPasswordAsync(DotNetNoteUser user, CancellationToken cancellationToken)
     {
