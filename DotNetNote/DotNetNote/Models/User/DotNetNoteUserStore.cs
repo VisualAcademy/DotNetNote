@@ -1,12 +1,4 @@
-﻿using Dapper;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.Data.SqlClient;
-using System;
-using System.Data;
-using System.Threading;
-using System.Threading.Tasks;
-
-namespace DotNetNoteCore;
+﻿namespace DotNetNoteCore;
 
 public class DotNetNoteUserStore : IUserStore<DotNetNoteUser>, IUserPasswordStore<DotNetNoteUser>
 {
