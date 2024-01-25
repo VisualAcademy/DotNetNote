@@ -1,4 +1,11 @@
-﻿global using Microsoft.AspNetCore.Hosting;
-global using Microsoft.Extensions.Hosting;
+﻿global using Dapper;
 global using DotNetNote.Models;
+global using Microsoft.AspNetCore.Hosting;
+global using Microsoft.AspNetCore.Identity;
+global using Microsoft.Data.SqlClient;
+global using Microsoft.Extensions.Hosting;
+global using System;
 global using System.Collections.Generic;
+global using System.Data;
+global using System.Threading;
+global using System.Threading.Tasks;
