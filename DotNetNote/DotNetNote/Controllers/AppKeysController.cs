@@ -1,7 +1,4 @@
-﻿using DotNetNote.Settings;
-using Microsoft.Extensions.Options;
-
-namespace DotNetNote.Controllers;
+﻿namespace DotNetNote.Controllers;
 
 public class AppKeysController : Controller
 {
