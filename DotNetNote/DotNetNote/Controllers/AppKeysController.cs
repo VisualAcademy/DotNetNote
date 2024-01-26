@@ -1,10 +1,8 @@
 ﻿namespace DotNetNote.Controllers;
 
-public class AppKeysController : Controller
+public class AppKeysController(IOptions<AppKeyConfig> appKeyConfig) : Controller
 {
-    private readonly AppKeyConfig appKeyConfig;
-
-    public AppKeysController(IOptions<AppKeyConfig> appKeyConfig) => this.appKeyConfig = appKeyConfig.Value;
+    private readonly AppKeyConfig appKeyConfig = appKeyConfig.Value;
 
     public IActionResult Index()
     {
