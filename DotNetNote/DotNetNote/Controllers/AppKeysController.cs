@@ -1,5 +1,4 @@
 ﻿using DotNetNote.Settings;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 
 namespace DotNetNote.Controllers;
