@@ -32,7 +32,7 @@ public class AccountApiDemoController : Controller
     [HttpGet("login")]
     public IActionResult Login()
     {
-        if (!LoginProcess(new LoginViewModel()))
+        if (!LoginProcess(new DotNetNote.Models.LoginViewModel()))
         {
             return NotFound("이메일 또는 암호가 틀립니다.");
         }
@@ -56,7 +56,7 @@ public class AccountApiDemoController : Controller
     }
 
     [HttpPost("login")]
-    public IActionResult Login([FromBody] LoginViewModel login)
+    public IActionResult Login([FromBody] DotNetNote.Models.LoginViewModel login)
     {
         if (!LoginProcess(login))
         {
@@ -84,7 +84,7 @@ public class AccountApiDemoController : Controller
     /// <summary>
     /// 로그인 처리: 이메일/암호가 맞으면 true 반환
     /// </summary>
-    private bool LoginProcess(LoginViewModel login) => true;
+    private bool LoginProcess(DotNetNote.Models.LoginViewModel login) => true;
 
     //[Authorize]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
