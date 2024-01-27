@@ -1,7 +1,4 @@
-﻿using DotNetNote.Services;
-using Microsoft.AspNetCore.Mvc;
-
-namespace DotNetNote.Controllers;
+﻿namespace DotNetNote.Controllers;
 
 public class SingletonDemoController(IInfoService svc) : Controller
 {
