@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace DotNetNote.Services;
+﻿namespace DotNetNote.Services;
 
 /// <summary>
 /// 서비스 클래스
