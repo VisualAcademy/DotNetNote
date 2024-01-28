@@ -15,5 +15,5 @@ public class CopyrightService : ICopyrightService
     
     // @inject 키워드로 뷰에 직접 주입해서 사용하기 
     public string CopyrightString { get; set; } = 
-        $"Copyright {DateTime.Now.Year} all right reserved.";
+        $"Copyright {DateTime.Now.Year} all rights reserved.";
 }
