@@ -1,7 +1,4 @@
-﻿using DotNetNote.Services;
-using Microsoft.AspNetCore.Mvc;
-
-namespace DotNetNote.Controllers;
+﻿namespace DotNetNote.Controllers;
 
 /// <summary>
 /// 종속성 주입(의존성 주입) 연습 
