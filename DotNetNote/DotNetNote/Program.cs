@@ -152,7 +152,10 @@ void DependencyInjectionContainer(IServiceCollection services, IConfiguration Co
     services.AddTransient<IUserModelRepository, UserModelRepository>();
 
     services.AddSingleton<IBuyerRepository>(new BuyerRepository(Configuration["ConnectionStrings:DefaultConnection"]));
+
+    // 컬렉션 형태의 데이터를 인-메모리 또는 DB에서 가져오는 초간단 리포지토리 패턴
     services.AddTransient<IVariableRepository, VariableRepositoryInMemory>();
+
     services.AddTransient<IIdeaRepository, IdeaRepository>();
     services.AddTransient<DotNetNote.Models.DataFinder>();
 
