@@ -1,6 +1,4 @@
-﻿using Microsoft.Data.SqlClient;
-
-namespace DotNetSale.Models;
+﻿namespace DotNetSale.Models;
 
 public class CategoryRepositoryInMemory : ICategoryRepository
 {
