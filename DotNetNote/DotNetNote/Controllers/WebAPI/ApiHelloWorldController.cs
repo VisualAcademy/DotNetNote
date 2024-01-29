@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-
-namespace ApiHelloWorld.Controllers;
+﻿namespace ApiHelloWorld.Controllers;
 
 //[!] 애트리뷰트(어트리뷰트) 라우팅
 [Route("api/[controller]")]
