@@ -1,7 +1,4 @@
 ﻿#nullable disable
-using Microsoft.EntityFrameworkCore;
-using VisualAcademy.Models;
-
 namespace VisualAcademy.Apis;
 
 [Route("api/[controller]")]
