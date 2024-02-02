@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using DotNetNote.Models.Notes;
+﻿using DotNetNote.Models.Notes;
 
 namespace DotNetNote.Controllers
 {
