@@ -1,8 +1,4 @@
-﻿using Dapper;
-using Microsoft.Data.SqlClient;
-using Microsoft.Extensions.Configuration;
-using System;
-using System.Linq;
+﻿using Microsoft.Extensions.Configuration;
 
 namespace DotNetNote.Common;
 
