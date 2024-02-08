@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace DotNetNote.Services;
+﻿namespace DotNetNote.Services;
 
 public class GuidService : IGuidService
 {
