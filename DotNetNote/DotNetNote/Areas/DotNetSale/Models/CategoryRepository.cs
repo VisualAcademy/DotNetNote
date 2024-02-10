@@ -16,7 +16,7 @@ public class CategoryRepository : ICategoryRepository
 {
     private IDbConnection db;
 
-    public CategoryRepository() => db = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString);
+    public CategoryRepository() => db = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString);
 
     /// <summary>
     /// 카테고리(대분류) 등록
@@ -57,7 +57,7 @@ public class CategoryRepository : ICategoryRepository
     {
         #region ADO.NET 클래스 사용
         SqlConnection objCon =
-            new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString);
+            new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString);
         objCon.Open();
 
         SqlCommand objCmd = new SqlCommand("ProductCategoryList", objCon);

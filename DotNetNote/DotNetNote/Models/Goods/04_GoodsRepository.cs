@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.Configuration;
-
-namespace DotNetNote.Models;
+﻿namespace DotNetNote.Models;
 
 /// <summary>
 /// [4] 리포지토리 클래스
