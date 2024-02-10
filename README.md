@@ -4,6 +4,8 @@ ASP.NET Core 8.0 개발, 강의, 집필 소스 모음
 
 `ASP.NET & Core를 다루는 기술` 책의 닷넷코어 파트 소스 결과물
 
+https://www.dotnetnote.com 사이트에서 실행결괴를 확인하세요.
+
 DotNetNote 이름으로 만들어진 소스의 시작은 박용준 강사가 집필한 ASP.NET & Core를 다루는 기술 책의 .NET Core 파트의 최종 결과물로부터 계속 버전업되어
 
 1.0 버전부터 현재 8.0 버전까지 업데이트가 되고 있습니다.
