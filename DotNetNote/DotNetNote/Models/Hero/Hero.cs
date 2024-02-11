@@ -252,18 +252,8 @@ namespace DotNetNote.Models
     //@Path("/api/Heroes") : Java EE 참고용으로 기록
     [Route("api/[controller]")] // /api/heroes 
     [EnableCors("AllowAnyOrigin")]
-    public class HeroesController : Controller
+    public class HeroesController(IHeroRepository repository, ILogger<HeroesController> logger) : Controller
     {
-        // @Inject
-        private IHeroRepository _repository;
-        private ILogger<HeroesController> _logger;
-
-        public HeroesController(IHeroRepository repository, ILogger<HeroesController> logger)
-        {
-            _repository = repository;
-            _logger = logger;
-        }
-
         /// <summary>
         /// GET: /api/heroes
         /// </summary>
@@ -278,7 +268,7 @@ namespace DotNetNote.Models
             // throw new Exception("인위적으로 에러 발생시켜 500에러 출력");
             try
             {
-                var models = _repository.GetAllHeroes();
+                var models = repository.GetAllHeroes();
                 if (models == null)
                 {
                     return NotFound("아무런 데이터가 없습니다.");
@@ -287,7 +277,7 @@ namespace DotNetNote.Models
             }
             catch (Exception ex)
             {
-                _logger.LogError($"에러 발생: {ex.Message}");
+                logger.LogError($"에러 발생: {ex.Message}");
                 return BadRequest();
             }
         }
@@ -301,7 +291,7 @@ namespace DotNetNote.Models
         {
             try
             {
-                var model = _repository.GetHeroById(id);
+                var model = repository.GetHeroById(id);
                 if (model == null)
                 {
                     return NotFound($"{id}번 데이터가 없습니다.");
@@ -310,7 +300,7 @@ namespace DotNetNote.Models
             }
             catch (Exception ex)
             {
-                _logger.LogError($"HeroesController - GetById 에러 발생: {ex.Message}");
+                logger.LogError($"HeroesController - GetById 에러 발생: {ex.Message}");
                 return BadRequest($"에러가 발생했습니다. {ex.Message}");
             }
         }
@@ -343,7 +333,7 @@ namespace DotNetNote.Models
                     return BadRequest(ModelState); // 400 에러 출력
                 }
 
-                var m = _repository.AddHero(model); // 저장 
+                var m = repository.AddHero(model); // 저장 
 
                 if (DateTime.Now.Second % 2 == 0) //[!] 2가지 방식 중 원하는 방식 사용
                 {
@@ -359,7 +349,7 @@ namespace DotNetNote.Models
             }
             catch (Exception ex)
             {
-                _logger.LogError($"HeroesController - Post 에러 발생: {ex.Message}");
+                logger.LogError($"HeroesController - Post 에러 발생: {ex.Message}");
                 return BadRequest($"에러가 발생했습니다. {ex.Message}");
             }
         } // </Post>
@@ -375,20 +365,20 @@ namespace DotNetNote.Models
 
             try
             {
-                var oldModel = _repository.GetHeroById(id);
+                var oldModel = repository.GetHeroById(id);
                 if (oldModel == null)
                 {
                     return NotFound($"{id}번 데이터가 없습니다.");
                 }
                 model.Id = id; // *
-                _repository.UpdateHero(model); // 수정
+                repository.UpdateHero(model); // 수정
                 //return Ok(model);
                 // 204 No Content
                 return NoContent(); // 이미 넘어온 정보에 모든 값을 가지고 있기에...
             }
             catch (Exception ex)
             {
-                _logger.LogError($"HeroesController - Put 에러 발생: {ex.Message}");
+                logger.LogError($"HeroesController - Put 에러 발생: {ex.Message}");
                 return BadRequest($"데이터가 업데이트되지 않았습니다. {ex.Message}");
             }
         } // </Put>
@@ -399,20 +389,20 @@ namespace DotNetNote.Models
         {
             try
             {
-                var oldModel = _repository.GetHeroById(id);
+                var oldModel = repository.GetHeroById(id);
                 if (oldModel == null)
                 {
                     return NotFound($"{id}번 데이터가 없습니다.");
                 }
 
                 // 삭제 
-                _repository.RemoveHero(id);
+                repository.RemoveHero(id);
 
                 return NoContent(); // 204 No Content 
             }
             catch (Exception ex)
             {
-                _logger.LogError($"HeroesController - Delete 에러 발생: {ex.Message}");
+                logger.LogError($"HeroesController - Delete 에러 발생: {ex.Message}");
                 return BadRequest($"삭제할 수 없습니다. {ex.Message}");
             }
         } // </Delete> 
@@ -427,7 +417,7 @@ namespace DotNetNote.Models
             {
                 // 페이지 번호는 1, 2, 3 사용, 리포지토리에서는 0, 1, 2 사용
                 int pageIndex = (pageNumber > 0) ? pageNumber - 1 : 0;
-                var models = _repository.GetAllHeroesWithPaging(pageIndex, pageSize);
+                var models = repository.GetAllHeroesWithPaging(pageIndex, pageSize);
                 if (models == null)
                 {
                     return NotFound("아무런 데이터가 없습니다.");
@@ -436,13 +426,13 @@ namespace DotNetNote.Models
                 // 응답 헤더에 총 레코드 수를 담아서 출력 
                 //Response.Headers.Add("X-TotalRecordCount", _repository.GetRecordCountHeroes().ToString());
                 // 인덱서를 사용하는 방식으로 변경
-                Response.Headers["X-TotalRecordCount"] = _repository.GetRecordCountHeroes().ToString();
+                Response.Headers["X-TotalRecordCount"] = repository.GetRecordCountHeroes().ToString();
 
                 return Ok(models); // 200 OK 
             }
             catch (Exception ex)
             {
-                _logger.LogError($"HeroesController - GetByPaging 에러 발생: {ex.Message}");
+                logger.LogError($"HeroesController - GetByPaging 에러 발생: {ex.Message}");
                 return BadRequest(ex.Message);
             }
         }
@@ -453,7 +443,7 @@ namespace DotNetNote.Models
         {
             try
             {
-                var model = _repository.GetHeroByName(name);
+                var model = repository.GetHeroByName(name);
                 if (model == null)
                 {
                     return Ok(new Hero());
@@ -462,7 +452,7 @@ namespace DotNetNote.Models
             }
             catch (Exception ex)
             {
-                _logger.LogError($"HeroesController - GetByName 에러 발생: {ex.Message}");
+                logger.LogError($"HeroesController - GetByName 에러 발생: {ex.Message}");
                 return BadRequest($"에러가 발생했습니다. {ex.Message}");
             }
         }
