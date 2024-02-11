@@ -1,13 +1,5 @@
 ﻿// 모델 -> 인터페이스 -> 리포지토리 -> 컨트롤러 -> REST 
-using Dapper;
 using Microsoft.AspNetCore.Cors;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Data.SqlClient;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Data;
-using System.Linq;
 
 namespace DotNetNote.Models
 {
