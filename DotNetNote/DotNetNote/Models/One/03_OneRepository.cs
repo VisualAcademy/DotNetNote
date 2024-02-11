@@ -1,9 +1,4 @@
-﻿using Dapper;
-using Microsoft.Data.SqlClient;
-using Microsoft.Extensions.Configuration;
-using System.Linq;
-
-namespace DotNetNote.Models;
+﻿namespace DotNetNote.Models;
 
 /// <summary>
 /// 리포지토리 클래스 
