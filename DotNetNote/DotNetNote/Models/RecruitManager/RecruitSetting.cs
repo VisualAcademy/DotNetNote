@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace DotNetNote.Models.RecruitManager;
 
@@ -13,11 +12,11 @@ public class RecruitSetting
     [Display(Name = "비고")]
     public string Remarks { get; set; }
 
-    public DateTimeOffset CreationDate  { get; set; }
+    public DateTimeOffset CreationDate { get; set; }
 
     [Display(Name = "게시판 이름")]
     [Required(ErrorMessage = "게시판 이름을 입력하세요.")]
-    public string BoardName	{ get; set; }
+    public string BoardName { get; set; }
 
     [Display(Name = "게시판 번호")]
     [Required(ErrorMessage = "게시판 번호를 입력하세요.")]
