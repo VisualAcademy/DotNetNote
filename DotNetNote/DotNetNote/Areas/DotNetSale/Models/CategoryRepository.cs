@@ -4,12 +4,6 @@
     코멘트: 닷넷세일 - 카테고리 리포지토리 클래스 
     수정일: 2020-11-01
 */
-using Dapper;
-using Microsoft.Data.SqlClient;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-
 namespace DotNetSale.Models;
 
 public class CategoryRepository : ICategoryRepository
