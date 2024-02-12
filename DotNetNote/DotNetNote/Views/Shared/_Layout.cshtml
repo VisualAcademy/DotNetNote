@@ -231,6 +231,9 @@
     <footer class="border-top footer text-muted">
         <div class="container text-center">
             <p>&copy; @DateTime.Now.Year - DotNetNote(닷넷노트) - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a></p>
+
+            @await Component.InvokeAsync("Copyright")
+
             <p class="small"><em>Creator: @Configuration["Creator"] </em></p>
             <p class="small text-center"><em><a href="https://www.dotnetkorea.com/" target="_blank">닷넷코리아(https://www.dotnetkorea.com/)</a></em></p>
             <p>Powered by @System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription</p>
