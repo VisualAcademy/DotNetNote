@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-
-namespace DotNetNote.ViewComponents;
+﻿namespace DotNetNote.ViewComponents;
 
 public class TechListViewComponent : ViewComponent
 {
