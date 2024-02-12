@@ -1,5 +1,3 @@
-using Microsoft.AspNetCore.Mvc;
-
 namespace DotNetNote.ViewComponents;
 
 public class MainSummaryListViewComponent : ViewComponent
