@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
-
-namespace DotNetNote.ViewComponents;
+﻿namespace DotNetNote.ViewComponents;
 
 /// <summary>
 /// Copyright 뷰 컴포넌트
