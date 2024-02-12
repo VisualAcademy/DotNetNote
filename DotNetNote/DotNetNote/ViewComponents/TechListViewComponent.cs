@@ -4,8 +4,9 @@ public class TechListViewComponent : ViewComponent
 {
     public IViewComponentResult Invoke()
     {
-        var techLists = new List<Tech>() {
-            new Tech { Id = 1, Title = "ASP.NET Core" },
+        var techLists = new List<Tech>()
+        {
+            new() { Id = 1, Title = "ASP.NET Core" },
             new Tech { Id = 2, Title = "Bootstrap" },
             new Tech { Id = 3, Title = "C#" },
             new Tech { Id = 4, Title = "Dapper" },
