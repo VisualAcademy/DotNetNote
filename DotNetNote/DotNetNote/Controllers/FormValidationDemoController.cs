@@ -7,8 +7,6 @@ public class FormValidationDemoController : Controller
     public IActionResult Index() => View();
     #endregion
 
-
-
     //[2] 따라하기 2: 순수 HTML과 JavaScript를 사용한 유효성 검사 
     #region HTML
     public IActionResult Html() => View();
@@ -23,8 +21,6 @@ public class FormValidationDemoController : Controller
     }
     #endregion
 
-
-
     //[3] 따라하기 3: MVC 헬퍼 메서드 사용하기
     #region Helper Method
     [HttpGet]
@@ -37,8 +33,6 @@ public class FormValidationDemoController : Controller
         return View();
     }
     #endregion
-
-
 
     //[4] 따라하기 4: 강력한 형식의 뷰와 모델 바인딩 사용하기
     #region Strongly Type View + Model Binding
@@ -55,8 +49,6 @@ public class FormValidationDemoController : Controller
         return View();
     }
     #endregion
-
-
 
     //[5] 따라하기 5: 모델 기반 유효성 검사 및 서버측 유효성 검사
     #region Model Validation + Server Validation
@@ -98,8 +90,6 @@ public class FormValidationDemoController : Controller
     public IActionResult Completed() => View();
     #endregion
 
-
-
     //[6] 따라하기 6: 클라이언트측 유효성 검사
     #region Client Validation
     public IActionResult ClientValidation() => View();
@@ -116,8 +106,6 @@ public class FormValidationDemoController : Controller
         return View();
     }
     #endregion
-
-
 
     //[7] 따라하기 7: 태그 헬퍼 사용하기
     #region TagHelper
