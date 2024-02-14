@@ -39,10 +39,7 @@ public class FormValidationDemoController : Controller
     public IActionResult StronglyTypeView() => View();
 
     [HttpPost]
-    public IActionResult StronglyTypeView(MaximModel model)
-    {
-        return model is null ? throw new ArgumentNullException(nameof(model)) : (IActionResult)View();
-    }
+    public IActionResult StronglyTypeView(MaximModel model) => model is null ? throw new ArgumentNullException(nameof(model)) : (IActionResult)View();
     #endregion
 
     //[5] 따라하기 5: 모델 기반 유효성 검사 및 서버측 유효성 검사
