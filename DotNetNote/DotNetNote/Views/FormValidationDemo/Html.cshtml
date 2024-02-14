@@ -6,7 +6,7 @@
 <head>
     <title>순수 HTML</title>
     <script>
-        function CheckForm() {
+        function checkForm() {
             var name = document.getElementById("txtName");
             var content = document.getElementById("txtContent");
             if (name.value.length < 1 || content.value.length < 1) {
@@ -23,7 +23,7 @@
 <h2>HTML 태그로 폼 구성</h2>
 
 <form action="/FormValidationDemo/HtmlProcess" method="post" 
-        onsubmit="return CheckForm();">
+        onsubmit="return checkForm();">
     이름: <input type="text" name="txtName" id="txtName" value="" /><br />
     내용: <input type="text" name="txtContent" id="txtContent" value="" /><br />
     <input type="submit" value="입력" />
