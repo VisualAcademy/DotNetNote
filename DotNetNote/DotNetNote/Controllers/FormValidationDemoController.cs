@@ -41,12 +41,7 @@ public class FormValidationDemoController : Controller
     [HttpPost]
     public IActionResult StronglyTypeView(MaximModel model)
     {
-        if (model is null)
-        {
-            throw new ArgumentNullException(nameof(model));
-        }
-
-        return View();
+        return model is null ? throw new ArgumentNullException(nameof(model)) : (IActionResult)View();
     }
     #endregion
 
