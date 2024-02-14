@@ -1,0 +1,29 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>순수 HTML</title>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var form = document.querySelector('form');
+            var nameInput = document.getElementById('txtName');
+            var contentInput = document.getElementById('txtContent');
+
+            form.addEventListener('submit', function (event) {
+                if (nameInput.value.trim() === '' || contentInput.value.trim() === '') {
+                    alert('이름과 내용을 입력해 주세요.');
+                    nameInput.focus();
+                    event.preventDefault();
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <h2>HTML 태그로 폼 구성</h2>
+    <form action="/FormValidationDemo/HtmlProcess" method="post">
+        이름: <input type="text" name="txtName" id="txtName" /><br />
+        내용: <input type="text" name="txtContent" id="txtContent" /><br />
+        <input type="submit" value="입력" />
+    </form>
+</body>
+</html>
