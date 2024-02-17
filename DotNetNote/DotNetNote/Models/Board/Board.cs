@@ -1,6 +1,4 @@
-﻿using System;
-
-/// <summary>
+﻿/// <summary>
 /// Board 모델 클래스(Board, BoardModel, BoardViewModel, BoardDto, ...)
 /// BoardViews(Boards 테이블) 뷰와 일대일로 매핑되는 모델 클래스
 /// </summary>
