@@ -1,9 +1,4 @@
-﻿using Dapper;
-using System.Data;
-using Microsoft.Data.SqlClient;
-using System.Linq;
-
-namespace DotNetNote.Models
+﻿namespace DotNetNote.Models
 {
     public class TabRepository : ITabRepository
     {
