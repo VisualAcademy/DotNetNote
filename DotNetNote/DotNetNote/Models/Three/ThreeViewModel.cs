@@ -56,8 +56,5 @@ public class ThreeRepository : IThreeRepository
         return model;
     }
 
-    public ThreeViewModel GetById(int id)
-    {
-        throw new NotImplementedException();
-    }
+    public ThreeViewModel GetById(int id) => throw new NotImplementedException();
 }
