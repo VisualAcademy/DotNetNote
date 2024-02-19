@@ -1,57 +1,56 @@
-﻿namespace DotNetNote.Models
+﻿namespace DotNetNote.Models;
+
+/// <summary>
+/// [1] 모델 클래스
+/// </summary>
+public class TwoModel
 {
-    /// <summary>
-    /// [1] 모델 클래스
-    /// </summary>
-    public class TwoModel
-    {
-        public int Id { get; set; }
+    public int Id { get; set; }
 
-        public string Note { get; set; }
+    public string Note { get; set; }
+}
+
+/// <summary>
+/// [2] 리포지토리 인터페이스 
+/// </summary>
+public interface ITwoRepository
+{
+    TwoModel Add(TwoModel model);
+
+    List<TwoModel> GetAll();
+}
+
+/// <summary>
+/// [3] 리포지토리 클래스 
+/// </summary>
+public class TwoRepository : ITwoRepository
+{
+    private SqlConnection db;
+    private IConfiguration _config;
+
+    public TwoRepository(IConfiguration config)
+    {
+        _config = config;
+        db = new SqlConnection(
+                _config
+                    .GetSection("ConnectionStrings")
+                        .GetSection("DefaultConnection").Value);
     }
 
-    /// <summary>
-    /// [2] 리포지토리 인터페이스 
-    /// </summary>
-    public interface ITwoRepository
+    public List<TwoModel> GetAll()
     {
-        TwoModel Add(TwoModel model);
-
-        List<TwoModel> GetAll();
+        string sql = "Select * From Twos Order By Id Asc";
+        return db.Query<TwoModel>(sql).ToList();
     }
 
-    /// <summary>
-    /// [3] 리포지토리 클래스 
-    /// </summary>
-    public class TwoRepository : ITwoRepository
+    public TwoModel Add(TwoModel model)
     {
-        private SqlConnection db;
-        private IConfiguration _config;
-
-        public TwoRepository(IConfiguration config)
-        {
-            _config = config;
-            db = new SqlConnection(
-                    _config
-                        .GetSection("ConnectionStrings")
-                            .GetSection("DefaultConnection").Value);
-        }
-
-        public List<TwoModel> GetAll()
-        {
-            string sql = "Select * From Twos Order By Id Asc";
-            return db.Query<TwoModel>(sql).ToList();
-        }
-
-        public TwoModel Add(TwoModel model)
-        {
-            string sql = @"
+        string sql = @"
                 Insert Into Twos (Note) Values (@Note);
                 Select Cast(SCOPE_IDENTITY() As Int);
             ";
-            var id = db.Query<int>(sql, model).Single();
-            model.Id = id;
-            return model;
-        }
+        var id = db.Query<int>(sql, model).Single();
+        model.Id = id;
+        return model;
     }
 }
