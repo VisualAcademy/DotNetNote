@@ -19,9 +19,7 @@ public class StudentRepository
 {
     public List<Student> GetAllInMemory()
     {
-        List<Student> students = new List<Student>();
-        students.Add(new Student { StudentId = 1, Name = "홍길동" });
-        students.Add(new Student { StudentId = 2, Name = "백두산" });
+        List<Student> students = [new Student { StudentId = 1, Name = "홍길동" }, new Student { StudentId = 2, Name = "백두산" }];
         return students;
     }
 }
