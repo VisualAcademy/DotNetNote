@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-
-namespace DotNetNote
+﻿namespace DotNetNote
 {
     public class AccountContext(DbContextOptions<AccountContext> options) : DbContext(options)
     {
