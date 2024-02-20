@@ -2,13 +2,8 @@
 
 namespace DotNetNote
 {
-    public class AccountContext : DbContext
+    public class AccountContext(DbContextOptions<AccountContext> options) : DbContext(options)
     {
-        public AccountContext(DbContextOptions<AccountContext> options) : base(options)
-        {
-
-        }
-
         public DbSet<SignBase> SignBases { get; set; }
     }
 }
