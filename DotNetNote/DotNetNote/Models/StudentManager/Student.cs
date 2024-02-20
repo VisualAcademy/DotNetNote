@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using System.Net;
+﻿using System.Net;
 
 namespace DotNetNote.Models.StudentManager;
 
