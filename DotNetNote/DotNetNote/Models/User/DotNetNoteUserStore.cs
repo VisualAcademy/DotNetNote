@@ -64,10 +64,7 @@ public class DotNetNoteUserStore : IUserStore<DotNetNoteUser>, IUserPasswordStor
 
     public Task<string> GetUserNameAsync(DotNetNoteUser user, CancellationToken cancellationToken) => Task.FromResult(user.UserName);
 
-    public Task<bool> HasPasswordAsync(DotNetNoteUser user, CancellationToken cancellationToken)
-    {
-        return Task.FromResult(user.PasswordHash != null);
-    }
+    public Task<bool> HasPasswordAsync(DotNetNoteUser user, CancellationToken cancellationToken) => Task.FromResult(user.PasswordHash != null);
 
     public Task SetNormalizedUserNameAsync(DotNetNoteUser user, string normalizedName, CancellationToken cancellationToken)
     {
