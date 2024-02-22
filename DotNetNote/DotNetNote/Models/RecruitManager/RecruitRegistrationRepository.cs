@@ -1,11 +1,4 @@
-﻿using Dapper;
-using Microsoft.Data.SqlClient;
-using Microsoft.Extensions.Configuration;
-using System;
-using System.Data;
-using System.Linq;
-
-namespace DotNetNote.Models.RecruitManager
+﻿namespace DotNetNote.Models.RecruitManager
 {
     public interface IRecruitRegistrationRepository
     {
