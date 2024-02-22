@@ -1,6 +1,4 @@
-﻿using System.Linq;
-
-namespace DotNetNote.Models.Samples
+﻿namespace DotNetNote.Models.Samples
 {
     public class Department_Employee
     {
