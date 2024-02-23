@@ -39,10 +39,7 @@
                     .GetSection("DefaultConnection").Value);
         }
 
-        public RecruitRegistration Add(RecruitRegistration model)
-        {
-            throw new NotImplementedException();
-        }
+        public RecruitRegistration Add(RecruitRegistration model) => throw new NotImplementedException();
 
         public List<RecruitRegistration> GetAll()
         {
