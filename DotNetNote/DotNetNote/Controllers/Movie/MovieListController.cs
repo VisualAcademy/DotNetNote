@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
-
-namespace DotNetNote.Controllers;
+﻿namespace DotNetNote.Controllers;
 
 public class MovieListController : Controller
 {
