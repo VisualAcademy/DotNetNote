@@ -1,5 +1,4 @@
 ﻿using DotNetNote.Models.Notifications;
-using Microsoft.AspNetCore.Mvc;
 
 namespace DotNetNote.Controllers;
 
