@@ -1,6 +1,4 @@
-﻿using System.Linq;
-
-namespace DotNetNote.Models
+﻿namespace DotNetNote.Models
 {
     /// <summary>
     /// 시험 클래스 
