@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
 
-namespace DotNetNote.Models.Buyers
+namespace DotNetNote.Models.Buyers;
+
+public interface IBuyerRepository
 {
-    public interface IBuyerRepository
-    {
-        List<Buyer> GetBuyers();
-        Buyer GetBuyer(string buyerId);
-    }
+    List<Buyer> GetBuyers();
+    Buyer GetBuyer(string buyerId);
 }
