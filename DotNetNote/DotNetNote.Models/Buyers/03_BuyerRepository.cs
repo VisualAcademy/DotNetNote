@@ -6,11 +6,9 @@ using Microsoft.Data.SqlClient;
 
 namespace DotNetNote.Models.Buyers;
 
-public class BuyerRepository : IBuyerRepository
+public class BuyerRepository(string connectionString) : IBuyerRepository
 {
-    private readonly IDbConnection db;
-
-    public BuyerRepository(string connectionString) => db = new SqlConnection(connectionString);
+    private readonly IDbConnection db = new SqlConnection(connectionString);
 
     public Buyer GetBuyer(string buyerId)
     {
