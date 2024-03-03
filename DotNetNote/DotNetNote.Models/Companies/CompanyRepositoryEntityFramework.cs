@@ -5,21 +5,14 @@ using System.Linq;
 
 namespace DotNetNote.Models.Companies;
 
-public class CompanyRepositoryEntityFramework : ICompanyRepository
+public class CompanyRepositoryEntityFramework(CompanyContext context) : ICompanyRepository
 {
-    private readonly CompanyContext db;
-
-    public CompanyRepositoryEntityFramework(CompanyContext context)
-    {
-        db = context;
-    }
-
     public CompanyModel Add(CompanyModel model)
     {
         //using (var db = new CompanyContext())
         {
-            db.Companies.Add(model);
-            db.SaveChanges();
+            context.Companies.Add(model);
+            context.SaveChanges();
         }
 
         return model;
@@ -60,7 +53,7 @@ public class CompanyRepositoryEntityFramework : ICompanyRepository
         var companies = new List<CompanyModel>();
         //using (var db = new CompanyContext())
         {
-            companies = db.Companies.ToList();
+            companies = context.Companies.ToList();
         }
         return companies;
     }
