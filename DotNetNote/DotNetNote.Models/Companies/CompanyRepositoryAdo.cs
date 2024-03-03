@@ -7,19 +7,12 @@ using System.Data;
 
 namespace DotNetNote.Models.Companies
 {
-    public class CompanyRepositoryAdo : ICompanyRepository
+    public class CompanyRepositoryAdo(string connectionString) : ICompanyRepository
     {
-        private string _connectionString;
-
-        public CompanyRepositoryAdo(string connectionString)
-        {
-            _connectionString = connectionString;
-        }
-
         public CompanyModel Add(CompanyModel model)
         {
             SqlConnection con = new SqlConnection();
-            con.ConnectionString = _connectionString;
+            con.ConnectionString = connectionString;
             con.Open();
 
             SqlCommand cmd = new SqlCommand();
@@ -75,7 +68,7 @@ namespace DotNetNote.Models.Companies
         public List<CompanyModel> Read()
         {
             SqlConnection con = new SqlConnection();
-            con.ConnectionString = _connectionString;
+            con.ConnectionString = connectionString;
             con.Open();
 
             SqlCommand cmd = new SqlCommand();
