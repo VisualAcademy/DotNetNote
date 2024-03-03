@@ -35,10 +35,7 @@ public class CompanyRepositoryAdo(string connectionString) : ICompanyRepository
         return model;
     }
 
-    public CompanyModel Browse(int id)
-    {
-        throw new NotImplementedException();
-    }
+    public CompanyModel Browse(int id) => throw new NotImplementedException();
 
     public bool Delete(int id)
     {
