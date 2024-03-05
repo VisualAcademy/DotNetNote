@@ -18,10 +18,7 @@ public class CompanyRepositoryEntityFramework(CompanyContext context) : ICompany
         return model;
     }
 
-    public CompanyModel Browse(int id)
-    {
-        throw new NotImplementedException();
-    }
+    public CompanyModel Browse(int id) => throw new NotImplementedException();
 
     public bool Delete(int id)
     {
