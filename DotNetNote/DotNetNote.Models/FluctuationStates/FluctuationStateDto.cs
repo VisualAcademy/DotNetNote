@@ -1,12 +1,11 @@
 ﻿using Newtonsoft.Json;
 
-namespace DotNetNote.Models
+namespace DotNetNote.Models;
+
+public class FluctuationStateDto
 {
-    public class FluctuationStateDto
-    {
-        [JsonProperty("Text")]
-        public string Text { get; set; }
-        [JsonProperty("Value")]
-        public string Value { get; set; }
-    }
+    [JsonProperty("Text")]
+    public string Text { get; set; }
+    [JsonProperty("Value")]
+    public string Value { get; set; }
 }
