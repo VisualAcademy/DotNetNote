@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace DotNetNote.Models
+namespace DotNetNote.Models;
+
+public interface IFluctuationStateRepository
 {
-    public interface IFluctuationStateRepository
-    {
-        List<FluctuationStateDto> GetFluctuationStates();
-    }
+    List<FluctuationStateDto> GetFluctuationStates();
 }
