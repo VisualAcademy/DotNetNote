@@ -1,20 +1,19 @@
 ﻿using System.Collections.Generic;
 
-namespace DotNetNote.Models.Ideas
+namespace DotNetNote.Models.Ideas;
+
+/// <summary>
+/// [3] 리포지토리 인터페이스 
+/// </summary>
+public interface IIdeaRepository
 {
     /// <summary>
-    /// [3] 리포지토리 인터페이스 
+    /// 출력
     /// </summary>
-    public interface IIdeaRepository
-    {
-        /// <summary>
-        /// 출력
-        /// </summary>
-        List<Idea> GetAll();
+    List<Idea> GetAll();
 
-        /// <summary>
-        /// 입력
-        /// </summary>
-        Idea Add(Idea model);
-    }
+    /// <summary>
+    /// 입력
+    /// </summary>
+    Idea Add(Idea model);
 }
