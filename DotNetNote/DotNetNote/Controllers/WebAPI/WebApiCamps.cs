@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-
-namespace DotNetNote.Controllers;
+﻿namespace DotNetNote.Controllers;
 
 /// <summary>
 /// WebApiCampsController 대신에 WebApiCamps만 지정해도 사용 가능하다. 
