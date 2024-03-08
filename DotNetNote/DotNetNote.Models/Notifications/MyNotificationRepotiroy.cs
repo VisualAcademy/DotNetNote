@@ -5,14 +5,9 @@ using System.Linq;
 
 namespace DotNetNote.Models.Notifications
 {
-    public class MyNotificationRepository : IMyNotificationRepository
+    public class MyNotificationRepository(string connectionString) : IMyNotificationRepository
     {
-        private IDbConnection db;
-
-        public MyNotificationRepository(string connectionString)
-        {
-            db = new SqlConnection(connectionString);
-        }
+        private IDbConnection db = new SqlConnection(connectionString);
 
         /// <summary>
         /// 특정 사용자에 대한 알림이 있는지 확인
