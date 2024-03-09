@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-
-namespace MemberManagement.Data
+﻿namespace MemberManagement.Data
 {
     public class MemberDbContext : DbContext
     {
