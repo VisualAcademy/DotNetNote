@@ -1,8 +1,6 @@
 ﻿using DotNetNoteCore.Services;
-using Microsoft.Extensions.Configuration;
 using SendGrid;
 using SendGrid.Helpers.Mail;
-using System.Threading.Tasks;
 
 namespace DotNetNote.Services;
 
