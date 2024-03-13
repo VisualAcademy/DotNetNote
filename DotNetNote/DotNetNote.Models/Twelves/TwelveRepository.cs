@@ -7,15 +7,8 @@ namespace DotNetNote.Models;
 /// <summary>
 /// Twelve 리포지토리 클래스
 /// </summary>
-public class TwelveRepository : ITwelveRepository
+public class TwelveRepository(DashboardContext context) : ITwelveRepository
 {
-    private readonly DashboardContext _context;
-
-    public TwelveRepository(DashboardContext context)
-    {
-        _context = context;
-    }
-
     /// <summary>
     /// ParentId에 해당하는 1~12까지의 값을 가지는 12개 컬렉션 반환
     /// </summary>
@@ -25,8 +18,8 @@ public class TwelveRepository : ITwelveRepository
         //_context.Database.ExecuteSqlCommand($"Delete Twelves Where ParentId = {parentId}");
         //_context.SaveChanges();
         // [2] 기존 ParentId에 해당하는 모든 레코드 삭제
-        _context.Twelves.Where(p => p.ParentId == parentId).ToList().ForEach(p => _context.Twelves.Remove(p));
-        _context.SaveChanges();
+        context.Twelves.Where(p => p.ParentId == parentId).ToList().ForEach(p => context.Twelves.Remove(p));
+        context.SaveChanges();
                    
         List<Twelve> twelves = new List<Twelve>();
 
@@ -35,8 +28,8 @@ public class TwelveRepository : ITwelveRepository
             twelves.Add(new Twelve { ParentId = parentId, MonthNumber = i });
         }
 
-        _context.Twelves.AddRange(twelves); // 데이터 추가(12개)
-        _context.SaveChanges(); // 업데이트
+        context.Twelves.AddRange(twelves); // 데이터 추가(12개)
+        context.SaveChanges(); // 업데이트
 
         return twelves;
     }
@@ -46,20 +39,20 @@ public class TwelveRepository : ITwelveRepository
     /// </summary>
     public void SaveOrUpdateProfit(int parentId, int monthNumber, int profit)
     {
-        var twelve = _context.Twelves.Where(t => t.ParentId == parentId && t.MonthNumber == monthNumber).SingleOrDefault();
+        var twelve = context.Twelves.Where(t => t.ParentId == parentId && t.MonthNumber == monthNumber).SingleOrDefault();
         if (twelve != null)
         {
             // Update
             twelve.Profit = profit;
-            _context.Entry(twelve).State = Microsoft.EntityFrameworkCore.EntityState.Modified; // 수정 상태로 변경
-            _context.SaveChanges();
+            context.Entry(twelve).State = Microsoft.EntityFrameworkCore.EntityState.Modified; // 수정 상태로 변경
+            context.SaveChanges();
         }
         else
         {
             // Insert
             var t = new Twelve() { ParentId = parentId, MonthNumber = monthNumber, Profit = profit };
-            _context.Twelves.Add(t);
-            _context.SaveChanges(); 
+            context.Twelves.Add(t);
+            context.SaveChanges(); 
         }
     }
 
@@ -68,7 +61,7 @@ public class TwelveRepository : ITwelveRepository
     /// </summary>
     public List<Twelve> GetTwelves(int parentId)
     {
-        var twelves = _context.Twelves.Where(t => t.ParentId == parentId).OrderBy(t => t.MonthNumber).ToList(); 
+        var twelves = context.Twelves.Where(t => t.ParentId == parentId).OrderBy(t => t.MonthNumber).ToList(); 
 
         return twelves;
     }
