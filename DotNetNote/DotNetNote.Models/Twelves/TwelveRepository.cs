@@ -2,120 +2,119 @@
 using System.Linq;
 using Dul.Data;
 
-namespace DotNetNote.Models
+namespace DotNetNote.Models;
+
+/// <summary>
+/// Twelve 리포지토리 클래스
+/// </summary>
+public class TwelveRepository : ITwelveRepository
 {
-    /// <summary>
-    /// Twelve 리포지토리 클래스
-    /// </summary>
-    public class TwelveRepository : ITwelveRepository
+    private readonly DashboardContext _context;
+
+    public TwelveRepository(DashboardContext context)
     {
-        private readonly DashboardContext _context;
+        _context = context;
+    }
 
-        public TwelveRepository(DashboardContext context)
+    /// <summary>
+    /// ParentId에 해당하는 1~12까지의 값을 가지는 12개 컬렉션 반환
+    /// </summary>
+    public List<Twelve> Seed(int parentId)
+    {
+        //// [1] 기존 데이터 지우기
+        //_context.Database.ExecuteSqlCommand($"Delete Twelves Where ParentId = {parentId}");
+        //_context.SaveChanges();
+        // [2] 기존 ParentId에 해당하는 모든 레코드 삭제
+        _context.Twelves.Where(p => p.ParentId == parentId).ToList().ForEach(p => _context.Twelves.Remove(p));
+        _context.SaveChanges();
+                   
+        List<Twelve> twelves = new List<Twelve>();
+
+        for (int i = 1; i <= 12; i++)
         {
-            _context = context;
+            twelves.Add(new Twelve { ParentId = parentId, MonthNumber = i });
         }
 
-        /// <summary>
-        /// ParentId에 해당하는 1~12까지의 값을 가지는 12개 컬렉션 반환
-        /// </summary>
-        public List<Twelve> Seed(int parentId)
+        _context.Twelves.AddRange(twelves); // 데이터 추가(12개)
+        _context.SaveChanges(); // 업데이트
+
+        return twelves;
+    }
+
+    /// <summary>
+    /// 조건에 맞는 데이터가 있으면 업데이트 그렇지 않으면 입력 
+    /// </summary>
+    public void SaveOrUpdateProfit(int parentId, int monthNumber, int profit)
+    {
+        var twelve = _context.Twelves.Where(t => t.ParentId == parentId && t.MonthNumber == monthNumber).SingleOrDefault();
+        if (twelve != null)
         {
-            //// [1] 기존 데이터 지우기
-            //_context.Database.ExecuteSqlCommand($"Delete Twelves Where ParentId = {parentId}");
-            //_context.SaveChanges();
-            // [2] 기존 ParentId에 해당하는 모든 레코드 삭제
-            _context.Twelves.Where(p => p.ParentId == parentId).ToList().ForEach(p => _context.Twelves.Remove(p));
+            // Update
+            twelve.Profit = profit;
+            _context.Entry(twelve).State = Microsoft.EntityFrameworkCore.EntityState.Modified; // 수정 상태로 변경
             _context.SaveChanges();
-                       
-            List<Twelve> twelves = new List<Twelve>();
-
-            for (int i = 1; i <= 12; i++)
-            {
-                twelves.Add(new Twelve { ParentId = parentId, MonthNumber = i });
-            }
-
-            _context.Twelves.AddRange(twelves); // 데이터 추가(12개)
-            _context.SaveChanges(); // 업데이트
-
-            return twelves;
         }
-
-        /// <summary>
-        /// 조건에 맞는 데이터가 있으면 업데이트 그렇지 않으면 입력 
-        /// </summary>
-        public void SaveOrUpdateProfit(int parentId, int monthNumber, int profit)
+        else
         {
-            var twelve = _context.Twelves.Where(t => t.ParentId == parentId && t.MonthNumber == monthNumber).SingleOrDefault();
-            if (twelve != null)
-            {
-                // Update
-                twelve.Profit = profit;
-                _context.Entry(twelve).State = Microsoft.EntityFrameworkCore.EntityState.Modified; // 수정 상태로 변경
-                _context.SaveChanges();
-            }
-            else
-            {
-                // Insert
-                var t = new Twelve() { ParentId = parentId, MonthNumber = monthNumber, Profit = profit };
-                _context.Twelves.Add(t);
-                _context.SaveChanges(); 
-            }
+            // Insert
+            var t = new Twelve() { ParentId = parentId, MonthNumber = monthNumber, Profit = profit };
+            _context.Twelves.Add(t);
+            _context.SaveChanges(); 
         }
+    }
 
-        /// <summary>
-        /// 특정 부모에 해당하는 12개 레코드를 반환 
-        /// </summary>
-        public List<Twelve> GetTwelves(int parentId)
-        {
-            var twelves = _context.Twelves.Where(t => t.ParentId == parentId).OrderBy(t => t.MonthNumber).ToList(); 
+    /// <summary>
+    /// 특정 부모에 해당하는 12개 레코드를 반환 
+    /// </summary>
+    public List<Twelve> GetTwelves(int parentId)
+    {
+        var twelves = _context.Twelves.Where(t => t.ParentId == parentId).OrderBy(t => t.MonthNumber).ToList(); 
 
-            return twelves;
-        }
+        return twelves;
+    }
 
-        public Twelve Add(Twelve model)
-        {
-            throw new System.NotImplementedException();
-        }
+    public Twelve Add(Twelve model)
+    {
+        throw new System.NotImplementedException();
+    }
 
-        public Twelve Browse(int id)
-        {
-            throw new System.NotImplementedException();
-        }
+    public Twelve Browse(int id)
+    {
+        throw new System.NotImplementedException();
+    }
 
-        public bool Delete(int id)
-        {
-            throw new System.NotImplementedException();
-        }
+    public bool Delete(int id)
+    {
+        throw new System.NotImplementedException();
+    }
 
-        public bool Edit(Twelve model)
-        {
-            throw new System.NotImplementedException();
-        }
+    public bool Edit(Twelve model)
+    {
+        throw new System.NotImplementedException();
+    }
 
-        public int Has()
-        {
-            throw new System.NotImplementedException();
-        }
+    public int Has()
+    {
+        throw new System.NotImplementedException();
+    }
 
-        public IEnumerable<Twelve> Ordering(OrderOption orderOption)
-        {
-            throw new System.NotImplementedException();
-        }
+    public IEnumerable<Twelve> Ordering(OrderOption orderOption)
+    {
+        throw new System.NotImplementedException();
+    }
 
-        public List<Twelve> Paging(int pageNumber, int pageSize)
-        {
-            throw new System.NotImplementedException();
-        }
+    public List<Twelve> Paging(int pageNumber, int pageSize)
+    {
+        throw new System.NotImplementedException();
+    }
 
-        public List<Twelve> Read()
-        {
-            throw new System.NotImplementedException();
-        }
+    public List<Twelve> Read()
+    {
+        throw new System.NotImplementedException();
+    }
 
-        public List<Twelve> Search(string query)
-        {
-            throw new System.NotImplementedException();
-        }
+    public List<Twelve> Search(string query)
+    {
+        throw new System.NotImplementedException();
     }
 }
