@@ -68,10 +68,7 @@ public class TwelveRepository(DashboardContext context) : ITwelveRepository
 
     public Twelve Add(Twelve model) => throw new System.NotImplementedException();
 
-    public Twelve Browse(int id)
-    {
-        throw new System.NotImplementedException();
-    }
+    public Twelve Browse(int id) => throw new System.NotImplementedException();
 
     public bool Delete(int id)
     {
