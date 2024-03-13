@@ -1,7 +1,6 @@
-﻿namespace DotNetNote.Models
+﻿namespace DotNetNote.Models;
+
+public interface IUrlRepository
 {
-    public interface IUrlRepository
-    {
-        bool IsExists(string email);
-    }
+    bool IsExists(string email);
 }
