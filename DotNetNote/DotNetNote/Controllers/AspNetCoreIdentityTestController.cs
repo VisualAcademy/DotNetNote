@@ -4,12 +4,8 @@
 
 namespace DotNetNote.Controllers;
 
-public class AspNetCoreIdentityTestController : Controller
+public class AspNetCoreIdentityTestController(UserManager<DotNetNoteUser> userManager) : Controller
 {
-    private readonly UserManager<DotNetNoteUser> userManager;
-
-    public AspNetCoreIdentityTestController(UserManager<DotNetNoteUser> userManager) => this.userManager = userManager;
-
     // GET: /<controller>/
     public IActionResult Index() => View();
 
