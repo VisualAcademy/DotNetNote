@@ -1,7 +1,6 @@
 using DotNetNote.Common;
 using DotNetNote.Components;
 using DotNetNote.Controllers.Articles;
-using DotNetNote.Data;
 using DotNetNote.Models.Buyers;
 using DotNetNote.Models.Categories;
 using DotNetNote.Models.Companies;
@@ -11,18 +10,11 @@ using DotNetNote.Models.Notes;
 using DotNetNote.Models.Notifications;
 using DotNetNote.Models.RecruitManager;
 using DotNetNote.Rules;
-using DotNetNote.Services;
-using DotNetNote.Settings;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Rewrite;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
