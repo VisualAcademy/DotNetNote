@@ -1,5 +1,3 @@
-using System.Text.Encodings.Web;
-
 namespace DotNetNote.Services;
 
 public static class EmailSenderExtensions
