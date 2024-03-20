@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace DotNetNote.Models.AccountViewModels;
+﻿namespace DotNetNote.Models.AccountViewModels;
 
 public class ForgotPasswordViewModel
 {
