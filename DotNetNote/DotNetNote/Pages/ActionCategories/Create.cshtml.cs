@@ -4,12 +4,8 @@ using Acts.Models;
 
 namespace Acts.Pages.ActionCategories;
 
-public class CreateModel : PageModel
+public class CreateModel(ActContext context) : PageModel
 {
-    private readonly Acts.Models.ActContext _context;
-
-    public CreateModel(ActContext context) => _context = context;
-
     public IActionResult OnGet() => Page();
 
     [BindProperty]
@@ -23,8 +19,8 @@ public class CreateModel : PageModel
             return Page();
         }
 
-        _context.ActionCategories.Add(ActionCategory);
-        await _context.SaveChangesAsync();
+        context.ActionCategories.Add(ActionCategory);
+        await context.SaveChangesAsync();
 
         return RedirectToPage("./Index");
     }
