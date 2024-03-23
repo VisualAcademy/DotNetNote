@@ -7,12 +7,8 @@ using Acts.Models;
 
 namespace Acts.Pages.ActionCategories;
 
-public class DetailsModel : PageModel
+public class DetailsModel(Acts.Models.ActContext context) : PageModel
 {
-    private readonly ActContext _context;
-
-    public DetailsModel(Acts.Models.ActContext context) => _context = context;
-
     public ActionCategory ActionCategory { get; set; }
 
     public async Task<IActionResult> OnGetAsync(long? id)
@@ -22,7 +18,7 @@ public class DetailsModel : PageModel
             return NotFound();
         }
 
-        ActionCategory = await _context.ActionCategories.FirstOrDefaultAsync(m => m.Id == id);
+        ActionCategory = await context.ActionCategories.FirstOrDefaultAsync(m => m.Id == id);
 
         if (ActionCategory == null)
         {
