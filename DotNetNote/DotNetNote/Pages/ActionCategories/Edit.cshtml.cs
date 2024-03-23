@@ -4,12 +4,8 @@ using Acts.Models;
 
 namespace Acts.Pages.ActionCategories;
 
-public class EditModel : PageModel
+public class EditModel(Acts.Models.ActContext context) : PageModel
 {
-    private readonly Acts.Models.ActContext _context;
-
-    public EditModel(Acts.Models.ActContext context) => _context = context;
-
     [BindProperty]
     public ActionCategory ActionCategory { get; set; }
 
@@ -20,7 +16,7 @@ public class EditModel : PageModel
             return NotFound();
         }
 
-        ActionCategory = await _context.ActionCategories.FirstOrDefaultAsync(m => m.Id == id);
+        ActionCategory = await context.ActionCategories.FirstOrDefaultAsync(m => m.Id == id);
 
         if (ActionCategory == null)
         {
@@ -38,11 +34,11 @@ public class EditModel : PageModel
             return Page();
         }
 
-        _context.Attach(ActionCategory).State = EntityState.Modified;
+        context.Attach(ActionCategory).State = EntityState.Modified;
 
         try
         {
-            await _context.SaveChangesAsync();
+            await context.SaveChangesAsync();
         }
         catch (DbUpdateConcurrencyException)
         {
@@ -59,5 +55,5 @@ public class EditModel : PageModel
         return RedirectToPage("./Index");
     }
 
-    private bool ActionCategoryExists(long id) => _context.ActionCategories.Any(e => e.Id == id);
+    private bool ActionCategoryExists(long id) => context.ActionCategories.Any(e => e.Id == id);
 }
