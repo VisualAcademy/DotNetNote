@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace DotNetNoteCore;
+﻿namespace DotNetNoteCore;
 
 public class DotNetNoteLoginModel
 {
