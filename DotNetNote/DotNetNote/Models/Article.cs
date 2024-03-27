@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace DotNetNote.Models;
+﻿namespace DotNetNote.Models;
 
 public class Article
 {
