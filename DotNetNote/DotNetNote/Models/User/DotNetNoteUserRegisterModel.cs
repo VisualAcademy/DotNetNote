@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace DotNetNote;
+﻿namespace DotNetNote;
 
 public class DotNetNoteUserRegisterModel
 {
