@@ -1,7 +1,4 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
-
-namespace DotNetNote.Models
+﻿namespace DotNetNote.Models
 {
     /// <summary>
     /// 모델 클래스
