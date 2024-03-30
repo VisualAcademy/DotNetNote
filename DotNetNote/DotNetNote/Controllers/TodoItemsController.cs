@@ -9,7 +9,7 @@ namespace DotNetNote.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class TodoItemsController(TodoContext context) : ControllerBase
+public class TodoItemsController(TodoApi.Models.TodoContext context) : ControllerBase
 {
     // GET: api/TodoItems
     [HttpGet]

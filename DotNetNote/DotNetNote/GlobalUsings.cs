@@ -1,4 +1,5 @@
 ﻿global using Dapper;
+global using DotNetNote.Components;
 global using DotNetNote.Controllers;
 global using DotNetNote.Data;
 global using DotNetNote.Models;
