@@ -1,4 +1,4 @@
-﻿namespace DotNetNoteCore;
+﻿namespace DotNetNote;
 
 public class DotNetNoteUserStore : IUserStore<DotNetNoteUser>, IUserPasswordStore<DotNetNoteUser>
 {

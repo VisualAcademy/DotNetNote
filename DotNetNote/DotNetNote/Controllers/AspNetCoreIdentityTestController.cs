@@ -1,7 +1,5 @@
 ﻿using DotNetNoteCore;
 
-// For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace DotNetNote.Controllers;
 
 public class AspNetCoreIdentityTestController(UserManager<DotNetNoteUser> userManager) : Controller
