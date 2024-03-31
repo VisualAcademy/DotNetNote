@@ -8,7 +8,7 @@ namespace DotNetNote.Pages.CabinetTypes;
 
 public class DeleteModel : PageModel
 {
-    private readonly DotNetNote.Data.ApplicationDbContext _context;
+    private readonly ApplicationDbContext _context;
 
     public DeleteModel(Data.ApplicationDbContext context) => _context = context;
 
