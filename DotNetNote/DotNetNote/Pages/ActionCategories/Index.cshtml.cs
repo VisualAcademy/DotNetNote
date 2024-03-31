@@ -1,7 +1,5 @@
 ﻿#nullable disable
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
 using Acts.Models;
 
 namespace Acts.Pages.ActionCategories;
