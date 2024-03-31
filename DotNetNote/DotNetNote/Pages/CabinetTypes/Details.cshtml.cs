@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace DotNetNote.Pages.CabinetTypes;
 
-public class DetailsModel(Data.ApplicationDbContext context) : PageModel
+public class DetailsModel(ApplicationDbContext context) : PageModel
 {
     public CabinetType CabinetType { get; set; }
 
