@@ -1,8 +1,4 @@
-﻿using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Identity;
-using System.Collections.Generic;
-
-namespace DotNetNote.Models.ManageViewModels
+﻿namespace DotNetNote.Models.ManageViewModels
 {
     public class ExternalLoginsViewModel
     {
