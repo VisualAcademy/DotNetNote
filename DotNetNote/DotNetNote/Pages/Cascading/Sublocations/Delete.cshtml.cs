@@ -11,15 +11,8 @@ using VisualAcademy.Models;
 
 namespace VisualAcademy.Pages.Cascading.Sublocations;
 
-public class DeleteModel : PageModel
+public class DeleteModel(DotNetNote.Data.ApplicationDbContext context) : PageModel
 {
-    private readonly DotNetNote.Data.ApplicationDbContext _context;
-
-    public DeleteModel(DotNetNote.Data.ApplicationDbContext context)
-    {
-        _context = context;
-    }
-
     [BindProperty]
     public Sublocation Sublocation { get; set; }
 
@@ -30,7 +23,7 @@ public class DeleteModel : PageModel
             return NotFound();
         }
 
-        Sublocation = await _context.Sublocations
+        Sublocation = await context.Sublocations
             .Include(s => s.LocationRef).FirstOrDefaultAsync(m => m.Id == id);
 
         if (Sublocation == null)
@@ -47,12 +40,12 @@ public class DeleteModel : PageModel
             return NotFound();
         }
 
-        Sublocation = await _context.Sublocations.FindAsync(id);
+        Sublocation = await context.Sublocations.FindAsync(id);
 
         if (Sublocation != null)
         {
-            _context.Sublocations.Remove(Sublocation);
-            await _context.SaveChangesAsync();
+            context.Sublocations.Remove(Sublocation);
+            await context.SaveChangesAsync();
         }
 
         return RedirectToPage("./Index");
