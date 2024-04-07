@@ -3,20 +3,13 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace VisualAcademy.Pages.Cascading.Sublocations
 {
-    public class IndexModel : PageModel
+    public class IndexModel(DotNetNote.Data.ApplicationDbContext context) : PageModel
     {
-        private readonly DotNetNote.Data.ApplicationDbContext _context;
-
-        public IndexModel(DotNetNote.Data.ApplicationDbContext context)
-        {
-            _context = context;
-        }
-
         public IList<Sublocation> Sublocation { get;set; }
 
         public async Task OnGetAsync()
         {
-            Sublocation = await _context.Sublocations
+            Sublocation = await context.Sublocations
                 .Include(s => s.LocationRef).ToListAsync();
         }
     }
