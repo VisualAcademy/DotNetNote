@@ -1,16 +1,15 @@
 ﻿#nullable disable
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace VisualAcademy.Pages.Cascading.Sublocations
-{
-    public class IndexModel(DotNetNote.Data.ApplicationDbContext context) : PageModel
-    {
-        public IList<Sublocation> Sublocation { get;set; }
+namespace VisualAcademy.Pages.Cascading.Sublocations;
 
-        public async Task OnGetAsync()
-        {
-            Sublocation = await context.Sublocations
-                .Include(s => s.LocationRef).ToListAsync();
-        }
+public class IndexModel(DotNetNote.Data.ApplicationDbContext context) : PageModel
+{
+    public IList<Sublocation> Sublocation { get;set; }
+
+    public async Task OnGetAsync()
+    {
+        Sublocation = await context.Sublocations
+            .Include(s => s.LocationRef).ToListAsync();
     }
 }
