@@ -4,12 +4,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace VisualAcademy.Pages.Cascading.Sublocations;
 
-public class EditModel : PageModel
+public class EditModel(DotNetNote.Data.ApplicationDbContext context) : PageModel
 {
-    private readonly DotNetNote.Data.ApplicationDbContext _context;
-
-    public EditModel(DotNetNote.Data.ApplicationDbContext context) => _context = context;
-
     [BindProperty]
     public Sublocation Sublocation { get; set; }
 
@@ -20,14 +16,14 @@ public class EditModel : PageModel
             return NotFound();
         }
 
-        Sublocation = await _context.Sublocations
+        Sublocation = await context.Sublocations
             .Include(s => s.LocationRef).FirstOrDefaultAsync(m => m.Id == id);
 
         if (Sublocation == null)
         {
             return NotFound();
         }
-       ViewData["LocationId"] = new SelectList(_context.Locations, "Id", "Id");
+       ViewData["LocationId"] = new SelectList(context.Locations, "Id", "Id");
         return Page();
     }
 
@@ -40,11 +36,11 @@ public class EditModel : PageModel
             return Page();
         }
 
-        _context.Attach(Sublocation).State = EntityState.Modified;
+        context.Attach(Sublocation).State = EntityState.Modified;
 
         try
         {
-            await _context.SaveChangesAsync();
+            await context.SaveChangesAsync();
         }
         catch (DbUpdateConcurrencyException)
         {
@@ -61,5 +57,5 @@ public class EditModel : PageModel
         return RedirectToPage("./Index");
     }
 
-    private bool SublocationExists(int id) => _context.Sublocations.Any(e => e.Id == id);
+    private bool SublocationExists(int id) => context.Sublocations.Any(e => e.Id == id);
 }
