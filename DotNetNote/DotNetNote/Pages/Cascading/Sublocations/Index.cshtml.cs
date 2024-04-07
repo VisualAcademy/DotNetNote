@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace VisualAcademy.Pages.Cascading.Sublocations;
 
-public class IndexModel(DotNetNote.Data.ApplicationDbContext context) : PageModel
+public class IndexModel(ApplicationDbContext context) : PageModel
 {
     public IList<Sublocation> Sublocation { get;set; }
 
