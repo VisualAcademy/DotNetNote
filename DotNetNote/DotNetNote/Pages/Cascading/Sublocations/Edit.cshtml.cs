@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace VisualAcademy.Pages.Cascading.Sublocations;
 
-public class EditModel(DotNetNote.Data.ApplicationDbContext context) : PageModel
+public class EditModel(ApplicationDbContext context) : PageModel
 {
     [BindProperty]
     public Sublocation Sublocation { get; set; }
