@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace VisualAcademy.Pages.Cascading.Sublocations;
 
-public class DeleteModel(DotNetNote.Data.ApplicationDbContext context) : PageModel
+public class DeleteModel(ApplicationDbContext context) : PageModel
 {
     [BindProperty]
     public Sublocation Sublocation { get; set; }
