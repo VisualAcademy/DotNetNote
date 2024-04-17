@@ -40,10 +40,7 @@ public class CompanyRepositoryAdo(string connectionString) : ICompanyRepository
 
     public bool Edit(CompanyModel model) => throw new NotImplementedException();
 
-    public int Has()
-    {
-        throw new NotImplementedException();
-    }
+    public int Has() => throw new NotImplementedException();
 
     public IEnumerable<CompanyModel> Ordering(OrderOption orderOption)
     {
