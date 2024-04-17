@@ -42,10 +42,7 @@ public class CompanyRepositoryAdo(string connectionString) : ICompanyRepository
 
     public int Has() => throw new NotImplementedException();
 
-    public IEnumerable<CompanyModel> Ordering(OrderOption orderOption)
-    {
-        throw new NotImplementedException();
-    }
+    public IEnumerable<CompanyModel> Ordering(OrderOption orderOption) => throw new NotImplementedException();
 
     public List<CompanyModel> Paging(int pageNumber, int pageSize)
     {
