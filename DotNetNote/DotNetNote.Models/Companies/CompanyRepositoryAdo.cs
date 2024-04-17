@@ -38,10 +38,7 @@ public class CompanyRepositoryAdo(string connectionString) : ICompanyRepository
 
     public bool Delete(int id) => throw new NotImplementedException();
 
-    public bool Edit(CompanyModel model)
-    {
-        throw new NotImplementedException();
-    }
+    public bool Edit(CompanyModel model) => throw new NotImplementedException();
 
     public int Has()
     {
