@@ -1,9 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Net.Http.Headers;
-using System;
 using System.IO;
-using System.Threading.Tasks;
 
 namespace DotNetNote.Controllers;
 
