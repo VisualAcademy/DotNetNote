@@ -4,12 +4,8 @@ using System.IO;
 
 namespace DotNetNote.Controllers;
 
-public class CkEditorDemoController : Controller
+public class CkEditorDemoController(IWebHostEnvironment environment) : Controller
 {
-    private IWebHostEnvironment _environment;
-
-    public CkEditorDemoController(IWebHostEnvironment environment) => _environment = environment;
-
     public IActionResult Index() => View();
 
     [HttpPost]
@@ -33,7 +29,7 @@ public class CkEditorDemoController : Controller
     {
         string imgPath = "";
         string msg = "";
-        var uploadFolder = Path.Combine(_environment.WebRootPath, "files");
+        var uploadFolder = Path.Combine(environment.WebRootPath, "files");
 
         try
         {
