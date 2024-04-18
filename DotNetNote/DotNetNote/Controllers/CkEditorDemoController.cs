@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Net.Http.Headers;
-using System.IO;
 
 namespace DotNetNote.Controllers;
 
