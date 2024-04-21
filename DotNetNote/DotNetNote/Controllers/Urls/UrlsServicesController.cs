@@ -1,9 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Linq;
-using System.Net;
+﻿using System.Net;
 using System.Net.Http;
 
 namespace DotNetNote.Controllers;
