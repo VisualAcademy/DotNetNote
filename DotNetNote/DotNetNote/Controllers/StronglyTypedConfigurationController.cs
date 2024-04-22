@@ -1,12 +1,9 @@
 ﻿namespace DotNetNote.Controllers;
 
-public class StronglyTypedConfigurationController : Controller
+public class StronglyTypedConfigurationController(IOptions<DotNetNoteSettings> options) : Controller
 {
     // 강력한 형식의 클래스의 인스턴스 생성
-    private DotNetNoteSettings _dnnSettings;
-    public StronglyTypedConfigurationController(
-        IOptions<DotNetNoteSettings> options) => 
-            _dnnSettings = options.Value;
+    private DotNetNoteSettings _dnnSettings = options.Value;
 
     public IActionResult Index()
     {
