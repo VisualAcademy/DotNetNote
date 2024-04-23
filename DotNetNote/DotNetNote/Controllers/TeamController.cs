@@ -10,7 +10,7 @@ public class TeamController(
         ) : Controller
 {
     // 강력한 형식의 클래스의 인스턴스 생성
-    private DotNetNoteSettings _dnnSettings = options.Value;
+    private readonly DotNetNoteSettings _dnnSettings = options.Value;
 
     public IActionResult Index()
     {
