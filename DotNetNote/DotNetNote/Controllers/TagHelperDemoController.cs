@@ -1,5 +1,3 @@
-using Microsoft.AspNetCore.Mvc;
-
 namespace DotNetNote.Controllers;
 
 public class TagHelperDemoController : Controller
