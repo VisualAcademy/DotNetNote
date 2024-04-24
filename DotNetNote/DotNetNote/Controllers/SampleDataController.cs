@@ -1,7 +1,3 @@
-using System;
-using System.Linq;
-using Microsoft.AspNetCore.Mvc;
-
 namespace DotNetNote.Controllers;
 
 [Route("api/[controller]")]
