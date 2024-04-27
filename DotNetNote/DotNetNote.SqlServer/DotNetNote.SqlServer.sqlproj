@@ -138,7 +138,6 @@
     <Build Include="dbo\Tables\Maxims.sql" />
     <Build Include="dbo\Tables\Memos.sql" />
     <Build Include="dbo\Tables\Ones.sql" />
-    <Build Include="dbo\Tables\Permission.sql" />
     <Build Include="dbo\Tables\Signs.sql" />
     <Build Include="dbo\Tables\SqlSessions.sql" />
     <Build Include="dbo\Tables\Tasks.sql" />
@@ -165,6 +164,5 @@
     <Build Include="dbo\Tables\Users\Users.sql" />
     <Build Include="dbo\Stored Procedures\Users\GetUsers.sql" />
     <Build Include="dbo\Stored Procedures\Users\Users_Procedures.sql" />
-    <Build Include="dbo\Stored Procedures\DotNetKorea\AddPermission.sql" />
   </ItemGroup>
 </Project>
