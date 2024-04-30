@@ -11,7 +11,7 @@ public class FluctuationStateRepositoryInMemory : IFluctuationStateRepository
             new FluctuationStateDto { Text = "증가", Value = "0"},
             new() { Text = "감소", Value = "1"},
             new FluctuationStateDto { Text = "고정", Value = "2"},
-            new FluctuationStateDto { Text = "예측", Value = "3"},
+            new() { Text = "예측", Value = "3"},
         };
 
         return r;
