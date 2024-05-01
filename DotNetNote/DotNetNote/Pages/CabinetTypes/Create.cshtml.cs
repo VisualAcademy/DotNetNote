@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace DotNetNote.Pages.CabinetTypes;
 
-public class CreateModel(Data.ApplicationDbContext context) : PageModel
+public class CreateModel(ApplicationDbContext context) : PageModel
 {
     public IActionResult OnGet() => Page();
 
