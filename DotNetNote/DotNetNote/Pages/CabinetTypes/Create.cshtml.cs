@@ -3,12 +3,8 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace DotNetNote.Pages.CabinetTypes;
 
-public class CreateModel : PageModel
+public class CreateModel(Data.ApplicationDbContext context) : PageModel
 {
-    private readonly Data.ApplicationDbContext _context;
-
-    public CreateModel(Data.ApplicationDbContext context) => _context = context;
-
     public IActionResult OnGet() => Page();
 
     [BindProperty]
@@ -22,8 +18,8 @@ public class CreateModel : PageModel
             return Page();
         }
 
-        _context.CabinetTypes.Add(CabinetType);
-        await _context.SaveChangesAsync();
+        context.CabinetTypes.Add(CabinetType);
+        await context.SaveChangesAsync();
 
         return RedirectToPage("./Index");
     }
