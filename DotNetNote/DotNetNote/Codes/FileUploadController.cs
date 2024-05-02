@@ -13,6 +13,7 @@ namespace VisualAcademy.Codes;
 /// </summary>
 [ApiController]
 [Route("[controller]")]
+[Authorize(Roles = "Administrators")]
 public class FileUploadController(
     IWebHostEnvironment environment,
     IConfiguration configuration) : ControllerBase
