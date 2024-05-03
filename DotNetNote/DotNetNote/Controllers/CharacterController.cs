@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-
-/// <summary>
+﻿/// <summary>
 /// 캐릭터(Heroes) 선택: 로그인한 회원만 접근 가능
 /// </summary>
 namespace DotNetNote.Controllers;
