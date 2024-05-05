@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-
-namespace DotNetNote.Controllers.WebAPI;
+﻿namespace DotNetNote.Controllers.WebAPI;
 
 [Route("api/[controller]")]
 public class ValuesController : Controller
