@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.ComponentModel.DataAnnotations;
-
-namespace ApiHelloWorld.Controllers;
+﻿namespace ApiHelloWorld.Controllers;
 
 [Route("api/[controller]")]
 public class ApiHelloWorldWithValueController : Controller
