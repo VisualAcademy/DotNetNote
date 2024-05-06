@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.ComponentModel.DataAnnotations;
-using System.Net;
+﻿using System.Net;
 
 namespace DotNetNote.Controllers;
 
