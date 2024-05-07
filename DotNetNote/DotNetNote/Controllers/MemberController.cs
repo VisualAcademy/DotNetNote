@@ -1,6 +1,4 @@
 ﻿using MemberManagement.Data;
-using Microsoft.AspNetCore.Mvc;
-using System.Linq;
 
 namespace DotNetNote.Controllers;
 
