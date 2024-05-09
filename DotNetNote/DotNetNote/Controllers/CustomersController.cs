@@ -7,13 +7,9 @@ namespace DotNetNote.Controllers;
 public class CustomersController : Controller
 {
     [HttpGet]
-    public IEnumerable<Customer> Get()
-    {
-        return
-        [
+    public IEnumerable<Customer> Get() => [
             new Customer { Id = 1, Name = "김태영", City = "서울" },
             new Customer { Id = 2, Name = "박용준", City = "인천" },
             new Customer { Id = 3, Name = "한상훈", City = "경기" }
         ];
-    }
 }
