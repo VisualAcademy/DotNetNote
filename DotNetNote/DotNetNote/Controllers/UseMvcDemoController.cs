@@ -10,7 +10,7 @@ public class UseMvcDemoController : Controller
 
     public IActionResult UsingModelDemo()
     {
-        DemoClass dc = new DemoClass() { Id = 1, Name = "박용준" };
+        DemoClass dc = new() { Id = 1, Name = "박용준" };
 
         return View(dc);
     }
