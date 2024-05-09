@@ -9,11 +9,13 @@ public class RankingServiceController : Controller
     [HttpGet]
     public IEnumerable<Ranking> Get()
     {
-        List<Ranking> lst = new List<Ranking>();
-        lst.Add(new Ranking { Id = 1, Name = "홍길동", Rank = 1, RankImage = "One.gif" });
-        lst.Add(new Ranking { Id = 2, Name = "백두산", Rank = 2, RankImage = "Two.gif" });
-        lst.Add(new Ranking { Id = 3, Name = "백두산3", Rank = 3, RankImage = "" });
-        lst.Add(new Ranking { Id = 4, Name = "백두산4", Rank = 4, RankImage = "" });
+        List<Ranking> lst =
+        [
+            new Ranking { Id = 1, Name = "홍길동", Rank = 1, RankImage = "One.gif" },
+            new Ranking { Id = 2, Name = "백두산", Rank = 2, RankImage = "Two.gif" },
+            new Ranking { Id = 3, Name = "백두산3", Rank = 3, RankImage = "" },
+            new Ranking { Id = 4, Name = "백두산4", Rank = 4, RankImage = "" },
+        ];
 
         return lst.AsEnumerable();
     }
