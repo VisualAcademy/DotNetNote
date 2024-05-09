@@ -4,14 +4,12 @@
 public class PersonServiceController : Controller
 {
     [HttpGet]
-    public IEnumerable<PersonModel> Get()
-    {
-        return new List<PersonModel> {
-                new PersonModel { Id = 1, Name = "김태영" },
-                new PersonModel { Id = 2, Name = "박용준" },
-                new PersonModel { Id = 3, Name = "한상훈" }
-            };
-    }
+    public IEnumerable<PersonModel> Get() =>
+        [
+            new PersonModel { Id = 1, Name = "김태영" },
+            new PersonModel { Id = 2, Name = "박용준" },
+            new PersonModel { Id = 3, Name = "한상훈" }
+        ];
 
     [HttpPost]
     public PersonModel Post([FromBody] PersonModel model) =>
