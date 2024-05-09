@@ -1,5 +1,4 @@
 ﻿using Dul.Web;
-using Microsoft.AspNetCore.Mvc;
 
 namespace DotNetNote.Controllers;
 
