@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-
-namespace DotNetNote.Controllers;
+﻿namespace DotNetNote.Controllers;
 
 /// <summary>
 /// [실습] Razor 표현식 사용하기 
