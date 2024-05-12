@@ -2,12 +2,8 @@
 
 namespace DotNetNote.Controllers;
 
-public class CompaniesController : Controller
+public class CompaniesController(ICompanyRepository repository) : Controller
 {
-    private ICompanyRepository _repository;
-
-    public CompaniesController(ICompanyRepository repository) => _repository = repository;
-
     public IActionResult Index() => View();
 
     [HttpPost]
@@ -21,7 +17,7 @@ public class CompaniesController : Controller
     [HttpGet]
     public IActionResult Manage()
     {
-        var companies = _repository.Read();
+        var companies = repository.Read();
 
         return View(companies);
     }
@@ -29,7 +25,7 @@ public class CompaniesController : Controller
     [HttpPost]
     public IActionResult Manage(string name)
     {
-        _repository.Add(new CompanyModel() { Name = name });
+        repository.Add(new CompanyModel() { Name = name });
         return RedirectToAction(nameof(Manage));
     }
 }
