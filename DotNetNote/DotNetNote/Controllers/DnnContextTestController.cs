@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-
-namespace DotNetNote.Controllers;
+﻿namespace DotNetNote.Controllers;
 
 public class DnnContextTestController(DotNetNoteContext context) : Controller
 {
