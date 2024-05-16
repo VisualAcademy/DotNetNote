@@ -1,6 +1,4 @@
 ﻿using DotNetNote.Models.Ideas;
-using Microsoft.AspNetCore.Mvc;
-using System.Linq;
 using System.Net;
 
 namespace DotNetNote.Controllers;
