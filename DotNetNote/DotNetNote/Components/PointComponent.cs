@@ -1,7 +1,4 @@
 ﻿//[Angular 강의] Points 테이블부터 Point 컴포넌트까지 JSON 데이터를 읽어다가 앵귤러 뷰 컴포넌트에 출력하기 데모
-using Microsoft.AspNetCore.Mvc;
-using System;
-
 namespace DotNetNote.Components;
 
 public class PointComponent
