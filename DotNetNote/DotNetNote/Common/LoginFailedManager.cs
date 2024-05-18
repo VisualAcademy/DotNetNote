@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.Configuration;
-
-namespace DotNetNote.Common;
+﻿namespace DotNetNote.Common;
 
 /// <summary>
 /// 인터페이스: Manager, Repository, Service, ...
