@@ -1,6 +1,3 @@
-using Microsoft.AspNetCore.Mvc;
-using System;
-
 namespace DotNetNote.Controllers;
 
 // 컨트롤러: 클래스
