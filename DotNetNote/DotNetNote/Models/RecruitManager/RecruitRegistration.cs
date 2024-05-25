@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace DotNetNote.Models.RecruitManager;
+﻿namespace DotNetNote.Models.RecruitManager;
 
 /// <summary>
 /// RecruitRegistration 모델: RecruitRegistrations 테이블과 일대일 클래스
