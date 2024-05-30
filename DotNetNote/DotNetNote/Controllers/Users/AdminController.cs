@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-
-namespace DotNetNote.Controllers;
+﻿namespace DotNetNote.Controllers;
 
 //[4] Administrators 이름으로 관리자 권한(Policy) 설정 관련
 [Authorize("Administrators")]
