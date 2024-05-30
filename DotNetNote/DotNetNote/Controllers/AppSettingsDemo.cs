@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.Configuration;
-
-namespace DotNetNote.Controllers;
+﻿namespace DotNetNote.Controllers;
 
 [Authorize(Roles = "Administrators")]
 public class AppSettingsDemo(IConfiguration configuration) : Controller
