@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-
-namespace DotNetSale.Controllers;
+﻿namespace DotNetSale.Controllers;
 
 [Area("DotNetSale")]
 public class CategoryController : Controller
