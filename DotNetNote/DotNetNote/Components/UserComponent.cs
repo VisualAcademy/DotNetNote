@@ -1,10 +1,4 @@
-﻿using Dapper;
-using Microsoft.Extensions.Caching.Memory;
-using Microsoft.Extensions.Configuration;
-using System;
-using System.Data;
-using Microsoft.Data.SqlClient;
-using System.Linq;
+﻿using Microsoft.Extensions.Caching.Memory;
 
 namespace DotNetNote.Components;
 
