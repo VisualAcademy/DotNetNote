@@ -1,9 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace DotNetNote.Components;
+﻿namespace DotNetNote.Components;
 
 /// <summary>
 /// Todo 컴포넌트
