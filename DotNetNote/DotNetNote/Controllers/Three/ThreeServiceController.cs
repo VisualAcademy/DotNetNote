@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-
-namespace DotNetNote.Controllers;
+﻿namespace DotNetNote.Controllers;
 
 [Route("api/[controller]")]
 public class ThreeServiceController(IThreeRepository repository) : Controller
