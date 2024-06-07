@@ -1,6 +1,4 @@
-﻿using DotNetNoteCore;
-
-namespace DotNetNote.Controllers;
+﻿namespace DotNetNote.Controllers;
 
 public class AspNetCoreIdentityTestController(UserManager<DotNetNoteUser> userManager) : Controller
 {
