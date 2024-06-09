@@ -1,7 +1,4 @@
-﻿using Microsoft.Data.SqlClient;
-using System;
-
-namespace DotNetSale.Models;
+﻿namespace DotNetSale.Models;
 
 public class CategoryRepositoryAdo : ICategoryRepository
 {

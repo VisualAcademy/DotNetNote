@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-
-namespace DotNetNote.Controllers;
+﻿namespace DotNetNote.Controllers;
 
 // MaximController 클래스는 Controller 클래스를 상속받습니다.
 public class MaximController : Controller

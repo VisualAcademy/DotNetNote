@@ -1,8 +1,5 @@
 ﻿// ASP.NET Core Fundamentals 강의 - RecruitManager(모집 관리자) 강의 소스
 using DotNetNote.Models.RecruitManager;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 
 namespace DotNetNote.Controllers.RecruitManager;
 

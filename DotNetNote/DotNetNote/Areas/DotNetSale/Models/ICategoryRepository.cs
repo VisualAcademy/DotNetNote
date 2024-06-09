@@ -4,8 +4,6 @@
     코멘트: 닷넷세일 - 카테고리 리포지토리 인터페이스 
     수정일: 2020-11-01
 */
-using Microsoft.Data.SqlClient;
-
 namespace DotNetSale.Models;
 
 public interface ICategoryRepository

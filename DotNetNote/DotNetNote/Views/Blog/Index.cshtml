@@ -148,7 +148,7 @@
                                            page-index='Convert.ToInt32(Context.Request.Query["Page"])'
                                            page-size="10"
                                            record-count="@ViewBag.TotalRecord"
-                                           search-mode='Convert.ToBoolean(@ViewBag.SearchMode)'
+                                           search-mode='Convert.ToBoolean(ViewBag.SearchMode)'
                                            search-field="@ViewBag.SearchField"
                                            search-query="@ViewBag.SearchQuery">
                         </dnn-paging-helper>
