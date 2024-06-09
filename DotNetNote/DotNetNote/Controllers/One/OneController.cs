@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-
-namespace DotNetNote.Controllers;
+﻿namespace DotNetNote.Controllers;
 
 public class OneController(IOneRepository repository) : Controller
 {
