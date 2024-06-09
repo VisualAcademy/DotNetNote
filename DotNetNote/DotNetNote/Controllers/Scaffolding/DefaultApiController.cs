@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-
-namespace ScaffoldingDemo.Controllers
+﻿namespace ScaffoldingDemo.Controllers
 {
     [Produces("application/json")]
     [Route("api/DefaultApi")]
