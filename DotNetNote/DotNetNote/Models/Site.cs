@@ -11,7 +11,7 @@ public class Site
     public int Id { get; set; }
 
     /// <summary>
-    /// 제목, 사이트명
+    /// 제목, 사이트명, Name, Title 속성은 자주 사용되는 필수 속성들 중 하나   
     /// </summary>
     public string Title { get; set; }
 
