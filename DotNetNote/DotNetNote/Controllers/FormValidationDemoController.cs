@@ -139,9 +139,11 @@ public class FormValidationDemoController : Controller
     }
     #endregion
 
+    #region MultiSelectOption Demo
     [HttpGet]
     public IActionResult MultiSelectOption() => View();
 
     [HttpPost]
-    public IActionResult MultiSelectOption(string[] questions, string[] answers) => View();
+    public IActionResult MultiSelectOption(string[] questions, string[] answers) => View(); 
+    #endregion
 }
