@@ -1,20 +1,19 @@
 ﻿using DotNetNote.Models.Notes;
 using Microsoft.AspNetCore.Mvc;
 
-namespace DotNetNote.ViewComponents
+namespace DotNetNote.ViewComponents;
+
+public class MainSummaryBlogPostListViewComponent : ViewComponent
 {
-    public class MainSummaryBlogPostListViewComponent : ViewComponent
+    private INoteRepository _repository;
+
+    public MainSummaryBlogPostListViewComponent(INoteRepository repository)
     {
-        private INoteRepository _repository;
+        _repository = repository;
+    }
 
-        public MainSummaryBlogPostListViewComponent(INoteRepository repository)
-        {
-            _repository = repository;
-        }
-
-        public IViewComponentResult Invoke()
-        {
-            return View(_repository.GetNoteSummaryByCategoryBlog("Blog"));
-        }
+    public IViewComponentResult Invoke()
+    {
+        return View(_repository.GetNoteSummaryByCategoryBlog("Blog"));
     }
 }
