@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
-
-namespace DotNetNote.ViewComponents;
+﻿namespace DotNetNote.ViewComponents;
 
 public class DataListViewComponent : ViewComponent
 {
