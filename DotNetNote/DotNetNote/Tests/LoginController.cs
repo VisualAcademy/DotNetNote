@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-
-namespace DotNetNote.Tests;
+﻿namespace DotNetNote.Tests;
 
 [Authorize(Roles = "Administrators")]
 public class LoginController : Controller
