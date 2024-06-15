@@ -1,4 +1,5 @@
 ﻿--[User][0][1] 회원관리를 위한 Users 테이블 생성
+-- ASP.NET Web Forms, ASP.NET Core 초간단 회원 관리 강의에서 사용한 자료 
 
 --[0] Users 테이블 생성
 Create Table dbo.Users
