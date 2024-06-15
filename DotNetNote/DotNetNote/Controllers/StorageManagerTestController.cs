@@ -1,8 +1,5 @@
-﻿using System.IO;
-using System.Threading.Tasks;
-using DotNetNoteCore.Services;
+﻿using DotNetNoteCore.Services;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 
 namespace DotNetNote.Controllers;
 
