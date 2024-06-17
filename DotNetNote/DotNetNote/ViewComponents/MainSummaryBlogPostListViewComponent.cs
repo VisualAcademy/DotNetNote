@@ -2,17 +2,10 @@
 
 namespace DotNetNote.ViewComponents;
 
-public class MainSummaryBlogPostListViewComponent : ViewComponent
+public class MainSummaryBlogPostListViewComponent(INoteRepository repository) : ViewComponent
 {
-    private INoteRepository _repository;
-
-    public MainSummaryBlogPostListViewComponent(INoteRepository repository)
-    {
-        _repository = repository;
-    }
-
     public IViewComponentResult Invoke()
     {
-        return View(_repository.GetNoteSummaryByCategoryBlog("Blog"));
+        return View(repository.GetNoteSummaryByCategoryBlog("Blog"));
     }
 }
