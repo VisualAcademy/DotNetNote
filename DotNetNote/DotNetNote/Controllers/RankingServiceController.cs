@@ -1,6 +1,4 @@
-﻿using AngularNote.Models;
-
-namespace DotNetNote.Controllers;
+﻿namespace DotNetNote.Controllers;
 
 [Route("api/[controller]")]
 public class RankingServiceController : Controller
