@@ -1,12 +1,10 @@
-﻿using Dul.Web;
-
-namespace DotNetNote.Controllers;
+﻿namespace DotNetNote.Controllers;
 
 public class PartialViewDemoController : Controller
 {
     public IActionResult Index(int page = 1)
     {
-        var pageModel = new PagerBase
+        var pageModel = new Dul.Web.PagerBase
         {
             Url = "PartialViewDemo",
             RecordCount = 140,
