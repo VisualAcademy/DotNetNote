@@ -1,14 +1,4 @@
-﻿using Dapper;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
-using System;
-using System.ComponentModel.DataAnnotations;
-using System.Data;
-using Microsoft.Data.SqlClient;
-using System.Linq;
-
-namespace DotNetNote.Models.Exams;
+﻿namespace DotNetNote.Models.Exams;
 
 public class ExamClass
 {
