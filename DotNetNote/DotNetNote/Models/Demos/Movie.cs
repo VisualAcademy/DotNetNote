@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace DotNetNote.Models.Demos;
+﻿namespace DotNetNote.Models.Demos;
 
 public class Movie
 {
