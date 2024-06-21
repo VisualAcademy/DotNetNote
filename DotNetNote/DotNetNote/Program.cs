@@ -137,7 +137,11 @@ void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvide
 
 void DependencyInjectionContainer(IServiceCollection services, IConfiguration Configuration)
 {
-    services.AddSingleton<IUserRepository>(new UserRepository(Configuration.GetConnectionString("DefaultConnection")));
+    #region ASP.NET Core 쿠키 인증으로 회원 관리 기능 구현하기
+    // 34.10. ASP.NET Core 쿠키 인증으로 회원 관리 기능 구현하기
+    services.AddSingleton<IUserRepository>(new UserRepository(Configuration.GetConnectionString("DefaultConnection"))); 
+    #endregion
+
     services.AddTransient<ILoginFailedRepository, LoginFailedRepository>();
     services.AddTransient<ILoginFailedManager, LoginFailedManager>();
     services.AddTransient<IUserModelRepository, UserModelRepository>();
