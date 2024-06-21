@@ -1,4 +1,4 @@
-﻿//[User][3]
+﻿//[User][3] 리포지토리 인터페이스
 namespace DotNetNote.Models
 {
     public interface IUserRepository
