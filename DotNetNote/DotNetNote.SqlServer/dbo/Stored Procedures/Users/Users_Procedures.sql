@@ -9,7 +9,6 @@ As
 Go
 --WriteUsers 'redplus', '1234'
 
-
 --[2] 출력 저장 프로시저
 --Create Proc dbo.ListUsers
 --As
@@ -21,7 +20,6 @@ As
 Go
 --ListUsers
 
-
 --[3] 상세 저장 프로시저
 Create Proc dbo.ViewUsers
 	@UID Int
@@ -29,7 +27,6 @@ As
 	Select [UID], [UserID], [Password] From Users Where UID = @UID
 Go
 --ViewUsers 5
-
 
 --[4] 수정 저장 프로시저
 Create Proc dbo.ModifyUsers
@@ -47,7 +44,6 @@ As
 Go
 --ModifyUsers 'master', '1234', 2
 
-
 --[5] 삭제 저장 프로시저
 Create Proc dbo.DeleteUsers
 	@UID Int
@@ -55,7 +51,6 @@ As
 	Delete Users Where UID = @UID
 Go
 --DeleteUsers 2
-
 
 --[6] 검색 저장 프로시저
 Create Proc dbo.SearchUsers
