@@ -1,4 +1,4 @@
-﻿//[User][4]
+﻿//[User][4] 리포지토리 클래스 
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using System.Data;
