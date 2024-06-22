@@ -1,7 +1,3 @@
-#nullable enable
-
-namespace DotNetNote.Controllers.Articles;
-
 using MemoEngineCore.Models;
 using Microsoft.AspNetCore.Hosting;
 using System;
@@ -11,6 +7,9 @@ using System.IO;
 using System.Linq;
 using System.Xml.Linq;
 
+#nullable enable
+
+namespace DotNetNote.Controllers.Articles;
 public class FileBlogService : IBlogService
 {
     private const string FILES = "files";
