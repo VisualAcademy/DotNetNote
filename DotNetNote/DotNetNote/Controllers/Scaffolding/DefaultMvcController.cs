@@ -5,10 +5,7 @@ namespace ScaffoldingDemo.Controllers;
 public class DefaultMvcController : Controller
 {
     // GET: DefaultMvc
-    public ActionResult Index()
-    {
-        return View();
-    }
+    public ActionResult Index() => View();
 
     // GET: DefaultMvc/Details/5
     public ActionResult Details(int id)
