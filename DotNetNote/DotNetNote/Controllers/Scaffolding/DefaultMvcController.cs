@@ -31,10 +31,7 @@ public class DefaultMvcController : Controller
     }
 
     // GET: DefaultMvc/Edit/5
-    public ActionResult Edit(int id)
-    {
-        return View();
-    }
+    public ActionResult Edit(int id) => View();
 
     // POST: DefaultMvc/Edit/5
     [HttpPost]
