@@ -8,10 +8,7 @@ public class DefaultMvcController : Controller
     public ActionResult Index() => View();
 
     // GET: DefaultMvc/Details/5
-    public ActionResult Details(int id)
-    {
-        return View();
-    }
+    public ActionResult Details(int id) => View();
 
     // GET: DefaultMvc/Create
     public ActionResult Create()
