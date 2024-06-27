@@ -11,10 +11,7 @@ public class DefaultMvcController : Controller
     public ActionResult Details(int id) => View();
 
     // GET: DefaultMvc/Create
-    public ActionResult Create()
-    {
-        return View();
-    }
+    public ActionResult Create() => View();
 
     // POST: DefaultMvc/Create
     [HttpPost]
