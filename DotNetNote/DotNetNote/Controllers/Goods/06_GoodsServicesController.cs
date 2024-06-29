@@ -1,7 +1,4 @@
-﻿using System;
-using Microsoft.AspNetCore.Mvc;
-
-namespace DotNetNote.Controllers
+﻿namespace DotNetNote.Controllers
 {
     /// <summary>
     /// [6] Web API 컨트롤러 클래스: Angular / jQuery 등의 프론트엔드에서 접근할 Web API
