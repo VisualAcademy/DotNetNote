@@ -1,6 +1,4 @@
-﻿using System.Threading.Tasks;
-
-namespace DotNetNoteCore.Services
+﻿namespace DotNetNoteCore.Services
 {
     // Abstractions: Interfaces => IEmailSender
     // Implementations: Classes => EmailSender, SendGridEmailSender, ...
