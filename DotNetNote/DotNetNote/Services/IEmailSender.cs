@@ -1,6 +1,4 @@
-﻿using System.Threading.Tasks;
-
-namespace DotNetNote.Services;
+﻿namespace DotNetNote.Services;
 
 public interface IEmailSender
 {
