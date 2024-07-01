@@ -1,7 +1,4 @@
-﻿using System.IO;
-using System.Threading.Tasks;
-
-namespace DotNetNoteCore.Services
+﻿namespace DotNetNoteCore.Services
 {
     public interface IStorageManager
     {
