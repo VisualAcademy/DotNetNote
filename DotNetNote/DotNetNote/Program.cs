@@ -105,8 +105,8 @@ void ConfigureServices(IServiceCollection services, IConfiguration Configuration
     services.AddDbContext<TechContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
     #region Tenants Table 생성 및 컬럼 추가 데모
-    var tenantSchemaEnhancer = new TenantSchemaEnhancer(Configuration.GetConnectionString("DefaultConnection"));
-    tenantSchemaEnhancer.EnsureSchema(); 
+    var tenantSchemaEnhancerCreateAndAlter = new TenantSchemaEnhancerCreateAndAlter(Configuration.GetConnectionString("DefaultConnection"));
+    tenantSchemaEnhancerCreateAndAlter.EnsureSchema(); 
     #endregion
 
     // 의존성 주입 컨테이너 설정 호출

@@ -2,11 +2,11 @@
 
 namespace Dalbodre.Infrastructures
 {
-    public class TenantSchemaEnhancer
+    public class TenantSchemaEnhancerCreateAndAlter
     {
         private readonly string _connectionString;
 
-        public TenantSchemaEnhancer(string connectionString)
+        public TenantSchemaEnhancerCreateAndAlter(string connectionString)
         {
             _connectionString = connectionString;
         }
