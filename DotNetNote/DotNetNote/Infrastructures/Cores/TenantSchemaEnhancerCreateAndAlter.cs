@@ -1,6 +1,6 @@
 ﻿using Microsoft.Data.SqlClient;
 
-namespace Dalbodre.Infrastructures
+namespace Dalbodre.Infrastructures.Cores
 {
     public class TenantSchemaEnhancerCreateAndAlter
     {

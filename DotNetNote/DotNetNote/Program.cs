@@ -1,4 +1,4 @@
-using Dalbodre.Infrastructures;
+using Dalbodre.Infrastructures.Cores;
 using DotNetNote.Common;
 using DotNetNote.Controllers.Articles;
 using DotNetNote.Models.Buyers;
