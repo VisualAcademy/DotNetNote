@@ -1,17 +1,10 @@
 ﻿namespace Dalbodre.Infrastructures.Cores;
 
-public class TenantSchemaEnhancerCreateAndAlter
+public class TenantSchemaEnhancerCreateAndAlter(string connectionString)
 {
-    private readonly string _connectionString;
-
-    public TenantSchemaEnhancerCreateAndAlter(string connectionString)
-    {
-        _connectionString = connectionString;
-    }
-
     public void EnsureTenantsTableExists()
     {
-        using (SqlConnection connection = new SqlConnection(_connectionString))
+        using (SqlConnection connection = new SqlConnection(connectionString))
         {
             connection.Open();
 
@@ -49,7 +42,7 @@ public class TenantSchemaEnhancerCreateAndAlter
 
     public void AddColumnIfNotExists(string tableName, string columnName, string columnDefinition)
     {
-        using (SqlConnection connection = new SqlConnection(_connectionString))
+        using (SqlConnection connection = new SqlConnection(connectionString))
         {
             connection.Open();
 
