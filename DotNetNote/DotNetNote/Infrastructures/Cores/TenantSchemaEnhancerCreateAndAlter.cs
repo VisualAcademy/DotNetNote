@@ -1,31 +1,31 @@
-﻿namespace Dalbodre.Infrastructures.Cores
+﻿namespace Dalbodre.Infrastructures.Cores;
+
+public class TenantSchemaEnhancerCreateAndAlter
 {
-    public class TenantSchemaEnhancerCreateAndAlter
+    private readonly string _connectionString;
+
+    public TenantSchemaEnhancerCreateAndAlter(string connectionString)
     {
-        private readonly string _connectionString;
+        _connectionString = connectionString;
+    }
 
-        public TenantSchemaEnhancerCreateAndAlter(string connectionString)
+    public void EnsureTenantsTableExists()
+    {
+        using (SqlConnection connection = new SqlConnection(_connectionString))
         {
-            _connectionString = connectionString;
-        }
+            connection.Open();
 
-        public void EnsureTenantsTableExists()
-        {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                connection.Open();
-
-                SqlCommand cmdCheck = new SqlCommand(@"
+            SqlCommand cmdCheck = new SqlCommand(@"
                     SELECT COUNT(*) 
                     FROM INFORMATION_SCHEMA.TABLES 
                     WHERE TABLE_SCHEMA = 'dbo' 
                     AND TABLE_NAME = 'Tenants'", connection);
 
-                int tableCount = (int)cmdCheck.ExecuteScalar();
+            int tableCount = (int)cmdCheck.ExecuteScalar();
 
-                if (tableCount == 0)
-                {
-                    SqlCommand cmdCreateTable = new SqlCommand(@"
+            if (tableCount == 0)
+            {
+                SqlCommand cmdCreateTable = new SqlCommand(@"
                         CREATE TABLE [dbo].[Tenants](
                             [ID] bigint IDENTITY(1,1) NOT NULL PRIMARY KEY CLUSTERED,
                             [ConnectionString] nvarchar(max) NULL,
@@ -40,20 +40,20 @@
                             [IsMultiPortalEnabled] BIT NULL DEFAULT 0
                         )", connection);
 
-                    cmdCreateTable.ExecuteNonQuery();
-                }
-
-                connection.Close();
+                cmdCreateTable.ExecuteNonQuery();
             }
+
+            connection.Close();
         }
+    }
 
-        public void AddColumnIfNotExists(string tableName, string columnName, string columnDefinition)
+    public void AddColumnIfNotExists(string tableName, string columnName, string columnDefinition)
+    {
+        using (SqlConnection connection = new SqlConnection(_connectionString))
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                connection.Open();
+            connection.Open();
 
-                SqlCommand cmdCheck = new SqlCommand($@"
+            SqlCommand cmdCheck = new SqlCommand($@"
                     IF NOT EXISTS (
                         SELECT * FROM INFORMATION_SCHEMA.COLUMNS 
                         WHERE TABLE_NAME = @tableName AND COLUMN_NAME = @columnName
@@ -62,24 +62,23 @@
                         ALTER TABLE dbo.{tableName} ADD {columnName} {columnDefinition};
                     END", connection);
 
-                cmdCheck.Parameters.AddWithValue("@tableName", tableName);
-                cmdCheck.Parameters.AddWithValue("@columnName", columnName);
+            cmdCheck.Parameters.AddWithValue("@tableName", tableName);
+            cmdCheck.Parameters.AddWithValue("@columnName", columnName);
 
-                cmdCheck.ExecuteNonQuery();
+            cmdCheck.ExecuteNonQuery();
 
-                connection.Close();
-            }
+            connection.Close();
         }
+    }
 
-        public void AddIsMultiPortalEnabledColumnIfNotExists()
-        {
-            AddColumnIfNotExists("Tenants", "IsMultiPortalEnabled", "BIT NULL DEFAULT 0");
-        }
+    public void AddIsMultiPortalEnabledColumnIfNotExists()
+    {
+        AddColumnIfNotExists("Tenants", "IsMultiPortalEnabled", "BIT NULL DEFAULT 0");
+    }
 
-        public void EnsureSchema()
-        {
-            EnsureTenantsTableExists();
-            AddIsMultiPortalEnabledColumnIfNotExists();
-        }
+    public void EnsureSchema()
+    {
+        EnsureTenantsTableExists();
+        AddIsMultiPortalEnabledColumnIfNotExists();
     }
 }
