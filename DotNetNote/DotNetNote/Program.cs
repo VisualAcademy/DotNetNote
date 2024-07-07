@@ -1,6 +1,7 @@
 using Dalbodre.Infrastructures.Cores;
 using DotNetNote.Common;
 using DotNetNote.Controllers.Articles;
+using DotNetNote.Infrastructures.Tenants;
 using DotNetNote.Models.Buyers;
 using DotNetNote.Models.Categories;
 using DotNetNote.Models.Companies;
@@ -106,7 +107,12 @@ void ConfigureServices(IServiceCollection services, IConfiguration Configuration
 
     #region Tenants Table 생성 및 컬럼 추가 데모
     var tenantSchemaEnhancerCreateAndAlter = new TenantSchemaEnhancerCreateAndAlter(Configuration.GetConnectionString("DefaultConnection"));
-    tenantSchemaEnhancerCreateAndAlter.EnsureSchema(); 
+    tenantSchemaEnhancerCreateAndAlter.EnsureSchema();
+    #endregion
+
+    #region Partners Table 생성 및 컬럼 추가 데모
+    var tenantSchemaEnhancerCreatePartnersTable = new TenantSchemaEnhancerCreatePartnersTable(Configuration.GetConnectionString("DefaultConnection"));
+    tenantSchemaEnhancerCreatePartnersTable.EnhanceAllTenantDatabases();
     #endregion
 
     // 의존성 주입 컨테이너 설정 호출
