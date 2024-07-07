@@ -1,15 +1,7 @@
 ﻿namespace DotNetNote.Infrastructures.Tenants;
 
-public class TenantSchemaEnhancerCreatePartnersTable
+public class TenantSchemaEnhancerCreatePartnersTable(string masterConnectionString)
 {
-    private string _masterConnectionString;
-
-    // 생성자: masterConnectionString을 설정합니다.
-    public TenantSchemaEnhancerCreatePartnersTable(string masterConnectionString)
-    {
-        _masterConnectionString = masterConnectionString;
-    }
-
     // 모든 테넌트 데이터베이스를 향상시키는 메서드
     public void EnhanceAllTenantDatabases()
     {
@@ -33,7 +25,7 @@ public class TenantSchemaEnhancerCreatePartnersTable
     {
         List<(string ConnectionString, bool IsMultiPortalEnabled)> result = new List<(string, bool)>();
 
-        using (SqlConnection connection = new SqlConnection(_masterConnectionString))
+        using (SqlConnection connection = new SqlConnection(masterConnectionString))
         {
             connection.Open();
 
