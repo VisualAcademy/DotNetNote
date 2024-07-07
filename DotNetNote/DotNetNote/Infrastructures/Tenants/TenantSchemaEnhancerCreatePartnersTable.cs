@@ -1,7 +1,4 @@
-﻿using Microsoft.Data.SqlClient;
-using System.Collections.Generic;
-
-namespace DotNetNote.Infrastructures.Tenants
+﻿namespace DotNetNote.Infrastructures.Tenants
 {
     public class TenantSchemaEnhancerCreatePartnersTable
     {
