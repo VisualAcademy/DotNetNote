@@ -47,6 +47,9 @@ public class TenantSchemaEnhancerCreatePartnersTable(string masterConnectionStri
     // 특정 테넌트 데이터베이스에 Partners 테이블이 없으면 생성하는 메서드
     private void CreatePartnersTableIfNotExists(string connectionString)
     {
+        // 문자열의 두 개의 백슬래시를 하나의 백슬래시로 변경
+        connectionString = connectionString.Replace("\\\\", "\\");
+
         using (SqlConnection connection = new SqlConnection(connectionString))
         {
             connection.Open();
@@ -80,6 +83,9 @@ public class TenantSchemaEnhancerCreatePartnersTable(string masterConnectionStri
     // 특정 테넌트 데이터베이스에 기본 파트너가 없으면 추가하는 메서드
     private void AddDefaultPartnerIfNotExists(string connectionString)
     {
+        // 문자열의 두 개의 백슬래시를 하나의 백슬래시로 변경
+        connectionString = connectionString.Replace("\\\\", "\\");
+
         using (SqlConnection connection = new SqlConnection(connectionString))
         {
             connection.Open();
