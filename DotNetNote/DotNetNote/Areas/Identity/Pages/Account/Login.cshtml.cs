@@ -3,17 +3,8 @@
 namespace VisualAcademy.Areas.Identity.Pages.Account;
 
 [AllowAnonymous]
-public class LoginModel : PageModel
+public class LoginModel(SignInManager<ApplicationUser> signInManager, ILogger<LoginModel> logger) : PageModel
 {
-    private readonly SignInManager<ApplicationUser> _signInManager;
-    private readonly ILogger<LoginModel> _logger;
-
-    public LoginModel(SignInManager<ApplicationUser> signInManager, ILogger<LoginModel> logger)
-    {
-        _signInManager = signInManager;
-        _logger = logger;
-    }
-
     [BindProperty]
     public InputModel Input { get; set; }
 
@@ -50,7 +41,7 @@ public class LoginModel : PageModel
         // Clear the existing external cookie to ensure a clean login process
         await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
 
-        ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+        ExternalLogins = (await signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
 
         ReturnUrl = returnUrl;
     }
@@ -63,10 +54,10 @@ public class LoginModel : PageModel
         {
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-            var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: true);
+            var result = await signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: true);
             if (result.Succeeded)
             {
-                _logger.LogInformation("User logged in.");
+                logger.LogInformation("User logged in.");
                 return LocalRedirect(returnUrl);
             }
             if (result.RequiresTwoFactor)
@@ -75,7 +66,7 @@ public class LoginModel : PageModel
             }
             if (result.IsLockedOut)
             {
-                _logger.LogWarning("User account locked out.");
+                logger.LogWarning("User account locked out.");
                 return RedirectToPage("./Lockout");
             }
             else
