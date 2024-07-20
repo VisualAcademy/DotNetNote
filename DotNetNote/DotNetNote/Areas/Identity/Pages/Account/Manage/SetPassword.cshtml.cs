@@ -2,19 +2,10 @@
 
 namespace VisualAcademy.Areas.Identity.Pages.Account.Manage;
 
-public class SetPasswordModel : PageModel
+public class SetPasswordModel(
+    UserManager<ApplicationUser> userManager,
+    SignInManager<ApplicationUser> signInManager) : PageModel
 {
-    private readonly UserManager<ApplicationUser> _userManager;
-    private readonly SignInManager<ApplicationUser> _signInManager;
-
-    public SetPasswordModel(
-        UserManager<ApplicationUser> userManager,
-        SignInManager<ApplicationUser> signInManager)
-    {
-        _userManager = userManager;
-        _signInManager = signInManager;
-    }
-
     [BindProperty]
     public InputModel Input { get; set; }
 
@@ -37,13 +28,13 @@ public class SetPasswordModel : PageModel
 
     public async Task<IActionResult> OnGetAsync()
     {
-        var user = await _userManager.GetUserAsync(User);
+        var user = await userManager.GetUserAsync(User);
         if (user == null)
         {
-            return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+            return NotFound($"Unable to load user with ID '{userManager.GetUserId(User)}'.");
         }
 
-        var hasPassword = await _userManager.HasPasswordAsync(user);
+        var hasPassword = await userManager.HasPasswordAsync(user);
 
         if (hasPassword)
         {
@@ -60,13 +51,13 @@ public class SetPasswordModel : PageModel
             return Page();
         }
 
-        var user = await _userManager.GetUserAsync(User);
+        var user = await userManager.GetUserAsync(User);
         if (user == null)
         {
-            return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+            return NotFound($"Unable to load user with ID '{userManager.GetUserId(User)}'.");
         }
 
-        var addPasswordResult = await _userManager.AddPasswordAsync(user, Input.NewPassword);
+        var addPasswordResult = await userManager.AddPasswordAsync(user, Input.NewPassword);
         if (!addPasswordResult.Succeeded)
         {
             foreach (var error in addPasswordResult.Errors)
@@ -76,7 +67,7 @@ public class SetPasswordModel : PageModel
             return Page();
         }
 
-        await _signInManager.RefreshSignInAsync(user);
+        await signInManager.RefreshSignInAsync(user);
         StatusMessage = "Your password has been set.";
 
         return RedirectToPage();
