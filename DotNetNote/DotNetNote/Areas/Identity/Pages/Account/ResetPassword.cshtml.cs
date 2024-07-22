@@ -3,15 +3,8 @@
 namespace VisualAcademy.Areas.Identity.Pages.Account;
 
 [AllowAnonymous]
-public class ResetPasswordModel : PageModel
+public class ResetPasswordModel(UserManager<ApplicationUser> userManager) : PageModel
 {
-    private readonly UserManager<ApplicationUser> _userManager;
-
-    public ResetPasswordModel(UserManager<ApplicationUser> userManager)
-    {
-        _userManager = userManager;
-    }
-
     [BindProperty]
     public InputModel Input { get; set; }
 
@@ -57,14 +50,14 @@ public class ResetPasswordModel : PageModel
             return Page();
         }
 
-        var user = await _userManager.FindByEmailAsync(Input.Email);
+        var user = await userManager.FindByEmailAsync(Input.Email);
         if (user == null)
         {
             // Don't reveal that the user does not exist
             return RedirectToPage("./ResetPasswordConfirmation");
         }
 
-        var result = await _userManager.ResetPasswordAsync(user, Input.Code, Input.Password);
+        var result = await userManager.ResetPasswordAsync(user, Input.Code, Input.Password);
         if (result.Succeeded)
         {
             return RedirectToPage("./ResetPasswordConfirmation");
