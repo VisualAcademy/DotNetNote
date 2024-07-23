@@ -1,4 +1,3 @@
-namespace MemoEngineCore.Models;
 
 using System;
 using System.Collections.Generic;
@@ -7,6 +6,7 @@ using System.Globalization;
 using System.Text;
 using System.Text.RegularExpressions;
 
+namespace MemoEngineCore.Models;
 public class Post
 {
     public IList<string> Categories { get; } = new List<string>();
