@@ -8,7 +8,7 @@ public class TenantNameInitializer(string connectionString)
         {
             connection.Open();
 
-            SqlCommand cmdUpdate = new SqlCommand(@"
+            SqlCommand cmdUpdate = new(@"
                     UPDATE ApplicantsTransfers
                     SET TenantName = 'VisualAcademy'
                     WHERE TenantName IS NULL OR TenantName = ''", connection);
