@@ -1,17 +1,10 @@
 ﻿namespace Dalbodre.Infrastructures;
 
-public class TenantNameInitializer
+public class TenantNameInitializer(string connectionString)
 {
-    private readonly string _connectionString;
-
-    public TenantNameInitializer(string connectionString)
-    {
-        _connectionString = connectionString;
-    }
-
     public void InitializeEmptyTenantNames()
     {
-        using (SqlConnection connection = new SqlConnection(_connectionString))
+        using (SqlConnection connection = new SqlConnection(connectionString))
         {
             connection.Open();
 
