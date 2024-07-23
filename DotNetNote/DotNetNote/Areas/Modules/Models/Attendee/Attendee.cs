@@ -1,7 +1,4 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-
-namespace AttendeeApp.Models;
+﻿namespace AttendeeApp.Models;
 
 /// <summary>
 /// Attendees 테이블과 일대일인 Attendee 클래스
