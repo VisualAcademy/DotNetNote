@@ -1,11 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Net.Http.Headers;
-using System;
-using System.IO;
-//using System.Net.Http.Headers;
-using System.Threading.Tasks;
 using Dul.Board;
 using DotNetNote.Models.Notes;
 
