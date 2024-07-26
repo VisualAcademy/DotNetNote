@@ -1,13 +1,7 @@
 ﻿using DotNetNote.Models.Notes;
 using Dul.Board;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using System;
-using System.IO;
 using System.Net.Http.Headers;
-using System.Threading.Tasks;
 
 namespace DotNetNote.Controllers;
 
