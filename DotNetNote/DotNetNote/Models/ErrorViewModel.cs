@@ -1,5 +1,3 @@
-using System;
-
 namespace DotNetNote.Models
 {
     public class ErrorViewModel
