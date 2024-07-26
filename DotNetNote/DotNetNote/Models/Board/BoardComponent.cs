@@ -1,6 +1,4 @@
-﻿using System;
-
-public class BoardComponent
+﻿public class BoardComponent
 {
 
 }
