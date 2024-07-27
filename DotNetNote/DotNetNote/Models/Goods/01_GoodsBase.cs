@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace DotNetNote.Models;
+﻿namespace DotNetNote.Models;
 
 /// <summary>
 /// [1] 모델 클래스
