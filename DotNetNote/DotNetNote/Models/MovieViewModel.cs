@@ -1,11 +1,10 @@
 ﻿using System;
 
-namespace DotNetNote.Models
+namespace DotNetNote.Models;
+
+public class MovieViewModel
 {
-    public class MovieViewModel
-    {
-        public int Id { get; set; }
-        public string Title { get; set; }
-        public DateTime CreationDate { get; set; }
-    }
+    public int Id { get; set; }
+    public string Title { get; set; }
+    public DateTime CreationDate { get; set; }
 }
