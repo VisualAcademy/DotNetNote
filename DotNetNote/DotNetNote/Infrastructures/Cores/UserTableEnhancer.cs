@@ -1,8 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-using Microsoft.Data.SqlClient;
-
-namespace Dalbodre
+﻿namespace Dalbodre
 {
     public class UserTableEnhancer
     {
