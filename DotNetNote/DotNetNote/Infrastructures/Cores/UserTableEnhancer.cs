@@ -1,17 +1,10 @@
 ﻿namespace Dalbodre;
 
-public class UserTableEnhancer
+public class UserTableEnhancer(string connectionString)
 {
-    private readonly string _connectionString;
-
-    public UserTableEnhancer(string connectionString)
-    {
-        _connectionString = connectionString;
-    }
-
     public async Task<bool> TableExistsAsync(string tableName)
     {
-        using (var connection = new SqlConnection(_connectionString))
+        using (var connection = new SqlConnection(connectionString))
         {
             await connection.OpenAsync();
 
@@ -38,7 +31,7 @@ public class UserTableEnhancer
 
     public async Task AddColumnIfNotExistsAsync(string tableName, string columnName, string columnDefinition)
     {
-        using (var connection = new SqlConnection(_connectionString))
+        using (var connection = new SqlConnection(connectionString))
         {
             await connection.OpenAsync();
 
