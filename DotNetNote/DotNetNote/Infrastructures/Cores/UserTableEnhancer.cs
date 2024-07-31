@@ -1,51 +1,44 @@
-﻿namespace Dalbodre
+﻿namespace Dalbodre;
+
+public class UserTableEnhancer(string connectionString)
 {
-    public class UserTableEnhancer
+    public async Task<bool> TableExistsAsync(string tableName)
     {
-        private readonly string _connectionString;
-
-        public UserTableEnhancer(string connectionString)
+        using (var connection = new SqlConnection(connectionString))
         {
-            _connectionString = connectionString;
-        }
+            await connection.OpenAsync();
 
-        public async Task<bool> TableExistsAsync(string tableName)
-        {
-            using (var connection = new SqlConnection(_connectionString))
+            var checkTableCmd = new SqlCommand
             {
-                await connection.OpenAsync();
-
-                var checkTableCmd = new SqlCommand
-                {
-                    Connection = connection,
-                    CommandText = @"
+                Connection = connection,
+                CommandText = @"
                         SELECT COUNT(*) 
                         FROM INFORMATION_SCHEMA.TABLES 
                         WHERE TABLE_SCHEMA = 'dbo' 
                         AND TABLE_NAME = @tableName",
-                    CommandType = System.Data.CommandType.Text
-                };
+                CommandType = System.Data.CommandType.Text
+            };
 
-                checkTableCmd.Parameters.AddWithValue("@tableName", tableName);
+            checkTableCmd.Parameters.AddWithValue("@tableName", tableName);
 
-                int tableCount = (int)await checkTableCmd.ExecuteScalarAsync();
+            int tableCount = (int)await checkTableCmd.ExecuteScalarAsync();
 
-                connection.Close();
+            connection.Close();
 
-                return tableCount > 0;
-            }
+            return tableCount > 0;
         }
+    }
 
-        public async Task AddColumnIfNotExistsAsync(string tableName, string columnName, string columnDefinition)
+    public async Task AddColumnIfNotExistsAsync(string tableName, string columnName, string columnDefinition)
+    {
+        using (var connection = new SqlConnection(connectionString))
         {
-            using (var connection = new SqlConnection(_connectionString))
-            {
-                await connection.OpenAsync();
+            await connection.OpenAsync();
 
-                var checkAndAddColumnCmd = new SqlCommand
-                {
-                    Connection = connection,
-                    CommandText = $@"
+            var checkAndAddColumnCmd = new SqlCommand
+            {
+                Connection = connection,
+                CommandText = $@"
                         IF NOT EXISTS (
                             SELECT * FROM INFORMATION_SCHEMA.COLUMNS 
                             WHERE TABLE_NAME = @tableName AND COLUMN_NAME = @columnName
@@ -53,27 +46,26 @@
                         BEGIN
                             ALTER TABLE dbo.{tableName} ADD {columnName} {columnDefinition};
                         END;",
-                    CommandType = System.Data.CommandType.Text
-                };
+                CommandType = System.Data.CommandType.Text
+            };
 
-                checkAndAddColumnCmd.Parameters.AddWithValue("@tableName", tableName);
-                checkAndAddColumnCmd.Parameters.AddWithValue("@columnName", columnName);
+            checkAndAddColumnCmd.Parameters.AddWithValue("@tableName", tableName);
+            checkAndAddColumnCmd.Parameters.AddWithValue("@columnName", columnName);
 
-                await checkAndAddColumnCmd.ExecuteNonQueryAsync();
+            await checkAndAddColumnCmd.ExecuteNonQueryAsync();
 
-                connection.Close();
-            }
+            connection.Close();
         }
+    }
 
-        public async Task EnsureUserTableColumnsAsync()
+    public async Task EnsureUserTableColumnsAsync()
+    {
+        if (await TableExistsAsync("AspNetUsers"))
         {
-            if (await TableExistsAsync("AspNetUsers"))
-            {
-                await AddColumnIfNotExistsAsync("AspNetUsers", "CriminalHistory", "NVARCHAR(MAX) NULL");
-                await AddColumnIfNotExistsAsync("AspNetUsers", "SecondaryPhone", "NVARCHAR(50) NULL");
-                await AddColumnIfNotExistsAsync("AspNetUsers", "MiddleName", "NVARCHAR(50) NULL");
-                await AddColumnIfNotExistsAsync("AspNetUsers", "SSN", "NVARCHAR(50) NULL");
-            }
+            await AddColumnIfNotExistsAsync("AspNetUsers", "CriminalHistory", "NVARCHAR(MAX) NULL");
+            await AddColumnIfNotExistsAsync("AspNetUsers", "SecondaryPhone", "NVARCHAR(50) NULL");
+            await AddColumnIfNotExistsAsync("AspNetUsers", "MiddleName", "NVARCHAR(50) NULL");
+            await AddColumnIfNotExistsAsync("AspNetUsers", "SSN", "NVARCHAR(50) NULL");
         }
     }
 }
