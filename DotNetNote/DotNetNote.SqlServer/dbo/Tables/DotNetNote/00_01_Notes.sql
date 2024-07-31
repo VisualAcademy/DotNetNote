@@ -15,7 +15,7 @@ CREATE TABLE [dbo].[Notes]
     [Name]          NVarChar(25) Not Null,                      -- [2][이름](작성자)
     PostDate        DateTime Default GetDate() Not Null,        -- 작성일 
     PostIp          NVarChar(15) Null,                          -- 작성IP
-    [Title]         NVarChar(150) Not Null,                     -- [3][제목]
+    [Title]         NVarChar(512) Not Null,                     -- [3][제목]
     [Content]       NText Not Null,                             -- [4][내용]__NVarChar(Max) => NText__
     Category        NVarChar(20) Default('Free') Null,          -- 카테고리(확장...) => '공지', '자유', '자료', '사진', ...
 
