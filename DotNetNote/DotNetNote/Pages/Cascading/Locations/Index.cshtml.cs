@@ -5,7 +5,7 @@ namespace VisualAcademy.Pages.Cascading.Locations;
 
 public class IndexModel : PageModel
 {
-    private readonly DotNetNote.Data.ApplicationDbContext _context;
+    private readonly ApplicationDbContext _context;
 
     public IndexModel(DotNetNote.Data.ApplicationDbContext context)
     {
