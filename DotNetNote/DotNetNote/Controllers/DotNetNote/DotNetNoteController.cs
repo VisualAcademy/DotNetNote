@@ -169,21 +169,21 @@ public class DotNetNoteController(
             }
         }
 
-        Note note = new();
-
-        note.Name = model.Name;
-        note.Email = Dul.HtmlUtility.Encode(model.Email);
-        note.Homepage = model.Homepage;
-        //note.Title    = Dul.HtmlUtility.Encode(model.Title);
-        note.Title = model.Title;
-        note.Content = model.Content;
-        note.FileName = fileName;
-        note.FileSize = fileSize;
-        note.Password = (new Dul.Security.CryptorEngine())
-            .EncryptPassword(model.Password);
-        note.PostIp =
-            HttpContext.Connection.RemoteIpAddress.ToString(); // IP 주소
-        note.Encoding = model.Encoding;
+        Note note = new()
+        {
+            Name = model.Name,
+            Email = Dul.HtmlUtility.Encode(model.Email),
+            Homepage = model.Homepage,
+            Title = model.Title,
+            Content = model.Content,
+            FileName = fileName,
+            FileSize = fileSize,
+            Password = (new Dul.Security.CryptorEngine())
+            .EncryptPassword(model.Password),
+            PostIp =
+            HttpContext.Connection.RemoteIpAddress.ToString(), // IP 주소
+            Encoding = model.Encoding
+        };
 
         repository.Add(note); // 데이터 저장
 
