@@ -169,7 +169,7 @@ public class DotNetNoteController(
             }
         }
 
-        Note note = new Note();
+        Note note = new();
 
         note.Name = model.Name;
         note.Email = Dul.HtmlUtility.Encode(model.Email);
