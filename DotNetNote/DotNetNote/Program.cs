@@ -1,9 +1,4 @@
-using System;
 using Microsoft.Extensions.DependencyInjection;
-using VisualAcademy;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Hosting;
 using Dalbodre.Infrastructures.Cores;
 using Dalbodre;
 using DotNetNote.Common;
