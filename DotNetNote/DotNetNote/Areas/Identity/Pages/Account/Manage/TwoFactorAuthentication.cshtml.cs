@@ -4,8 +4,7 @@ namespace VisualAcademy.Areas.Identity.Pages.Account.Manage;
 
 public class TwoFactorAuthenticationModel(
     UserManager<ApplicationUser> userManager,
-    SignInManager<ApplicationUser> signInManager,
-    ILogger<TwoFactorAuthenticationModel> logger) : PageModel
+    SignInManager<ApplicationUser> signInManager) : PageModel
 {
     private const string AuthenicatorUriFormat = "otpauth://totp/{0}:{1}?secret={2}&issuer={0}";
 
