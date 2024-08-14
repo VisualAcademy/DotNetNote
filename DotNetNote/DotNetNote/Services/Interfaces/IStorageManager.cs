@@ -1,4 +1,4 @@
-﻿namespace DotNetNoteCore.Services;
+﻿namespace DotNetNote.Services;
 
 public interface IStorageManager
 {
