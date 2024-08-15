@@ -91,6 +91,7 @@
     <Folder Include="dbo\Tables\Users" />
     <Folder Include="dbo\Stored Procedures\DotNetKorea" />
     <Folder Include="dbo\Tables\Attachments" />
+    <Folder Include="dbo\Scripts\Attachments" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\Companies.sql" />
@@ -166,5 +167,8 @@
     <Build Include="dbo\Stored Procedures\Users\GetUsers.sql" />
     <Build Include="dbo\Stored Procedures\Users\Users_Procedures.sql" />
     <Build Include="dbo\Tables\Attachments\Attachments.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="dbo\Scripts\Attachments\Demo_Attachments_Processing.sql" />
   </ItemGroup>
 </Project>
