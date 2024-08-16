@@ -92,10 +92,10 @@
     <Folder Include="dbo\Stored Procedures\DotNetKorea" />
     <Folder Include="dbo\Tables\Attachments" />
     <Folder Include="dbo\Scripts\Attachments" />
+    <Folder Include="dbo\Scripts\1_SqlServer" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\Companies.sql" />
-    <None Include="dbo\Scripts\SysDateTimeOffset.sql" />
     <Build Include="dbo\Stored Procedures\Blog\GetBlogPost.sql" />
     <Build Include="dbo\Stored Procedures\DapperDemo\GetTableById.sql" />
     <Build Include="dbo\Stored Procedures\DapperDemo\GetTables.sql" />
@@ -167,6 +167,7 @@
     <Build Include="dbo\Stored Procedures\Users\GetUsers.sql" />
     <Build Include="dbo\Stored Procedures\Users\Users_Procedures.sql" />
     <Build Include="dbo\Tables\Attachments\Attachments.sql" />
+    <None Include="dbo\Scripts\1_SqlServer\SysDateTimeOffset.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="dbo\Scripts\Attachments\Demo_Attachments_Processing.sql" />
