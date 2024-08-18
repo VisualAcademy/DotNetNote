@@ -18,7 +18,7 @@ using Microsoft.AspNetCore.Rewrite;
 using Microsoft.IdentityModel.Tokens;
 using DotNetNote.Models.Categories;
 
-public class Program
+public partial class Program
 {
     public static async Task Main(string[] args)
     {
@@ -224,4 +224,10 @@ public class Program
         services.AddTransient<IUrlRepository, UrlRepository>();
         services.AddTransient<IBlogService, FileBlogService>();
     }
+}
+
+
+public partial class Program
+{ 
+
 }
