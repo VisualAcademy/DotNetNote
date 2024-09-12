@@ -69,7 +69,13 @@ public partial class Program
         {
             todos.Add(task);
             return TypedResults.Created("/todos/{id}", task);
-        }); 
+        });
+
+        app.MapDelete("/todos/{id}", (int id) => 
+        {
+            todos.RemoveAll(t => id == t.Id);
+            return TypedResults.NoContent(); // TODO: 
+        });
         #endregion
 
         app.Run();
