@@ -74,7 +74,7 @@ public partial class Program
         app.MapDelete("/todos/{id}", (int id) => 
         {
             todos.RemoveAll(t => id == t.Id);
-            return TypedResults.NoContent(); // TODO: 
+            return TypedResults.NoContent();
         });
         #endregion
 
