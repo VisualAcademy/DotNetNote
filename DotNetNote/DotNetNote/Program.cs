@@ -17,6 +17,9 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Rewrite;
 using Microsoft.IdentityModel.Tokens;
 using DotNetNote.Models.Categories;
+using DotNetNote.Records;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 public partial class Program
 {
@@ -48,6 +51,26 @@ public partial class Program
 
         // Configure
         Configure(app, app.Environment, app.Services);
+
+        #region ASP.NET Core Web API with Minimal APIs 
+        var todos = new List<TodoRecord>();
+
+        app.MapGet("/todos", () => todos); 
+
+        app.MapGet("/todos/{id}", Results<Ok<TodoRecord>, NotFound> (int id) =>
+        {
+            var targetTodo = todos.SingleOrDefault(x => x.Id == id);
+            return targetTodo is null
+                ? TypedResults.NotFound()
+                : TypedResults.Ok(targetTodo);
+        });
+
+        app.MapPost("/todos", (TodoRecord task) =>
+        {
+            todos.Add(task);
+            return TypedResults.Created("/todos/{id}", task);
+        }); 
+        #endregion
 
         app.Run();
     }
