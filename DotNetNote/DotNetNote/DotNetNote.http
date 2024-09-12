@@ -1,0 +1,4 @@
+# For more info on HTTP files go to https://aka.ms/vs/httpfile
+
+### 로컬 Web API 테스트
+GET https://localhost:5001/api/Products
