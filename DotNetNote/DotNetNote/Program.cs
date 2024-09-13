@@ -53,9 +53,11 @@ public partial class Program
         Configure(app, app.Environment, app.Services);
 
         #region ASP.NET Core Web API with Minimal APIs 
+
+        #region Back-End Web Development with .NET
         var todos = new List<TodoRecord>();
 
-        app.MapGet("/todos", () => todos); 
+        app.MapGet("/todos", () => todos);
 
         app.MapGet("/todos/{id}", Results<Ok<TodoRecord>, NotFound> (int id) =>
         {
@@ -71,11 +73,13 @@ public partial class Program
             return TypedResults.Created("/todos/{id}", task);
         });
 
-        app.MapDelete("/todos/{id}", (int id) => 
+        app.MapDelete("/todos/{id}", (int id) =>
         {
             todos.RemoveAll(t => id == t.Id);
             return TypedResults.NoContent();
-        });
+        }); 
+        #endregion
+
         #endregion
 
         app.Run();
