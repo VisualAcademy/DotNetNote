@@ -70,7 +70,7 @@ public partial class Program
         app.MapPost("/todos", (TodoRecord task) =>
         {
             todos.Add(task);
-            return TypedResults.Created("/todos/{id}", task);
+            return TypedResults.Created($"/todos/{task.Id}", task);
         });
 
         app.MapDelete("/todos/{id}", (int id) =>
