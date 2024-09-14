@@ -20,6 +20,7 @@ using DotNetNote.Models.Categories;
 using DotNetNote.Records;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
+using DotNetNote.Services.Tasks;
 
 public partial class Program
 {
@@ -31,6 +32,9 @@ public partial class Program
         builder.Services.AddDbContext<DotNetNote.Components.TodoContext>(options =>
             options.UseInMemoryDatabase("TodoList"));
         await ConfigureServicesAsync(builder.Services, builder.Configuration);
+
+        // ITaskService를 DI 컨테이너에 등록
+        builder.Services.AddSingleton<ITaskService, TaskService>();
 
         var app = builder.Build();
 
@@ -143,6 +147,36 @@ public partial class Program
 
                 return await next(context);
             }); 
+            #endregion
+        }
+        {
+            #region Endpoint with DI
+            // 전체 TODO 목록 가져오기 (DI 사용)
+            app.MapGet("/di/todos", (ITaskService taskService) =>
+            {
+                return taskService.GetTodos();
+            });
+
+            // 특정 ID의 TODO 항목 가져오기 (DI 사용)
+            app.MapGet("/di/todos/{id}", (int id, ITaskService taskService) =>
+            {
+                var todo = taskService.GetTodoById(id);
+                return todo is null ? Results.NotFound() : Results.Ok(todo);
+            });
+
+            // 새로운 TODO 항목 추가 (DI 사용)
+            app.MapPost("/di/todos", (TodoRecord task, ITaskService taskService) =>
+            {
+                var addedTask = taskService.AddTodo(task);
+                return Results.Created($"/di/todos/{addedTask.Id}", addedTask);
+            });
+
+            // 특정 ID의 TODO 항목 삭제 (DI 사용)
+            app.MapDelete("/di/todos/{id}", (int id, ITaskService taskService) =>
+            {
+                taskService.DeleteTodoById(id);
+                return Results.NoContent();
+            });
             #endregion
         }
         #endregion
