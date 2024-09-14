@@ -1,15 +1,37 @@
-# For more info on HTTP files go to https://aka.ms/vs/httpfile
-
+# 전체 TODO 목록 가져오기
 GET https://localhost:5001/todos
 
-### 
+###
 
+# 새로운 TODO 항목 추가
 POST https://localhost:5001/todos
-content-type: application/json
+Content-Type: application/json
 
 {
   "id": 1,
   "name": "Todo Demo",
-  "dueDate": "2024-09-20",
+  "dueDate": "2024-12-01T00:00:00",
   "isCompleted": false
 }
+
+###
+
+# 특정 ID의 TODO 항목 가져오기
+GET https://localhost:5001/todos/1
+
+###
+
+# 특정 ID의 TODO 항목 업데이트
+PUT https://localhost:5001/todos/1
+Content-Type: application/json
+
+{
+  "name": "Updated Todo",
+  "dueDate": "2024-12-15T00:00:00",
+  "isCompleted": true
+}
+
+###
+
+# 특정 ID의 TODO 항목 삭제
+DELETE https://localhost:5001/todos/1
