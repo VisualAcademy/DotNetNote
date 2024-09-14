@@ -35,3 +35,17 @@ Content-Type: application/json
 
 # 특정 ID의 TODO 항목 삭제
 DELETE https://localhost:5001/todos/1
+
+### 
+
+# 새로운 TODO 항목 추가 (유효성 검사 실패 - 이미 완료된 항목)
+POST https://localhost:5001/todoswithvalidation
+Content-Type: application/json
+
+{
+  "id": 3,
+  "name": "Invalid Todo - Completed",
+  "dueDate": "2024-12-01T00:00:00",
+  "isCompleted": true
+}
+

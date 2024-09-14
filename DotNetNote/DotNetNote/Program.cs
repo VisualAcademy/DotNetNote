@@ -115,6 +115,35 @@ public partial class Program
                 return TypedResults.NoContent();
             });
             #endregion
+
+            #region Endpoint Filter demo
+            // 새로운 TODO 항목 추가
+            app.MapPost("/todoswithvalidation", (TodoRecord task) =>
+            {
+                todos.Add(task);
+                return TypedResults.Created($"/todos/{task.Id}", task);
+            })
+            .AddEndpointFilter(async (context, next) =>
+            {
+                var taskArgument = context.GetArgument<TodoRecord>(0);
+                var errors = new Dictionary<string, string[]>();
+                if (taskArgument.DueDate < DateTime.UtcNow)
+                {
+                    errors.Add(nameof(TodoRecord.DueDate), ["Cannot have due date in the past."]);
+                }
+                if (taskArgument.IsCompleted)
+                {
+                    errors.Add(nameof(TodoRecord.IsCompleted), ["Cannot add completed todo."]);
+                }
+
+                if (errors.Count > 0)
+                {
+                    return Results.ValidationProblem(errors);
+                }
+
+                return await next(context);
+            }); 
+            #endregion
         }
         #endregion
 
