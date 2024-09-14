@@ -54,6 +54,17 @@ public partial class Program
 
         #region ASP.NET Core Web API with Minimal APIs 
         {
+            // URL 재작성(Rewriting) 미들웨어 사용하기
+            app.UseRewriter(new RewriteOptions().AddRedirect("tasks/(.*)", "todos/"));
+
+            // 사용자 정의 미들웨어 만들어보기 
+            app.Use(async (context, next) => 
+            {
+                Console.WriteLine($"[{context.Request.Method} {context.Request.Path} {DateTime.UtcNow}] Started.");
+                await next(context); 
+                Console.WriteLine($"[{context.Request.Method} {context.Request.Path} {DateTime.UtcNow}] Finished.");
+            });
+
             #region Back-End Web Development with .NET
             // TODO 리스트를 저장할 메모리 리스트
             var todos = new List<TodoRecord>();
