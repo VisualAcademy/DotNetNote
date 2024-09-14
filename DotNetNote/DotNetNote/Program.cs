@@ -53,33 +53,33 @@ public partial class Program
         Configure(app, app.Environment, app.Services);
 
         #region ASP.NET Core Web API with Minimal APIs 
+        { 
+            #region Back-End Web Development with .NET
+            var todos = new List<TodoRecord>();
 
-        #region Back-End Web Development with .NET
-        var todos = new List<TodoRecord>();
+            app.MapGet("/todos", () => todos);
 
-        app.MapGet("/todos", () => todos);
+            app.MapGet("/todos/{id}", Results<Ok<TodoRecord>, NotFound> (int id) =>
+            {
+                var targetTodo = todos.SingleOrDefault(x => x.Id == id);
+                return targetTodo is null
+                    ? TypedResults.NotFound()
+                    : TypedResults.Ok(targetTodo);
+            });
 
-        app.MapGet("/todos/{id}", Results<Ok<TodoRecord>, NotFound> (int id) =>
-        {
-            var targetTodo = todos.SingleOrDefault(x => x.Id == id);
-            return targetTodo is null
-                ? TypedResults.NotFound()
-                : TypedResults.Ok(targetTodo);
-        });
+            app.MapPost("/todos", (TodoRecord task) =>
+            {
+                todos.Add(task);
+                return TypedResults.Created($"/todos/{task.Id}", task);
+            });
 
-        app.MapPost("/todos", (TodoRecord task) =>
-        {
-            todos.Add(task);
-            return TypedResults.Created($"/todos/{task.Id}", task);
-        });
-
-        app.MapDelete("/todos/{id}", (int id) =>
-        {
-            todos.RemoveAll(t => id == t.Id);
-            return TypedResults.NoContent();
-        }); 
-        #endregion
-
+            app.MapDelete("/todos/{id}", (int id) =>
+            {
+                todos.RemoveAll(t => id == t.Id);
+                return TypedResults.NoContent();
+            }); 
+            #endregion
+        }
         #endregion
 
         app.Run();
