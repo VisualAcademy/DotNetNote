@@ -53,12 +53,15 @@ public partial class Program
         Configure(app, app.Environment, app.Services);
 
         #region ASP.NET Core Web API with Minimal APIs 
-        { 
+        {
             #region Back-End Web Development with .NET
+            // TODO 리스트를 저장할 메모리 리스트
             var todos = new List<TodoRecord>();
 
+            // 전체 TODO 목록 가져오기
             app.MapGet("/todos", () => todos);
 
+            // 특정 ID의 TODO 항목 가져오기
             app.MapGet("/todos/{id}", Results<Ok<TodoRecord>, NotFound> (int id) =>
             {
                 var targetTodo = todos.SingleOrDefault(x => x.Id == id);
@@ -67,17 +70,39 @@ public partial class Program
                     : TypedResults.Ok(targetTodo);
             });
 
+            // 새로운 TODO 항목 추가
             app.MapPost("/todos", (TodoRecord task) =>
             {
                 todos.Add(task);
                 return TypedResults.Created($"/todos/{task.Id}", task);
             });
 
+            // 특정 ID의 TODO 항목 업데이트
+            app.MapPut("/todos/{id}", (int id, TodoRecord updatedTodo) =>
+            {
+                var index = todos.FindIndex(t => t.Id == id);
+                if (index == -1)
+                {
+                    return Results.NotFound();
+                }
+
+                // 새로운 TodoRecord를 생성하고 기존 리스트에 할당
+                todos[index] = todos[index] with
+                {
+                    Name = updatedTodo.Name,
+                    DueDate = updatedTodo.DueDate,
+                    IsCompleted = updatedTodo.IsCompleted
+                };
+
+                return Results.Ok(todos[index]);
+            });
+
+            // 특정 ID의 TODO 항목 삭제
             app.MapDelete("/todos/{id}", (int id) =>
             {
                 todos.RemoveAll(t => id == t.Id);
                 return TypedResults.NoContent();
-            }); 
+            });
             #endregion
         }
         #endregion
