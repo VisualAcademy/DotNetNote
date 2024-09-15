@@ -1,0 +1,20 @@
+﻿@page "/accessdenied"
+@using Microsoft.AspNetCore.Components
+
+<h3>Access Denied</h3>
+
+<p>You do not have permission to access this page.</p>
+
+<div>
+    <button class="btn btn-primary" @onclick="NavigateToHome">Go to Home</button>
+</div>
+
+@code {
+    [Inject]
+    private NavigationManager Navigation { get; set; }
+
+    private void NavigateToHome()
+    {
+        Navigation.NavigateTo("/");
+    }
+}
