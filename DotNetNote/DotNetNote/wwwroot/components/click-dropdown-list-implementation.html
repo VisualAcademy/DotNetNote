@@ -1,0 +1,90 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>클릭 드롭다운 리스트</title>
+    <style>
+        /* 드롭다운 버튼 스타일 */
+        .dul-btn {
+            background-color: #3498DB;
+            color: white;
+            padding: 16px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+        }
+
+            .dul-btn:hover, .dul-btn:focus {
+                background-color: #2980B9;
+            }
+
+        /* 드롭다운 컨테이너 */
+        .dul-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        /* 드롭다운 내용 */
+        .dul-dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f1f1f1;
+            min-width: 160px;
+            overflow: auto;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+
+            /* 드롭다운 링크 스타일 */
+            .dul-dropdown-content a {
+                color: black;
+                padding: 12px 16px;
+                text-decoration: none;
+                display: block;
+            }
+
+                .dul-dropdown-content a:hover {
+                    background-color: #ddd;
+                }
+
+        /* 드롭다운이 열렸을 때 표시 */
+        .dul-show {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 드롭다운 버튼과 리스트 -->
+    <div class="dul-dropdown">
+        <button onclick="dulToggleDropdown()" class="dul-btn">클릭 드롭다운 리스트</button>
+        <div id="dulDropdownContent" class="dul-dropdown-content">
+            <a href="#dotnetnote">DotNetNote</a>
+            <a href="#visualacademy">VisualAcademy</a>
+            <a href="#devlec">DevLec</a>
+        </div>
+    </div>
+
+    <script>
+    /* 드롭다운 열고 닫기 함수 */
+    function dulToggleDropdown() {
+      document.getElementById("dulDropdownContent").classList.toggle("dul-show");
+    }
+
+    // 드롭다운 외부를 클릭하면 리스트 닫기
+    window.onclick = function(event) {
+      if (!event.target.matches('.dul-btn')) {
+        var dropdowns = document.getElementsByClassName("dul-dropdown-content");
+        for (var i = 0; i < dropdowns.length; i++) {
+          var openDropdown = dropdowns[i];
+          if (openDropdown.classList.contains('dul-show')) {
+            openDropdown.classList.remove('dul-show');
+          }
+        }
+      }
+    }
+    </script>
+
+</body>
+</html>
