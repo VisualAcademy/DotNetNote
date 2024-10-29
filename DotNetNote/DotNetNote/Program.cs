@@ -261,6 +261,9 @@ public partial class Program
 
         // 의존성 주입 컨테이너 설정 호출
         DependencyInjectionContainer(services, Configuration);
+
+        // HttpClient 등록
+        services.AddHttpClient();
     }
 
     private static void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider)

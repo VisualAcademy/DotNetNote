@@ -1,0 +1,9 @@
+# For more info on HTTP files go to https://aka.ms/vs/httpfile
+
+
+POST https://localhost:5001/api/Translator
+Content-Type: application/json
+
+{
+  "text": "Hello, how are you?"
+}
