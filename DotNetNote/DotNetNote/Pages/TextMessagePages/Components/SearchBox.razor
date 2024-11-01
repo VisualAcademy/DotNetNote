@@ -1,5 +1,10 @@
-﻿<h3>SearchBox</h3>
+﻿@namespace VisualAcademy.Pages.TextMessages.Components
 
-@code {
-
-}
+<div class="input-group">
+    <input class="form-control input-sm" type="search" placeholder="Search topics or keywords"
+           aria-describedby="btnSearch" @attributes="AdditionalAttributes"
+           @bind="SearchQuery" @bind:event="oninput">
+    <span class="input-group-btn">
+        <button class="btn btn-sm btn-success" type="button" @onclick="Search" id="btnSearch">Search</button>
+    </span>
+</div>
