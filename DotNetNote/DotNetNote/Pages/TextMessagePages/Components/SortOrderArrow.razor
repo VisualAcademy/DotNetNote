@@ -1,5 +1,31 @@
-﻿<h3>SortOrderArrow</h3>
+﻿@namespace VisualAcademy.Pages.TextMessages.Components
+
+<span style="color: silver; vertical-align:text-bottom; margin-left: 7px; font-weight: bold; float: right;">@arrow</span>
 
 @code {
+    [Parameter]
+    public string SortColumn { get; set; }
 
+    [Parameter]
+    public string SortOrder { get; set; }
+
+    private string arrow = " ";
+
+    protected override void OnParametersSet()
+    {
+        if (SortOrder == "")
+        {
+            arrow = "↕";
+        }
+        else if (SortOrder.Contains(SortColumn) && SortOrder.Contains("Desc"))
+        {
+            arrow = "↓";
+        }
+        else if (SortOrder.Contains(SortColumn))
+        {
+            arrow = "↑";
+        }
+
+        StateHasChanged();
+    }
 }
