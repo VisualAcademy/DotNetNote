@@ -1,5 +1,25 @@
-﻿<h3>DeleteDialog</h3>
+﻿@namespace VisualAcademy.Pages.TextMessages.Components
 
-@code {
-
+@if (IsShow)
+{
+    <div class="modal fade in" tabindex="-1" role="dialog" style="display: block;">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" aria-label="Close" @onclick="Hide">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">DELETE</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to delete?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" @onclick="OnClickCallback">Yes</button>
+                    <button type="button" class="btn btn-default" @onclick="Hide">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-backdrop fade in"></div>
 }
