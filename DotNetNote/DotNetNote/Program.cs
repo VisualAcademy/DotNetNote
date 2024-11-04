@@ -36,6 +36,12 @@ public partial class Program
         // ITaskService를 DI 컨테이너에 등록
         builder.Services.AddSingleton<ITaskService, TaskService>();
 
+        // HttpClient 등록
+        builder.Services.AddHttpClient();
+
+        // Azure Translator 설정 바인딩
+        builder.Services.Configure<AzureTranslatorSettings>(builder.Configuration.GetSection("AzureTranslator"));
+
         var app = builder.Build();
 
         // <TodoComponent>
