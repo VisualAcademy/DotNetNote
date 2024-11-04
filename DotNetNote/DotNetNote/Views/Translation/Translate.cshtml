@@ -1,0 +1,11 @@
+﻿@using DotNetNote.ViewModels.Translators
+@model TranslationRequestModel
+
+<form method="post" asp-action="Translate">
+    <label for="text">번역할 텍스트:</label>
+    <input type="text" id="text" name="Text" asp-for="Text" />
+    <button type="submit">번역</button>
+</form>
+<div>
+    @Html.ValidationMessageFor(model => model.Text)
+</div>
