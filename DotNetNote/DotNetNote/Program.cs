@@ -255,6 +255,11 @@ public partial class Program
         tenantSchemaEnhancerCreateAndAlter.EnsureSchema();
         #endregion
 
+        #region AspNetUsers 테이블에 새로운 컬럼 추가 
+        //var aspNetUsersTableAddColumn = new AspNetUsersTableEnhancer(Configuration.GetConnectionString("DefaultConnection"));
+        //aspNetUsersTableAddColumn.AddShowInDropdownColumnIfNotExists(); 
+        #endregion
+
         #region Partners Table 생성 및 컬럼 추가 데모
         var tenantSchemaEnhancerCreatePartnersTable = new TenantSchemaEnhancerCreatePartnersTable(Configuration.GetConnectionString("DefaultConnection"));
         tenantSchemaEnhancerCreatePartnersTable.EnhanceAllTenantDatabases();
