@@ -1,6 +1,4 @@
-﻿using Microsoft.Data.SqlClient;
-
-namespace Dalbodre.Infrastructures.Cores
+﻿namespace Dalbodre.Infrastructures.Cores
 {
     public class AspNetUsersTableEnhancer
     {
