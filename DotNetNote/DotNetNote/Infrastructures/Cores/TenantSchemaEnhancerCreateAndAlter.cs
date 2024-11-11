@@ -1,18 +1,11 @@
 ﻿namespace Dalbodre.Infrastructures.Cores;
 
-public class TenantSchemaEnhancerCreateAndAlter
+public class TenantSchemaEnhancerCreateAndAlter(string connectionString)
 {
-    private readonly string _connectionString;
-
-    public TenantSchemaEnhancerCreateAndAlter(string connectionString)
-    {
-        _connectionString = connectionString;
-    }
-
     // Tenants 테이블이 없으면 생성하는 메서드
     public void EnsureTenantsTableExists()
     {
-        using (SqlConnection connection = new SqlConnection(_connectionString))
+        using (SqlConnection connection = new SqlConnection(connectionString))
         {
             connection.Open();
 
@@ -51,7 +44,7 @@ public class TenantSchemaEnhancerCreateAndAlter
     // 특정 테이블에 특정 컬럼이 없으면 추가하는 메서드
     public void AddColumnIfNotExists(string tableName, string columnName, string columnDefinition)
     {
-        using (SqlConnection connection = new SqlConnection(_connectionString))
+        using (SqlConnection connection = new SqlConnection(connectionString))
         {
             connection.Open();
 
@@ -109,7 +102,7 @@ public class TenantSchemaEnhancerCreateAndAlter
     // 특정 테넌트의 IsMultiPortalEnabled 열을 1로 설정하는 메서드
     public void SetMultiPortalEnabledForSpecificTenants()
     {
-        using (SqlConnection connection = new SqlConnection(_connectionString))
+        using (SqlConnection connection = new SqlConnection(connectionString))
         {
             connection.Open();
 
@@ -127,7 +120,7 @@ public class TenantSchemaEnhancerCreateAndAlter
     // IsMultiPortalEnabled 열의 값이 NULL인 경우 false로 업데이트하는 메서드
     public void UpdateNullIsMultiPortalEnabledToFalse()
     {
-        using (SqlConnection connection = new SqlConnection(_connectionString))
+        using (SqlConnection connection = new SqlConnection(connectionString))
         {
             connection.Open();
 
