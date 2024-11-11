@@ -72,5 +72,24 @@ namespace Dalbodre.Infrastructures
                 connection.Close();
             }
         }
+
+        // Method to update Language column values to 'en-US' if they are NULL
+        public void UpdateNullLanguageValuesToDefault()
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+
+                // Update Language column to 'en-US' where it is NULL
+                SqlCommand cmdUpdate = new SqlCommand(@"
+                    UPDATE dbo.Documents
+                    SET Language = 'en-US'
+                    WHERE Language IS NULL", connection);
+
+                cmdUpdate.ExecuteNonQuery();
+
+                connection.Close();
+            }
+        }
     }
 }
