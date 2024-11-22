@@ -287,7 +287,10 @@ public partial class Program
         }
 
         app.UseDefaultFiles();
+
         app.UseStaticFiles();
+        //app.MapStaticAssets();
+
         app.UseRouting();
         app.UseRewriter(new RewriteOptions().Add(new RedirectAzureWebsitesRule()).AddRedirectToWwwPermanent());
         app.UseAuthentication();
