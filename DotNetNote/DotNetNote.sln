@@ -9,6 +9,14 @@ Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "DotNetNote.SqlServer", "Dot
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNetNote", "DotNetNote\DotNetNote.csproj", "{D769F0BF-C5CF-4F24-A09B-8C1486974167}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "aspire", "aspire", "{5D58A335-5DD6-41E6-A393-A7FC6DF406EC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetNote.Web", "DotNetNote.Web\DotNetNote.Web.csproj", "{6EE6CAC0-6E6D-42CB-B2DD-368EF009D061}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetNote.AppHost", "DotNetNote.AppHost\DotNetNote.AppHost.csproj", "{4846062D-C53D-4154-90D3-C365FA87C700}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetNote.ServiceDefaults", "DotNetNote.ServiceDefaults\DotNetNote.ServiceDefaults.csproj", "{2D2FF5D6-A6E1-4151-AB6E-1E9668463138}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,9 +37,26 @@ Global
 		{D769F0BF-C5CF-4F24-A09B-8C1486974167}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D769F0BF-C5CF-4F24-A09B-8C1486974167}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D769F0BF-C5CF-4F24-A09B-8C1486974167}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6EE6CAC0-6E6D-42CB-B2DD-368EF009D061}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6EE6CAC0-6E6D-42CB-B2DD-368EF009D061}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6EE6CAC0-6E6D-42CB-B2DD-368EF009D061}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6EE6CAC0-6E6D-42CB-B2DD-368EF009D061}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4846062D-C53D-4154-90D3-C365FA87C700}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4846062D-C53D-4154-90D3-C365FA87C700}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4846062D-C53D-4154-90D3-C365FA87C700}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4846062D-C53D-4154-90D3-C365FA87C700}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2D2FF5D6-A6E1-4151-AB6E-1E9668463138}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D2FF5D6-A6E1-4151-AB6E-1E9668463138}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D2FF5D6-A6E1-4151-AB6E-1E9668463138}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D2FF5D6-A6E1-4151-AB6E-1E9668463138}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{6EE6CAC0-6E6D-42CB-B2DD-368EF009D061} = {5D58A335-5DD6-41E6-A393-A7FC6DF406EC}
+		{4846062D-C53D-4154-90D3-C365FA87C700} = {5D58A335-5DD6-41E6-A393-A7FC6DF406EC}
+		{2D2FF5D6-A6E1-4151-AB6E-1E9668463138} = {5D58A335-5DD6-41E6-A393-A7FC6DF406EC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {832D57CB-B219-403C-ADA1-7B804C0169D5}
