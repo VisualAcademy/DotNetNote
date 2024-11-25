@@ -18,6 +18,12 @@ public class HomeController : Controller
         return View();
     }
 
+    public IActionResult Chat()
+    {
+        //return Content("Chat Page");
+        return View();
+    }
+
     public IActionResult Privacy()
     {
         return View();
