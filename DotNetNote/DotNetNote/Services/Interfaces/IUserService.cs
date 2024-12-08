@@ -1,29 +1,28 @@
-﻿namespace DotNetNote.Services.Interfaces
+﻿namespace DotNetNote.Services.Interfaces;
+
+public interface IUserService
 {
-    public interface IUserService
-    {
-        ApplicationUser GetUser();
+    ApplicationUser GetUser();
 
-        ApplicationUser GetUserNotCached();
+    ApplicationUser GetUserNotCached();
 
-        ApplicationUser GetUser(string email);
+    ApplicationUser GetUser(string email);
 
-        ApplicationUser GetUserById(string id);
+    ApplicationUser GetUserById(string id);
 
-        ApplicationUser GetUserByIdCached(string id);
+    ApplicationUser GetUserByIdCached(string id);
 
-        Task<ApplicationUser> GetUserAsync();
+    Task<ApplicationUser> GetUserAsync();
 
-        Task<ApplicationUser> GetUserAsyncCached();
+    Task<ApplicationUser> GetUserAsyncCached();
 
-        Task<ApplicationUser> GetUserAsyncWithRoleInfo();
+    Task<ApplicationUser> GetUserAsyncWithRoleInfo();
 
-        Task<TimeZoneInfo> GetTimeZoneInfoAsync();
+    Task<TimeZoneInfo> GetTimeZoneInfoAsync();
 
-        void ConfirmEmail(string email);
+    void ConfirmEmail(string email);
 
-        bool HasAccessTo(string packageFeature);
+    bool HasAccessTo(string packageFeature);
 
-        Task RemoveUserCacheAsync();
-    }
+    Task RemoveUserCacheAsync();
 }
