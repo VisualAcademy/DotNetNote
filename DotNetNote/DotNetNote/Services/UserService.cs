@@ -1,6 +1,5 @@
-﻿namespace DotNetNote.Services
+﻿namespace DotNetNote.Services;
+
+public class UserService
 {
-    public class UserService
-    {
-    }
 }
