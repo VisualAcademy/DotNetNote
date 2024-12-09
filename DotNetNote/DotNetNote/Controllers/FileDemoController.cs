@@ -15,30 +15,30 @@ public class FileDemoController(IWebHostEnvironment environment) : Controller
     /// 파일 업로드 처리
     /// 보안상 파일 업로드 처리 코드는 주석 처리합니다.
     /// </summary>
-    [HttpPost]
-    public async Task<IActionResult> FileUploadDemo(
-        ICollection<IFormFile> files)
-    {
-        var uploadFolder = Path.Combine(environment.WebRootPath, "files");
+    //[HttpPost]
+    //public async Task<IActionResult> FileUploadDemo(
+    //    ICollection<IFormFile> files)
+    //{
+    //    var uploadFolder = Path.Combine(environment.WebRootPath, "files");
 
-        foreach (var file in files)
-        {
-            if (file.Length > 0)
-            {
-                var fileName = Path.GetFileName(
-                    ContentDispositionHeaderValue.Parse(
-                        file.ContentDisposition).FileName.Trim('"'));
+    //    foreach (var file in files)
+    //    {
+    //        if (file.Length > 0)
+    //        {
+    //            var fileName = Path.GetFileName(
+    //                ContentDispositionHeaderValue.Parse(
+    //                    file.ContentDisposition).FileName.Trim('"'));
 
-                using (var fileStream = new FileStream(
-                    Path.Combine(uploadFolder, fileName), FileMode.Create))
-                {
-                    await file.CopyToAsync(fileStream);
-                }
-            }
-        }
+    //            using (var fileStream = new FileStream(
+    //                Path.Combine(uploadFolder, fileName), FileMode.Create))
+    //            {
+    //                await file.CopyToAsync(fileStream);
+    //            }
+    //        }
+    //    }
 
-        return View();
-    }
+    //    return View();
+    //}
 
     /// <summary>
     /// 파일 다운로드 처리 데모
