@@ -1,12 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace DotNetNote.Web.Controllers
+namespace DotNetNote.Web.Controllers;
+
+public class ExamDemoController : Controller
 {
-    public class ExamDemoController : Controller
+    public IActionResult Index()
     {
-        public IActionResult Index()
-        {
-            return View();
-        }
+        return View();
     }
 }
