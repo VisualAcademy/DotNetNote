@@ -1,4 +1,7 @@
-﻿namespace DotNetNote.Controllers;
+﻿using DotNetNote.Models;
+using Microsoft.AspNetCore.Mvc;
+
+namespace DotNetNote.Controllers;
 
 public class ViewWithListOfDemoController : Controller
 {
@@ -7,7 +10,8 @@ public class ViewWithListOfDemoController : Controller
     /// </summary>
     public IActionResult Index()
     {
-        List<DemoModel> models = new List<DemoModel>() {
+        List<DemoModel> models = new List<DemoModel>() 
+        {
             new DemoModel { Id = 1, Name = "홍길동" },
             new DemoModel { Id = 2, Name = "백두산" },
             new DemoModel { Id = 3, Name = "임꺽정" }

@@ -40,7 +40,8 @@ public class DemoController : Controller
     /// </summary>
     public IActionResult ViewWithListOfDemo()
     {
-        List<DemoModel> models = new() {
+        List<DemoModel> models = new() 
+        {
             new DemoModel { Id = 1, Name = "홍길동" },
             new DemoModel { Id = 2, Name = "백두산" },
             new DemoModel { Id = 3, Name = "임꺽정" }

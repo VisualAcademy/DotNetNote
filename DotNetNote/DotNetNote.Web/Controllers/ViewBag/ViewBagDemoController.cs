@@ -1,4 +1,6 @@
-﻿namespace DotNetNote.Controllers;
+﻿using Microsoft.AspNetCore.Mvc;
+
+namespace DotNetNote.Controllers;
 
 public class ViewBagDemoController : Controller
 {
