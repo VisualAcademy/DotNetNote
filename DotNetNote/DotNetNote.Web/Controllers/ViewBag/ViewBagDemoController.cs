@@ -1,5 +1,4 @@
-﻿// ViewBag과 ViewData 개체를 사용하여 컨트롤러의 데이터를 뷰 페이지로 전송하기
-namespace DotNetNote.Controllers;
+﻿namespace DotNetNote.Controllers;
 
 public class ViewBagDemoController : Controller
 {
