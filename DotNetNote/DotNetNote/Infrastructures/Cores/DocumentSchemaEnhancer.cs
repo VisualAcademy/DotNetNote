@@ -1,6 +1,4 @@
-﻿using Microsoft.Data.SqlClient;
-
-namespace Dalbodre.Infrastructures
+﻿namespace Dalbodre.Infrastructures
 {
     public class DocumentSchemaEnhancer
     {
