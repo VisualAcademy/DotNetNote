@@ -1,6 +1,5 @@
-﻿namespace DotNetNote.Infrastructures
+﻿namespace DotNetNote.Infrastructures;
+
+public class DataInitializer
 {
-    public class DataInitializer
-    {
-    }
 }
