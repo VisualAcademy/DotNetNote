@@ -1,4 +1,6 @@
-﻿// (실시간) ASP.NET Core MVC 기초 컨트롤러 클래스, 액션 메서드, 뷰 페이지
+﻿// https://youtu.be/T4ybB7fepJs
+// (실시간) ASP.NET Core MVC 기초 컨트롤러 클래스, 액션 메서드, 뷰 페이지
+
 namespace DotNetNote.Controllers;
 
 /// <summary>
