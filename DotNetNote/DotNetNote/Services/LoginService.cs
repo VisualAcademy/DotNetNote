@@ -1,6 +1,6 @@
-﻿namespace DotNetNote.Services
+﻿namespace DotNetNote.Services;
+
+public class LoginService
 {
-    public class LoginService
-    {
-    }
+
 }
