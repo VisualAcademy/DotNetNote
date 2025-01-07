@@ -1,6 +1,6 @@
-﻿namespace DotNetNote.Services
+﻿namespace DotNetNote.Services;
+
+public class AccountService
 {
-    public class AccountService
-    {
-    }
+
 }
