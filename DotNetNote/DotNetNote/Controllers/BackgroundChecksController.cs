@@ -1,12 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿namespace DotNetNote.Controllers;
 
-namespace DotNetNote.Controllers
+public class BackgroundChecksController : Controller
 {
-    public class BackgroundChecksController : Controller
+    public IActionResult Index()
     {
-        public IActionResult Index()
-        {
-            return View();
-        }
+        return View();
     }
 }
