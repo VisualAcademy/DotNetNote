@@ -2,8 +2,5 @@
 
 public class BackgroundChecksController : Controller
 {
-    public IActionResult Index()
-    {
-        return View();
-    }
+    public IActionResult Index() => View();
 }
