@@ -1,6 +1,5 @@
-﻿namespace DotNetNote.ViewModels.TextMessageViewModels
+﻿namespace DotNetNote.ViewModels.TextMessageViewModels;
+
+public class TextMessageViewModel
 {
-    public class TextMessageViewModel
-    {
-    }
 }
