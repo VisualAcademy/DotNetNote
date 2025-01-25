@@ -1,7 +1,6 @@
-﻿namespace DotNetNote.ViewModels.Translators
+﻿namespace DotNetNote.ViewModels.Translators;
+
+public class TranslationRequestModel
 {
-    public class TranslationRequestModel
-    {
-        public string Text { get; set; }
-    }
+    public string Text { get; set; }
 }
