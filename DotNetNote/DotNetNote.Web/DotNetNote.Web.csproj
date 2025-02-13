@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\All\All.csproj" />
     <ProjectReference Include="..\DotNetNote.ServiceDefaults\DotNetNote.ServiceDefaults.csproj" />
   </ItemGroup>
 

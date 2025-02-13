@@ -49,6 +49,7 @@
     </ItemGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\All\All.csproj" />
         <ProjectReference Include="..\DotNetNote.Models\DotNetNote.Models.csproj" />
     </ItemGroup>
 

@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetNote.AppHost", "DotNe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetNote.ServiceDefaults", "DotNetNote.ServiceDefaults\DotNetNote.ServiceDefaults.csproj", "{2D2FF5D6-A6E1-4151-AB6E-1E9668463138}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "All", "All\All.csproj", "{C7B54A77-FADB-4960-A250-D97BCD73B83C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -49,6 +51,10 @@ Global
 		{2D2FF5D6-A6E1-4151-AB6E-1E9668463138}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2D2FF5D6-A6E1-4151-AB6E-1E9668463138}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2D2FF5D6-A6E1-4151-AB6E-1E9668463138}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C7B54A77-FADB-4960-A250-D97BCD73B83C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C7B54A77-FADB-4960-A250-D97BCD73B83C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C7B54A77-FADB-4960-A250-D97BCD73B83C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C7B54A77-FADB-4960-A250-D97BCD73B83C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
