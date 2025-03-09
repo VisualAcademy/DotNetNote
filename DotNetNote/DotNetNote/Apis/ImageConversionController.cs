@@ -21,6 +21,6 @@ namespace DotNetNote.Apis
             string dataUrl = $"data:image/png;base64,{base64String}";
 
             return Ok(dataUrl);
-        }
-    }
+        } // end of method ImageConversionController::GetBase64Image
+    } // end of class ImageConversionController
 }
