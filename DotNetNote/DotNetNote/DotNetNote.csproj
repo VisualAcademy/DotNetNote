@@ -84,9 +84,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Folder Include="Areas\Conferences\Controllers\" />
         <Folder Include="Areas\Conferences\Data\" />
-        <Folder Include="Areas\Conferences\Views\" />
         <Folder Include="Areas\DotNetSale\Data\" />
         <Folder Include="Areas\Modules\Data\" />
         <Folder Include="Entities\" />
