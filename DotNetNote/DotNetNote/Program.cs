@@ -21,6 +21,7 @@ using DotNetNote.Records;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 using DotNetNote.Services.Tasks;
+using Hawaso.Infrastructures.Tenants;
 
 public partial class Program
 {
@@ -212,6 +213,23 @@ public partial class Program
             }
         }
         #endregion
+
+
+
+
+
+        // CustomFieldTitles 테이블 생성 및 컬럼 추가
+        using (var scope = app.Services.CreateScope())
+        {
+            var configuration = scope.ServiceProvider.GetRequiredService<IConfiguration>();
+            string masterConnectionString = configuration.GetConnectionString("DefaultConnection");
+
+            var enhancer = new TenantSchemaEnhancerCreateCustomFieldTitlesTable(masterConnectionString);
+            enhancer.EnhanceAllTenantDatabases();
+        }
+
+
+
 
 
         app.Run();
