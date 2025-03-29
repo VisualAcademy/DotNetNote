@@ -1,0 +1,341 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>az-carousel</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .az-carousel-section {
+            position: relative;
+            width: 100%;
+            height: 500px;
+            overflow: hidden;
+        }
+
+        .az-slides {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .az-slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.8s ease-in-out;
+        }
+
+            .az-slide.az-active {
+                opacity: 1;
+                z-index: 1;
+            }
+
+            .az-slide img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+        .az-slide-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            color: #fff;
+            text-align: center;
+            border-radius: 8px;
+            max-width: 80%;
+        }
+
+            .az-slide-content h2 {
+                font-size: 1.8rem;
+                margin-bottom: 10px;
+            }
+
+            .az-slide-content p {
+                font-size: 1rem;
+                margin-bottom: 15px;
+            }
+
+            .az-slide-content a {
+                color: white;
+                background-color: #007bff;
+                padding: 8px 16px;
+                text-decoration: none;
+                border-radius: 4px;
+            }
+
+                .az-slide-content a:hover {
+                    background-color: #0056b3;
+                }
+
+        .az-nav-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.8rem;
+            color: white;
+            background: rgba(0, 0, 0, 0.5);
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+            .az-nav-arrow.az-left {
+                left: 20px;
+            }
+
+            .az-nav-arrow.az-right {
+                right: 20px;
+            }
+
+        .az-progress-indicators {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            z-index: 20;
+        }
+
+        .az-progress-dot {
+            width: 40px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 2px;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .az-progress-fill {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 0%;
+            background: #007aff;
+        }
+
+        .az-pause-button {
+            margin-left: 12px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            color: white;
+            background: rgba(0,0,0,0.5);
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+            .az-pause-button:hover {
+                background: rgba(0,0,0,0.7);
+            }
+    </style>
+</head>
+<body>
+    <div class="container px-0">
+        <section class="az-carousel-section" id="az-carousel">
+            <div class="az-slides" id="az-slide-container">
+                <div class="az-slide az-active">
+                    <img src="https://images.pexels.com/photos/1103970/pexels-photo-1103970.jpeg?auto=compress&cs=tinysrgb&w=1600" alt="Slide 1">
+                    <div class="az-slide-content">
+                        <h2>Blazor Server Part 1</h2>
+                        <p>회사 홈페이지와 관리자 페이지를 Blazor로 만드는 실전 웹개발 과정</p>
+                        <a href="http://www.devlec.com/?_pageVariable=courseDetail&code=PT001TB4369&method=S&relation=PT001TB4369_BlazorServer" target="_blank">강의 보기</a>
+                    </div>
+                </div>
+                <div class="az-slide">
+                    <img src="https://images.pexels.com/photos/18105/pexels-photo.jpg?auto=compress&cs=tinysrgb&w=1600" alt="Slide 2">
+                    <div class="az-slide-content">
+                        <h2>Blazor 게시판 프로젝트 Part 2</h2>
+                        <p>공지사항, 자료실, 답변형 게시판을 Blazor로 직접 구현해보세요</p>
+                        <a href="http://www.devlec.com/?_pageVariable=courseDetail&code=PT001TB4370&method=S&relation=PT001TB4370_BlazorServerPart2" target="_blank">강의 보기</a>
+                    </div>
+                </div>
+                <div class="az-slide">
+                    <img src="https://images.pexels.com/photos/414612/pexels-photo-414612.jpeg?auto=compress&cs=tinysrgb&w=1600" alt="Slide 3">
+                    <div class="az-slide-content">
+                        <h2>Blazor 실전 프로젝트 Part 3</h2>
+                        <p>hawaso.com 사이트를 직접 구현하며 실무 핵심 기능을 익히는 강의</p>
+                        <a href="http://www.devlec.com/?_pageVariable=courseDetail&code=PT001TB4371&method=S&relation=PT001TB4371_BlazorProject" target="_blank">강의 보기</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="az-nav-arrow az-left" id="az-prev-btn"><i class="fas fa-chevron-left"></i></div>
+            <div class="az-nav-arrow az-right" id="az-next-btn"><i class="fas fa-chevron-right"></i></div>
+
+            <div class="az-progress-indicators" id="az-progress-indicators"></div>
+        </section>
+    </div>
+
+    <script>
+        // 기존 스크립트 그대로 유지
+        const azSlides = document.querySelectorAll('.az-slide');
+        const azTotalSlides = azSlides.length;
+        const azProgressIndicators = document.getElementById('az-progress-indicators');
+        const azSlideDuration = 5000;
+        let azCurrentIndex = 0;
+        let azIsPaused = false;
+        let azTimeout;
+        let azStartTime;
+        let azElapsed = 0;
+
+        const azProgressDots = [];
+
+        for (let i = 0; i < azTotalSlides; i++) {
+            const dot = document.createElement('div');
+            dot.className = 'az-progress-dot';
+            dot.dataset.index = i;
+
+            const fill = document.createElement('div');
+            fill.className = 'az-progress-fill';
+            dot.appendChild(fill);
+
+            dot.addEventListener('click', () => {
+                clearTimeout(azTimeout);
+                azElapsed = 0;
+                azUpdateSlide(i);
+            });
+
+            azProgressIndicators.appendChild(dot);
+            azProgressDots.push(fill);
+        }
+
+        const azPauseBtn = document.createElement('div');
+        azPauseBtn.className = 'az-pause-button';
+        azPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+        azProgressIndicators.appendChild(azPauseBtn);
+
+        azPauseBtn.addEventListener('click', () => {
+            azIsPaused = !azIsPaused;
+            azPauseBtn.innerHTML = `<i class="fas fa-${azIsPaused ? 'play' : 'pause'}"></i>`;
+            if (azIsPaused) {
+                azPauseProgress();
+            } else {
+                azResumeProgress();
+            }
+        });
+
+        function azUpdateSlide(index) {
+            azCurrentIndex = (index + azTotalSlides) % azTotalSlides;
+
+            azSlides.forEach((slide, i) => {
+                slide.classList.toggle('az-active', i === azCurrentIndex);
+            });
+
+            azProgressDots.forEach(dot => {
+                dot.style.transition = 'none';
+                dot.style.width = '0%';
+            });
+
+            azElapsed = 0;
+            if (!azIsPaused) azStartProgress(azSlideDuration);
+        }
+
+        function azStartProgress(duration) {
+            const dot = azProgressDots[azCurrentIndex];
+            dot.style.transition = 'none';
+            dot.style.width = '0%';
+
+            requestAnimationFrame(() => {
+                dot.style.transition = `width ${duration}ms linear`;
+                dot.style.width = '100%';
+            });
+
+            azStartTime = Date.now();
+            azTimeout = setTimeout(() => {
+                azElapsed = 0;
+                azUpdateSlide(azCurrentIndex + 1);
+            }, duration);
+        }
+
+        function azPauseProgress() {
+            const dot = azProgressDots[azCurrentIndex];
+            const computed = parseFloat(getComputedStyle(dot).width);
+            const parentWidth = dot.parentElement.offsetWidth;
+            const percent = (computed / parentWidth) * 100;
+
+            dot.style.transition = 'none';
+            dot.style.width = percent + '%';
+
+            azElapsed += Date.now() - azStartTime;
+            clearTimeout(azTimeout);
+        }
+
+        function azResumeProgress() {
+            const remaining = azSlideDuration - azElapsed;
+            azStartProgress(remaining);
+        }
+
+        document.getElementById('az-next-btn').addEventListener('click', () => {
+            clearTimeout(azTimeout);
+            azElapsed = 0;
+            azUpdateSlide(azCurrentIndex + 1);
+        });
+
+        document.getElementById('az-prev-btn').addEventListener('click', () => {
+            clearTimeout(azTimeout);
+            azElapsed = 0;
+            azUpdateSlide(azCurrentIndex - 1);
+        });
+
+        const azCarousel = document.getElementById('az-carousel');
+        let azTouchStartX = 0;
+        let azTouchEndX = 0;
+
+        azCarousel.addEventListener('touchstart', e => {
+            azTouchStartX = e.changedTouches[0].screenX;
+        });
+
+        azCarousel.addEventListener('touchend', e => {
+            azTouchEndX = e.changedTouches[0].screenX;
+            azHandleSwipe();
+        });
+
+        function azHandleSwipe() {
+            if (azTouchEndX < azTouchStartX - 30) {
+                clearTimeout(azTimeout);
+                azElapsed = 0;
+                azUpdateSlide(azCurrentIndex + 1);
+            }
+            if (azTouchEndX > azTouchStartX + 30) {
+                clearTimeout(azTimeout);
+                azElapsed = 0;
+                azUpdateSlide(azCurrentIndex - 1);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            azUpdateSlide(0);
+        });
+    </script>
+</body>
+</html>
