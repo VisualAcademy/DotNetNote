@@ -1,0 +1,59 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JSON 자동 높이 조절 텍스트박스</title>
+    <style>
+        textarea.auto-resize {
+            width: 100%;
+            overflow: hidden;
+            resize: none;
+            padding: 8px;
+            box-sizing: border-box;
+            margin-bottom: 12px;
+        }
+    </style>
+</head>
+<body>
+    <h2>JSON 자동 높이 조절 예제</h2>
+
+    <textarea class="auto-resize" id="json1"></textarea>
+    <textarea class="auto-resize" id="json2"></textarea>
+
+    <script>
+    function autoResizeTextarea(textarea) {
+      textarea.style.height = 'auto';
+      textarea.style.height = textarea.scrollHeight + 'px';
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+      // 예시 JSON 데이터
+      const jsonData1 = {
+        name: "홍길동",
+        age: 30,
+        job: "개발자"
+      };
+
+      const jsonData2 = {
+        message: "안녕하세요!\n이것은 여러 줄로 된 JSON 메시지입니다.",
+        items: [1, 2, 3],
+        active: true
+      };
+
+      // JSON을 문자열로 변환하여 textarea에 설정
+      const textarea1 = document.getElementById("json1");
+      const textarea2 = document.getElementById("json2");
+
+      textarea1.value = JSON.stringify(jsonData1, null, 2);
+      textarea2.value = JSON.stringify(jsonData2, null, 2);
+
+      // 높이 자동 조절
+      [textarea1, textarea2].forEach(textarea => {
+        autoResizeTextarea(textarea);
+        textarea.addEventListener("input", () => autoResizeTextarea(textarea));
+      });
+    });
+    </script>
+</body>
+</html>
