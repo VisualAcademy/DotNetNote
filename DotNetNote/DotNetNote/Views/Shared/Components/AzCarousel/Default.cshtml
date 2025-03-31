@@ -1,2 +1,41 @@
-﻿
-<h3>AzCarousel 들어오는 곳</h3>
+﻿@* AzCarousel *@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+<link href="/css/az-carousel.css" rel="stylesheet" />
+
+<div class="container px-0">
+    <section class="az-carousel-section" id="az-carousel">
+        <div class="az-slides" id="az-slide-container">
+            <div class="az-slide az-active">
+                <img src="https://images.pexels.com/photos/1103970/pexels-photo-1103970.jpeg?auto=compress&cs=tinysrgb&w=1600" alt="Slide 1" />
+                <div class="az-slide-content">
+                    <h2>Blazor Server Part 1</h2>
+                    <p>회사 홈페이지와 관리자 페이지를 Blazor로 만드는 실전 웹개발 과정</p>
+                    <a href="http://www.devlec.com/?_pageVariable=courseDetail&code=PT001TB4369" target="_blank">강의 보기</a>
+                </div>
+            </div>
+            <div class="az-slide">
+                <img src="https://images.pexels.com/photos/18105/pexels-photo.jpg?auto=compress&cs=tinysrgb&w=1600" alt="Slide 2" />
+                <div class="az-slide-content">
+                    <h2>Blazor 게시판 프로젝트 Part 2</h2>
+                    <p>공지사항, 자료실, 답변형 게시판을 Blazor로 직접 구현해보세요</p>
+                    <a href="http://www.devlec.com/?_pageVariable=courseDetail&code=PT001TB4370" target="_blank">강의 보기</a>
+                </div>
+            </div>
+            <div class="az-slide">
+                <img src="https://images.pexels.com/photos/414612/pexels-photo-414612.jpeg?auto=compress&cs=tinysrgb&w=1600" alt="Slide 3" />
+                <div class="az-slide-content">
+                    <h2>Blazor 실전 프로젝트 Part 3</h2>
+                    <p>hawaso.com 사이트를 직접 구현하며 실무 핵심 기능을 익히는 강의</p>
+                    <a href="http://www.devlec.com/?_pageVariable=courseDetail&code=PT001TB4371" target="_blank">강의 보기</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="az-nav-arrow az-left" id="az-prev-btn"><i class="fas fa-chevron-left"></i></div>
+        <div class="az-nav-arrow az-right" id="az-next-btn"><i class="fas fa-chevron-right"></i></div>
+
+        <div class="az-progress-indicators" id="az-progress-indicators"></div>
+    </section>
+</div>
+
+<script src="/js/az-carousel.js"></script>

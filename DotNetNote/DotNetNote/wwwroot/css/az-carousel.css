@@ -1,0 +1,139 @@
+﻿.az-carousel-section {
+    position: relative;
+    width: 100%;
+    height: 500px;
+    overflow: hidden;
+}
+
+.az-slides {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.az-slide {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.8s ease-in-out;
+}
+
+    .az-slide.az-active {
+        opacity: 1;
+        z-index: 1;
+    }
+
+    .az-slide img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+.az-slide-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    color: #fff;
+    text-align: center;
+    border-radius: 8px;
+    max-width: 80%;
+}
+
+    .az-slide-content h2 {
+        font-size: 1.8rem;
+        margin-bottom: 10px;
+    }
+
+    .az-slide-content p {
+        font-size: 1rem;
+        margin-bottom: 15px;
+    }
+
+    .az-slide-content a {
+        color: white;
+        background-color: #007bff;
+        padding: 8px 16px;
+        text-decoration: none;
+        border-radius: 4px;
+    }
+
+        .az-slide-content a:hover {
+            background-color: #0056b3;
+        }
+
+.az-nav-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.8rem;
+    color: white;
+    background: rgba(0, 0, 0, 0.5);
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 10;
+}
+
+    .az-nav-arrow.az-left {
+        left: 20px;
+    }
+
+    .az-nav-arrow.az-right {
+        right: 20px;
+    }
+
+.az-progress-indicators {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    z-index: 20;
+}
+
+.az-progress-dot {
+    width: 40px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 2px;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+}
+
+.az-progress-fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 0%;
+    background: #007aff;
+}
+
+.az-pause-button {
+    margin-left: 12px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    color: white;
+    background: rgba(0,0,0,0.5);
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+    .az-pause-button:hover {
+        background: rgba(0,0,0,0.7);
+    }
