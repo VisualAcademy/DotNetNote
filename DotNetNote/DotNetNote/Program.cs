@@ -22,6 +22,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 using DotNetNote.Services.Tasks;
 using Hawaso.Infrastructures.Tenants;
+using Azunt.Infrastructures.Tenants;
+using Azunt.Infrastructures;
 
 public partial class Program
 {
@@ -347,6 +349,17 @@ public partial class Program
             endpoints.MapRazorPages();
             endpoints.MapBlazorHub();
         });
+
+        #region 데이터베이스 초기화 설정
+        try
+        {
+            SchemaInitializer.Initialize(app.ApplicationServices);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"스키마 초기화 중 오류 발생: {ex.Message}");
+        } 
+        #endregion
     }
 
     private static void DependencyInjectionContainer(IServiceCollection services, IConfiguration Configuration)
