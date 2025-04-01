@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-
-namespace Azunt.Infrastructures.Tenants
+﻿namespace Azunt.Infrastructures.Tenants
 {
     public class TenantSchemaEnhancerEnsureLicenseTypesTable
     {
