@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.SqlClient;
-using Microsoft.Extensions.Logging;
-
-namespace Azunt.Infrastructures
+﻿namespace Azunt.Infrastructures
 {
     public class TenantAuditTrailSchemaEnhancer
     {
