@@ -1,7 +1,8 @@
 ﻿#nullable enable
+using DotNetNote;
 using Microsoft.AspNetCore.Identity;
 
-namespace DotNetNote.Areas.Identity.Models;
+namespace DotNetNote.Data;
 
 public class ApplicationRole : IdentityRole
 {
