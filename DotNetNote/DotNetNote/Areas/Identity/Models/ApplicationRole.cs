@@ -5,5 +5,5 @@ namespace DotNetNote.Areas.Identity.Models;
 
 public class ApplicationRole : IdentityRole
 {
-    public string? Description { get; set; }
+    public string? Description { get; set; } = "";
 }
