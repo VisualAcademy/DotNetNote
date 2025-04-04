@@ -170,6 +170,7 @@
     <None Include="dbo\Scripts\1_SqlServer\SysDateTimeOffset.sql" />
     <Build Include="dbo\Tables\Documents.sql" />
     <Build Include="dbo\Tables\DailyLogs.sql" />
+    <Build Include="dbo\Tables\LicenseTypes.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="dbo\Scripts\Attachments\Demo_Attachments_Processing.sql" />
