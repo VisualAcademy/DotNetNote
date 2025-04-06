@@ -5,6 +5,7 @@
         <AssemblyName>DotNetNote</AssemblyName>
         <RootNamespace>DotNetNote</RootNamespace>
         <UserSecretsId>2df5ebbc-8229-486b-ac8c-026b63a53631</UserSecretsId>
+        <Nullable>enable</Nullable>
     </PropertyGroup>
 
     <ItemGroup>
