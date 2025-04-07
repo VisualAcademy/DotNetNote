@@ -57,7 +57,11 @@ public class TenantSchemaEnhancerEnsureLicenseTypesTable
             {
                 while (reader.Read())
                 {
-                    result.Add(reader["ConnectionString"].ToString());
+                    var connectionString = reader["ConnectionString"]?.ToString();
+                    if (!string.IsNullOrEmpty(connectionString))
+                    {
+                        result.Add(connectionString);
+                    }
                 }
             }
         }
@@ -188,16 +192,20 @@ public class TenantSchemaEnhancerEnsureLicenseTypesTable
 
         foreach (var (type, description) in defaultTypes)
         {
-            var cmdInsert = new SqlCommand(@"
-                INSERT INTO [dbo].[LicenseTypes]
-                ([Active], [CreatedAt], [CreatedBy], [Type], [Description], [ApplicantType], [BgRequired], [IsApplicationRequired], [IsCertificateRequired])
-                VALUES (1, SYSDATETIMEOFFSET(), 'System', @Type, @Description, 1, 0, 1, 0)", connection);
+            foreach (var applicantType in new[] { 1, 2 })
+            {
+                var cmdInsert = new SqlCommand(@"
+            INSERT INTO [dbo].[LicenseTypes]
+            ([Active], [CreatedAt], [CreatedBy], [Type], [Description], [ApplicantType], [BgRequired], [IsApplicationRequired], [IsCertificateRequired])
+            VALUES (1, SYSDATETIMEOFFSET(), 'System', @Type, @Description, @ApplicantType, 0, 1, 0)", connection);
 
-            cmdInsert.Parameters.AddWithValue("@Type", type);
-            cmdInsert.Parameters.AddWithValue("@Description", description);
-            cmdInsert.ExecuteNonQuery();
+                cmdInsert.Parameters.AddWithValue("@Type", type);
+                cmdInsert.Parameters.AddWithValue("@Description", description);
+                cmdInsert.Parameters.AddWithValue("@ApplicantType", applicantType);
+                cmdInsert.ExecuteNonQuery();
 
-            _logger.LogInformation($"Default LicenseType inserted: {type}");
+                _logger.LogInformation($"Default LicenseType inserted: {type} (ApplicantType: {applicantType})");
+            }
         }
     }
 
@@ -213,6 +221,10 @@ public class TenantSchemaEnhancerEnsureLicenseTypesTable
             var logger = services.GetRequiredService<ILogger<TenantSchemaEnhancerEnsureLicenseTypesTable>>();
             var config = services.GetRequiredService<IConfiguration>();
             var masterConnectionString = config.GetConnectionString("DefaultConnection");
+            if (string.IsNullOrEmpty(masterConnectionString))
+            {
+                throw new InvalidOperationException("DefaultConnection is not configured in appsettings.json.");
+            }
 
             var enhancer = new TenantSchemaEnhancerEnsureLicenseTypesTable(masterConnectionString, logger);
 
