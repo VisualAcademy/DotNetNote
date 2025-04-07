@@ -350,6 +350,27 @@ public partial class Program
             endpoints.MapBlazorHub();
         });
 
+
+
+
+
+
+
+        #region 데이터베이스 및 인증 스키마 초기화
+        var config = app.ApplicationServices.GetRequiredService<IConfiguration>();
+        bool initializeDatabase = config.GetValue<bool>("Database:InitializeOnStartup");
+
+        if (initializeDatabase)
+        {
+            DatabaseInitializer.Initialize(app.ApplicationServices);
+        }
+        else
+        {
+            Console.WriteLine("Database initialization is skipped (Database:InitializeOnStartup = false)");
+        }
+        #endregion
+
+
         #region 데이터베이스 초기화 설정
         try
         {
