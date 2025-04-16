@@ -1,10 +1,19 @@
 ﻿namespace Azunt.Infrastructures.Auth;
 
+/// <summary>
+/// 테넌트 및 마스터 데이터베이스에 AspNetRoles 테이블을 생성 및 보강하고,
+/// 기본 역할 데이터를 삽입하는 역할을 수행하는 클래스입니다.
+/// </summary>
 public class TenantSchemaEnhancerEnsureRolesTable
 {
     private readonly string _masterConnectionString;
     private readonly ILogger<TenantSchemaEnhancerEnsureRolesTable> _logger;
 
+    /// <summary>
+    /// 생성자: 마스터 연결 문자열과 로거를 받아 초기화합니다.
+    /// </summary>
+    /// <param name="masterConnectionString">마스터 데이터베이스 연결 문자열</param>
+    /// <param name="logger">로깅을 위한 ILogger 인스턴스</param>
     public TenantSchemaEnhancerEnsureRolesTable(
         string masterConnectionString,
         ILogger<TenantSchemaEnhancerEnsureRolesTable> logger)
@@ -13,6 +22,11 @@ public class TenantSchemaEnhancerEnsureRolesTable
         _logger = logger;
     }
 
+    /// <summary>
+    /// 모든 테넌트 데이터베이스에서 AspNetRoles 테이블이 존재하는지 확인하고,
+    /// 존재하지 않으면 생성하며, Description 컬럼이 없으면 추가합니다.
+    /// 또한 기본 역할(Administrators, Everyone, Users, Guests)을 삽입합니다.
+    /// </summary>
     public void EnhanceTenantDatabases()
     {
         var tenantConnectionStrings = GetTenantConnectionStrings();
@@ -31,6 +45,9 @@ public class TenantSchemaEnhancerEnsureRolesTable
         }
     }
 
+    /// <summary>
+    /// 마스터 데이터베이스에서 AspNetRoles 테이블을 보장하고 기본 역할을 삽입합니다.
+    /// </summary>
     public void EnhanceMasterDatabase()
     {
         try
@@ -44,6 +61,10 @@ public class TenantSchemaEnhancerEnsureRolesTable
         }
     }
 
+    /// <summary>
+    /// 마스터 데이터베이스에서 모든 테넌트의 연결 문자열을 조회합니다.
+    /// </summary>
+    /// <returns>테넌트 연결 문자열 리스트</returns>
     private List<string> GetTenantConnectionStrings()
     {
         var result = new List<string>();
@@ -69,6 +90,11 @@ public class TenantSchemaEnhancerEnsureRolesTable
         return result;
     }
 
+    /// <summary>
+    /// 주어진 연결 문자열에 대해 AspNetRoles 테이블 및 Description 컬럼을 보장하고,
+    /// 기본 역할 데이터를 삽입합니다.
+    /// </summary>
+    /// <param name="connectionString">데이터베이스 연결 문자열</param>
     private void EnsureRolesTable(string connectionString)
     {
         using (var connection = new SqlConnection(connectionString))
@@ -126,6 +152,11 @@ public class TenantSchemaEnhancerEnsureRolesTable
         }
     }
 
+    /// <summary>
+    /// AspNetRoles 테이블에 필요한 기본 역할(Administrators, Everyone, Users, Guests)이
+    /// 존재하지 않으면 삽입합니다.
+    /// </summary>
+    /// <param name="connection">열려 있는 SQL 연결 객체</param>
     private void EnsureDefaultRoles(SqlConnection connection)
     {
         var existingRoles = new HashSet<string>();
@@ -165,10 +196,12 @@ public class TenantSchemaEnhancerEnsureRolesTable
     }
 
     /// <summary>
-    /// Entry point to run from Program.cs or Startup.cs
-    /// forMaster == true: only master DB
-    /// forMaster == false: only tenant DBs
+    /// Program.cs 또는 Startup.cs에서 호출되는 진입점입니다.
+    /// - <c>forMaster == true</c>: 마스터 DB만 처리
+    /// - <c>forMaster == false</c>: 테넌트 DB들만 처리
     /// </summary>
+    /// <param name="services">서비스 공급자 (DI 컨테이너)</param>
+    /// <param name="forMaster">마스터 DB만 처리할지 여부</param>
     public static void Run(IServiceProvider services, bool forMaster)
     {
         try
