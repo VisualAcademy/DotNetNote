@@ -12,16 +12,16 @@ public static class DatabaseInitializer
         var loggerFactory = services.GetRequiredService<ILoggerFactory>();
         var logger = loggerFactory.CreateLogger("DatabaseInitializer");
 
-        //try
-        //{
-        //    // 1. 인증 및 사용자 초기화 (우선순위 1)
-        //    AuthSchemaInitializer.Initialize(services);
-        //    logger.LogInformation("인증 및 사용자 초기화 완료");
-        //}
-        //catch (Exception ex)
-        //{
-        //    logger.LogError(ex, "인증 및 사용자 초기화 중 오류 발생");
-        //}
+        try
+        {
+            // 1. 인증 및 사용자 초기화 (우선순위 1)
+            AuthSchemaInitializer.Initialize(services);
+            logger.LogInformation("인증 및 사용자 초기화 완료");
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "인증 및 사용자 초기화 중 오류 발생");
+        }
 
         try
         {
