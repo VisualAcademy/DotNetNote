@@ -1,11 +1,4 @@
-﻿using Microsoft.Data.SqlClient;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-
-namespace Azunt.Web.Infrastructures.All;
+﻿namespace Azunt.Web.Infrastructures.All;
 
 public class TenantSchemaEnhancerEnsureAllowedIpRangesTable
 {
