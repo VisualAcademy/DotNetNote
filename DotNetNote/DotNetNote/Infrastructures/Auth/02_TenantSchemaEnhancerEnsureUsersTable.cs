@@ -1,6 +1,4 @@
-﻿using Microsoft.Data.SqlClient;
-
-namespace Azunt.Infrastructures.Auth;
+﻿namespace Azunt.Infrastructures.Auth;
 
 public class TenantSchemaEnhancerEnsureUsersTable
 {
