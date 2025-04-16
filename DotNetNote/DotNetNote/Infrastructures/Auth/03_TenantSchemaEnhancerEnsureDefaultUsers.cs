@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-
-namespace Azunt.Infrastructures.Auth;
+﻿namespace Azunt.Infrastructures.Auth;
 
 public class TenantSchemaEnhancerEnsureDefaultUsers
 {
