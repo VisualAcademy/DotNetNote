@@ -1,7 +1,19 @@
 ﻿namespace Azunt.Infrastructures.Auth;
 
+/// <summary>
+/// 테넌트 데이터베이스에서 AspNetUsers 테이블이 비어 있는 경우,
+/// 기본 역할과 기본 사용자 계정을 자동으로 생성하는 유틸리티 클래스입니다.
+/// - appsettings.json에서 기본 사용자 정보를 읽어와 사용자를 생성합니다.
+/// - 기본 역할(Administrators, Everyone, Users, Guests)이 존재하지 않으면 생성합니다.
+/// </summary>
 public class TenantSchemaEnhancerEnsureDefaultUsers
 {
+    /// <summary>
+    /// 테넌트 데이터베이스에서 기본 사용자 및 역할을 보장합니다.
+    /// - 사용자 테이블이 비어 있는 경우에만 실행됩니다.
+    /// - appsettings.json 설정을 기반으로 기본 사용자 정보를 읽고 생성합니다.
+    /// </summary>
+    /// <param name="services">서비스 공급자 (DI 컨테이너)</param>
     public static async Task RunAsync(IServiceProvider services)
     {
         var logger = services.GetRequiredService<ILogger<TenantSchemaEnhancerEnsureDefaultUsers>>();
@@ -68,6 +80,15 @@ public class TenantSchemaEnhancerEnsureDefaultUsers
             new[] { Dul.Roles.Guests.ToString() });
     }
 
+    /// <summary>
+    /// 지정된 이메일 주소를 가진 사용자가 존재하지 않으면 생성하고, 지정된 역할에 할당합니다.
+    /// </summary>
+    /// <param name="userManager">UserManager 인스턴스</param>
+    /// <param name="logger">로거</param>
+    /// <param name="email">사용자 이메일</param>
+    /// <param name="password">비밀번호</param>
+    /// <param name="roles">할당할 역할 목록</param>
+    /// <param name="emailConfirmed">이메일 인증 여부 (기본값: false)</param>
     private static async Task CreateUserIfNotExists(UserManager<ApplicationUser> userManager, ILogger logger,
         string email, string password, string[] roles, bool emailConfirmed = false)
     {
