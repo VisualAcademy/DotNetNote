@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-
-namespace DotNetNote.Infrastructures.All.Identity;
+﻿namespace DotNetNote.Infrastructures.All.Identity;
 
 public class AdministratorPasswordResetHelper
 {
