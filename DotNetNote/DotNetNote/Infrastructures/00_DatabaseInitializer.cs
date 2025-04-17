@@ -1,5 +1,5 @@
 ﻿using Azunt.Web.Infrastructures._Initializers;
-using Hawaso.Infrastructures.Initializers;
+using DotNetNote.Infrastructures._Initializers;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 

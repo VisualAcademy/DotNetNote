@@ -1,7 +1,7 @@
 ﻿using Azunt.Infrastructures.Tenants;
 using Azunt.Web.Infrastructures.All;
 
-namespace Hawaso.Infrastructures.Initializers;
+namespace DotNetNote.Infrastructures._Initializers;
 
 public static class SchemaInitializer
 {
