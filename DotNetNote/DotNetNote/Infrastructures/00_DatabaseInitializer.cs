@@ -1,7 +1,4 @@
 ﻿using Azunt.Web.Infrastructures._Initializers;
-using DotNetNote.Infrastructures._Initializers;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 
 namespace Azunt.Infrastructures;
 
