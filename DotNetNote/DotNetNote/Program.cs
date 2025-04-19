@@ -24,6 +24,7 @@ using DotNetNote.Services.Tasks;
 using Hawaso.Infrastructures.Tenants;
 using Azunt.Infrastructures.Tenants;
 using Azunt.Infrastructures;
+using Microsoft.FluentUI.AspNetCore.Components;
 
 public partial class Program
 {
@@ -32,6 +33,8 @@ public partial class Program
         var builder = WebApplication.CreateBuilder(args);
 
         // ConfigureServices
+        builder.Services.AddFluentUIComponents();
+
         builder.Services.AddDbContext<DotNetNote.Components.TodoContext>(options =>
             options.UseInMemoryDatabase("TodoList"));
         await ConfigureServicesAsync(builder.Services, builder.Configuration);
