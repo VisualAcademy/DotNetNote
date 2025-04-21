@@ -272,13 +272,26 @@ public partial class Program
                 };
             });
         services.AddTransient<ISignRepository, SignRepositoryInMemory>();
+
+
+        #region Authorization Policy Configuration
+        // ASP.NET Core 애플리케이션에서 권한 정책을 정의합니다.
         services.AddAuthorization(options =>
         {
             options.AddPolicy("Users", policy => policy.RequireRole("Users"));
             options.AddPolicy("Administrators", policy =>
                 policy.RequireRole("Users").RequireClaim("UserId",
-                    Configuration.GetSection("DotNetNoteSettings").GetSection("SiteAdmin").Value));
+                    Configuration.GetSection("DotNetNoteSettings").GetSection("SiteAdmin").Value!));
+
+            // "AdminOnly" 정책: "Administrators" 역할을 가진 사용자만 접근 가능
+            options.AddPolicy("AdminOnly", policy => policy.RequireRole("Administrators"));
+
+            // "ManagerOnly" 정책: "Managers" 역할을 가진 사용자만 접근 가능
+            options.AddPolicy("ManagerOnly", policy => policy.RequireRole("Managers"));
         });
+        #endregion
+
+
         services.AddCors(options =>
         {
             options.AddDefaultPolicy(builder =>
