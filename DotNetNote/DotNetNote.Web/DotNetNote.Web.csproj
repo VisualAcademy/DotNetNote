@@ -14,7 +14,7 @@
         <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="9.0.0" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.0" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.0" />
-        <PackageReference Include="Twilio" Version="7.8.4" />
+        <PackageReference Include="Twilio" Version="7.10.0" />
     </ItemGroup>
 
     <ItemGroup>
