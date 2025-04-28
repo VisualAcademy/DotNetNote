@@ -54,7 +54,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Azunt" Version="1.0.1" />
+        <PackageReference Include="Azunt" Version="1.0.2" />
         <PackageReference Include="Azure.Identity" Version="1.13.1" />
         <PackageReference Include="Azure.Storage.Blobs" Version="12.23.0" />
         <PackageReference Include="CommonMark.NET" Version="0.15.1" />
