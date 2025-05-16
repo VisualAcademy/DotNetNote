@@ -56,6 +56,15 @@
     <ItemGroup>
         <PackageReference Include="Azunt" Version="1.0.7" />
         <PackageReference Include="Azunt.Components" Version="1.0.2" />
+        <PackageReference Include="Azunt.DenominationManagement" Version="1.0.0" />
+        <PackageReference Include="Azunt.DepotManagement" Version="1.0.1" />
+        <PackageReference Include="Azunt.FileManagement" Version="1.0.5" />
+        <PackageReference Include="Azunt.MediaThemeManagement" Version="1.0.0" />
+        <PackageReference Include="Azunt.ProgressiveTypeManagement" Version="1.0.1" />
+        <PackageReference Include="Azunt.ReasonManagement" Version="1.0.1" />
+        <PackageReference Include="Azunt.ResourceManagement" Version="1.0.0" />
+        <PackageReference Include="Azunt.RuleManagement" Version="1.0.0" />
+        <PackageReference Include="Azunt.TenantManagement" Version="1.0.1" />
         <PackageReference Include="Azure.Identity" Version="1.14.0" />
         <PackageReference Include="Azure.Storage.Blobs" Version="12.24.0" />
         <PackageReference Include="CommonMark.NET" Version="0.15.1" />
