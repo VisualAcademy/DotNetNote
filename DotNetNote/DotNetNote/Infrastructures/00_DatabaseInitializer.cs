@@ -1,4 +1,5 @@
 ﻿using Azunt.Web.Infrastructures._Initializers;
+using Azunt.Web.Infrastructures.Initializers;
 
 namespace Azunt.Infrastructures;
 
@@ -8,6 +9,17 @@ public static class DatabaseInitializer
     {
         var loggerFactory = services.GetRequiredService<ILoggerFactory>();
         var logger = loggerFactory.CreateLogger("DatabaseInitializer");
+
+        try
+        {
+            // 0. 시스템
+            SystemSchemaInitializer.Initialize(services);
+            logger.LogInformation("시스템 테이블 초기화 완료");
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "시스템 테이블 초기화 중 오류 발생");
+        }
 
         try
         {

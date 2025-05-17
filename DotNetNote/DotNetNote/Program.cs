@@ -3,7 +3,6 @@ using Dalbodre.Infrastructures.Cores;
 using Dalbodre;
 using DotNetNote.Common;
 using DotNetNote.Controllers.Articles;
-using DotNetNote.Infrastructures.Tenants;
 using DotNetNote.Models.Buyers;
 using DotNetNote.Models.Companies;
 using DotNetNote.Models.Exams;
@@ -21,7 +20,6 @@ using DotNetNote.Records;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 using DotNetNote.Services.Tasks;
-using Hawaso.Infrastructures.Tenants;
 using Azunt.Infrastructures.Tenants;
 using Azunt.Infrastructures;
 using Microsoft.FluentUI.AspNetCore.Components;
@@ -195,20 +193,6 @@ public partial class Program
         #endregion
 
 
-        // CustomFieldTitles 테이블 생성 및 컬럼 추가
-        using (var scope = app.Services.CreateScope())
-        {
-            var configuration = scope.ServiceProvider.GetRequiredService<IConfiguration>();
-            string masterConnectionString = configuration.GetConnectionString("DefaultConnection");
-
-            var enhancer = new TenantSchemaEnhancerCreateCustomFieldTitlesTable(masterConnectionString);
-            enhancer.EnhanceAllTenantDatabases();
-        }
-
-
-
-
-
         app.Run();
     }
 
@@ -291,11 +275,6 @@ public partial class Program
         #region AspNetUsers 테이블에 새로운 컬럼 추가 
         //var aspNetUsersTableAddColumn = new AspNetUsersTableEnhancer(Configuration.GetConnectionString("DefaultConnection"));
         //aspNetUsersTableAddColumn.AddShowInDropdownColumnIfNotExists(); 
-        #endregion
-
-        #region Partners Table 생성 및 컬럼 추가 데모
-        var tenantSchemaEnhancerCreatePartnersTable = new TenantSchemaEnhancerCreatePartnersTable(Configuration.GetConnectionString("DefaultConnection"));
-        tenantSchemaEnhancerCreatePartnersTable.EnhanceAllTenantDatabases();
         #endregion
 
         #region Ensure the columns exist in the AspNetUsers table.
