@@ -88,10 +88,10 @@
         <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 
         <PackageReference Include="SendGrid" Version="9.29.3" />
-        <PackageReference Include="Serilog" Version="4.2.0" />
+        <PackageReference Include="Serilog" Version="4.3.0" />
         <PackageReference Include="Serilog.Extensions.Logging" Version="9.0.1" />
         <PackageReference Include="Serilog.Sinks.File" Version="7.0.0" />
-        <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.9.0" />
+        <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.11.0" />
         <PackageReference Include="Twilio" Version="7.11.1" />
 
     </ItemGroup>
