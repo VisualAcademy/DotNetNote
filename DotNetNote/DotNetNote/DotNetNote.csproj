@@ -63,7 +63,7 @@
         <PackageReference Include="Azunt.PostManagement" Version="1.0.1" />
         <PackageReference Include="Azunt.ProgressiveTypeManagement" Version="1.0.1" />
         <PackageReference Include="Azunt.ReasonManagement" Version="1.0.1" />
-        <PackageReference Include="Azunt.ResourceManagement" Version="1.0.0" />
+        <PackageReference Include="Azunt.ResourceManagement" Version="1.0.1" />
         <PackageReference Include="Azunt.RuleManagement" Version="1.0.0" />
         <PackageReference Include="Azunt.SubcategoryManagement" Version="1.0.1" />
         <PackageReference Include="Azunt.TenantManagement" Version="1.0.1" />
