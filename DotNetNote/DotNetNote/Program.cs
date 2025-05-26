@@ -1,28 +1,29 @@
-using Microsoft.Extensions.DependencyInjection;
-using Dalbodre.Infrastructures.Cores;
+using Azunt.Infrastructures;
+using Azunt.Infrastructures.Tenants;
+using Azunt.ResourceManagement;
 using Dalbodre;
+using Dalbodre.Infrastructures.Cores;
 using DotNetNote.Common;
 using DotNetNote.Controllers.Articles;
 using DotNetNote.Models.Buyers;
+using DotNetNote.Models.Categories;
 using DotNetNote.Models.Companies;
 using DotNetNote.Models.Exams;
 using DotNetNote.Models.Ideas;
 using DotNetNote.Models.Notes;
 using DotNetNote.Models.Notifications;
 using DotNetNote.Models.RecruitManager;
+using DotNetNote.Records;
 using DotNetNote.Rules;
+using DotNetNote.Services.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Rewrite;
-using Microsoft.IdentityModel.Tokens;
-using DotNetNote.Models.Categories;
-using DotNetNote.Records;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
-using DotNetNote.Services.Tasks;
-using Azunt.Infrastructures.Tenants;
-using Azunt.Infrastructures;
+using Microsoft.AspNetCore.Rewrite;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.FluentUI.AspNetCore.Components;
+using Microsoft.IdentityModel.Tokens;
 
 public partial class Program
 {
@@ -406,9 +407,18 @@ public partial class Program
         );
         services.AddTransient<IUrlRepository, UrlRepository>();
         services.AddTransient<IBlogService, FileBlogService>();
+
+
+        #region ResourceManagement 
+        // Resource 모듈 등록 (AdoNet 모드 선택)
+        var defaultConnection = Configuration.GetConnectionString("DefaultConnection");
+        if (string.IsNullOrWhiteSpace(defaultConnection))
+            throw new InvalidOperationException("DefaultConnection is not configured in appsettings.json");
+        services.AddDependencyInjectionContainerForResourceApp(defaultConnection, Azunt.Models.Enums.RepositoryMode.EfCore);
+        services.AddTransient<ResourceAppDbContextFactory>();
+        #endregion
     }
 }
-
 
 public partial class Program
 { 
