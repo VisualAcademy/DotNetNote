@@ -54,7 +54,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Azunt" Version="1.1.0" />
+        <PackageReference Include="Azunt" Version="1.1.1" />
         <PackageReference Include="Azunt.Components" Version="1.0.2" />
         <PackageReference Include="Azunt.DenominationManagement" Version="1.0.0" />
         <PackageReference Include="Azunt.DepotManagement" Version="1.0.1" />
