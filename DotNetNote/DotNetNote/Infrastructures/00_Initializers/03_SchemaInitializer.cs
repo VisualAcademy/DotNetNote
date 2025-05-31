@@ -1,4 +1,5 @@
-﻿using Azunt.Infrastructures.Tenants;
+﻿using Azunt.DivisionManagement;
+using Azunt.Infrastructures.Tenants;
 using Azunt.Web.Infrastructures.All;
 
 namespace Azunt.Web.Infrastructures._Initializers;
@@ -13,12 +14,28 @@ public static class SchemaInitializer
         var config = services.GetRequiredService<IConfiguration>();
         var masterConnectionString = config.GetConnectionString("DefaultConnection");
 
+        InitializeDivisionsTable(services, logger, forMaster: true);
         // LicenseTypes 테이블 생성/수정
         InitializeLicenseTypesTable(services, logger, forMaster: true); // InitializeLicenseTypesTable(services, logger, forMaster: false);
         //InitializeContactTypesTable(services, logger, forMaster: true); // 또는 true
         //InitializeAllsTable(services, logger, forMaster: true); // Alls 테이블
         InitializeLicenseStatusesTable(services, logger, forMaster: true); // LicenseStatuses 테이블
         InitializeAllowedIpRangesTable(services, logger, forMaster: true);
+    }
+
+    private static void InitializeDivisionsTable(IServiceProvider services, ILogger logger, bool forMaster)
+    {
+        string target = forMaster ? "마스터 DB" : "테넌트 DB";
+
+        try
+        {
+            DivisionsTableBuilder.Run(services, forMaster);
+            logger.LogInformation($"{target}의 Divisions 테이블 초기화 완료");
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, $"{target}의 Divisions 테이블 초기화 중 오류 발생");
+        }
     }
 
     private static void InitializeLicenseTypesTable(IServiceProvider services, ILogger logger, bool forMaster)
