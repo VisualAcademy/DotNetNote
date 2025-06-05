@@ -1,0 +1,50 @@
+﻿@namespace Azunt.Web.Components.Pages.Notes.Components
+@using System.ComponentModel.DataAnnotations
+@using Microsoft.AspNetCore.Components.Forms
+@using Azunt.NoteManagement
+
+@if (IsShow)
+{
+    <div class="modal fade show d-block" tabindex="-1" role="dialog" style="background-color: rgba(0, 0, 0, 0.5);">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable modal-dialog-centered" role="document">
+            <div class="modal-content shadow-lg rounded">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title">@EditorFormTitle</h5>
+                    <button type="button" class="btn-close btn-close-white" @onclick="Hide" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <EditForm Model="ModelEdit" OnValidSubmit="HandleValidSubmit">
+                        <DataAnnotationsValidator />
+                        <ValidationSummary class="text-danger" />
+
+                        <input type="hidden" @bind="ModelEdit.Id" />
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Upload Note</label>
+                            <Microsoft.AspNetCore.Components.Forms.InputFile OnChange="HandleNoteChange" class="form-control" />
+                            @if (!string.IsNullOrEmpty(ModelEdit.FileName))
+                            {
+                                <div class="form-text mt-1">📎 Selected: <strong>@ModelEdit.FileName</strong></div>
+                            }
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="txtName" class="form-label fw-bold">Display Name</label>
+                            <InputText id="txtName" class="form-control" placeholder="Enter name" @bind-Value="ModelEdit.Name" />
+                            <ValidationMessage For="@(() => ModelEdit.Name)" />
+                        </div>
+
+                        <div class="d-flex justify-content-end pt-3">
+                            <button type="submit" class="btn btn-success me-2">
+                                <i class="bi bi-check-circle me-1"></i> Save
+                            </button>
+                            <button type="button" class="btn btn-secondary" @onclick="Hide">
+                                <i class="bi bi-x-circle me-1"></i> Cancel
+                            </button>
+                        </div>
+                    </EditForm>
+                </div>
+            </div>
+        </div>
+    </div>
+}

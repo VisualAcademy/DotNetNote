@@ -1,0 +1,58 @@
+﻿@namespace Azunt.Web.Components.Pages.Notes.Controls
+@using Azunt.NoteManagement
+@inject INoteRepository NoteRepository
+
+<div class="d-flex align-items-center">
+    <select class="form-control" style="width: 250px;" @onchange="OnSelectChanged">
+        <option value="">-- Select a Note --</option>
+        @foreach (var note in NoteManager)
+        {
+            <option value="@note" selected="@(note == SelectedNote)">
+                @note
+            </option>
+        }
+    </select>
+
+    <span class="mx-2 text-muted">or</span>
+
+    <input class="form-control" type="text" placeholder="Or type a new note..."
+           style="width: 250px;"
+           @bind="SelectedNote"
+           @oninput="OnInputChanged" />
+</div>
+
+@code {
+    [Parameter]
+    public string SelectedNote { get; set; } = "";
+
+    [Parameter]
+    public EventCallback<string> SelectedNoteChanged { get; set; }
+
+    private List<string> NoteManager { get; set; } = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        var notes = await NoteRepository.GetAllAsync();
+        NoteManager = notes
+            .Select(d => d.Name ?? "")
+            .Where(n => !string.IsNullOrWhiteSpace(n))
+            .Distinct()
+            .ToList();
+    }
+
+    private async Task OnSelectChanged(ChangeEventArgs e)
+    {
+        var selected = e.Value?.ToString();
+        if (!string.IsNullOrWhiteSpace(selected))
+        {
+            SelectedNote = selected;
+            await SelectedNoteChanged.InvokeAsync(SelectedNote);
+        }
+    }
+
+    private async Task OnInputChanged(ChangeEventArgs e)
+    {
+        SelectedNote = e.Value?.ToString() ?? "";
+        await SelectedNoteChanged.InvokeAsync(SelectedNote);
+    }
+}

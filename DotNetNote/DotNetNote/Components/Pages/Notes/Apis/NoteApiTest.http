@@ -1,0 +1,42 @@
+@HostAddress = https://localhost:7110
+
+### GET 전체 노트 목록
+GET {{HostAddress}}/api/NoteApi
+Accept: application/json
+
+###
+
+### GET 특정 노트 조회
+GET {{HostAddress}}/api/NoteApi/1
+Accept: application/json
+
+###
+
+### POST 새 노트 추가
+POST {{HostAddress}}/api/NoteApi
+Content-Type: application/json
+
+{
+  "name": "테스트 노트",
+  "category": "General",
+  "createdBy": "Tester"
+}
+
+###
+
+### PUT 노트 수정 (ID = 1)
+PUT {{HostAddress}}/api/NoteApi/1
+Content-Type: application/json
+
+{
+  "id": 1,
+  "name": "수정된 노트 제목",
+  "category": "Updated",
+  "createdBy": "Admin"
+}
+
+###
+
+### DELETE 노트 삭제 (ID = 5)
+DELETE {{HostAddress}}/api/NoteApi/5
+Accept: application/json

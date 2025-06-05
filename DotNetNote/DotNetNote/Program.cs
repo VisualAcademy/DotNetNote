@@ -1,6 +1,8 @@
 using Azunt.Infrastructures;
 using Azunt.Infrastructures.Tenants;
+using Azunt.NoteManagement;
 using Azunt.ResourceManagement;
+using Azunt.Web.Components.Pages.Notes.Services;
 using Dalbodre;
 using Dalbodre.Infrastructures.Cores;
 using DotNetNote.Common;
@@ -47,6 +49,13 @@ public partial class Program
         // Azure Translator 설정 바인딩
         builder.Services.Configure<AzureTranslatorSettings>(builder.Configuration.GetSection("AzureTranslator"));
         builder.Services.AddSingleton(resolver => resolver.GetRequiredService<IOptions<AzureTranslatorSettings>>().Value);
+
+        var defaultConnStr = builder.Configuration.GetConnectionString("DefaultConnection")
+            ?? throw new InvalidOperationException("DefaultConnection is missing in configuration.");
+
+        builder.Services.AddDependencyInjectionContainerForNoteApp(defaultConnStr, Azunt.Models.Enums.RepositoryMode.EfCore);
+        builder.Services.AddTransient<NoteDbContextFactory>();
+        builder.Services.AddScoped<INoteStorageService, LocalNoteStorageService>();
 
         var app = builder.Build();
 
@@ -376,7 +385,7 @@ public partial class Program
         services.AddScoped<IScopedGuidService, ScopedGuidService>();
         services.AddSingleton<ISingletonGuidService, SingletonGuidService>();
         services.AddTransient<ICommunityCampJoinMemberRepository, CommunityCampJoinMemberRepository>();
-        services.AddTransient<INoteRepository, NoteRepository>();
+        services.AddTransient<DotNetNote.Models.Notes.INoteRepository, DotNetNote.Models.Notes.NoteRepository>();
         services.AddTransient<INoteCommentRepository, NoteCommentRepository>();
         services.AddTransient<MaximServiceRepository, MaximServiceRepository>();
         services.AddTransient<ITechRepositoryEf, TechRepositoryEf>();
