@@ -50,12 +50,14 @@ public partial class Program
         builder.Services.Configure<AzureTranslatorSettings>(builder.Configuration.GetSection("AzureTranslator"));
         builder.Services.AddSingleton(resolver => resolver.GetRequiredService<IOptions<AzureTranslatorSettings>>().Value);
 
-        var defaultConnStr = builder.Configuration.GetConnectionString("DefaultConnection")
+        #region Note Module Test
+        var defaultConnStr = builder.Configuration.GetConnectionString("DefaultConnection") 
             ?? throw new InvalidOperationException("DefaultConnection is missing in configuration.");
 
         builder.Services.AddDependencyInjectionContainerForNoteApp(defaultConnStr, Azunt.Models.Enums.RepositoryMode.EfCore);
         builder.Services.AddTransient<NoteDbContextFactory>();
-        builder.Services.AddScoped<INoteStorageService, LocalNoteStorageService>();
+        //builder.Services.AddScoped<INoteStorageService, LocalNoteStorageService>(); 
+        #endregion
 
         var app = builder.Build();
 
@@ -83,10 +85,10 @@ public partial class Program
             app.UseRewriter(new RewriteOptions().AddRedirect("tasks/(.*)", "todos/"));
 
             // 사용자 정의 미들웨어 만들어보기 
-            app.Use(async (context, next) => 
+            app.Use(async (context, next) =>
             {
                 Console.WriteLine($"[{context.Request.Method} {context.Request.Path} {DateTime.UtcNow}] Started.");
-                await next(context); 
+                await next(context);
                 Console.WriteLine($"[{context.Request.Method} {context.Request.Path} {DateTime.UtcNow}] Finished.");
             });
 
@@ -167,7 +169,7 @@ public partial class Program
                 }
 
                 return await next(context);
-            }); 
+            });
             #endregion
         }
         {
@@ -430,6 +432,6 @@ public partial class Program
 }
 
 public partial class Program
-{ 
+{
 
 }
