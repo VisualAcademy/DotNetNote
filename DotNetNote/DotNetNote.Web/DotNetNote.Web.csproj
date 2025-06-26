@@ -11,6 +11,7 @@
         <PackageReference Include="Azunt" Version="1.1.3" />
         <PackageReference Include="Azunt.BannedCustomerManagement" Version="1.0.2" />
         <PackageReference Include="Azunt.Components" Version="1.0.3" />
+        <PackageReference Include="Azunt.DenominationManagement" Version="1.0.0" />
         <PackageReference Include="Azunt.DepotManagement" Version="1.0.1" />
         <PackageReference Include="Azunt.FileManagement" Version="1.0.6" />
         <PackageReference Include="Azunt.IncidentManagement" Version="1.0.3" />
