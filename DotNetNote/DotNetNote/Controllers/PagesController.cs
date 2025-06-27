@@ -13,4 +13,6 @@ public class PagesController : Controller
     public IActionResult NotAssigned() => View();
 
     public IActionResult IntroDemo() => View();
+
+    public IActionResult Console() => View();
 }
