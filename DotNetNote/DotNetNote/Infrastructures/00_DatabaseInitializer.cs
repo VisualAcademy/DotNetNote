@@ -76,16 +76,16 @@ public static class DatabaseInitializer
             logger.LogError(ex, "커뮤니티 관련 테이블 초기화 중 오류 발생");
         }
 
-        //try
-        //{
-        //    // 6. 직원(Employee) 관련 테이블 초기화
-        //    EmployeeSchemaInitializer.Initialize(services);
-        //    logger.LogInformation("직원 관련 테이블 초기화 완료");
-        //}
-        //catch (Exception ex)
-        //{
-        //    logger.LogError(ex, "직원 관련 테이블 초기화 중 오류 발생");
-        //}
+        try
+        {
+            // 6. 직원(Employee) 관련 테이블 초기화
+            EmployeeSchemaInitializer.Initialize(services);
+            logger.LogInformation("직원 관련 테이블 초기화 완료");
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "직원 관련 테이블 초기화 중 오류 발생");
+        }
 
         try
         {
