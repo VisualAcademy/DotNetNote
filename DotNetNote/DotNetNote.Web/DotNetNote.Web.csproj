@@ -40,4 +40,8 @@
         <ProjectReference Include="..\DotNetNote.ServiceDefaults\DotNetNote.ServiceDefaults.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Components\Pages\BackgroundChecks\Components\" />
+    </ItemGroup>
+
 </Project>
