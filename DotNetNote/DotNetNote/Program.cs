@@ -34,6 +34,10 @@ public partial class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
+        // Add services to the container.
+        builder.Services.AddRazorComponents()
+            .AddInteractiveServerComponents();
+
         // ConfigureServices
         builder.Services.AddFluentUIComponents();
 
