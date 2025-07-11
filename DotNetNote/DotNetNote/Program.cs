@@ -7,6 +7,7 @@ using Azunt.Web.Infrastructures;
 using Dalbodre;
 using Dalbodre.Infrastructures.Cores;
 using DotNetNote.Common;
+using DotNetNote.Components.Account;
 using DotNetNote.Controllers.Articles;
 using DotNetNote.Models.Buyers;
 using DotNetNote.Models.Categories;
@@ -21,9 +22,11 @@ using DotNetNote.Rules;
 using DotNetNote.Services.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Rewrite;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.FluentUI.AspNetCore.Components;
 using Microsoft.IdentityModel.Tokens;
@@ -33,6 +36,22 @@ public partial class Program
     public static async Task Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
+
+        // Add services to the container.
+        builder.Services.AddRazorComponents()
+            .AddInteractiveServerComponents();
+
+        builder.Services.AddCascadingAuthenticationState();
+        builder.Services.AddScoped<IdentityUserAccessor>();
+        builder.Services.AddScoped<IdentityRedirectManager>();
+        builder.Services.AddScoped<AuthenticationStateProvider, IdentityRevalidatingAuthenticationStateProvider>();
+
+        //builder.Services.AddAuthentication(options =>
+        //{
+        //    options.DefaultScheme = IdentityConstants.ApplicationScheme;
+        //    options.DefaultSignInScheme = IdentityConstants.ExternalScheme;
+        //})
+        //    .AddIdentityCookies();
 
         // ConfigureServices
         builder.Services.AddFluentUIComponents();
@@ -206,11 +225,22 @@ public partial class Program
         #endregion
 
 
+        app.MapStaticAssets();
+        app.MapRazorComponents<App>()
+            .AddInteractiveServerRenderMode();
+
+        // Add additional endpoints required by the Identity /Account Razor components.
+        app.MapAdditionalIdentityEndpoints();
+
         app.Run();
     }
 
     private static async Task ConfigureServicesAsync(IServiceCollection services, IConfiguration Configuration)
     {
+        services.AddIdentity<ApplicationUser, IdentityRole>()
+            .AddEntityFrameworkStores<ApplicationDbContext>()
+            .AddDefaultTokenProviders();
+
         //services.AddDbContext<DotNetNote.Components.TodoContext>(opt => opt.UseInMemoryDatabase("TodoList"));
         services.AddHttpContextAccessor();
         services.AddControllersWithViews();
@@ -272,6 +302,7 @@ public partial class Program
                 builder.WithOrigins("https://localhost:3000");
             });
         });
+
         services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
         services.Configure<IdentityOptions>(options =>
         {
@@ -316,10 +347,15 @@ public partial class Program
         app.UseStaticFiles();
         //app.MapStaticAssets();
 
+
+
         app.UseRouting();
         app.UseRewriter(new RewriteOptions().Add(new RedirectAzureWebsitesRule()).AddRedirectToWwwPermanent());
         app.UseAuthentication();
         app.UseAuthorization();
+
+        app.UseAntiforgery();
+
         app.UseSession();
 
         app.UseEndpoints(endpoints =>
