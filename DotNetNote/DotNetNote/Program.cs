@@ -30,6 +30,8 @@ using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.FluentUI.AspNetCore.Components;
 using Microsoft.IdentityModel.Tokens;
+using Serilog;
+using Serilog.Sinks.MSSqlServer;
 
 public partial class Program
 {
@@ -78,6 +80,49 @@ public partial class Program
         builder.Services.AddTransient<NoteDbContextFactory>();
         //builder.Services.AddScoped<INoteStorageService, LocalNoteStorageService>(); 
         #endregion
+
+
+
+
+        #region Serilog
+        // 1. Serilog 컬럼 옵션 정의
+        var columnOptions = new ColumnOptions
+        {
+            Store = new List<StandardColumn>
+            {
+                StandardColumn.Message,
+                StandardColumn.MessageTemplate,
+                StandardColumn.Level,
+                StandardColumn.TimeStamp,
+                StandardColumn.Exception,
+                StandardColumn.Properties
+            }
+        };
+
+        // 2. 로그 구성
+        Log.Logger = new LoggerConfiguration()
+            .MinimumLevel.Debug()
+            .WriteTo.Console()
+            .WriteTo.MSSqlServer(
+                connectionString: builder.Configuration.GetConnectionString("DefaultConnection"),
+                sinkOptions: new MSSqlServerSinkOptions
+                {
+                    TableName = "AppLogs",
+                    AutoCreateSqlTable = false // 이미 테이블이 존재하므로 false
+                },
+                restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Error,
+                columnOptions: columnOptions
+            )
+            .Enrich.FromLogContext()
+            .CreateLogger();
+
+        // 3. Serilog를 ASP.NET Core 로그로 사용하도록 등록
+        builder.Host.UseSerilog();
+        #endregion
+
+
+
+
 
         var app = builder.Build();
 
@@ -342,8 +387,7 @@ public partial class Program
             app.UseDeveloperExceptionPage();
         }
 
-        app.UseDefaultFiles();
-
+        //app.UseDefaultFiles(); // 기본 파일을 사용하도록 설정: 아래 UseStaticFiles()만 사용
         app.UseStaticFiles();
         //app.MapStaticAssets();
 
