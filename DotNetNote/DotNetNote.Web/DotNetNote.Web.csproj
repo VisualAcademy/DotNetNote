@@ -16,6 +16,7 @@
         <PackageReference Include="Azunt.DenominationManagement" Version="1.0.0" />
         <PackageReference Include="Azunt.DepotManagement" Version="1.0.1" />
         <PackageReference Include="Azunt.DivisionManagement" Version="1.0.2" />
+        <PackageReference Include="Azunt.EmployeeManagement" Version="1.0.0" />
         <PackageReference Include="Azunt.FileManagement" Version="1.0.6" />
         <PackageReference Include="Azunt.IncidentManagement" Version="1.0.3" />
         <PackageReference Include="Azunt.MediaThemeManagement" Version="1.0.0" />
