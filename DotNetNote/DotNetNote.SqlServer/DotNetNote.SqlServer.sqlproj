@@ -173,6 +173,7 @@
     <Build Include="dbo\Tables\LicenseTypes.sql" />
     <Build Include="dbo\Tables\Divisions.sql" />
     <Build Include="dbo\Tables\AppLogs.sql" />
+    <Build Include="dbo\Tables\KnownUsers.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="dbo\Scripts\Attachments\Demo_Attachments_Processing.sql" />
