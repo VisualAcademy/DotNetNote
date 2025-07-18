@@ -9,6 +9,13 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
     #region Cascading DropDownList 
     public DbSet<Property> Properties { get; set; } = null!;
     public DbSet<Location> Locations { get; set; } = null!;
-    public DbSet<Sublocation> Sublocations { get; set; } = null!; 
+    public DbSet<Sublocation> Sublocations { get; set; } = null!;
     #endregion
+
+    public DbSet<KnownUser> KnownUsers { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<KnownUser>().ToTable("KnownUsers");
+    }
 }
