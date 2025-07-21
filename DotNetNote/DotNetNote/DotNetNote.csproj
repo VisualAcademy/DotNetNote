@@ -74,6 +74,7 @@
         <PackageReference Include="Azunt.ResourceManagement" Version="1.0.5" />
         <PackageReference Include="Azunt.RuleManagement" Version="1.0.2" />
         <PackageReference Include="Azunt.SubcategoryManagement" Version="1.0.1" />
+        <PackageReference Include="Azunt.TechnicianManagement" Version="1.0.0" />
         <PackageReference Include="Azunt.TenantManagement" Version="1.0.3" />
         <PackageReference Include="Azure.Identity" Version="1.14.2" />
         <PackageReference Include="Azure.Storage.Blobs" Version="12.25.0" />
