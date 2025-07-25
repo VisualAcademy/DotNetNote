@@ -1,4 +1,5 @@
-﻿using Azunt.Web.Infrastructures._Initializers;
+﻿using Azunt.Web.Infrastructures._00_Initializers;
+using Azunt.Web.Infrastructures._Initializers;
 using Azunt.Web.Infrastructures.Initializers;
 
 namespace Azunt.Web.Infrastructures;
@@ -96,6 +97,17 @@ public static class DatabaseInitializer
         catch (Exception ex)
         {
             logger.LogError(ex, "보고서 관련 테이블 초기화 중 오류 발생");
+        }
+
+        try
+        {
+            // 8. VisualAcademy and DevLec 강의 관련 테이블 초기화
+            VisualAcademySchemaInitializer.Initialize(services);
+            logger.LogInformation("강의 관련 테이블 초기화 완료");
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "강의 관련 테이블 초기화 중 오류 발생");
         }
 
         logger.LogInformation("전체 데이터베이스 초기화 완료");
