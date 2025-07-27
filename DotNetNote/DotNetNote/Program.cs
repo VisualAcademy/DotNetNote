@@ -9,6 +9,7 @@ using Dalbodre.Infrastructures.Cores;
 using DotNetNote.Common;
 using DotNetNote.Components.Account;
 using DotNetNote.Controllers.Articles;
+using DotNetNote.Endpoints;
 using DotNetNote.Models.Buyers;
 using DotNetNote.Models.Categories;
 using DotNetNote.Models.Companies;
@@ -276,6 +277,12 @@ public partial class Program
 
         // Add additional endpoints required by the Identity /Account Razor components.
         app.MapAdditionalIdentityEndpoints();
+
+
+
+        // 엔드포인트 등록
+        app.MapIsoCountriesEndpoint();
+
 
         app.Run();
     }
