@@ -25,7 +25,7 @@ public static class EmployeeSchemaInitializer
         InitializeBackgroundChecksTable(services, logger, forMaster: true);
         InitializeBranchesTable(services, logger, forMaster: true);
 
-        InitializeDepartmentsTable(services, logger, forMaster: true);  // 테넌트 DB
+        InitializeDepartmentsTable(services, logger, forMaster: true);  // 마스터 DB
     }
 
     private static void InitializeBackgroundChecksTable(IServiceProvider services, ILogger logger, bool forMaster)
