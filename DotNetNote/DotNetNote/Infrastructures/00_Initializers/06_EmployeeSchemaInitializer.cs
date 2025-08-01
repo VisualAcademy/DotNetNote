@@ -24,6 +24,8 @@ public static class EmployeeSchemaInitializer
         //InitializeEligibilityTypesTable(services, logger, forMaster: true);
         InitializeBackgroundChecksTable(services, logger, forMaster: true);
         InitializeBranchesTable(services, logger, forMaster: true);
+
+        InitializeDepartmentsTable(services, logger, forMaster: true);  // 테넌트 DB
     }
 
     private static void InitializeBackgroundChecksTable(IServiceProvider services, ILogger logger, bool forMaster)
@@ -52,6 +54,21 @@ public static class EmployeeSchemaInitializer
         catch (Exception ex)
         {
             logger.LogError(ex, $"{target}의 Branches 테이블 초기화 중 오류 발생");
+        }
+    }
+
+    private static void InitializeDepartmentsTable(IServiceProvider services, ILogger logger, bool forMaster)
+    {
+        string target = forMaster ? "마스터 DB" : "테넌트 DB";
+
+        try
+        {
+            Azunt.DepartmentManagement.DepartmentsTableBuilder.Run(services, forMaster);
+            logger.LogInformation($"{target}의 Departments 테이블 초기화 완료");
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, $"{target}의 Departments 테이블 초기화 중 오류 발생");
         }
     }
 }
