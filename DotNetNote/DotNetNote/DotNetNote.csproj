@@ -79,7 +79,7 @@
         <PackageReference Include="Azunt.SubcategoryManagement" Version="1.0.1" />
         <PackageReference Include="Azunt.TechnicianManagement" Version="1.0.1" />
         <PackageReference Include="Azunt.TenantManagement" Version="1.0.3" />
-        <PackageReference Include="Azure.Identity" Version="1.14.2" />
+        <PackageReference Include="Azure.Identity" Version="1.15.0" />
         <PackageReference Include="Azure.Storage.Blobs" Version="12.25.0" />
         <PackageReference Include="CommonMark.NET" Version="0.15.1" />
         <PackageReference Include="CsvHelper" Version="33.1.0" />
