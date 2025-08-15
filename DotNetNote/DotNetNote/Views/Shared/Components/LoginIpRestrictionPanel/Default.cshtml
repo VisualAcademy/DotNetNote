@@ -1,0 +1,61 @@
+﻿@* 강의/데모용: 순수 HTML + Bootstrap 그리드 *@
+@* 서버에서는 name="LimitIP" / "IpAddress1" / "IpAddress2" 로 값을 수신 *@
+
+<!-- Row 1: Limit IP -->
+<div class="row" style="padding-bottom: 5px;">
+    <div class="col-sm-4">
+        <label for="LimitIP" style="color:#3f51b5; font-size:12px;">Limit IP?</label>
+    </div>
+    <div class="col-sm-8">
+        <input type="checkbox" id="LimitIP" name="LimitIP" />
+        <small class="text-muted" style="font-size:11px; margin-left:5px;">
+            Restrict sign-in to the allowed IP addresses only.
+        </small>
+        <!-- 데모용 유효성 표시 영역 -->
+        <span class="text-danger" data-valmsg-for="LimitIP"></span>
+    </div>
+</div>
+
+<!-- Row 2: IP Address 1 -->
+<div class="row" style="padding-bottom: 5px;">
+    <div class="col-sm-4">
+        <label for="IpAddress1" style="color:#3f51b5; font-size:12px;">IP Address 1</label>
+    </div>
+    <div class="col-sm-8">
+        <input type="text"
+               id="IpAddress1"
+               name="IpAddress1"
+               class="form-control"
+               style="width:100%;"
+               placeholder="e.g. 203.0.113.10"
+               inputmode="numeric"
+               pattern="^((25[0-5]|2[0-4]\d|1\d{2}|[1-9]?\d)\.){3}(25[0-5]|2[0-4]\d|1\d{2}|[1-9]?\d)$"
+               aria-describedby="ip1Help" />
+        <small id="ip1Help" class="text-muted" style="font-size:11px;">
+            Primary allowed IP address for sign-in.
+        </small>
+        <span class="text-danger" data-valmsg-for="IpAddress1"></span>
+    </div>
+</div>
+
+<!-- Row 3: IP Address 2 -->
+<div class="row" style="padding-bottom: 5px;">
+    <div class="col-sm-4">
+        <label for="IpAddress2" style="color:#3f51b5; font-size:12px;">IP Address 2</label>
+    </div>
+    <div class="col-sm-8">
+        <input type="text"
+               id="IpAddress2"
+               name="IpAddress2"
+               class="form-control"
+               style="width:100%;"
+               placeholder="optional"
+               inputmode="numeric"
+               pattern="^$|^((25[0-5]|2[0-4]\d|1\d{2}|[1-9]?\d)\.){3}(25[0-5]|2[0-4]\d|1\d{2}|[1-9]?\d)$"
+               aria-describedby="ip2Help" />
+        <small id="ip2Help" class="text-muted" style="font-size:11px;">
+            Secondary allowed IP address (optional).
+        </small>
+        <span class="text-danger" data-valmsg-for="IpAddress2"></span>
+    </div>
+</div>
