@@ -1,115 +1,154 @@
 ﻿using Azunt.NoteManagement;
+using Azunt.SignInManagement;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Diagnostics;
 
 namespace Azunt.Web.Infrastructures.Initializers
 {
     /// <summary>
-    /// 시스템 관련 테이블 초기화 작업을 담당하는 초기화 클래스입니다.
-    /// - 마스터 DB 및 테넌트 DB의 시스템 테이블을 생성 및 보강합니다.
-    /// - 필요한 경우 기본 데이터를 삽입합니다.
+    /// 시스템 관련 테이블 초기화를 담당합니다.
+    /// - 마스터/테넌트 DB의 필수 테이블을 생성/보강하고(없으면 생성, 누락 컬럼 추가),
+    ///   필요 시 기본 데이터를 시드합니다.
+    /// - 초기화 단계별 로깅/예외 처리/소요 시간 측정을 제공합니다.
     /// </summary>
     public static class SystemSchemaInitializer
     {
+        private static readonly EventId EvStart = new(1000, nameof(SystemSchemaInitializer) + "_Start");
+        private static readonly EventId EvDone = new(1001, nameof(SystemSchemaInitializer) + "_Done");
+        private static readonly EventId EvStep = new(1010, nameof(SystemSchemaInitializer) + "_Step");
+        private static readonly EventId EvErr = new(1099, nameof(SystemSchemaInitializer) + "_Error");
+
         /// <summary>
-        /// 시스템 초기화 진입점입니다.
-        /// Program.cs 또는 Startup.cs에서 호출됩니다.
+        /// 시스템 초기화 진입점입니다. Program.cs/Startup.cs 등에서 호출하세요.
         /// </summary>
-        /// <param name="services">DI 컨테이너 서비스 프로바이더</param>
+        /// <param name="services">DI 컨테이너</param>
         public static void Initialize(IServiceProvider services)
         {
-            var loggerFactory = services.GetRequiredService<ILoggerFactory>();
+            if (services is null) throw new ArgumentNullException(nameof(services), "services is null.");
+
+            var loggerFactory = services.GetService<ILoggerFactory>()
+                ?? throw new InvalidOperationException("ILoggerFactory is not registered.");
             var logger = loggerFactory.CreateLogger("SystemSchemaInitializer");
 
-            // 마스터 DB를 대상으로 테이블 초기화 수행
+            logger.LogInformation(EvStart, "System schema initialization started.");
+
+            // 마스터 DB 초기화
             InitializeTenantsTable(services, logger, forMaster: true);
             InitializePostsTable(services, logger, forMaster: true);
             InitializeNotesTable(services, logger, forMaster: true);
+            InitializeSignInsTable(services, logger, forMaster: true);
+
+            // ※ 필요 시 테넌트 DB에 대해서도 초기화를 수행하세요.
+            // InitializeTenantsTable(services, logger, forMaster: false);
+            // InitializePostsTable(services, logger, forMaster: false);
+            // InitializeNotesTable(services, logger, forMaster: false);
+            // InitializeSignInsTable(services, logger, forMaster: false);
+
+            logger.LogInformation(EvDone, "System schema initialization completed.");
         }
 
         /// <summary>
-        /// Tenants 테이블을 초기화합니다.
-        /// 생성 및 컬럼 보강 후, 마스터 DB일 경우 기본 테넌트 데이터 삽입까지 수행합니다.
+        /// 공통 초기화 실행기. 소요 시간 측정/예외 처리/로깅을 일괄 제공합니다.
         /// </summary>
-        private static void InitializeTenantsTable(IServiceProvider services, ILogger logger, bool forMaster)
+        private static void RunStep(ILogger logger, string stepName, bool forMaster, Action action)
         {
-            string target = forMaster ? "마스터 DB" : "테넌트 DB";
+            var target = forMaster ? "마스터 DB" : "테넌트 DB";
+            var sw = Stopwatch.StartNew();
 
             try
             {
-                // 1. 테이블 생성 및 컬럼 보강
-                TenantManagement.TenantsTableBuilder.Run(services, forMaster);
-                logger.LogInformation($"{target}의 Tenants 테이블 초기화 완료");
-
-                // 2. 마스터 DB일 경우 기본 테넌트 시드 데이터 삽입
-                if (forMaster)
-                {
-                    TryInsertDefaultTenant(services, logger);
-                }
+                logger.LogInformation(EvStep, "[{Target}] {Step} 시작", target, stepName);
+                action();
+                sw.Stop();
+                logger.LogInformation(EvStep, "[{Target}] {Step} 완료 (elapsed: {ElapsedMs} ms)", target, stepName, sw.ElapsedMilliseconds);
             }
             catch (Exception ex)
             {
-                logger.LogError(ex, $"{target}의 Tenants 테이블 초기화 중 오류 발생");
+                sw.Stop();
+                logger.LogError(EvErr, ex, "[{Target}] {Step} 중 오류 발생 (elapsed: {ElapsedMs} ms)", target, stepName, sw.ElapsedMilliseconds);
             }
         }
 
         /// <summary>
-        /// 기본 테넌트 데이터 삽입을 시도합니다.
-        /// Insert 조건과 로거를 안전하게 처리합니다.
+        /// Tenants 테이블 초기화(생성/보강 및 시드).
+        /// </summary>
+        private static void InitializeTenantsTable(IServiceProvider services, ILogger logger, bool forMaster)
+        {
+            if (services is null) throw new ArgumentNullException(nameof(services));
+            if (logger is null) throw new ArgumentNullException(nameof(logger));
+
+            RunStep(logger, "Tenants 초기화", forMaster, () =>
+            {
+                TenantManagement.TenantsTableBuilder.Run(services, forMaster);
+
+                // 마스터 DB 시 기본 테넌트 시드가 필요하다면 아래 호출을 해제하세요.
+                // if (forMaster) TryInsertDefaultTenant(services, logger);
+            });
+        }
+
+        /// <summary>
+        /// 기본 테넌트 데이터 삽입을 시도합니다. (선택 사항)
         /// </summary>
         private static void TryInsertDefaultTenant(IServiceProvider services, ILogger logger)
         {
             var config = services.GetService<IConfiguration>();
             var connectionString = config?.GetConnectionString("DefaultConnection");
-
             var resolvedLogger = logger ?? services.GetService<ILoggerFactory>()?.CreateLogger("TenantSeeder");
 
-            if (!string.IsNullOrWhiteSpace(connectionString) && resolvedLogger != null)
+            if (!string.IsNullOrWhiteSpace(connectionString) && resolvedLogger is not null)
             {
                 TenantManagement.TenantSeeder.InsertDefaultTenant(connectionString, resolvedLogger);
+                resolvedLogger.LogInformation("기본 테넌트 데이터 삽입 완료");
             }
             else
             {
-                logger?.LogWarning("TenantSeeder를 호출하지 못했습니다: connectionString 또는 logger가 null입니다.");
+                logger?.LogWarning("TenantSeeder 호출 실패: connectionString 또는 logger가 null입니다.");
             }
         }
 
         /// <summary>
-        /// Posts 테이블을 초기화합니다.
+        /// Posts 테이블 초기화(생성/보강 및 시드).
         /// </summary>
         private static void InitializePostsTable(IServiceProvider services, ILogger logger, bool forMaster)
         {
-            string target = forMaster ? "마스터 DB" : "테넌트 DB";
+            if (services is null) throw new ArgumentNullException(nameof(services));
+            if (logger is null) throw new ArgumentNullException(nameof(logger));
 
-            try
+            RunStep(logger, "Posts 초기화", forMaster, () =>
             {
                 PostManagement.PostsTableBuilder.Run(services, forMaster);
-                logger.LogInformation($"{target}의 Posts 테이블 초기화 완료");
-            }
-            catch (Exception ex)
-            {
-                logger.LogError(ex, $"{target}의 Posts 테이블 초기화 중 오류 발생");
-            }
+            });
         }
 
         /// <summary>
-        /// Notes 테이블을 초기화합니다.
+        /// Notes 테이블 초기화(생성/보강 및 시드).
         /// </summary>
         private static void InitializeNotesTable(IServiceProvider services, ILogger logger, bool forMaster)
         {
-            string target = forMaster ? "마스터 DB" : "테넌트 DB";
+            if (services is null) throw new ArgumentNullException(nameof(services));
+            if (logger is null) throw new ArgumentNullException(nameof(logger));
 
-            try
+            RunStep(logger, "Notes 초기화", forMaster, () =>
             {
                 NotesTableBuilder.Run(services, forMaster);
-                logger.LogInformation($"{target}의 Notes 테이블 초기화 완료");
-            }
-            catch (Exception ex)
+            });
+        }
+
+        /// <summary>
+        /// SignIns 테이블 초기화(생성/보강 및 시드).
+        /// </summary>
+        private static void InitializeSignInsTable(IServiceProvider services, ILogger logger, bool forMaster)
+        {
+            if (services is null) throw new ArgumentNullException(nameof(services));
+            if (logger is null) throw new ArgumentNullException(nameof(logger));
+
+            RunStep(logger, "SignIns 초기화", forMaster, () =>
             {
-                logger.LogError(ex, $"{target}의 Notes 테이블 초기화 중 오류 발생");
-            }
+                SignInsTableBuilder.Run(services, forMaster);
+            });
         }
     }
 }

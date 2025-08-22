@@ -76,6 +76,7 @@
         <PackageReference Include="Azunt.ReasonManagement" Version="1.0.1" />
         <PackageReference Include="Azunt.ResourceManagement" Version="1.0.5" />
         <PackageReference Include="Azunt.RuleManagement" Version="1.0.2" />
+        <PackageReference Include="Azunt.SignInManagement" Version="1.0.0" />
         <PackageReference Include="Azunt.SubcategoryManagement" Version="1.0.1" />
         <PackageReference Include="Azunt.TechnicianManagement" Version="1.0.1" />
         <PackageReference Include="Azunt.TenantManagement" Version="1.0.4" />
