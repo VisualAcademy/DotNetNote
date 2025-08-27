@@ -1,4 +1,5 @@
-﻿using Azunt.DivisionManagement;
+﻿using Azunt.ApplicantTypeManagement;
+using Azunt.DivisionManagement;
 using Azunt.Infrastructures.Tenants;
 using Azunt.Web.Infrastructures.All;
 
@@ -14,6 +15,8 @@ public static class SchemaInitializer
         var config = services.GetRequiredService<IConfiguration>();
         var masterConnectionString = config.GetConnectionString("DefaultConnection");
 
+        // ApplicantTypes 먼저
+        InitializeApplicantTypesTable(services, logger, forMaster: true);
         InitializeDivisionsTable(services, logger, forMaster: true);
         // LicenseTypes 테이블 생성/수정
         InitializeLicenseTypesTable(services, logger, forMaster: true); // InitializeLicenseTypesTable(services, logger, forMaster: false);
@@ -21,6 +24,22 @@ public static class SchemaInitializer
         //InitializeAllsTable(services, logger, forMaster: true); // Alls 테이블
         InitializeLicenseStatusesTable(services, logger, forMaster: true); // LicenseStatuses 테이블
         InitializeAllowedIpRangesTable(services, logger, forMaster: true);
+    }
+
+    private static void InitializeApplicantTypesTable(IServiceProvider services, ILogger logger, bool forMaster)
+    {
+        string target = forMaster ? "마스터 DB" : "테넌트 DB";
+
+        try
+        {
+            // NuGet의 비동기 메서드를 동기 파이프라인에 맞춰 호출
+            ApplicantTypesTableBuilder.RunAsync(services, forMaster).GetAwaiter().GetResult();
+            logger.LogInformation($"{target}의 ApplicantTypes 테이블 초기화 완료");
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, $"{target}의 ApplicantTypes 테이블 초기화 중 오류 발생");
+        }
     }
 
     private static void InitializeDivisionsTable(IServiceProvider services, ILogger logger, bool forMaster)
