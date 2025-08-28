@@ -27,3 +27,9 @@ Accept: application/json
 GET {{base_url}}/v1/info
 Authorization: Bearer {{jwt_token}}
 Accept: application/json
+
+### 4. 사용량 정보 출력
+GET {{base_url}}/v1/usage?startDate=2025-08-01&endDate=2025-08-30
+Authorization: Bearer {{jwt_token}}
+Accept: application/json
+
