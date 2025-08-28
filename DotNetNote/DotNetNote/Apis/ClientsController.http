@@ -22,3 +22,8 @@ Accept: application/json
 GET {{base_url}}/v1/isocountries
 Authorization: Bearer {{jwt_token}}
 Accept: application/json
+
+### 3. 클라이언트 GUID로 클라이언트 정보 출력
+GET {{base_url}}/v1/info
+Authorization: Bearer {{jwt_token}}
+Accept: application/json
