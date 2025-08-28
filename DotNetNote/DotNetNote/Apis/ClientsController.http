@@ -17,3 +17,8 @@ Accept: application/json
 GET {{base_url}}/v1/clients?page=0&size=5
 Authorization: Bearer {{jwt_token}}
 Accept: application/json
+
+### 2. ISO 국가 목록 출력
+GET {{base_url}}/v1/isocountries
+Authorization: Bearer {{jwt_token}}
+Accept: application/json
