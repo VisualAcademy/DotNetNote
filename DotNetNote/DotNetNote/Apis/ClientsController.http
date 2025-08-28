@@ -1,0 +1,19 @@
+@base_url = https://localhost:5003
+@jwt_token = TestToken
+@client_guid = 11111111-1111-1111-1111-111111111111
+
+@product_guid = 087854ec-541c-4530-9e37-3622017917ea
+@alice_smith_guid = a1111111-b222-4333-c444-d55555555555
+@bob_jones_guid   = b2222222-c333-4444-d555-e66666666666
+
+@order_guid = c3333333-d444-5555-e666-f77777777777
+
+### 1) 클라이언트 목록 (전체) - 컨트롤러 지원
+GET {{base_url}}/v1/clients
+Authorization: Bearer {{jwt_token}}
+Accept: application/json
+
+### 2) 클라이언트 목록 (페이징) - 컨트롤러 지원
+GET {{base_url}}/v1/clients?page=0&size=5
+Authorization: Bearer {{jwt_token}}
+Accept: application/json
