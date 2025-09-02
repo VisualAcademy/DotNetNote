@@ -3,10 +3,12 @@
 @client_guid = 11111111-1111-1111-1111-111111111111
 
 @product_guid = 087854ec-541c-4530-9e37-3622017917ea
-@alice_smith_guid = a1111111-b222-4333-c444-d55555555555
-@bob_jones_guid   = b2222222-c333-4444-d555-e66666666666
 
-@order_guid = c3333333-d444-5555-e666-f77777777777
+@joe_clean_guid = 54776c2e-0235-4416-8da9-2282c6b54450
+@hank_mess_guid = 239873dd-a18b-4eb2-88e9-f815fccb351e
+
+@joe_clean_order_guid = b84409e4-a9a8-4d0d-9d6f-2dc88bb00277
+@hank_mess_order_guid = 6ab88112-d98f-422e-9395-17b15a64ce8d
 
 ### 1) 클라이언트 목록 (전체) - 컨트롤러 지원
 GET {{base_url}}/v1/clients
@@ -33,3 +35,182 @@ GET {{base_url}}/v1/usage?startDate=2025-08-01&endDate=2025-08-30
 Authorization: Bearer {{jwt_token}}
 Accept: application/json
 
+### All Order
+GET {{base_url}}/v1/clients/{{client_guid}}/orders?page=0&size=2
+Authorization: Bearer {{jwt_token}}
+Accept: application/json
+
+### Get Product List
+GET {{base_url}}/v1/clients/{{client_guid}}/products/collection/panels
+Authorization: Bearer {{jwt_token}}
+Accept: application/json
+
+### Get Product List for Client
+GET {{base_url}}/v1/clients/{{client_guid}}/products/collection/panels
+Authorization: Bearer {{jwt_token}}
+Accept: application/json
+
+### Get All Client Products
+GET {{base_url}}/v1/clients/{{client_guid}}/products
+Authorization: Bearer {{jwt_token}}
+Accept: application/json
+
+### All Applicants
+GET {{base_url}}/v1/clients/{{client_guid}}/applicants?page=0&size=30
+Authorization: Bearer {{jwt_token}}
+Accept: application/json
+
+### 1. Create Test Applicant - Joe Clean, SSN: 111-22-3333 값이 통과하는 테스트 고정값
+POST {{base_url}}/v1/clients/{{client_guid}}/applicants
+Authorization: Bearer {{jwt_token}}
+Content-Type: application/json
+
+{
+  "firstName": "Joe",
+  "lastName": "Clean",
+  "ssn": "111-22-3333",
+  "gender": "MALE",
+  "dateOfBirth": "1985-01-01",
+  "email": "joe.clean@example.com",
+  "phoneNumber": "(555) 555-5555"
+}
+
+### All Applicants
+GET {{base_url}}/v1/clients/{{client_guid}}/applicants?page=0&size=30
+Authorization: Bearer {{jwt_token}}
+Accept: application/json
+
+### 2. Create Test Applicant - Hank Mess - SSN: 333-22-1111 값이 실패하는 테스트 고정값 
+POST {{base_url}}/v1/clients/{{client_guid}}/applicants
+Authorization: Bearer {{jwt_token}}
+Content-Type: application/json
+
+{
+  "firstName": "Hank",
+  "lastName": "Mess",
+  "ssn": "333-22-1111",
+  "gender": "MALE",
+  "dateOfBirth": "1980-06-15",
+  "email": "hank.mess@example.com",
+  "phoneNumber": "(555) 666-6666"
+}
+
+### All Applicants
+GET {{base_url}}/v1/clients/{{client_guid}}/applicants?page=0&size=30
+Authorization: Bearer {{jwt_token}}
+Accept: application/json
+
+### Submit Order for Applicants
+
+### 1. Submit Order for Joe Clean (Clear Result)
+POST {{base_url}}/v1/clients/{{client_guid}}/orders
+Authorization: Bearer {{jwt_token}}
+Content-Type: application/json
+
+{
+  "applicantGuid": "{{joe_clean_guid}}",
+  "clientProductGuid": "{{product_guid}}",
+  "useQuickApp": false,
+  "certifyPermissiblePurpose": true,
+  "generalReportReference": "JOE-CLEAR-REF-001",
+  "externalIdentifier": "JOE-CLEAR-001",
+  "orderNotes": "Test order for Joe Clean",
+  "quickappNotifyApplicants": false,
+  "queueConsumerDisclosure": false
+}
+
+### {
+###   "orderGuid": "b84409e4-a9a8-4d0d-9d6f-2dc88bb00277",
+###   "fileNumber": 670770,
+###   "orderStatus": "pending",
+###   "orderType": "Employment",
+###   "orderedDate": 1756784063559,
+###   "generalReportReference": "JOE-CLEAR-REF-001",
+###   "externalIdentifier": "JOE-CLEAR-001",
+###   "applicantName": "CLEAN, JOE",
+###   "clientName": "Demo Client Account",
+###   "clientCode": "DEMO-CLIENT-CODE",
+###   "productName": "API Demo",
+###   "requestedBy": "Demo Sandbox Instance - Demo Client",
+###   "searchFlagged": false,
+###   "createdDate": 1756784063559,
+###   "createdBy": "Demo Sandbox Instance - Demo Client",
+###   "modifiedDate": 1756784063559,
+###   "modifiedBy": "Demo Sandbox Instance - Demo Client",
+###   "completedDate": null
+### }
+
+### Clean Joe Clean Order Status
+GET {{base_url}}/v1/clients/{{client_guid}}/orders/{{joe_clean_order_guid}}
+Authorization: Bearer {{jwt_token}}
+Accept: application/json
+
+### 2. Submit Order for Hank Mess (Bad Result)
+POST {{base_url}}/v1/clients/{{client_guid}}/orders
+Authorization: Bearer {{jwt_token}}
+Content-Type: application/json
+
+{
+  "applicantGuid": "{{hank_mess_guid}}",
+  "clientProductGuid": "{{product_guid}}",
+  "useQuickApp": false,
+  "certifyPermissiblePurpose": true,
+  "generalReportReference": "HANK-BAD-REF-002",
+  "externalIdentifier": "HANK-BAD-002",
+  "orderNotes": "Test order for Hank Mess",
+  "quickappNotifyApplicants": false,
+  "queueConsumerDisclosure": false
+}
+
+### {
+###   "orderGuid": "6ab88112-d98f-422e-9395-17b15a64ce8d",
+###   "fileNumber": 670771,
+###   "orderStatus": "pending",
+###   "orderType": "Employment",
+###   "orderedDate": 1756784130943,
+###   "generalReportReference": "HANK-BAD-REF-002",
+###   "externalIdentifier": "HANK-BAD-002",
+###   "applicantName": "MESS, HANK",
+###   "clientName": "Demo Client Account",
+###   "clientCode": "DEMO-CLIENT-CODE",
+###   "productName": "API Demo",
+###   "requestedBy": "Demo Sandbox Instance - Demo Client",
+###   "searchFlagged": false,
+###   "createdDate": 1756784130943,
+###   "createdBy": "Demo Sandbox Instance - Demo Client",
+###   "modifiedDate": 1756784130943,
+###   "modifiedBy": "Demo Sandbox Instance - Demo Client",
+###   "completedDate": null
+### }
+
+### Bad Hank Mess Order Status
+GET {{base_url}}/v1/clients/{{client_guid}}/orders/{{hank_mess_order_guid}}
+Authorization: Bearer {{jwt_token}}
+Accept: application/json
+
+### All Order - {{base_url}}/v1/clients/{{client-guid}}/orders?page=0&size=2
+GET {{base_url}}/v1/clients/{{client_guid}}/orders?page=0&size=2
+Authorization: Bearer {{jwt_token}}
+Accept: application/json
+
+### Get PDF Link for Order Results
+GET {{base_url}}/v1/clients/{{client_guid}}/orders/{{joe_clean_order_guid}}/resultsAsPdf
+Authorization: Bearer {{jwt_token}}
+Accept: application/json
+
+#### 위 코드 실행 결과
+# {
+#   "resultsUrl": "https://localhost:5003/v1/reports/670770.pdf?download=1",
+#   "externalIdentifier": "JOE-CLEAR-001"
+# }
+
+### Get PDF Link for Order Results
+GET {{base_url}}/v1/clients/{{client_guid}}/orders/{{hank_mess_order_guid}}/resultsAsPdf
+Authorization: Bearer {{jwt_token}}
+Accept: application/json
+
+#### 위 코드 실행 결과
+# {
+#   "resultsUrl": "https://localhost:5003/v1/reports/670771.pdf?download=1",
+#   "externalIdentifier": "HANK-BAD-002"
+# }
