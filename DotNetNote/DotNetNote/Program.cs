@@ -289,7 +289,7 @@ public partial class Program
 
     private static async Task ConfigureServicesAsync(IServiceCollection services, IConfiguration Configuration)
     {
-        services.AddIdentity<ApplicationUser, IdentityRole>()
+        services.AddIdentity<ApplicationUser, ApplicationRole>()
             .AddEntityFrameworkStores<ApplicationDbContext>()
             .AddDefaultTokenProviders();
 

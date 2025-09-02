@@ -2,7 +2,7 @@
 
 namespace DotNetNote.Data;
 
-public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : IdentityDbContext(options)
+public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : IdentityDbContext<ApplicationUser, ApplicationRole, string>(options)
 {
     public DbSet<CabinetType> CabinetTypes { get; set; } = null!;
 
