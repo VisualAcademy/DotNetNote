@@ -282,6 +282,11 @@ public partial class Program
 
         // 엔드포인트 등록
         app.MapIsoCountriesEndpoint();
+        app.MapApplicantsEndpoint();
+        app.MapClientProductsEndpoint();
+        app.MapOrdersEndpoint();
+        app.MapOrderResultsEndpoint();
+
 
 
         app.Run();
