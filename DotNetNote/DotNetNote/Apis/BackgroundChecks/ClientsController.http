@@ -4,7 +4,7 @@
 
 @product_guid = 087854ec-541c-4530-9e37-3622017917ea
 
-@joe_clean_guid = 54776c2e-0235-4416-8da9-2282c6b54450
+@joe_clean_guid = 5685dc65-19e7-4c51-94a9-e5a4e5625c78
 @hank_mess_guid = 239873dd-a18b-4eb2-88e9-f815fccb351e
 
 @joe_clean_order_guid = b84409e4-a9a8-4d0d-9d6f-2dc88bb00277
@@ -37,11 +37,6 @@ Accept: application/json
 
 ### All Order
 GET {{base_url}}/v1/clients/{{client_guid}}/orders?page=0&size=2
-Authorization: Bearer {{jwt_token}}
-Accept: application/json
-
-### Get Product List
-GET {{base_url}}/v1/clients/{{client_guid}}/products/collection/panels
 Authorization: Bearer {{jwt_token}}
 Accept: application/json
 
