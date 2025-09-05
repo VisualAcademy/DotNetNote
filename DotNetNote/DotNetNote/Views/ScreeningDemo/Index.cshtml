@@ -1,0 +1,61 @@
+﻿@model DotNetNote.Models.ScreeningDemoVm
+@using Azunt.Web.Policies
+@using Azunt.Web.Constants
+@inject IBackgroundScreeningPolicy ScreeningPolicy
+
+@{
+    ViewData["Title"] = "Background Screening Demo";
+
+    // ▼ 공통 변수명만 사용 (값은 Constants로부터)
+    var providerKey = BackgroundProviders.Azunt; // 테스트 대상 프로바이더
+    var tenantName = Model.TenantName;
+    var partnerName = Model.PartnerName;
+
+    // 정책 기반 노출 여부
+    bool showByPolicy =
+        ScreeningPolicy.IsProviderVisible(providerKey, tenantName);
+
+    // 파트너명 매칭 (대/소문자 무시)
+    bool isCurrentPartner =
+        !string.IsNullOrWhiteSpace(partnerName)
+        && providerKey.Equals(partnerName, System.StringComparison.OrdinalIgnoreCase);
+
+    // 최종 버튼 노출 조건: 관리자 OR 글로벌관리자 OR 현재파트너 OR 정책일치
+    bool showButton =
+        Model.IsAdmin || Model.IsGlobalAdmin || isCurrentPartner || showByPolicy;
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div style="display:flex; gap: 8px; flex-wrap: wrap;">
+    <div style="display:flex; gap: 8px; align-items:center;">
+        <button id="addNewBackgroundCheck"
+                class="btn btn-primary"
+                onclick="alert('Azunt clicked')">
+            Add Background Check <sup>@BackgroundProviders.Azunt</sup>
+        </button>
+
+        @if (showButton)
+        {
+            <button id="addNewBackgroundCheckProvider"
+                    class="btn btn-success"
+                    onclick="alert('@providerKey clicked')">
+                Add Background Check <sup>@providerKey</sup>
+            </button>
+        }
+    </div>
+</div>
+
+<hr />
+
+<h4>Diagnostics</h4>
+<ul>
+    <li><b>TenantName</b>: @tenantName</li>
+    <li><b>PartnerName</b>: @partnerName</li>
+    <li><b>IsAdmin</b>: @Model.IsAdmin</li>
+    <li><b>IsGlobalAdmin</b>: @Model.IsGlobalAdmin</li>
+    <li><b>ProviderKey(Test)</b>: @providerKey</li>
+    <li><b>VisibleByPolicy</b>: @showByPolicy</li>
+    <li><b>IsCurrentPartner</b>: @isCurrentPartner</li>
+    <li><b>Final ShowButton</b>: @showButton</li>
+</ul>
