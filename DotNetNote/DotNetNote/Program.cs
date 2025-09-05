@@ -1,12 +1,10 @@
 using Azunt.Endpoints;
-using Azunt.Infrastructures;
-using Azunt.Infrastructures.Tenants;
 using Azunt.NoteManagement;
 using Azunt.ResourceManagement;
-using Azunt.Web.Components.Pages.Notes.Services;
 using Azunt.Web.Infrastructures;
+using Azunt.Web.Policies;
+using Azunt.Web.Settings;
 using Dalbodre;
-using Dalbodre.Infrastructures.Cores;
 using DotNetNote.Common;
 using DotNetNote.Components.Account;
 using DotNetNote.Controllers.Articles;
@@ -29,7 +27,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Rewrite;
 using Microsoft.AspNetCore.Routing;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.FluentUI.AspNetCore.Components;
 using Microsoft.IdentityModel.Tokens;
 using Serilog;
@@ -79,7 +76,7 @@ public partial class Program
         builder.Services.AddSingleton(resolver => resolver.GetRequiredService<IOptions<AzureTranslatorSettings>>().Value);
 
         #region Note Module Test
-        var defaultConnStr = builder.Configuration.GetConnectionString("DefaultConnection") 
+        var defaultConnStr = builder.Configuration.GetConnectionString("DefaultConnection")
             ?? throw new InvalidOperationException("DefaultConnection is missing in configuration.");
 
         builder.Services.AddDependencyInjectionContainerForNoteApp(defaultConnStr, Azunt.Models.Enums.RepositoryMode.EfCore);
@@ -136,6 +133,14 @@ public partial class Program
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("text/plain"));
         });
 
+
+
+        // appsettings 바인딩
+        builder.Services.Configure<BackgroundScreeningOptions>(
+            builder.Configuration.GetSection("BackgroundScreening"));
+
+        // 정책 서비스 DI
+        builder.Services.AddScoped<IBackgroundScreeningPolicy, BackgroundScreeningPolicy>();
 
 
         var app = builder.Build();
