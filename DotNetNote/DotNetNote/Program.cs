@@ -1,3 +1,4 @@
+using Azunt.Endpoints;
 using Azunt.Infrastructures;
 using Azunt.Infrastructures.Tenants;
 using Azunt.NoteManagement;
@@ -33,6 +34,7 @@ using Microsoft.FluentUI.AspNetCore.Components;
 using Microsoft.IdentityModel.Tokens;
 using Serilog;
 using Serilog.Sinks.MSSqlServer;
+using System.Net.Http.Headers;
 
 public partial class Program
 {
@@ -48,6 +50,17 @@ public partial class Program
         builder.Services.AddScoped<IdentityUserAccessor>();
         builder.Services.AddScoped<IdentityRedirectManager>();
         builder.Services.AddScoped<AuthenticationStateProvider, IdentityRevalidatingAuthenticationStateProvider>();
+
+
+        // 최신 권장 방식: HttpClientFactory 등록
+        builder.Services.AddHttpClient("egress-ip", client =>
+        {
+            client.Timeout = TimeSpan.FromSeconds(5);
+            client.DefaultRequestHeaders.UserAgent.ParseAdd("Azunt-EgressIp/1.0");
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("text/plain"));
+        });
+
 
         //builder.Services.AddAuthentication(options =>
         //{
@@ -126,6 +139,11 @@ public partial class Program
 
 
         var app = builder.Build();
+
+
+        // nullable 경고 억제: app은 실제로 null이 아님
+        app!.MapDiagnosticsEndpoints();
+
 
         // <TodoComponent>
         using (var scope = app.Services.CreateScope())
