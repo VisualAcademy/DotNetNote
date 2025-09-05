@@ -52,14 +52,6 @@ public partial class Program
         builder.Services.AddScoped<AuthenticationStateProvider, IdentityRevalidatingAuthenticationStateProvider>();
 
 
-        // 최신 권장 방식: HttpClientFactory 등록
-        builder.Services.AddHttpClient("egress-ip", client =>
-        {
-            client.Timeout = TimeSpan.FromSeconds(5);
-            client.DefaultRequestHeaders.UserAgent.ParseAdd("Azunt-EgressIp/1.0");
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("text/plain"));
-        });
 
 
         //builder.Services.AddAuthentication(options =>
@@ -135,14 +127,20 @@ public partial class Program
         #endregion
 
 
+        // 최신 권장 방식: HttpClientFactory 등록
+        builder.Services.AddHttpClient("egress-ip", client =>
+        {
+            client.Timeout = TimeSpan.FromSeconds(5);
+            client.DefaultRequestHeaders.UserAgent.ParseAdd("Azunt-EgressIp/1.0");
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("text/plain"));
+        });
 
 
 
         var app = builder.Build();
 
 
-        // nullable 경고 억제: app은 실제로 null이 아님
-        app!.MapDiagnosticsEndpoints();
 
 
         // <TodoComponent>
@@ -304,6 +302,10 @@ public partial class Program
         app.MapClientProductsEndpoint();
         app.MapOrdersEndpoint();
         app.MapOrderResultsEndpoint();
+
+
+        // nullable 경고 억제: app은 실제로 null이 아님
+        app!.MapDiagnosticsEndpoints();
 
 
 

@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Builder;   // MapGet 확장메서드
+﻿using Microsoft.AspNetCore.Builder;   // MapGet 확장 메서드
 using Microsoft.AspNetCore.Http;      // Results.*
 using Microsoft.AspNetCore.Routing;   // IEndpointRouteBuilder
 using System.Net.Http;
@@ -9,16 +9,20 @@ namespace Azunt.Endpoints;
 public static class DiagnosticsEndpoints
 {
     /// <summary>
-    /// 운영 진단용 미니멀 API 묶음 등록
+    /// 운영 진단용 미니멀 API 묶음 등록 (인증 필요)
     /// </summary>
     public static IEndpointRouteBuilder MapDiagnosticsEndpoints(this IEndpointRouteBuilder app)
     {
-        // nullable 경고 방지 + 런타임 안전
         ArgumentNullException.ThrowIfNull(app);
         var endpoints = app;
 
-        // JSON 응답: { "ip": "x.x.x.x" }
-        endpoints.MapGet("/api/diagnostics/egress-ip", async (IHttpClientFactory httpClientFactory, CancellationToken ct) =>
+        // 이 그룹에 포함된 모든 엔드포인트는 인증 필요
+        var diag = endpoints.MapGroup("/api/diagnostics")
+                            .WithTags("Diagnostics")
+                            .RequireAuthorization();
+
+        // 그룹에 포함된 엔드포인트 (자동으로 인증 필요)
+        diag.MapGet("/egress-ip", async (IHttpClientFactory httpClientFactory, CancellationToken ct) =>
         {
             var client = httpClientFactory.CreateClient("egress-ip");
 
@@ -49,11 +53,10 @@ public static class DiagnosticsEndpoints
                 : Results.Problem("Unable to determine outbound IP address right now. Try again shortly.");
         })
         .WithName("GetEgressIp")
-        .WithTags("Diagnostics")
         .Produces(StatusCodes.Status200OK)
         .ProducesProblem(StatusCodes.Status503ServiceUnavailable);
 
-        // 텍스트 응답(헬스체크/스크립트에서 간단 확인): x.x.x.x
+        // health 엔드포인트 (그룹 밖, 개별 RequireAuthorization 적용)
         endpoints.MapGet("/health/egress-ip", async (IHttpClientFactory httpClientFactory, CancellationToken ct) =>
         {
             var client = httpClientFactory.CreateClient("egress-ip");
@@ -68,7 +71,8 @@ public static class DiagnosticsEndpoints
             }
         })
         .WithName("HealthEgressIp")
-        .WithTags("Diagnostics");
+        .WithTags("Diagnostics")
+        .RequireAuthorization();  // 개별 인증 요구
 
         return endpoints;
     }
