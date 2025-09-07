@@ -134,13 +134,14 @@ public partial class Program
         });
 
 
-
+        #region Background Service
         // appsettings 바인딩
         builder.Services.Configure<BackgroundScreeningOptions>(
             builder.Configuration.GetSection("BackgroundScreening"));
 
         // 정책 서비스 DI
         builder.Services.AddScoped<IBackgroundScreeningPolicy, BackgroundScreeningPolicy>();
+        #endregion
 
 
         var app = builder.Build();
