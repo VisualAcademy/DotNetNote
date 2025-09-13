@@ -1,13 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Azunt.NoteManagement;
+﻿using Azunt.NoteManagement;
 
 using DocumentFormat.OpenXml;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Spreadsheet;
-using System;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Azunt.Apis.Notes
 {
