@@ -28,7 +28,7 @@ namespace VisualAcademy.Areas.Identity.Pages.Account
         }
 
         [BindProperty]
-        public InputModel Input { get; set; }
+        public InputModel Input { get; set; } = default!;
 
         public string LoginProvider { get; set; }
 
