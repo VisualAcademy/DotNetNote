@@ -1,8 +1,4 @@
 ﻿using Azunt.Infrastructures.Community;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using System;
 
 namespace Azunt.Web.Infrastructures._Initializers;
 
