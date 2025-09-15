@@ -8,9 +8,9 @@ namespace All.Controllers
     {
         public bool HasPassword { get; set; } // 사용자가 비밀번호를 설정했는지 여부
 
-        public IList<UserLoginInfo> Logins { get; set; } // 사용자의 로그인 정보 목록
+        public IList<UserLoginInfo> Logins { get; set; } = new List<UserLoginInfo>(); // 사용자의 로그인 정보 목록
 
-        public string PhoneNumber { get; set; } // 사용자 전화번호
+        public string PhoneNumber { get; set; } = string.Empty; // 사용자 전화번호
 
         public bool TwoFactor { get; set; } // 2단계 인증 활성화 여부
 
@@ -62,7 +62,7 @@ namespace All.Controllers
             var model = new IndexViewModel
             {
                 HasPassword = await _userManager.HasPasswordAsync(user),
-                PhoneNumber = await _userManager.GetPhoneNumberAsync(user),
+                PhoneNumber = await _userManager.GetPhoneNumberAsync(user) ?? string.Empty,
                 TwoFactor = await _userManager.GetTwoFactorEnabledAsync(user),
                 Logins = await _userManager.GetLoginsAsync(user),
                 BrowserRemembered = await _signInManager.IsTwoFactorClientRememberedAsync(user),
@@ -224,11 +224,10 @@ namespace All.Controllers
         }
 
         #region Helpers
-        private Task<ApplicationUser> GetCurrentUserAsync()
+        private Task<ApplicationUser?> GetCurrentUserAsync()
         {
             return _userManager.GetUserAsync(HttpContext.User);
         }
-
         #endregion
     }
 }
