@@ -1,5 +1,7 @@
+using Azunt.DefaultAttachmentManagement;
 using Azunt.EmployeeManagement;
 using Azunt.Endpoints;
+using Azunt.Models.Enums;
 using Azunt.NoteManagement;
 using Azunt.ResourceManagement;
 using Azunt.Web.Infrastructures;
@@ -580,6 +582,17 @@ public partial class Program
             throw new InvalidOperationException("DefaultConnection is not configured in appsettings.json");
         services.AddDependencyInjectionContainerForResourceApp(defaultConnection, Azunt.Models.Enums.RepositoryMode.EfCore);
         services.AddTransient<ResourceAppDbContextFactory>();
+        #endregion
+
+        #region Default Attachment Management 
+        var connDefaultAttachment = Configuration.GetConnectionString("DefaultConnection");
+        // 첨부파일 관리 모듈 등록: 기본 CRUD 코드
+        services.AddDependencyInjectionContainerForDefaultAttachmentApp(
+            connDefaultAttachment!,
+            mode: RepositoryMode.EfCore);
+
+        // DbContextFactory는 리포지토리 내부에서 DbContext 생성을 위해 사용됨
+        services.AddTransient<DefaultAttachmentDbContextFactory>();
         #endregion
     }
 }
