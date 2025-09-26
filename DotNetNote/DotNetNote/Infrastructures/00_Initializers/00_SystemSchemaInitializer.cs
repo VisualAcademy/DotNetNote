@@ -1,5 +1,6 @@
 ﻿using Azunt.NoteManagement;
 using Azunt.SignInManagement;
+using Azunt.TenantSettingManagement;
 using System.Diagnostics;
 
 namespace Azunt.Web.Infrastructures.Initializers
@@ -36,6 +37,9 @@ namespace Azunt.Web.Infrastructures.Initializers
             InitializePostsTable(services, logger, forMaster: true);
             InitializeNotesTable(services, logger, forMaster: true);
             InitializeSignInsTable(services, logger, forMaster: true);
+
+            // TenantSettings 스키마/시드 (마스터 DB)
+            InitializeTenantSettingsTable(services, logger, forMaster: true);
 
             // ※ 필요 시 테넌트 DB에 대해서도 초기화를 수행하세요.
             // InitializeTenantsTable(services, logger, forMaster: false);
@@ -145,6 +149,76 @@ namespace Azunt.Web.Infrastructures.Initializers
             {
                 SignInsTableBuilder.Run(services, forMaster);
             });
+        }
+
+        /// <summary>
+        /// TenantSettings 테이블 초기화(없으면 생성) 및 선택적 기본 키 시드.
+        /// - forMaster=true  : 마스터 DB에만 스키마 보강
+        /// - forMaster=false : Tenants 테이블을 조회하여 각 테넌트 DB에 스키마 보강(+선택적 시드)
+        /// </summary>
+        private static void InitializeTenantSettingsTable(IServiceProvider services, ILogger logger, bool forMaster)
+        {
+            if (services is null) throw new ArgumentNullException(nameof(services));
+            if (logger is null) throw new ArgumentNullException(nameof(logger));
+
+            RunStep(logger, "TenantSettings 초기화", forMaster, () =>
+            {
+                var cfg = services.GetRequiredService<IConfiguration>();
+                var loggerFactory = services.GetRequiredService<ILoggerFactory>();
+                var schemaLogger = loggerFactory.CreateLogger<TenantSettingsSchemaManager>();
+
+                var masterCs = cfg.GetConnectionString("DefaultConnection");
+                if (string.IsNullOrWhiteSpace(masterCs))
+                    throw new InvalidOperationException("DefaultConnection is not configured.");
+
+                var mgr = new TenantSettingsSchemaManager(schemaLogger);
+
+                if (forMaster)
+                {
+                    // 1) 마스터 DB 스키마 보강
+                    mgr.EnsureSchema(masterCs);
+
+                    // 2) (신규) 마스터 DB에도 테넌트별 기본값 시드 (없을 때만)
+                    foreach (var (tenantId, _) in GetTenants(masterCs))
+                    {
+                        // 필요한 기본 키들을 여기서 모두 추가
+                        mgr.SeedIfMissing(masterCs, tenantId, TenantSettingKeys.EmployeeSummary.Enabled, "true", "System");
+                    }
+                }
+                else
+                {
+                    // 테넌트 DB들 스키마 보강 + (없을 때만) 기본값 시드
+                    foreach (var (tenantId, tenantCs) in GetTenants(masterCs))
+                    {
+                        if (string.IsNullOrWhiteSpace(tenantCs)) continue;
+
+                        mgr.EnsureSchema(tenantCs);
+
+                        mgr.SeedIfMissing(tenantCs, tenantId, TenantSettingKeys.EmployeeSummary.Enabled, "true", "System");
+                    }
+                }
+            });
+        }
+
+        /// <summary>
+        /// 마스터 DB의 dbo.Tenants에서 (ID, ConnectionString) 목록을 가져옵니다.
+        /// </summary>
+        private static IEnumerable<(long TenantId, string ConnectionString)> GetTenants(string masterConnectionString)
+        {
+            using var conn = new SqlConnection(masterConnectionString);
+            conn.Open();
+
+            using var cmd = new SqlCommand(
+                "SELECT ID, ConnectionString FROM dbo.Tenants WITH (NOLOCK)",
+                conn);
+
+            using var rdr = cmd.ExecuteReader();
+            while (rdr.Read())
+            {
+                var id = rdr.GetInt64(0);
+                var cs = rdr.IsDBNull(1) ? string.Empty : rdr.GetString(1);
+                yield return (id, cs);
+            }
         }
     }
 }
