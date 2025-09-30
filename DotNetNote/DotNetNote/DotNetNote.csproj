@@ -120,7 +120,7 @@
         <PackageReference Include="Serilog.Sinks.File" Version="7.0.0" />
         <PackageReference Include="Serilog.Sinks.MSSqlServer" Version="8.2.2" />
         <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.14.0" />
-        <PackageReference Include="Twilio" Version="7.13.2" />
+        <PackageReference Include="Twilio" Version="7.13.3" />
 
     </ItemGroup>
 
