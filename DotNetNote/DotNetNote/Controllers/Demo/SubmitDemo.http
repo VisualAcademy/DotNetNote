@@ -1,0 +1,32 @@
+### 1. 인증 없음 → Unauthorized (401) 예상
+PUT https://localhost:5003/api/demo/submit/1
+Content-Type: application/json
+
+{}
+
+###
+
+### 2. 우회 대상 테넌트 (DotNetNote) → NoContent (204) 예상
+PUT https://localhost:5003/api/demo/submit/10
+Content-Type: application/json
+X-Demo-UserTenant: DotNetNote
+
+{}
+
+###
+
+### 3. 우회 대상 테넌트 (Hawaso) → NoContent (204) 예상
+PUT https://localhost:5003/api/demo/submit/11
+Content-Type: application/json
+X-Demo-UserTenant: Hawaso
+
+{}
+
+###
+
+### 4. 비우회 테넌트 (VisualAcademy) → UnprocessableEntity (422) 예상
+PUT https://localhost:5003/api/demo/submit/12
+Content-Type: application/json
+X-Demo-UserTenant: VisualAcademy
+
+{}

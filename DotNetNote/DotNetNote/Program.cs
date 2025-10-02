@@ -5,6 +5,7 @@ using Azunt.Models.Enums;
 using Azunt.NoteManagement;
 using Azunt.ResourceManagement;
 using Azunt.TenantSettingManagement;
+using Azunt.Web.Infrastructure.Extensions;
 using Azunt.Web.Infrastructures;
 using Azunt.Web.Policies;
 using Azunt.Web.Settings;
@@ -150,6 +151,10 @@ public partial class Program
 
         // 기본 연결 문자열로 모듈 등록 (Service/DbContextFactory 등)
         builder.Services.AddTenantSettingsModule(builder.Configuration);
+
+
+        // 공통 DI 묶음
+        builder.Services.AddAzuntWeb(builder.Configuration);
 
 
         var app = builder.Build();
@@ -321,7 +326,8 @@ public partial class Program
         // nullable 경고 억제: app은 실제로 null이 아님
         app!.MapDiagnosticsEndpoints();
 
-
+        // Minimal APIs
+        app.MapAzuntMinimalApis();
 
         app.Run();
     }

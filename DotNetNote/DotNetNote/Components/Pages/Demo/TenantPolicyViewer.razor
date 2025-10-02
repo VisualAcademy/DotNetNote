@@ -1,0 +1,26 @@
+﻿@page "/tenant-policy"
+<h3>Tenant Policy Viewer</h3>
+
+<p>Header X-Demo-UserTenant: @UserTenant</p>
+<p>EditOverride? @IsEditOverride</p>
+<p>BypassUploadCheck? @IsBypass</p>
+
+@code {
+    [Inject] NavigationManager Nav { get; set; } = default!;
+    [Inject] ITenantPolicyService Policy { get; set; } = default!;
+
+    private string UserTenant = "DotNetNote";
+    private bool IsEditOverride;
+    private bool IsBypass;
+
+    protected override void OnInitialized()
+    {
+        // 학습용: 쿼리에서 userTenant 받아오기
+        var uri = new Uri(Nav.Uri);
+        var q = System.Web.HttpUtility.ParseQueryString(uri.Query);
+        UserTenant = q["userTenant"] ?? "DotNetNote";
+
+        IsEditOverride = Policy.IsEditOverrideTenant(UserTenant);
+        IsBypass = Policy.IsBypassUploadCheckTenant(UserTenant);
+    }
+}
