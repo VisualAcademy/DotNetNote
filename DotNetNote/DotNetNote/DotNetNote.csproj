@@ -128,6 +128,9 @@
     <ItemGroup>
         <Folder Include="Areas\Conferences\Data\" />
         <Folder Include="Areas\DotNetSale\Data\" />
+        <Folder Include="Areas\Employees\Data\" />
+        <Folder Include="Areas\Employees\Models\" />
+        <Folder Include="Areas\Employees\Views\" />
         <Folder Include="Areas\Modules\Data\" />
         <Folder Include="Entities\" />
         <Folder Include="Properties\ServiceDependencies\" />
