@@ -321,6 +321,7 @@ public partial class Program
         app.MapClientProductsEndpoint();
         app.MapOrdersEndpoint();
         app.MapOrderResultsEndpoint();
+        app.MapProductFieldsEndpoint();
 
 
         // nullable 경고 억제: app은 실제로 null이 아님

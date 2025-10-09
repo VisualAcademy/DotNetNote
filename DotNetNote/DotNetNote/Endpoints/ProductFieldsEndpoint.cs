@@ -58,10 +58,7 @@ public static class ProductFieldsEndpoint
 
             var requiredFields = new List<FieldItem>
             {
-                new("Department", new()
-                {
-                    "OPERATIONS", "FINANCE", "SECURITY", "HUMAN RESOURCES", "INFORMATION TECHNOLOGY"
-                }),
+                new("Reference", new() { "OPERATIONS", "FINANCE", "SECURITY", "HUMAN RESOURCES", "INFORMATION TECHNOLOGY" }), // 무조건 이 값으로 테스트
                 new("Employment Type", new() { "FULL_TIME", "PART_TIME", "TEMPORARY", "CONTRACTOR" })
             };
 
