@@ -8,7 +8,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Azunt" Version="1.1.8" />
+        <PackageReference Include="Azunt" Version="1.1.9" />
         <PackageReference Include="Azunt.ApplicantTypeManagement" Version="1.0.0" />
         <PackageReference Include="Azunt.AppointmentTypeManagement" Version="1.0.0" />
         <PackageReference Include="Azunt.ArticleManagement" Version="1.0.1" />
@@ -45,10 +45,10 @@
         </PackageReference>
         <PackageReference Include="Twilio" Version="7.13.3" />
 
-        <PackageReference Include="Microsoft.FluentUI.AspNetCore.Components" Version="4.12.1" />
-        <PackageReference Include="Microsoft.FluentUI.AspNetCore.Components.DataGrid.EntityFrameworkAdapter" Version="4.12.1" />
-        <PackageReference Include="Microsoft.FluentUI.AspNetCore.Components.Emoji" Version="4.12.1" />
-        <PackageReference Include="Microsoft.FluentUI.AspNetCore.Components.Icons" Version="4.12.1" />
+        <PackageReference Include="Microsoft.FluentUI.AspNetCore.Components" Version="4.13.0" />
+        <PackageReference Include="Microsoft.FluentUI.AspNetCore.Components.DataGrid.EntityFrameworkAdapter" Version="4.13.0" />
+        <PackageReference Include="Microsoft.FluentUI.AspNetCore.Components.Emoji" Version="4.13.0" />
+        <PackageReference Include="Microsoft.FluentUI.AspNetCore.Components.Icons" Version="4.13.0" />
     </ItemGroup>
 
     <ItemGroup>
