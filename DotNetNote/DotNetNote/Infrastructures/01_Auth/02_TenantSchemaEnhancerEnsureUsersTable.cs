@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Data;
 
 namespace Azunt.Web.Infrastructures.Auth;
 
@@ -430,5 +431,96 @@ public class TenantSchemaEnhancerEnsureUsersTable
             var affected = updateNullsCmd.ExecuteNonQuery();
             _logger.LogInformation($"AspNetUsers.HasMultipleTenants backfilled to 0: {affected} row(s).");
         }
+    }
+
+    /// <summary>
+    /// 마스터 DB에서 특정 이메일의 TenantID/TenantId 값을 지정 값으로 업데이트합니다.
+    /// </summary>
+    public int SetTenantIdForEmailInMaster(string email, long tenantId)
+    {
+        if (string.IsNullOrWhiteSpace(email))
+            throw new ArgumentException("email is required.", nameof(email));
+
+        try
+        {
+            using (var connection = new SqlConnection(_masterConnectionString))
+            {
+                connection.Open();
+
+                var columnName = ResolveTenantIdColumnName(connection);
+                if (columnName == null)
+                {
+                    _logger.LogWarning("AspNetUsers 테이블에 TenantID/TenantId 컬럼이 없습니다. EnsureUsersTable 실행 후 재시도하세요.");
+                    return 0;
+                }
+
+                var normalized = email.Trim().ToUpperInvariant();
+
+                // NormalizedEmail 우선, 없으면 Email 대소문자 무시 매칭
+                var sql = $@"
+UPDATE [dbo].[AspNetUsers]
+   SET [{columnName}] = @TenantId
+ WHERE (NormalizedEmail = @NormalizedEmail)
+    OR (NormalizedEmail IS NULL AND Email IS NOT NULL AND UPPER(Email) = @NormalizedEmail);";
+
+                using (var cmd = new SqlCommand(sql, connection))
+                {
+                    cmd.Parameters.Add(new SqlParameter("@TenantId", SqlDbType.BigInt) { Value = tenantId });
+                    cmd.Parameters.Add(new SqlParameter("@NormalizedEmail", SqlDbType.NVarChar, 256) { Value = normalized });
+
+                    var affected = cmd.ExecuteNonQuery();
+                    _logger.LogInformation($"[MASTER] Updated TenantID for {email} -> {tenantId} (rows: {affected})");
+                    return affected;
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, $"[MASTER] Failed to update TenantID for {email}");
+            return 0;
+        }
+    }
+
+    /// <summary>
+    /// 스키마에 존재하는 테넌트 컬럼명을 확인(우선순위: TenantID -> TenantId)하여 반환합니다.
+    /// </summary>
+    private static string? ResolveTenantIdColumnName(SqlConnection connection)
+    {
+        static string? Check(SqlConnection conn, string name)
+        {
+            using var checkCmd = new SqlCommand(@"
+SELECT COUNT(*)
+FROM INFORMATION_SCHEMA.COLUMNS
+WHERE TABLE_NAME = 'AspNetUsers' AND COLUMN_NAME = @Name;", conn);
+
+            checkCmd.Parameters.AddWithValue("@Name", name);
+            var exists = (int)checkCmd.ExecuteScalar();
+            return exists > 0 ? name : null;
+        }
+
+        // 우선순위: TenantID -> TenantId
+        return Check(connection, "TenantID") ?? Check(connection, "TenantId");
+    }
+
+    /// <summary>
+    /// Startup.cs 등에서 바로 호출 가능한 정적 진입점.
+    /// - Ensure(보강) 먼저 하고
+    /// - 이어서 특정 이메일의 TenantID 갱신까지 한 번에 처리.
+    /// </summary>
+    public static int RunSetTenantIdForEmail(IServiceProvider services, string email, long tenantId)
+    {
+        var logger = services.GetRequiredService<ILogger<TenantSchemaEnhancerEnsureUsersTable>>();
+        var config = services.GetRequiredService<IConfiguration>();
+        var masterConnectionString = config.GetConnectionString("DefaultConnection");
+        if (string.IsNullOrEmpty(masterConnectionString))
+            throw new InvalidOperationException("Master connection string 'DefaultConnection' is not configured.");
+
+        var enhancer = new TenantSchemaEnhancerEnsureUsersTable(masterConnectionString, logger);
+
+        // 1) 스키마 보강(선 방어)
+        enhancer.EnhanceMasterDatabase();
+
+        // 2) 값 갱신
+        return enhancer.SetTenantIdForEmailInMaster(email, tenantId);
     }
 }
