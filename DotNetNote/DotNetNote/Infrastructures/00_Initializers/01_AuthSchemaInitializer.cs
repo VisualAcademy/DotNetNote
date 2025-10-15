@@ -1,4 +1,5 @@
 ﻿using Azunt.Infrastructures.Auth;
+using Azunt.Web.Infrastructures.Auth;
 
 namespace Azunt.Web.Infrastructures._Initializers;
 
