@@ -92,6 +92,7 @@ public partial class Program
 
 
 
+
         #region Serilog
         // 1. Serilog 컬럼 옵션 정의
         var columnOptions = new ColumnOptions
@@ -127,6 +128,8 @@ public partial class Program
         // 3. Serilog를 ASP.NET Core 로그로 사용하도록 등록
         builder.Host.UseSerilog();
         #endregion
+
+
 
 
         // 최신 권장 방식: HttpClientFactory 등록
