@@ -26,7 +26,7 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
-        //_logger.LogInformation("HOME - Index 페이지가 로드되었습니다.");
+        _logger.LogInformation("HOME - Index 페이지가 로드되었습니다.");
 
         // ViewData[] 또는 ViewBag. 개체로 뷰 페이지로 값 전송 
         ViewBag.SiteName = _dnnSettings.SiteName;
