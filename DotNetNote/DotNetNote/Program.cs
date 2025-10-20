@@ -117,7 +117,7 @@ public partial class Program
                 sinkOptions: new MSSqlServerSinkOptions
                 {
                     TableName = "AppLogs",
-                    AutoCreateSqlTable = false // 이미 테이블이 존재하므로 false
+                    AutoCreateSqlTable = true // 이미 테이블이 존재하므로 false
                 },
                 restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Error,
                 columnOptions: columnOptions
