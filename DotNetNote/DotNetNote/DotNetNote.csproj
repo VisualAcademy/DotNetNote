@@ -135,7 +135,6 @@
         <Folder Include="Areas\Modules\Data\" />
         <Folder Include="Entities\" />
         <Folder Include="Properties\ServiceDependencies\" />
-        <Folder Include="Utils\" />
         <Folder Include="Properties\PublishProfiles\" />
         <Folder Include="wwwroot\files\" />
     </ItemGroup>
