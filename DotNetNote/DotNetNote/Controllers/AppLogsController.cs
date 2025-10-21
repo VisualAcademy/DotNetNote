@@ -3,6 +3,7 @@ using System.Globalization;
 
 namespace DotNetNote.Controllers
 {
+    [Authorize(Roles = "Administrators")]
     public class AppLogsController : Controller
     {
         private readonly LogsDbContext _db;
