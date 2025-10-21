@@ -1,0 +1,28 @@
+﻿@model DotNetNote.Models.AppLog
+@{
+    ViewData["Title"] = "Log Details";
+    string Pretty(string? s)
+    {
+        if (string.IsNullOrWhiteSpace(s)) return "";
+        try
+        {
+            var json = System.Text.Json.JsonDocument.Parse(s).RootElement;
+            return System.Text.Json.JsonSerializer.Serialize(
+                json, new System.Text.Json.JsonSerializerOptions { WriteIndented = true });
+        }
+        catch { return s; }
+    }
+}
+
+<h2 class="h4">Log Details</h2>
+
+<table class="table table-bordered table-sm">
+    <tr><th style="width:160px">TimeStamp</th><td>@(Model.TimeStamp?.ToLocalTime().ToString("yyyy-MM-dd HH:mm:ss.fff zzz"))</td></tr>
+    <tr><th>Level</th><td>@Model.Level</td></tr>
+    <tr><th>Message</th><td><pre class="mb-0" style="white-space:pre-wrap">@Model.Message</pre></td></tr>
+    <tr><th>MessageTemplate</th><td><pre class="mb-0" style="white-space:pre-wrap">@Model.MessageTemplate</pre></td></tr>
+    <tr><th>Exception</th><td><pre class="mb-0" style="white-space:pre-wrap">@Model.Exception</pre></td></tr>
+    <tr><th>Properties</th><td><pre class="mb-0">@Pretty(Model.Properties)</pre></td></tr>
+</table>
+
+<a class="btn btn-secondary" href="@Url.Action("Index")">Back</a>
