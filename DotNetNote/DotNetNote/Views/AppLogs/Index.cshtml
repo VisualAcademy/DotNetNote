@@ -1,0 +1,90 @@
+﻿@model IEnumerable<DotNetNote.Controllers.LogListItem>
+@{
+    ViewData["Title"] = "App Logs";
+    var page = (int)(ViewBag.Page ?? 1);
+    var pageSize = (int)(ViewBag.PageSize ?? 20);
+    var total = (int)(ViewBag.Total ?? 0);
+    var q = (string)(ViewBag.Query ?? "");
+    var level = (string)(ViewBag.Level ?? "");
+    int pageCount = (int)Math.Ceiling(total / (double)pageSize);
+
+    string BuildUrl(int p)
+    {
+        var qs = System.Web.HttpUtility.ParseQueryString(string.Empty);
+        if (!string.IsNullOrWhiteSpace(q)) qs["q"] = q;
+        if (!string.IsNullOrWhiteSpace(level)) qs["level"] = level;
+        qs["pageSize"] = pageSize.ToString();
+        qs["page"] = p.ToString();
+        return "?" + qs.ToString();
+    }
+}
+
+<h2 class="h4">App Logs</h2>
+
+<form method="get" class="form-inline" style="gap:.5rem; display:flex; flex-wrap:wrap; align-items:center;">
+    <input name="q" value="@q" class="form-control" placeholder="Search message/exception/properties..." style="min-width:280px" />
+    <select name="level" class="form-control">
+        <option value="">All levels</option>
+        @foreach (var lv in new[] { "Verbose", "Debug", "Information", "Warning", "Error", "Fatal" })
+        {
+            <option value="@lv" selected="@(lv == level)">@lv</option>
+        }
+    </select>
+    <select name="pageSize" class="form-control">
+        @foreach (var ps in new[] { 10, 20, 50, 100 })
+        {
+            <option value="@ps" selected="@(ps == pageSize)">@ps / page</option>
+        }
+    </select>
+    <button class="btn btn-primary">Search</button>
+</form>
+
+<table class="table table-sm table-hover" style="margin-top:.75rem">
+    <thead>
+        <tr>
+            <th style="width:140px">Time</th>
+            <th style="width:120px">Level</th>
+            <th>Message</th>
+            <th style="width:100px"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var x in Model)
+        {
+            var ts = x.TimeStamp?.UtcDateTime.ToString("o");
+            <tr>
+                <td>@x.TimeStamp?.ToLocalTime().ToString("yyyy-MM-dd HH:mm:ss")</td>
+                <td>@x.Level</td>
+                <td>@x.MessageShort</td>
+                <td class="text-right">
+                    <a class="btn btn-sm btn-outline-secondary"
+                       href="@Url.Action("Details", "AppLogs", new { key = x.Key, ts = ts, level = x.Level })">
+                        Details
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@{
+    if (pageCount > 1)
+    {
+        <nav>
+            <ul class="pagination">
+                <li class="page-item @(page <= 1 ? "disabled" : "")">
+                    <a class="page-link" href="@BuildUrl(page - 1)">Prev</a>
+                </li>
+                @for (int i = Math.Max(1, page - 2); i <= Math.Min(pageCount, page + 2); i++)
+                {
+                    <li class="page-item @(i == page ? "active" : "")">
+                        <a class="page-link" href="@BuildUrl(i)">@i</a>
+                    </li>
+                }
+                <li class="page-item @(page >= pageCount ? "disabled" : "")">
+                    <a class="page-link" href="@BuildUrl(page + 1)">Next</a>
+                </li>
+            </ul>
+        </nav>
+    }
+}
