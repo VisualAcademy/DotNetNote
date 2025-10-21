@@ -160,6 +160,9 @@ public partial class Program
         builder.Services.AddAzuntWeb(builder.Configuration);
 
 
+        builder.Services.AddDbContext<LogsDbContext>(opt =>
+            opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
         var app = builder.Build();
 
 
