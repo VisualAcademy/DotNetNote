@@ -1,0 +1,438 @@
+﻿@{
+    ViewData["Title"] = "Analytics Charts Demo (Static)";
+    Layout = "_Layout"; // 필요 시 제거/수정
+}
+
+<!-- Chart.js CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3"></script>
+
+<div class="container-fluid py-3">
+    <h2 class="mb-3">Analytics Demo (Static)</h2>
+
+    <!-- 컨트롤: 상위 N + 기타 묶음 -->
+    <div class="row g-2 align-items-end mb-3">
+        <div class="col-auto">
+            <label class="form-label mb-0">Top N</label>
+            <input id="topN" type="number" class="form-control" style="width:100px" value="7" min="3" max="15">
+        </div>
+        <div class="col-auto form-check mt-4">
+            <input id="groupOthers" class="form-check-input" type="checkbox" checked>
+            <label class="form-check-label">기타(Other)로 묶기</label>
+        </div>
+        <div class="col-auto">
+            <button id="applyTopN" class="btn btn-primary">적용</button>
+        </div>
+        <div class="col text-end text-muted">
+            <small>※ Top N 적용 대상: 면허 종류, 부서, 직무 차트</small>
+        </div>
+    </div>
+
+    <!-- 1. 면허 상태 분포 (도넛) & 8. 고용 상태 분포 (도넛) -->
+    <div class="row g-3 mb-3">
+        <div class="col-12 col-lg-6">
+            <div class="card h-100">
+                <div class="card-header fw-bold">1) License Status Distribution (Donut)</div>
+                <div class="card-body"><canvas id="chStatus"></canvas></div>
+            </div>
+        </div>
+        <div class="col-12 col-lg-6">
+            <div class="card h-100">
+                <div class="card-header fw-bold">8) Employment Status Distribution (Donut)</div>
+                <div class="card-body"><canvas id="chEmployment"></canvas></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. 면허 종류 분포 (세로 막대) & 9. 담당자 워크로드 (세로 막대) -->
+    <div class="row g-3 mb-3">
+        <div class="col-12 col-lg-6">
+            <div class="card h-100">
+                <div class="card-header fw-bold d-flex justify-content-between align-items-center">
+                    <span>2) License Type Distribution (Bar)</span>
+                    <small class="text-muted">Top N/Other 반영</small>
+                </div>
+                <div class="card-body"><canvas id="chType"></canvas></div>
+            </div>
+        </div>
+        <div class="col-12 col-lg-6">
+            <div class="card h-100">
+                <div class="card-header fw-bold">9) AssignedTo Workload (Bar)</div>
+                <div class="card-body"><canvas id="chAssigned"></canvas></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. 부서별 인원 (가로 막대) & 4. 직무별 인원 (가로 막대) -->
+    <div class="row g-3 mb-3">
+        <div class="col-12 col-lg-6">
+            <div class="card h-100">
+                <div class="card-header fw-bold d-flex justify-content-between align-items-center">
+                    <span>3) Department Top 10 (Horizontal Bar)</span>
+                    <small class="text-muted">Top N/Other 반영</small>
+                </div>
+                <div class="card-body"><canvas id="chDept"></canvas></div>
+            </div>
+        </div>
+        <div class="col-12 col-lg-6">
+            <div class="card h-100">
+                <div class="card-header fw-bold d-flex justify-content-between align-items-center">
+                    <span>4) Position Top 10 (Horizontal Bar)</span>
+                    <small class="text-muted">Top N/Other 반영</small>
+                </div>
+                <div class="card-body"><canvas id="chPos"></canvas></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 5. 월별 신규 면허 발급 추세 (라인/에어리어) & 6. 월별 만료 추세 (라인/에어리어) -->
+    <div class="row g-3 mb-3">
+        <div class="col-12 col-lg-6">
+            <div class="card h-100">
+                <div class="card-header fw-bold">5) New Licenses by Month (Area)</div>
+                <div class="card-body"><canvas id="chNewMonthly"></canvas></div>
+            </div>
+        </div>
+        <div class="col-12 col-lg-6">
+            <div class="card h-100">
+                <div class="card-header fw-bold">6) Expirations by Month (Area)</div>
+                <div class="card-body"><canvas id="chExpMonthly"></canvas></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 7. 만료 D-버킷 (스택 가로/세로 택1: 세로 스택) & 10. 해지 월별 추세 (라인) -->
+    <div class="row g-3">
+        <div class="col-12 col-lg-6">
+            <div class="card h-100">
+                <div class="card-header fw-bold">7) Expiration Buckets (Stacked Column)</div>
+                <div class="card-body"><canvas id="chExpBuckets"></canvas></div>
+            </div>
+        </div>
+        <div class="col-12 col-lg-6">
+            <div class="card h-100">
+                <div class="card-header fw-bold">10) Terminations by Month (Line)</div>
+                <div class="card-body"><canvas id="chTermination"></canvas></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    /* -------------------- 공통 팔레트 -------------------- */
+    const palette = [
+      "#4e79a7","#f28e2c","#e15759","#76b7b2","#59a14f",
+      "#edc949","#af7aa1","#ff9da7","#9c755f","#bab0ab",
+      "#2b8a3e","#1f77b4","#9467bd","#8c564b","#17becf"
+    ];
+
+    /* -------------------- 더미 데이터 -------------------- */
+    // 1) License Status
+    const dataStatus = [
+      {label:"Active", value: 420},
+      {label:"Pending", value: 120},
+      {label:"Suspended", value: 35},
+      {label:"Expired", value: 88},
+      {label:"Revoked", value: 12}
+    ];
+
+    // 8) Employment Status
+    const dataEmployment = [
+      {label:"Employed", value: 520},
+      {label:"Leave", value: 26},
+      {label:"Terminated", value: 71}
+    ];
+
+    // 2) License Type (Top N 적용)
+    const dataTypeRaw = [
+      {label:"Gaming Agent", value: 180},
+      {label:"Non-Gaming", value: 130},
+      {label:"Vendor Primary", value: 95},
+      {label:"Vendor Secondary", value: 72},
+      {label:"Key Employee", value: 66},
+      {label:"Temporary", value: 58},
+      {label:"Contractor", value: 52},
+      {label:"Seasonal", value: 43},
+      {label:"Volunteer", value: 29},
+      {label:"Intern", value: 17},
+      {label:"Consultant", value: 14}
+    ];
+
+    // 3) Department (Top N 적용)
+    const dataDeptRaw = [
+      {label:"Casino Ops", value: 160},
+      {label:"Security", value: 140},
+      {label:"Compliance", value: 75},
+      {label:"HR", value: 70},
+      {label:"IT", value: 66},
+      {label:"Finance", value: 55},
+      {label:"Facilities", value: 51},
+      {label:"Food & Beverage", value: 49},
+      {label:"Retail", value: 37},
+      {label:"Marketing", value: 34},
+      {label:"Cage", value: 31},
+      {label:"Surveillance", value: 29}
+    ];
+
+    // 4) Position (Top N 적용)
+    const dataPosRaw = [
+      {label:"Dealer", value: 120},
+      {label:"Floor Supervisor", value: 88},
+      {label:"Cage Cashier", value: 66},
+      {label:"Host", value: 55},
+      {label:"Security Officer", value: 49},
+      {label:"IT Support", value: 44},
+      {label:"Auditor", value: 39},
+      {label:"Maintenance", value: 37},
+      {label:"Chef", value: 35},
+      {label:"Bartender", value: 31},
+      {label:"Server", value: 27}
+    ];
+
+    // 5) New Licenses by Month (최근 12개월)
+    const months = lastNMonthsLabels(12); // ["2024-11","2024-12",...]
+    const dataNewMonthly = months.map((m, i) => 40 + Math.round(Math.sin(i/2)*12) + rand(0,10));
+
+    // 6) Expirations by Month
+    const dataExpMonthly = months.map((m, i) => 25 + Math.round(Math.cos(i/3)*10) + rand(0,8));
+
+    // 7) Expiration Buckets (스택)
+    const bucketLabels = ["Expired", "0-30", "31-60", "61-90", "90+", "No Date"];
+    const bucketSeries = [
+      {label:"Count", data:[ 22, 48, 36, 19, 55, 8 ]} // 단일 카테고리 스택: 시각적으로 분해
+    ];
+
+    // 9) AssignedTo Workload
+    const dataAssigned = [
+      {label:"Alice", value: 62},
+      {label:"Bob", value: 58},
+      {label:"Choi", value: 49},
+      {label:"Diaz", value: 37},
+      {label:"Eun", value: 33},
+      {label:"Fischer", value: 29}
+    ];
+
+    // 10) Terminations by Month
+    const dataTermMonthly = months.map((m, i) => 5 + Math.max(0, Math.round(Math.sin(i/1.8)*4)) + rand(0,2));
+
+    /* -------------------- 유틸: Top N + 기타 묶음 -------------------- */
+    function topNWithOther(items, n, useOther){
+      // items: [{label, value}]
+      const sorted = [...items].sort((a,b) => b.value - a.value);
+      if(!useOther || n >= sorted.length) return sorted;
+      const head = sorted.slice(0, n);
+      const tail = sorted.slice(n);
+      const others = tail.reduce((acc, cur) => acc + cur.value, 0);
+      if(others > 0) head.push({label:"Other", value: others});
+      return head;
+    }
+
+    /* -------------------- 유틸: 날짜 라벨/랜덤 -------------------- */
+    function lastNMonthsLabels(n){
+      const arr = [];
+      const d = new Date(); // 오늘 기준
+      d.setDate(1);
+      for(let i = n-1; i >= 0; i--){
+        const dt = new Date(d.getFullYear(), d.getMonth() - i, 1);
+        arr.push(dt.toISOString().slice(0,7));
+      }
+      return arr;
+    }
+    function rand(min, max){ return Math.floor(Math.random()*(max-min+1))+min; }
+
+    /* -------------------- 차트 인스턴스 -------------------- */
+    let chStatus, chEmployment, chType, chAssigned, chDept, chPos, chNewMonthly, chExpMonthly, chExpBuckets, chTermination;
+
+    /* -------------------- 차트 생성 공통옵션 -------------------- */
+    const baseOptions = {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { position: 'bottom' },
+        tooltip: { mode: 'index', intersect: false }
+      },
+      scales: {
+        x: { grid: { display: true } },
+        y: { beginAtZero: true, grid: { display: true } }
+      }
+    };
+
+    /* -------------------- 차트 랜더링 -------------------- */
+    function renderAllCharts(){
+      const n = Math.max(3, Math.min(15, parseInt(document.getElementById('topN').value || '7', 10)));
+      const useOther = document.getElementById('groupOthers').checked;
+
+      // 1) License Status (Donut)
+      chStatus = createOrUpdateDoughnut("chStatus", dataStatus.map(d=>d.label), dataStatus.map(d=>d.value));
+
+      // 8) Employment Status (Donut)
+      chEmployment = createOrUpdateDoughnut("chEmployment", dataEmployment.map(d=>d.label), dataEmployment.map(d=>d.value));
+
+      // 2) License Type (Bar, TopN/Other)
+      const typeN = topNWithOther(dataTypeRaw, n, useOther);
+      chType = createOrUpdateBar("chType", typeN.map(d=>d.label), typeN.map(d=>d.value), 'Licenses');
+
+      // 9) AssignedTo Workload (Bar)
+      chAssigned = createOrUpdateBar("chAssigned", dataAssigned.map(d=>d.label), dataAssigned.map(d=>d.value), 'Investigations');
+
+      // 3) Department (Horizontal Bar, TopN/Other)
+      const deptN = topNWithOther(dataDeptRaw, n, useOther);
+      chDept = createOrUpdateBar("chDept", deptN.map(d=>d.label), deptN.map(d=>d.value), 'Employees', true);
+
+      // 4) Position (Horizontal Bar, TopN/Other)
+      const posN = topNWithOther(dataPosRaw, n, useOther);
+      chPos = createOrUpdateBar("chPos", posN.map(d=>d.label), posN.map(d=>d.value), 'Employees', true);
+
+      // 5) New Licenses by Month (Area)
+      chNewMonthly = createOrUpdateLineArea("chNewMonthly", months, dataNewMonthly, "New Licenses");
+
+      // 6) Expirations by Month (Area)
+      chExpMonthly = createOrUpdateLineArea("chExpMonthly", months, dataExpMonthly, "Expirations");
+
+      // 7) Expiration Buckets (Stacked Column)
+      chExpBuckets = createOrUpdateStacked("chExpBuckets", bucketLabels, bucketSeries);
+
+      // 10) Terminations by Month (Line)
+      chTermination = createOrUpdateLine("chTermination", months, dataTermMonthly, "Terminations");
+    }
+
+    /* -------------------- 차트 팩토리들 -------------------- */
+    function colorAt(i){ return palette[i % palette.length]; }
+    function destroyIfExists(id){
+      const inst = Chart.getChart(id);
+      if(inst) inst.destroy();
+    }
+
+    /* Donut */
+    function createOrUpdateDoughnut(canvasId, labels, values){
+      destroyIfExists(canvasId);
+      const dsColors = labels.map((_,i)=>colorAt(i));
+      return new Chart(document.getElementById(canvasId), {
+        type: 'doughnut',
+        data: {
+          labels,
+          datasets: [{ data: values, backgroundColor: dsColors, borderWidth: 1 }]
+        },
+        options: {
+          ...baseOptions,
+          plugins: {
+            ...baseOptions.plugins,
+            tooltip: { callbacks: {
+              label: ctx => `${ctx.label}: ${ctx.formattedValue}`
+            }}
+          },
+          cutout: '55%'
+        }
+      });
+    }
+
+    /* Bar (vertical / horizontal) */
+    function createOrUpdateBar(canvasId, labels, values, label, horizontal=false){
+      destroyIfExists(canvasId);
+      return new Chart(document.getElementById(canvasId), {
+        type: 'bar',
+        data: {
+          labels,
+          datasets: [{
+            label: label || 'Count',
+            data: values,
+            backgroundColor: colorAt(0),
+            borderWidth: 0
+          }]
+        },
+        options: {
+          ...baseOptions,
+          indexAxis: horizontal ? 'y' : 'x'
+        }
+      });
+    }
+
+    /* Line + area */
+    function createOrUpdateLineArea(canvasId, labels, values, label){
+      destroyIfExists(canvasId);
+      return new Chart(document.getElementById(canvasId), {
+        type: 'line',
+        data: {
+          labels,
+          datasets: [{
+            label: label || 'Value',
+            data: values,
+            fill: true,
+            tension: 0.35,
+            borderColor: colorAt(1),
+            backgroundColor: hexToRgba(colorAt(1), 0.2),
+            pointRadius: 2
+          }]
+        },
+        options: { ...baseOptions }
+      });
+    }
+
+    /* Line */
+    function createOrUpdateLine(canvasId, labels, values, label){
+      destroyIfExists(canvasId);
+      return new Chart(document.getElementById(canvasId), {
+        type: 'line',
+        data: {
+          labels,
+          datasets: [{
+            label: label || 'Value',
+            data: values,
+            fill: false,
+            tension: 0.35,
+            borderColor: colorAt(2),
+            backgroundColor: colorAt(2),
+            pointRadius: 2
+          }]
+        },
+        options: { ...baseOptions }
+      });
+    }
+
+    /* Stacked Column (여기서는 단일 카테고리 스택을 분리 표현) */
+    function createOrUpdateStacked(canvasId, labels, series){
+      destroyIfExists(canvasId);
+      const datasets = labels.map((lab, i) => ({
+        label: lab,
+        data: [ series[0].data[i] ?? 0 ], // 하나의 그룹에 카테고리 스택
+        backgroundColor: colorAt(i)
+      }));
+      return new Chart(document.getElementById(canvasId), {
+        type: 'bar',
+        data: { labels: ['Exp Buckets'], datasets },
+        options: {
+          ...baseOptions,
+          scales: {
+            x: { stacked: true, grid: { display: false }},
+            y: { stacked: true, beginAtZero: true }
+          }
+        }
+      });
+    }
+
+    /* 헬퍼: HEX -> RGBA */
+    function hexToRgba(hex, alpha){
+      const m = hex.replace('#','');
+      const bigint = parseInt(m, 16);
+      const r = (bigint >> 16) & 255;
+      const g = (bigint >> 8) & 255;
+      const b = bigint & 255;
+      return `rgba(${r},${g},${b},${alpha})`;
+    }
+
+    /* -------------------- 초기화 & 이벤트 -------------------- */
+    document.getElementById('applyTopN').addEventListener('click', () => {
+      renderAllCharts();
+    });
+
+    // 초기 렌더
+    renderAllCharts();
+</script>
+
+<style>
+    /* 카드 높이 균형 & 캔버스 높이 */
+    .card { box-shadow: 0 1px 6px rgba(0,0,0,.05); }
+    .card-body { height: 360px; }
+    @@media (max-width: 991.98px){
+      .card-body { height: 300px; }
+    }
+</style>
