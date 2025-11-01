@@ -72,3 +72,6 @@ https://github.com/VisualAcademy/DotNetNote.V7.0
 
 ## ASP.NET Core 8.0 버전의 DotNetNote는 다음 리포지토리에 있습니다.
 https://github.com/VisualAcademy/DotNetNote.V8.0
+
+## ASP.NET Core 9.0 버전의 DotNetNote는 다음 리포지토리에 있습니다.
+https://github.com/VisualAcademy/DotNetNote.V9.0
