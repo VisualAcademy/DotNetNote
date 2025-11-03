@@ -5,7 +5,7 @@
 @using Microsoft.AspNetCore.Identity
 @using System.Buffers.Text
 
-@inject UserManager<IdentityUser> UserManager
+@inject UserManager<ApplicationUser> UserManager
 @inject IdentityRedirectManager RedirectManager
 
 <EditForm Model="Input" OnValidSubmit="Rename" FormName="rename-passkey" method="post">
@@ -31,7 +31,7 @@
 </EditForm>
 
 @code {
-    private IdentityUser? user;
+    private ApplicationUser? user;
     private UserPasskeyInfo? passkey;
 
     [CascadingParameter]

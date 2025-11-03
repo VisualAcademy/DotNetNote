@@ -5,8 +5,8 @@
 @using System.ComponentModel.DataAnnotations
 @using System.Buffers.Text
 
-@inject UserManager<IdentityUser> UserManager
-@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@inject SignInManager<ApplicationUser> SignInManager
 @inject IdentityRedirectManager RedirectManager
 
 <PageTitle>Manage your passkeys</PageTitle>
@@ -62,7 +62,7 @@ else
 @code {
     private const int MaxPasskeyCount = 100;
 
-    private IdentityUser? user;
+    private ApplicationUser? user;
     private IList<UserPasskeyInfo>? currentPasskeys;
 
     [CascadingParameter]

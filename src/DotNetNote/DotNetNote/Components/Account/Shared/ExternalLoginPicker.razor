@@ -2,7 +2,7 @@
 @using Microsoft.AspNetCore.Identity
 @using DotNetNote.Data
 
-@inject SignInManager<IdentityUser> SignInManager
+@inject SignInManager<ApplicationUser> SignInManager
 @inject IdentityRedirectManager RedirectManager
 
 @if (externalLogins.Length == 0)

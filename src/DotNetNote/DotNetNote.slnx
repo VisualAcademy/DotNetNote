@@ -1,6 +1,6 @@
 <Solution>
   <Project Path="DotNetNote.Models/DotNetNote.Models.csproj" />
-  <Project Path="DotNetNote.SqlServer/DotNetNote.SqlServer.sqlproj">
+  <Project Path="DotNetNote.SqlServer/DotNetNote.SqlServer.sqlproj" Id="b1829323-1f74-4cc5-a932-ab5c84d62a16">
     <Build />
     <Deploy />
   </Project>

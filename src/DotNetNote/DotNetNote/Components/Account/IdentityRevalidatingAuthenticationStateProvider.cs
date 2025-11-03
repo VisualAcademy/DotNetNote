@@ -22,11 +22,11 @@ namespace DotNetNote.Components.Account
         {
             // Get the user manager from a new scope to ensure it fetches fresh data
             await using var scope = scopeFactory.CreateAsyncScope();
-            var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
+            var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
             return await ValidateSecurityStampAsync(userManager, authenticationState.User);
         }
 
-        private async Task<bool> ValidateSecurityStampAsync(UserManager<IdentityUser> userManager, ClaimsPrincipal principal)
+        private async Task<bool> ValidateSecurityStampAsync(UserManager<ApplicationUser> userManager, ClaimsPrincipal principal)
         {
             var user = await userManager.GetUserAsync(principal);
             if (user is null)
