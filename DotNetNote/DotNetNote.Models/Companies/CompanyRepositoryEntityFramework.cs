@@ -12,7 +12,7 @@ public class CompanyRepositoryEntityFramework(CompanyContext context) : ICompany
         //using (var db = new CompanyContext())
         {
             context.Companies.Add(model);
-            context.SaveChanges();
+            context.SaveChanges(); // 저장 시 Identity 자동 채움
         }
 
         return model;
@@ -50,7 +50,7 @@ public class CompanyRepositoryEntityFramework(CompanyContext context) : ICompany
         var companies = new List<CompanyModel>();
         //using (var db = new CompanyContext())
         {
-            companies = context.Companies.ToList();
+            companies = context.Companies.ToList(); // 최신 1000개 제한이 필요하면 Take(1000)
         }
         return companies;
     }
