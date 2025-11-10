@@ -31,7 +31,7 @@ public class CompanyRepositoryAdo(string connectionString) : ICompanyRepository
 
         con.Close();
 
-        return model;
+        return model; // Identity를 다시 읽지 않음(간단 구현)
     }
 
     public CompanyModel Browse(int id) => throw new NotImplementedException();
