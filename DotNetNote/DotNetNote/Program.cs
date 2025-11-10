@@ -350,8 +350,29 @@ public partial class Program
         services.AddControllersWithViews();
         services.AddRazorPages();
         services.AddServerSideBlazor();
-        services.AddDbContext<CompanyContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+
+
+        #region Companies
+        services.AddDbContext<CompanyContext>(options =>
+            options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
         services.AddTransient<ICompanyRepository, CompanyRepositoryEntityFramework>();
+        //// EF Core DbContext
+        //builder.Services.AddDbContext<CompanyContext>(options =>
+        //    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+        //// 리포지토리 선택(한 가지만 등록해서 사용)
+        //builder.Services.AddScoped<ICompanyRepository, CompanyRepositoryEntityFramework>();
+        //// 또는
+        //// builder.Services.AddScoped<ICompanyRepository>(sp => 
+        ////     new CompanyRepositoryDapper(builder.Configuration.GetConnectionString("DefaultConnection")));
+        //// 또는
+        //// builder.Services.AddScoped<ICompanyRepository>(sp => 
+        ////     new CompanyRepositoryAdo(builder.Configuration.GetConnectionString("DefaultConnection"))); 
+        #endregion
+
+
+
         services.Configure<DotNetNoteSettings>(Configuration.GetSection("DotNetNoteSettings"));
         services.AddSession(options => { options.IdleTimeout = TimeSpan.FromMinutes(30); });
         services.AddAuthentication("Cookies")

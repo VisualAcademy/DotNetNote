@@ -1,9 +1,8 @@
 ﻿using Dul.Data;
 
-namespace DotNetNote.Models.Companies
-{
-    public interface ICompanyRepository : IBreadShop<CompanyModel>
-    {
+namespace DotNetNote.Models.Companies;
 
-    }
+public interface ICompanyRepository : IBreadShop<CompanyModel>
+{
+
 }

@@ -35,9 +35,9 @@ public class CompanyContext : DbContext
         {
             string connectionString = ConfigurationManager.ConnectionStrings[
                 "DefaultConnection"].ConnectionString;
-            optionsBuilder.UseSqlServer(connectionString);
+            optionsBuilder.UseSqlServer(connectionString); // SQL Server 사용
         }
     }
 
-    public DbSet<CompanyModel> Companies { get; set; }
+    public DbSet<CompanyModel> Companies { get; set; } // 테이블 매핑
 }
