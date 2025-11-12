@@ -134,6 +134,7 @@
         <Folder Include="Areas\Employees\Views\" />
         <Folder Include="Areas\Modules\Data\" />
         <Folder Include="Controllers\Administrations\UserRoleManagement\" />
+        <Folder Include="Controllers\Applications\" />
         <Folder Include="Entities\" />
         <Folder Include="Properties\ServiceDependencies\" />
         <Folder Include="Properties\PublishProfiles\" />

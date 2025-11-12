@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace DotNetNote.Controllers.Applications;
+namespace DotNetNote.Controllers;
 
 public class ApplicationFormDataViewerController : Controller
 {
