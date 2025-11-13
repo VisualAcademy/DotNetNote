@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
     <PropertyGroup>
-        <TargetFramework>net9.0</TargetFramework>
+        <TargetFramework>net10.0</TargetFramework>
         <AssemblyName>DotNetNote</AssemblyName>
         <RootNamespace>DotNetNote</RootNamespace>
         <UserSecretsId>2df5ebbc-8229-486b-ac8c-026b63a53631</UserSecretsId>
