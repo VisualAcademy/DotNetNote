@@ -176,6 +176,7 @@
     <Build Include="dbo\Tables\KnownUsers.sql" />
     <Build Include="dbo\Tables\AnonymousSignIns.sql" />
     <Build Include="dbo\Tables\SignIns.sql" />
+    <Build Include="dbo\Tables\Books.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="dbo\Scripts\Attachments\Demo_Attachments_Processing.sql" />
