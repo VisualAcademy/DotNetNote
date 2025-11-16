@@ -163,9 +163,16 @@ public partial class Program
         builder.Services.AddDbContext<LogsDbContext>(opt =>
             opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+        // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+        builder.Services.AddOpenApi();
+
         var app = builder.Build();
 
-
+        // Configure the HTTP request pipeline.
+        if (app.Environment.IsDevelopment())
+        {
+            app.MapOpenApi();
+        }
 
 
         // <TodoComponent>
@@ -336,6 +343,8 @@ public partial class Program
         // Minimal APIs
         app.MapAzuntMinimalApis();
 
+        app.MapControllers();
+
         app.Run();
     }
 
@@ -347,7 +356,9 @@ public partial class Program
 
         //services.AddDbContext<DotNetNote.Components.TodoContext>(opt => opt.UseInMemoryDatabase("TodoList"));
         services.AddHttpContextAccessor();
+
         services.AddControllersWithViews();
+
         services.AddRazorPages();
         services.AddServerSideBlazor();
 

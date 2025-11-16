@@ -1,4 +1,6 @@
-# For more info on HTTP files go to https://aka.ms/vs/httpfile
+@DotNetNote_HostAddress = https://localhost:5003
 
-### 로컬 Web API 테스트
-GET https://localhost:5001/api/Products
+GET {{DotNetNote_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
