@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-
-namespace DotNetNote.Apis;
+﻿namespace DotNetNote.Apis;
 
 public record OrderItem(
     string orderGuid,
