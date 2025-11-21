@@ -1,10 +1,9 @@
-﻿namespace DotNetNote.Controllers
+﻿namespace DotNetNote.Controllers;
+
+public class ChartjsDemoController : Controller
 {
-    public class ChartjsDemoController : Controller
+    public IActionResult Index()
     {
-        public IActionResult Index()
-        {
-            return View();
-        }
+        return View();
     }
 }
