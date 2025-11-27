@@ -1,0 +1,13 @@
+<Solution>
+  <Folder Name="/aspire/">
+    <Project Path="DotNetNote.AppHost/DotNetNote.AppHost.csproj" />
+    <Project Path="DotNetNote.ServiceDefaults/DotNetNote.ServiceDefaults.csproj" />
+    <Project Path="DotNetNote.Web/DotNetNote.Web.csproj" />
+  </Folder>
+  <Project Path="DotNetNote.Models/DotNetNote.Models.csproj" />
+  <Project Path="DotNetNote.SqlServer/DotNetNote.SqlServer.sqlproj">
+    <Build />
+    <Deploy />
+  </Project>
+  <Project Path="DotNetNote/DotNetNote.csproj" />
+</Solution>
