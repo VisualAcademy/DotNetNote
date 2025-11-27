@@ -5,7 +5,7 @@
     <Project Path="DotNetNote.Web/DotNetNote.Web.csproj" />
   </Folder>
   <Project Path="DotNetNote.Models/DotNetNote.Models.csproj" />
-  <Project Path="DotNetNote.SqlServer/DotNetNote.SqlServer.sqlproj">
+  <Project Path="DotNetNote.SqlServer/DotNetNote.SqlServer.sqlproj" Id="f0c55bf3-07c9-4dfc-9a49-23f33273af5a">
     <Build />
     <Deploy />
   </Project>
