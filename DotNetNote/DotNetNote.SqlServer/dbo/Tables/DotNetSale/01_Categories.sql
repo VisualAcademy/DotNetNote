@@ -10,7 +10,7 @@
 --[1] 카테고리: 상품분류
 Create Table dbo.Categories
 (
-    CategoryId Int Identity(1, 1) Not Null Primary Key,		-- 카테고리번호
+    CategoryId Int Identity(1, 1) Not Null Primary Key,		-- 카테고리번호(Id, CategoryId, ...), 일련번호, GUID 
     CategoryName NVarChar(50),								-- 카테고리명
     --
     SuperCategory Int Null									-- 부모카테고리번호(확장용) : ParentId, ParentCategoryId로 이름 변경해도 무관
@@ -67,3 +67,12 @@ Go
 --Where SuperCategory = @SuperCategory
 --Go
 
+---- 하위 카테고리 리스트를 출력하는 프로시저
+--Create Proc dbo.GetSubCategories
+--	@SuperCategory Int
+--As
+--	Select CategoryID, CategoryName From Categories 
+--	Where SuperCategory = @SuperCategory
+--Go
+--Exec GetSubCategories 1
+--Go
