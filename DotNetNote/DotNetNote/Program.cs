@@ -55,6 +55,13 @@ public partial class Program
 
 
 
+        // -------------------------------------------------
+        // Azure Blob Storage settings (for invoice PDF files)
+        // -------------------------------------------------
+        builder.Services.Configure<AzureBlobSettings>(
+            builder.Configuration.GetSection("AzureBlob"));
+
+
 
         //builder.Services.AddAuthentication(options =>
         //{
