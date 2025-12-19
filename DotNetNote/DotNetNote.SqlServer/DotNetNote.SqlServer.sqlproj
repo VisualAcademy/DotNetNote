@@ -180,6 +180,7 @@
     <Build Include="dbo\Tables\Devices.sql" />
     <Build Include="dbo\Tables\Invoices.sql" />
     <Build Include="dbo\Tables\Clients.sql" />
+    <Build Include="dbo\Tables\InvoiceItemTemplates.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="dbo\Scripts\Attachments\Demo_Attachments_Processing.sql" />
