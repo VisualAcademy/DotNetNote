@@ -1,4 +1,108 @@
-﻿@page "/invoices/client"
+﻿@*
+================================================================================
+ClientInvoices.razor (Invoices) - 특정 Client 기준 인보이스 목록 조회 페이지
+Path: Pages\Invoices\ClientInvoices.razor
+Route: /invoices/client
+Auth: [Authorize] (인증된 사용자만 접근 가능)
+
+[목적]
+- 특정 Tenant + Email(클라이언트 식별자)을 기준으로
+  해당 클라이언트와 연관된 인보이스 목록만을 조회하는 페이지다.
+- Employee / Vendor / VendorEmployee 등의 "개별 클라이언트 관점"에서
+  자신의 인보이스 내역을 확인하고,
+  필요 시 동일한 컨텍스트로 신규 인보이스 생성을 시작할 수 있도록 한다.
+
+[페이지 성격 요약]
+- ✔ 클라이언트 단위 인보이스 조회용 UI
+- ✔ TenantName + Email 조합을 기준으로 데이터 필터링
+- ✔ /invoices/new 로 이어지는 "컨텍스트 유지형 Add Invoice" 진입점 제공
+- ❌ 전체 인보이스 관리 페이지 아님
+- ❌ 결제 처리/발행/삭제 기능 없음 (조회 중심)
+
+[필수 입력(쿼리 스트링)]
+- TenantName (필수)
+- Email (필수)
+- 아래 항목은 선택값이며, 주로 "신규 인보이스 생성 시 컨텍스트 전달"에 사용됨:
+   ▸ ClientName
+   ▸ ClientType
+   ▸ FirstName / MiddleName / LastName
+
+[화면 구성]
+1) 파라미터 검증 영역
+   - TenantName 또는 Email이 없으면:
+     ▸ 경고 메시지 출력
+     ▸ 데이터 조회/테이블 렌더링 수행하지 않음
+
+2) 클라이언트 컨텍스트 요약(Alert)
+   - Tenant
+   - Email
+   - ClientName(존재할 경우)
+   → 현재 어떤 "클라이언트 컨텍스트"로 보고 있는지 명확히 표시
+
+3) 상단 액션 영역
+   - "Add Invoice" 버튼
+   - 현재 Tenant/Email/Client 정보를 그대로 유지한 채
+     /invoices/new 로 이동
+
+4) 인보이스 목록 테이블
+   - Id            : 인보이스 식별자 (Details 링크)
+   - No            : InvoiceNumber
+   - Status        : Draft / Issued / Sent / Paid 등
+   - Name          : FullName 우선, 없으면 ClientName
+   - Total         : Total + Currency
+   - Issued        : IssueDateUtc (yyyy-MM-dd)
+   - 데이터가 없을 경우:
+       ▸ "No invoices yet." 안내 메시지 표시
+
+[데이터 로딩 프로세스]
+- OnParametersSetAsync()
+   1) TenantName 또는 Email이 비어 있으면:
+        ▸ _list = null
+        ▸ 즉시 return
+   2) 조건 충족 시 Db.Invoices 조회:
+        - !IsDeleted
+        - i.TenantName == TenantName
+        - i.Email == Email
+        - Items Include (합계/표시 일관성 목적)
+        - Id 내림차순 정렬
+   3) 결과를 _list에 바인딩하여 테이블 렌더링
+
+[Add Invoice 네비게이션 규칙]
+- NewInvoice()
+   - 기본 URL:
+        /invoices/new?TenantName=...&Email=...
+   - 선택 파라미터(존재할 경우에만 추가):
+        ▸ FirstName / MiddleName / LastName
+        ▸ ClientName
+        ▸ ClientType
+   - 모든 파라미터는 Uri.EscapeDataString으로 인코딩
+   - 현재 "클라이언트 컨텍스트"를 그대로 유지한 채 신규 인보이스 생성 화면으로 이동
+
+[중요한 보안/설계 주의사항]
+- [Authorize]는 "로그인 여부"만 보장한다.
+  TenantName/Email은 Query String으로 전달되므로,
+  해당 값 자체를 신뢰해서는 안 된다.
+- 실제 운영 환경에서는 다음 검증이 반드시 필요하다:
+   ▸ 로그인 사용자가 해당 Tenant에 속하는지
+   ▸ 해당 Email(클라이언트)에 대한 조회/생성 권한이 있는지
+- 이러한 검증은 UI가 아니라
+  /invoices/new 및 서비스 계층에서 강제되어야 한다.
+
+[유지보수/확장 포인트]
+- TenantName + Email 문자열 조합 대신
+  ClientId / VendorId / EmployeeId 기반 식별자로 전환 고려
+- ClientType을 enum/상수로 표준화
+- 인보이스 수가 많아질 경우 Paging 적용
+- Status/기간 기준 필터 추가 가능
+
+[TODO 후보]
+- Authorization 정책(tenant ownership + role) 명시적 적용
+- Query String 기반 식별 → 내부 ID 기반 식별로 점진적 전환
+- Client 관점 "결제 상태 요약" 또는 "미결제 인보이스 강조" UI 추가
+================================================================================
+*@
+
+@page "/invoices/client"
 
 <h3>ClientInvoices</h3>
 
