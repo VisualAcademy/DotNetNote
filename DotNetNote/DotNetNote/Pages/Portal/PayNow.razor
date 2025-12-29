@@ -1,0 +1,128 @@
+﻿@*
+================================================================================
+PayNow.razor (Client Portal) - 인보이스 결제 진입(결제 수단 선택) 페이지
+Path: Pages\Portal\PayNow.razor
+Route: /portal/pay/{Id:long}
+Auth: [Authorize] (로그인 사용자만 접근)
+
+[목적]
+- 클라이언트 포털에서 특정 인보이스(Id)를 기준으로
+  ▸ 현재 결제 대상 인보이스 요약 정보를 보여주고
+  ▸ 사용자가 결제 수단을 선택할 수 있도록 하는 "결제 허브(Entry) 페이지" 역할을 한다.
+- 실제 결제 처리는 이 페이지에서 직접 수행하지 않으며,
+  선택한 결제 수단에 따라:
+    - Stripe 카드 결제 페이지로 리다이렉트하거나
+    - 수표(Check) / 은행이체(Bank Transfer) 안내 페이지로 이동시킨다.
+
+[페이지 성격 요약]
+- ✔ 결제 수단 선택(UI)
+- ✔ 인보이스 상태/금액/기한 요약
+- ❌ 결제 게이트웨이 직접 연동 없음
+- ❌ 결제 확정/정산 로직 없음 (Demo 흐름 기준)
+
+[화면 구성]
+1) 좌측 카드 (Invoice Overview)
+   - Invoice 번호 (InvoiceNumber 없으면 #Id fallback)
+   - Client 조직명
+   - 청구 이메일 표시 로직:
+       ▸ Invoice.Email 우선
+       ▸ 없으면 Client.BillingEmail
+       ▸ 둘 다 없으면 "-"
+   - Amount due (Total + Currency)
+   - Due 요약 문구 (GetDueSummary):
+       ▸ Due in N days
+       ▸ Due today
+       ▸ Overdue by N days
+       ▸ No due date
+   - 상태(Status), 발행일, 만기일, Subtotal, Tax 요약
+   - "View invoice details" → 백오피스/관리용 상세 페이지(새 탭)
+   - "Back to Client Portal" 버튼
+
+2) 우측 카드 (Payment Method Selection)
+   - Pay Now (Stripe 카드 결제)
+   - Pay with Check (Mail a Check)
+   - Pay with Bank Transfer
+   - 각 버튼은 실제 결제가 아니라:
+       ▸ Stripe: 외부 Stripe Checkout 페이지로 이동
+       ▸ Check/Bank: 오프라인 결제 안내 페이지로 이동
+   - 결제 상태 메시지 영역:
+       ▸ Demo 결제 완료 메시지
+       ▸ 이미 Paid 상태인 경우 안내
+       ▸ 일반 안내 텍스트
+
+3) 하단 정보 카드 (Contact & follow-up)
+   - 인보이스 담당자/연락처 샘플
+   - Portal UX 참고용 더미 섹션
+   - 실제 운영 시 CRM/담당자 엔터티와 연동 가능
+
+[데이터 로딩 프로세스]
+- 초기 상태: _loading = true
+- OnInitializedAsync():
+    Db.Invoices
+      .Include(i => i.Client)
+      .FirstOrDefaultAsync(i => i.Id == Id && !i.IsDeleted)
+- 로딩 완료 후 _loading = false
+- 렌더링 분기:
+    - _loading = true  : "Loading invoice..."
+    - _invoice = null  : 인보이스 없음 오류 + 포털 복귀 버튼
+    - _invoice != null : 정상 UI 표시
+
+[결제 버튼 동작 방식]
+- PayWithStripeAsync()
+    → /payments/stripe-checkout/{Id}
+    → 실제 운영에서는 Stripe Hosted Checkout으로 연결되는 위치
+- PayWithCheckAsync()
+    → /portal/pay-by-check/{Id}
+    → 수표 우편 결제 안내 페이지
+- PayWithBankTransferAsync()
+    → /portal/pay-by-bank-transfer/{Id}
+    → 은행 이체(ACH/Wire) 안내 페이지
+
+※ 현재는 "CompletePaymentAsync"가 Demo 용도로만 존재하며,
+  실제 버튼에서는 호출되지 않는다.
+
+[Demo 결제 처리 메서드]
+- CompletePaymentAsync(string provider)
+    - 실제 결제 연동 없이 Invoice.Status를 Paid로 변경
+    - 데모/샘플 UI 시연용
+    - 운영 환경에서는 사용하지 않거나 제거 권장
+
+[네비게이션 정책]
+- BackToPortal():
+    - Invoice/Client에서 이메일을 추출하여
+      /portal?email={email} 형태로 복귀
+    - 이메일이 없으면 /portal 기본 경로로 이동
+    - 포털 UX 상 "사용자 맥락 유지"를 위한 처리
+
+[유지보수 / 보안 주의사항]
+- 접근 제어:
+    - [Authorize]만 적용되어 있음
+    - 실제 운영에서는:
+        ▸ 로그인 사용자가 해당 Invoice의 Client/Tenant에 속하는지
+        ▸ URL Id 추측 접근 차단
+      등의 추가 검증 필요
+- 결제 상태 신뢰성:
+    - 이 페이지는 결제 상태를 "결정"하지 않음
+    - Paid 상태 변경은:
+        ▸ Stripe Webhook
+        ▸ 관리자(Admin) 확인 프로세스
+      에서 수행되어야 함
+- 금액/통화:
+    - 표시용이며, 실제 결제 요청 시 서버에서 재검증 필수
+
+[TODO 후보]
+- Stripe Checkout 실제 연동 + Webhook 기반 Paid 처리
+- 결제 수단별 가용성 제어(Invoice 상태/통화/테넌트 기준)
+- Invoice 접근 권한 검증 로직 추가
+- Contact & follow-up 섹션을 실제 담당자/메시지 기능과 연동
+- Demo 결제 메서드(CompletePaymentAsync) 제거 또는 분리
+================================================================================
+*@
+
+@page "/portal/pay/{Id:long}"
+
+<h3>PayNow</h3>
+
+@code {
+
+}
