@@ -13,7 +13,7 @@ public class Question
     public int Id { get; set; }
 
     [Required]
-    public string Title { get; set; }
+    public string Title { get; set; } = "";
 }
 
 /// <summary>
