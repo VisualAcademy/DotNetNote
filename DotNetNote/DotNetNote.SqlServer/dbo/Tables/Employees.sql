@@ -19,4 +19,5 @@
     [AdditionalEmploymentEndDate] DATETIME2(7) NULL, -- 추가 근무 종료일
     [AdditionalEmploymentLocation] NVARCHAR(255) NULL, -- 추가 근무 장소
 
+    [FinalApprovalDate] DATETIMEOFFSET(7) NULL, -- 최종 승인 날짜
 )
