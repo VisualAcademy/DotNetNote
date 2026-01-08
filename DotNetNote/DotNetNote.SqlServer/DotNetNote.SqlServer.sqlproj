@@ -183,6 +183,7 @@
     <Build Include="dbo\Tables\InvoiceItemTemplates.sql" />
     <Build Include="dbo\Tables\InvoiceNumberSequences.sql" />
     <Build Include="dbo\Tables\InvoiceItems.sql" />
+    <Build Include="dbo\Tables\Employees.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="dbo\Scripts\Attachments\Demo_Attachments_Processing.sql" />
