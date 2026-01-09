@@ -10,9 +10,11 @@ public class ViewWithModelDemoController : Controller
     /// </summary>
     public IActionResult Index()
     {
-        DemoModel dm = new DemoModel();
-        dm.Id = 1;
-        dm.Name = "홍길동";
+        DemoModel dm = new DemoModel
+        {
+            Id = 1,
+            Name = "홍길동"
+        };
         return View(dm);
     }
 }
