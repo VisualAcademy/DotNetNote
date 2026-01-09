@@ -188,7 +188,10 @@ public class TenantSchemaEnhancerEnsureVendorLicenseStatusesTable
         {
             var logger = services.GetRequiredService<ILogger<TenantSchemaEnhancerEnsureVendorLicenseStatusesTable>>();
             var config = services.GetRequiredService<IConfiguration>();
-            var masterConnectionString = config.GetConnectionString("DefaultConnection");
+            var masterConnectionString =
+                config.GetConnectionString("DefaultConnection")
+                ?? throw new InvalidOperationException(
+                    "Connection string 'DefaultConnection' is not configured.");
 
             var enhancer = new TenantSchemaEnhancerEnsureVendorLicenseStatusesTable(masterConnectionString, logger);
 
