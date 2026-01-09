@@ -1,7 +1,4 @@
-﻿using DotNetNote.Models;
-using Microsoft.AspNetCore.Mvc;
-
-namespace DotNetNote.Controllers;
+﻿namespace DotNetNote.Controllers;
 
 public class ViewWithModelDemoController : Controller
 {
