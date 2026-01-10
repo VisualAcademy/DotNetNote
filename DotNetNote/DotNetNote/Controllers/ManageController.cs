@@ -510,18 +510,29 @@ public class ManageController : Controller
             unformattedKey);
     }
 
-    private async Task LoadSharedKeyAndQrCodeUriAsync(ApplicationUser user, EnableAuthenticatorViewModel model)
+    private async Task LoadSharedKeyAndQrCodeUriAsync(
+        ApplicationUser user,
+        EnableAuthenticatorViewModel model)
     {
+        // 인증기 키 조회 (null 가능)
         var unformattedKey = await _userManager.GetAuthenticatorKeyAsync(user);
+
+        // 키가 없으면 새로 생성
         if (string.IsNullOrEmpty(unformattedKey))
         {
             await _userManager.ResetAuthenticatorKeyAsync(user);
             unformattedKey = await _userManager.GetAuthenticatorKeyAsync(user);
         }
 
-        model.SharedKey = FormatKey(unformattedKey);
-        model.AuthenticatorUri = GenerateQrCodeUri(user.Email, unformattedKey);
-    }
+        // 컴파일러 + 런타임 모두를 위한 최종 null 가드
+        if (string.IsNullOrEmpty(unformattedKey))
+        {
+            throw new InvalidOperationException("Authenticator key could not be loaded.");
+        }
 
+        // 여기부터는 unformattedKey가 non-null임이 보장됨
+        model.SharedKey = FormatKey(unformattedKey);
+        model.AuthenticatorUri = GenerateQrCodeUri(user.Email!, unformattedKey);
+    }
     #endregion
 }
