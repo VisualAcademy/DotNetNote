@@ -67,7 +67,9 @@ public class SignServicesController(ISignRepository repo, IConfiguration config)
         };
 
         //[2] 보안키 생성
-        var key = config.GetSection("SymmetricSecurityKey").Value;
+        var key = config.GetSection("SymmetricSecurityKey").Value
+            ?? throw new InvalidOperationException("SymmetricSecurityKey is not configured.");
+
         var securityKey =
             new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key));
         var signingCredentials =
