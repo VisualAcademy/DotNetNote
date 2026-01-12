@@ -527,4 +527,49 @@ WHERE TABLE_NAME = 'AspNetUsers' AND COLUMN_NAME = @Name;", conn);
         // 2) 값 갱신
         return enhancer.SetTenantIdForEmailInMaster(email, tenantId);
     }
+
+    /// <summary>
+    /// AspNetUsers.SignatureImage 컬럼이 없으면 추가합니다.
+    /// - 사용자 서명 이미지(JPG binary) 저장용
+    /// - 기존 데이터에는 영향 없음
+    /// </summary>
+    public void EnsureSignatureImageColumn()
+    {
+        try
+        {
+            using (var connection = new SqlConnection(_masterConnectionString))
+            {
+                connection.Open();
+
+                // 컬럼 존재 여부 확인
+                using var checkCmd = new SqlCommand(@"
+                SELECT COUNT(*)
+                FROM INFORMATION_SCHEMA.COLUMNS
+                WHERE TABLE_NAME = 'AspNetUsers'
+                  AND COLUMN_NAME = 'SignatureImage';", connection);
+
+                var exists = (int)checkCmd.ExecuteScalar();
+
+                if (exists == 0)
+                {
+                    using var alterCmd = new SqlCommand(@"
+                    ALTER TABLE [dbo].[AspNetUsers]
+                    ADD [SignatureImage] VARBINARY(MAX) NULL;", connection);
+
+                    alterCmd.ExecuteNonQuery();
+
+                    _logger.LogInformation("AspNetUsers.SignatureImage column added.");
+                }
+                else
+                {
+                    _logger.LogInformation("AspNetUsers.SignatureImage column already exists.");
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Failed to ensure AspNetUsers.SignatureImage column.");
+            throw;
+        }
+    }
 }
