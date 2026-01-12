@@ -781,7 +781,16 @@ public class DotNetNoteController(
     [AllowAnonymous]
     public JsonResult DeleteArticleById(int id)
     {
-        var deleteArticle = context.Notes.Where(n => n.Id == id).SingleOrDefault();
+        var deleteArticle = context.Notes.SingleOrDefault(n => n.Id == id);
+
+        if (deleteArticle == null)
+        {
+            return Json(new
+            {
+                message = "NOT_FOUND"
+            });
+        }
+
         context.Entry(deleteArticle).State = EntityState.Deleted;
         context.SaveChanges();
 
