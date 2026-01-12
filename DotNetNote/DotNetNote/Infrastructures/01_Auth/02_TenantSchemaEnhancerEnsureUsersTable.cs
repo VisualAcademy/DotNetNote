@@ -168,6 +168,10 @@ public class TenantSchemaEnhancerEnsureUsersTable
                 ["UsernameChangeLimit"] = "INT NULL DEFAULT(0)",
                 ["Photo"] = "NVARCHAR(MAX) NULL",
                 ["ProfilePicture"] = "VARBINARY(MAX) NULL",
+
+                // 사용자 서명 이미지 (JPG binary)
+                ["SignatureImage"] = "VARBINARY(MAX) NULL",
+
                 ["PersonalEmail"] = "NVARCHAR(254) NULL",
 
                 // 출생 정보
