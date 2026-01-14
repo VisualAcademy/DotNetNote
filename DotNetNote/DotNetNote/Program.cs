@@ -604,7 +604,16 @@ public partial class Program
         services.AddTransient<MaximServiceRepository, MaximServiceRepository>();
         services.AddTransient<ITechRepositoryEf, TechRepositoryEf>();
         services.AddTransient<IAttendeeRepository, AttendeeRepository>();
-        services.AddSingleton<AttendeeApp.Models.IAttendeeRepository>(new AttendeeApp.Models.AttendeeRepository(Configuration.GetConnectionString("DefaultConnection")));
+        
+        //services.AddSingleton<AttendeeApp.Models.IAttendeeRepository>(new AttendeeApp.Models.AttendeeRepository(Configuration.GetConnectionString("DefaultConnection")));
+        services.AddSingleton<AttendeeApp.Models.IAttendeeRepository>(
+            new AttendeeApp.Models.AttendeeRepository(
+                Configuration.GetConnectionString("DefaultConnection")
+                ?? throw new InvalidOperationException(
+                    "DefaultConnection connection string is not configured.")
+            )
+        );
+
         services.AddTransient<IRecruitSettingRepository, RecruitSettingRepository>();
         services.AddTransient<IRecruitRegistrationRepository, RecruitRegistrationRepository>();
         services.AddTransient<IOneRepository, OneRepository>();
