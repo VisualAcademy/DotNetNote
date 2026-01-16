@@ -89,14 +89,17 @@ public class UrlsServicesController : Controller
     [AllowAnonymous]
     public JsonResult DeleteUrlById(int id)
     {
-        var deleteArticle = _context.Urls.Where(n => n.Id == id).SingleOrDefault();
-        _context.Entry(deleteArticle).State = EntityState.Deleted;
+        var deleteArticle = _context.Urls.SingleOrDefault(n => n.Id == id);
+
+        if (deleteArticle is null)
+        {
+            return Json(new { message = "NOT_FOUND" });
+        }
+
+        _context.Urls.Remove(deleteArticle);
         _context.SaveChanges();
 
-        return Json(new
-        {
-            message = "DELETED"
-        });
+        return Json(new { message = "DELETED" });
     }
 
     /// <summary>
