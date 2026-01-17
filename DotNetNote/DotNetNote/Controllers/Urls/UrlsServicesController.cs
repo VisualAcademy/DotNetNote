@@ -58,6 +58,10 @@ public class UrlsServicesController : Controller
     public JsonResult UrlDetails(int id, string keyword = "")
     {
         var articleBase = _context.Urls.Where(n => n.Id == id).SingleOrDefault();
+        if (articleBase is null)
+        {
+            return Json(new { message = "NOT_FOUND" });
+        }
 
         Url? prev = null;
         Url? next = null;
