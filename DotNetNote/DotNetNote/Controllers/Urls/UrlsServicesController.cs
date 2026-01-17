@@ -59,8 +59,8 @@ public class UrlsServicesController : Controller
     {
         var articleBase = _context.Urls.Where(n => n.Id == id).SingleOrDefault();
 
-        Url prev = new Url();
-        Url next = new Url();
+        Url? prev = null;
+        Url? next = null;
         if (string.IsNullOrWhiteSpace(keyword))
         {
             prev = _context.Urls.Where(n => n.Id < id).OrderByDescending(n => n.Id).FirstOrDefault(); // 이전 
