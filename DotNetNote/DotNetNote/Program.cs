@@ -45,7 +45,7 @@ public partial class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
-        #region Termonology
+        #region Terminology
         // Terminology 설정 바인딩
         builder.Services.Configure<TerminologySettings>(builder.Configuration);
         // Terminology 서비스 등록
