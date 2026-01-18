@@ -4,6 +4,7 @@ using Azunt.Endpoints;
 using Azunt.Models.Enums;
 using Azunt.NoteManagement;
 using Azunt.ResourceManagement;
+using Azunt.Services.Terminology;
 using Azunt.TenantSettingManagement;
 using Azunt.Web.Infrastructure.Extensions;
 using Azunt.Web.Infrastructures;
@@ -43,6 +44,13 @@ public partial class Program
     public static async Task Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
+
+        #region Termonology
+        // Terminology 설정 바인딩
+        builder.Services.Configure<TerminologySettings>(builder.Configuration);
+        // Terminology 서비스 등록
+        builder.Services.AddSingleton<ITerminologyService, TerminologyService>();
+        #endregion
 
         // Add services to the container.
         builder.Services.AddRazorComponents()
