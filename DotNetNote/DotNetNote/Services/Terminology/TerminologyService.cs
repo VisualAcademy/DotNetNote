@@ -1,6 +1,4 @@
-﻿using DotNetNote.Services.Terminology;
-
-namespace Azunt.Services.Terminology;
+﻿namespace Azunt.Services.Terminology;
 
 public sealed class TerminologyService : ITerminologyService
 {
