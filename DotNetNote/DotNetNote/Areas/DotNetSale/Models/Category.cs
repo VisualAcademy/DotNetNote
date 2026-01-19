@@ -11,9 +11,9 @@ public class Category
     public int CategoryId { get; set; }
 
     /// <summary>
-    /// 카테고리 이름
+    /// 카테고리 이름 (필수값)
     /// </summary>
-    public string CategoryName { get; set; }
+    public required string CategoryName { get; set; }
 
     /// <summary>
     /// 부모 카테고리 번호
@@ -21,7 +21,7 @@ public class Category
     public int SuperCategory { get; set; }
 
     /// <summary>
-    /// 카테고리보여지는순서
+    /// 카테고리 보여지는 순서
     /// </summary>
     public int Align { get; set; }
 }
