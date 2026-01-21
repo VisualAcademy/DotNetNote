@@ -401,6 +401,7 @@ public partial class Program
 
         services.Configure<DotNetNoteSettings>(Configuration.GetSection("DotNetNoteSettings"));
         services.AddSession(options => { options.IdleTimeout = TimeSpan.FromMinutes(30); });
+
         services.AddAuthentication("Cookies")
             .AddCookie(options =>
             {
@@ -409,6 +410,14 @@ public partial class Program
             })
             .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
             {
+                // SymmetricSecurityKey 설정값 null/empty 방어 (CS8604 제거)
+                var symmetricSecurityKey = Configuration["SymmetricSecurityKey"];
+                if (string.IsNullOrWhiteSpace(symmetricSecurityKey))
+                {
+                    throw new InvalidOperationException(
+                        "Configuration key 'SymmetricSecurityKey' is missing or empty.");
+                }
+
                 options.RequireHttpsMetadata = false;
                 options.SaveToken = true;
                 options.TokenValidationParameters = new TokenValidationParameters
@@ -416,11 +425,13 @@ public partial class Program
                     ValidateAudience = false,
                     ValidateIssuer = false,
                     ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["SymmetricSecurityKey"])),
+                    IssuerSigningKey = new SymmetricSecurityKey(
+                        Encoding.UTF8.GetBytes(symmetricSecurityKey)),
                     ValidateLifetime = true,
                     ClockSkew = TimeSpan.FromMinutes(5)
                 };
             });
+
         services.AddTransient<ISignRepository, SignRepositoryInMemory>();
 
 
