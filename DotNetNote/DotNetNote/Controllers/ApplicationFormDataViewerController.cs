@@ -8,4 +8,9 @@ public class ApplicationFormDataViewerController : Controller
     {
         return View();
     }
+
+    public IActionResult Blank()
+    {
+        return View();
+    }
 }
