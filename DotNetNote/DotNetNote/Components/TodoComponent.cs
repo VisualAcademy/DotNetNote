@@ -173,8 +173,15 @@ public class TodoController(TodoContext context) : Controller
     public async Task<IActionResult> DeleteConfirmed(int id)
     {
         var todo = await context.Todos.SingleOrDefaultAsync(m => m.Id == id);
+
+        if (todo is null)
+        {
+            return NotFound(); // 또는 RedirectToAction(nameof(Index));
+        }
+
         context.Todos.Remove(todo);
         await context.SaveChangesAsync();
+
         return RedirectToAction(nameof(Index));
     }
 
