@@ -15,7 +15,7 @@
     [InvestigationID]   BIGINT             NULL,
     [Note]              NVARCHAR(128)      NULL,
 
-    -- (VendorLicensing 쪽에만 있던 컬럼들)
+    -- (Vendor 쪽에만 있던 컬럼들)
     [Type]              BIT                NULL,
     [OwnerID]           NVARCHAR(50)       NULL,
     [OwnerName]         NVARCHAR(MAX)      NULL,
