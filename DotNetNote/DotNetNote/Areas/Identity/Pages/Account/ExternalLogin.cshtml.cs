@@ -35,7 +35,7 @@ namespace VisualAcademy.Areas.Identity.Pages.Account
         public string ReturnUrl { get; set; }
 
         [TempData]
-        public string ErrorMessage { get; set; }
+        public string? ErrorMessage { get; set; }
 
         public class InputModel
         {
