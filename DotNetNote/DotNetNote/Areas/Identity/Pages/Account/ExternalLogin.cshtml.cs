@@ -30,9 +30,9 @@ namespace VisualAcademy.Areas.Identity.Pages.Account
         [BindProperty]
         public InputModel Input { get; set; } = default!;
 
-        public string LoginProvider { get; set; }
+        public string LoginProvider { get; set; } = string.Empty;
 
-        public string ReturnUrl { get; set; }
+        public string ReturnUrl { get; set; } = string.Empty;
 
         [TempData]
         public string? ErrorMessage { get; set; }
