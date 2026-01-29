@@ -41,7 +41,7 @@ namespace VisualAcademy.Areas.Identity.Pages.Account
         {
             [Required]
             [EmailAddress]
-            public string Email { get; set; }
+            public string Email { get; set; } = string.Empty;
         }
 
         public IActionResult OnGetAsync()
