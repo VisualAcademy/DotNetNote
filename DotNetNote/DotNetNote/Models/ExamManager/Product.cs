@@ -1,7 +1,6 @@
-﻿namespace DotNetNote.Models
+﻿namespace DotNetNote.Models;
+
+public class Product
 {
-    public class Product
-    {
-        public string Name { get; set; } = string.Empty;
-    }
+    public string Name { get; set; } = string.Empty;
 }
