@@ -3,5 +3,5 @@
 public class SlideImage
 {
     public required string Url { get; set; }
-    public string Caption { get; set; }
+    public required string Caption { get; set; } = ""
 }
