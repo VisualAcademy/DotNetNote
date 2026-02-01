@@ -1,13 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace DotNetNote.Models
+﻿namespace DotNetNote.Models
 {
     public class LoginViewModel
     {
-        [Required, EmailAddress]
-        public required string Email { get; set; } = string.Empty;
-
-        [Required, DataType(DataType.Password)]
-        public required string Password { get; set; } = string.Empty;
+        public string Email { get; set; } = "";
+        public string Password { get; set; } = "";
     }
 }
