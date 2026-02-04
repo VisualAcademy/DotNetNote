@@ -1,41 +1,77 @@
-﻿@* AzCarousel View *@
+﻿@* ------------------------------------------------------------
+   AzCarousel Component Markup
+   이 뷰는 슬라이드형 배너(카루셀)를 구성하는 전체 HTML 구조입니다.
+   포함된 모든 슬라이드가 항상 함께 출력되는 기본 버전입니다.
+   동작은 /js/az-carousel.js 스크립트가 담당합니다.
+------------------------------------------------------------- *@
+
+@* 아이콘(좌우 화살표, 재생/일시정지 아이콘 등)에 사용되는 Font Awesome *@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+@* 카루셀 전용 스타일 파일 *@
 <link href="/css/az-carousel.css" rel="stylesheet" />
 
 <div class="container px-0">
-    <section class="az-carousel-section" id="az-carousel">
-        <div class="az-slides" id="az-slide-container">
+    <!-- 카루셀 전체 영역: 스크립트가 이 section 하나를 하나의 개체로 인식 -->
+    <section class="az-carousel-section">
+
+        <!-- 슬라이드들을 감싸는 컨테이너 -->
+        <div class="az-slides">
+
+            <!-- 첫 번째 슬라이드: 초기 로딩 시 표시되도록 az-active 클래스 포함 -->
             <div class="az-slide az-active">
                 <img src="~/images/az-carousel/blazor-part-3.jpg" alt="Blazor Server Part 1" />
+                <!-- 슬라이드 위 텍스트/버튼 영역 -->
                 <div class="az-slide-content">
                     <h2>Blazor Server Part 1</h2>
                     <p>회사 홈페이지와 관리자 페이지를 Blazor로 만드는 실전 웹개발 과정</p>
-                    <a href="http://www.devlec.com/?_pageVariable=courseDetail&code=PT001TB4369&method=S&relation=PT001TB4369_BlazorServer" target="_blank">강의 보기</a>
+                    <a href="http://www.devlec.com/?_pageVariable=courseDetail&code=PT001TB4369&method=S&relation=PT001TB4369_BlazorServer" target="_blank">
+                        강의 보기
+                    </a>
                 </div>
             </div>
+
+            <!-- 두 번째 슬라이드 -->
             <div class="az-slide">
                 <img src="~/images/az-carousel/blazor-part-2.jpg" alt="Blazor Server Part 2" />
                 <div class="az-slide-content">
                     <h2>Blazor 게시판 프로젝트 Part 2</h2>
                     <p>공지사항, 자료실, 답변형 게시판을 Blazor로 직접 구현해보세요</p>
-                    <a href="http://www.devlec.com/?_pageVariable=courseDetail&code=PT001TB4370&method=S&relation=PT001TB4370_BlazorServerPart2" target="_blank">강의 보기</a>
+                    <a href="http://www.devlec.com/?_pageVariable=courseDetail&code=PT001TB4370&method=S&relation=PT001TB4370_BlazorServerPart2" target="_blank">
+                        강의 보기
+                    </a>
                 </div>
             </div>
+
+            <!-- 세 번째 슬라이드 -->
             <div class="az-slide">
                 <img src="~/images/az-carousel/blazor-part-1.jpg" alt="Blazor Server Part 3" />
                 <div class="az-slide-content">
                     <h2>Blazor 실전 프로젝트 Part 3</h2>
                     <p>hawaso.com 사이트를 직접 구현하며 실무 핵심 기능을 익히는 강의</p>
-                    <a href="http://www.devlec.com/?_pageVariable=courseDetail&code=PT001TB4371&method=S&relation=PT001TB4371_BlazorProject" target="_blank">강의 보기</a>
+                    <a href="http://www.devlec.com/?_pageVariable=courseDetail&code=PT001TB4371&method=S&relation=PT001TB4371_BlazorProject" target="_blank">
+                        강의 보기
+                    </a>
                 </div>
             </div>
+
         </div>
 
-        <div class="az-nav-arrow az-left" id="az-prev-btn"><i class="fas fa-chevron-left"></i></div>
-        <div class="az-nav-arrow az-right" id="az-next-btn"><i class="fas fa-chevron-right"></i></div>
+        <!-- 이전 슬라이드로 이동하는 버튼 -->
+        <div class="az-nav-arrow az-left az-prev-btn">
+            <i class="fas fa-chevron-left"></i>
+        </div>
 
-        <div class="az-progress-indicators" id="az-progress-indicators"></div>
+        <!-- 다음 슬라이드로 이동하는 버튼 -->
+        <div class="az-nav-arrow az-right az-next-btn">
+            <i class="fas fa-chevron-right"></i>
+        </div>
+
+        <!-- 진행바(dot)와 일시정지 버튼이 스크립트에 의해 동적으로 생성되는 영역 -->
+        <div class="az-progress-indicators"></div>
+
     </section>
 </div>
 
+@* 카루셀 동작을 담당하는 스크립트 로드 *@
 <script src="/js/az-carousel.js"></script>

@@ -1,41 +1,53 @@
-﻿.az-carousel-section {
-    position: relative;
-    width: 100%;
-    height: 500px;
-    overflow: hidden;
+﻿/* ------------------------------------------------------------
+   Az Carousel Layout Styles
+   이 파일은 카루셀의 전체 레이아웃, 슬라이드 전환,
+   네비게이션 버튼, 진행바 UI를 정의합니다.
+------------------------------------------------------------- */
+
+/* 카루셀 전체 영역 */
+.az-carousel-section {
+    position: relative; /* 내부 절대 위치 요소들의 기준 */
+    width: 100%; /* 부모 너비에 맞춤 */
+    height: 500px; /* 카루셀 고정 높이 */
+    overflow: hidden; /* 슬라이드 전환 시 영역 밖 요소 숨김 */
 }
 
+/* 슬라이드들을 감싸는 컨테이너 */
 .az-slides {
-    position: relative;
+    position: relative; /* 슬라이드들이 absolute로 배치될 기준 */
     width: 100%;
     height: 100%;
 }
 
+/* 개별 슬라이드 */
 .az-slide {
-    position: absolute;
+    position: absolute; /* 모든 슬라이드를 겹쳐 놓음 */
     width: 100%;
     height: 100%;
-    opacity: 0;
-    transition: opacity 0.8s ease-in-out;
+    opacity: 0; /* 기본은 숨김 */
+    transition: opacity 0.8s ease-in-out; /* 페이드 전환 효과 */
 }
 
+    /* 현재 활성화된 슬라이드 */
     .az-slide.az-active {
-        opacity: 1;
-        z-index: 1;
+        opacity: 1; /* 보이도록 처리 */
+        z-index: 1; /* 다른 슬라이드 위에 표시 */
     }
 
+    /* 슬라이드 배경 이미지 */
     .az-slide img {
         width: 100%;
         height: 100%;
-        object-fit: cover;
+        object-fit: cover; /* 영역을 꽉 채우되 비율 유지 */
     }
 
+/* 슬라이드 위 텍스트 박스 */
 .az-slide-content {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: rgba(0, 0, 0, 0.5);
+    transform: translate(-50%, -50%); /* 정중앙 배치 */
+    background-color: rgba(0, 0, 0, 0.5); /* 반투명 배경 */
     padding: 20px;
     color: #fff;
     text-align: center;
@@ -43,16 +55,19 @@
     max-width: 80%;
 }
 
+    /* 제목 스타일 */
     .az-slide-content h2 {
         font-size: 1.8rem;
         margin-bottom: 10px;
     }
 
+    /* 설명 텍스트 스타일 */
     .az-slide-content p {
         font-size: 1rem;
         margin-bottom: 15px;
     }
 
+    /* 버튼 스타일 */
     .az-slide-content a {
         color: white;
         background-color: #007bff;
@@ -61,14 +76,16 @@
         border-radius: 4px;
     }
 
+        /* 버튼 hover 효과 */
         .az-slide-content a:hover {
             background-color: #0056b3;
         }
 
+/* 좌우 네비게이션 화살표 공통 스타일 */
 .az-nav-arrow {
     position: absolute;
     top: 50%;
-    transform: translateY(-50%);
+    transform: translateY(-50%); /* 세로 중앙 정렬 */
     font-size: 1.8rem;
     color: white;
     background: rgba(0, 0, 0, 0.5);
@@ -79,47 +96,53 @@
     justify-content: center;
     border-radius: 50%;
     cursor: pointer;
-    z-index: 10;
+    z-index: 10; /* 슬라이드 위에 표시 */
 }
 
+    /* 왼쪽 화살표 위치 */
     .az-nav-arrow.az-left {
         left: 20px;
     }
 
+    /* 오른쪽 화살표 위치 */
     .az-nav-arrow.az-right {
         right: 20px;
     }
 
+/* 진행바 및 일시정지 버튼 영역 */
 .az-progress-indicators {
     position: absolute;
     bottom: 20px;
     left: 50%;
-    transform: translateX(-50%);
+    transform: translateX(-50%); /* 하단 중앙 배치 */
     display: flex;
-    gap: 8px;
+    gap: 8px; /* dot 간 간격 */
     align-items: center;
     z-index: 20;
 }
 
+/* 개별 진행바(dot) */
 .az-progress-dot {
     width: 40px;
     height: 4px;
-    background: rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.3); /* 비활성 배경 */
     border-radius: 2px;
-    overflow: hidden;
+    overflow: hidden; /* 내부 fill이 넘치지 않도록 */
     position: relative;
     cursor: pointer;
 }
 
+/* 실제 진행률을 나타내는 막대 */
 .az-progress-fill {
     position: absolute;
     top: 0;
     left: 0;
     height: 100%;
-    width: 0%;
+    width: 0%; /* JS에서 애니메이션으로 증가 */
     background: #007aff;
 }
 
+/* 일시정지 / 재생 버튼 */
 .az-pause-button {
     margin-left: 12px;
     font-size: 1.1rem;
@@ -134,6 +157,7 @@
     border-radius: 50%;
 }
 
+    /* 일시정지 버튼 hover 효과 */
     .az-pause-button:hover {
         background: rgba(0,0,0,0.7);
     }
