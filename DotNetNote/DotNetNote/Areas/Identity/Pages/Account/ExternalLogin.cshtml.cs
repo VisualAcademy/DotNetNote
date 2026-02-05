@@ -1,38 +1,42 @@
-﻿using DotNetNote.Data;
-using Microsoft.AspNetCore.Authorization;
+﻿#nullable enable
+
+using System.ComponentModel.DataAnnotations;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
-using System.ComponentModel.DataAnnotations;
-using System.Security.Claims;
-using System.Threading.Tasks;
 
-namespace VisualAcademy.Areas.Identity.Pages.Account
+namespace DotNetNote.Areas.Identity.Pages.Account
 {
-    [AllowAnonymous]
     public class ExternalLoginModel : PageModel
     {
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IUserStore<ApplicationUser> _userStore;
+        private readonly IUserEmailStore<ApplicationUser> _emailStore;
         private readonly ILogger<ExternalLoginModel> _logger;
 
         public ExternalLoginModel(
             SignInManager<ApplicationUser> signInManager,
             UserManager<ApplicationUser> userManager,
+            IUserStore<ApplicationUser> userStore,
             ILogger<ExternalLoginModel> logger)
         {
             _signInManager = signInManager;
             _userManager = userManager;
+            _userStore = userStore;
+            _emailStore = GetEmailStore(userManager, userStore);
             _logger = logger;
         }
 
         [BindProperty]
-        public InputModel Input { get; set; } = default!;
+        public InputModel Input { get; set; } = new();
 
-        public string LoginProvider { get; set; } = string.Empty;
-
-        public string ReturnUrl { get; set; } = string.Empty;
+        public string? ProviderDisplayName { get; set; }
+        public string? LoginProvider { get; set; }
+        public string? ReturnUrl { get; set; }
 
         [TempData]
         public string? ErrorMessage { get; set; }
@@ -44,95 +48,98 @@ namespace VisualAcademy.Areas.Identity.Pages.Account
             public string Email { get; set; } = string.Empty;
         }
 
-        public IActionResult OnGetAsync()
-        {
-            return RedirectToPage("./Login");
-        }
+        public IActionResult OnGet() => RedirectToPage("./Login");
 
-        public IActionResult OnPost(string provider, string returnUrl = null)
+        public IActionResult OnPost(string provider, string? returnUrl = null)
         {
-            // Request a redirect to the external login provider.
-            var redirectUrl = Url.Page("./ExternalLogin", pageHandler: "Callback", values: new { returnUrl });
+            ReturnUrl = returnUrl ?? Url.Content("~/");
+            var redirectUrl = Url.Page("./ExternalLogin", pageHandler: "Callback", values: new { returnUrl = ReturnUrl });
             var properties = _signInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl);
             return new ChallengeResult(provider, properties);
         }
 
-        public async Task<IActionResult> OnGetCallbackAsync(string returnUrl = null, string remoteError = null)
+        public async Task<IActionResult> OnGetCallbackAsync(string? returnUrl = null, string? remoteError = null)
         {
-            returnUrl = returnUrl ?? Url.Content("~/");
-            if (remoteError != null)
+            ReturnUrl = returnUrl ?? Url.Content("~/");
+
+            if (!string.IsNullOrEmpty(remoteError))
             {
                 ErrorMessage = $"Error from external provider: {remoteError}";
-                return RedirectToPage("./Login", new { ReturnUrl = returnUrl });
-            }
-            var info = await _signInManager.GetExternalLoginInfoAsync();
-            if (info == null)
-            {
-                ErrorMessage = "Error loading external login information.";
-                return RedirectToPage("./Login", new { ReturnUrl = returnUrl });
+                return RedirectToPage("./Login", new { ReturnUrl });
             }
 
-            // Sign in the user with this external login provider if the user already has a login.
-            var result = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: false, bypassTwoFactor: true);
+            var info = await _signInManager.GetExternalLoginInfoAsync();
+            if (info is null)
+            {
+                ErrorMessage = "Error loading external login information.";
+                return RedirectToPage("./Login", new { ReturnUrl });
+            }
+
+            var result = await _signInManager.ExternalLoginSignInAsync(
+                info.LoginProvider, info.ProviderKey, false, true);
+
             if (result.Succeeded)
             {
-                _logger.LogInformation("{Name} logged in with {LoginProvider} provider.", info.Principal.Identity.Name, info.LoginProvider);
-                return LocalRedirect(returnUrl);
+                return LocalRedirect(ReturnUrl);
             }
+
             if (result.IsLockedOut)
             {
                 return RedirectToPage("./Lockout");
             }
-            else
-            {
-                // If the user does not have an account, then ask the user to create an account.
-                ReturnUrl = returnUrl;
-                LoginProvider = info.LoginProvider;
-                if (info.Principal.HasClaim(c => c.Type == ClaimTypes.Email))
-                {
-                    Input = new InputModel
-                    {
-                        Email = info.Principal.FindFirstValue(ClaimTypes.Email)
-                    };
-                }
-                return Page();
-            }
+
+            ProviderDisplayName = info.ProviderDisplayName;
+            LoginProvider = info.LoginProvider;
+
+            var email = info.Principal?.FindFirstValue(ClaimTypes.Email);
+            Input.Email = email ?? string.Empty;
+
+            return Page();
         }
 
-        public async Task<IActionResult> OnPostConfirmationAsync(string returnUrl = null)
+        public async Task<IActionResult> OnPostConfirmationAsync(string? returnUrl = null)
         {
-            returnUrl = returnUrl ?? Url.Content("~/");
-            // Get the information about the user from the external login provider
+            ReturnUrl = returnUrl ?? Url.Content("~/");
+
             var info = await _signInManager.GetExternalLoginInfoAsync();
-            if (info == null)
+            if (info is null)
             {
                 ErrorMessage = "Error loading external login information during confirmation.";
-                return RedirectToPage("./Login", new { ReturnUrl = returnUrl });
+                return RedirectToPage("./Login", new { ReturnUrl });
             }
 
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email };
-                var result = await _userManager.CreateAsync(user);
-                if (result.Succeeded)
-                {
-                    result = await _userManager.AddLoginAsync(user, info);
-                    if (result.Succeeded)
-                    {
-                        await _signInManager.SignInAsync(user, isPersistent: false);
-                        _logger.LogInformation("User created an account using {Name} provider.", info.LoginProvider);
-                        return LocalRedirect(returnUrl);
-                    }
-                }
-                foreach (var error in result.Errors)
-                {
-                    ModelState.AddModelError(string.Empty, error.Description);
-                }
+                ProviderDisplayName = info.ProviderDisplayName;
+                LoginProvider = info.LoginProvider;
+                return Page();
             }
 
-            LoginProvider = info.LoginProvider;
-            ReturnUrl = returnUrl;
-            return Page();
+            var user = new ApplicationUser();
+            await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
+            await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
+
+            var result = await _userManager.CreateAsync(user);
+            if (!result.Succeeded)
+            {
+                ProviderDisplayName = info.ProviderDisplayName;
+                LoginProvider = info.LoginProvider;
+                return Page();
+            }
+
+            await _userManager.AddLoginAsync(user, info);
+            await _signInManager.SignInAsync(user, false, info.LoginProvider);
+
+            return LocalRedirect(ReturnUrl);
+        }
+
+        private static IUserEmailStore<ApplicationUser> GetEmailStore(UserManager<ApplicationUser> userManager, IUserStore<ApplicationUser> userStore)
+        {
+            if (!userManager.SupportsUserEmail)
+            {
+                throw new NotSupportedException("User store must support email.");
+            }
+            return (IUserEmailStore<ApplicationUser>)userStore;
         }
     }
 }
