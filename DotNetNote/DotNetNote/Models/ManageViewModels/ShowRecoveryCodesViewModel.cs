@@ -1,7 +1,6 @@
-﻿namespace DotNetNote.Models.ManageViewModels
+﻿namespace DotNetNote.Models.ManageViewModels;
+
+public class ShowRecoveryCodesViewModel
 {
-    public class ShowRecoveryCodesViewModel
-    {
-        public string[] RecoveryCodes { get; set; } = Array.Empty<string>();
-    }
+    public string[] RecoveryCodes { get; set; } = Array.Empty<string>();
 }
