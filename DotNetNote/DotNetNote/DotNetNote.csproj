@@ -119,7 +119,7 @@
         <PackageReference Include="Serilog.Extensions.Logging" Version="10.0.0" />
         <PackageReference Include="Serilog.Sinks.File" Version="7.0.0" />
         <PackageReference Include="Serilog.Sinks.MSSqlServer" Version="9.0.2" />
-        <PackageReference Include="Stripe.net" Version="50.1.0" />
+        <PackageReference Include="Stripe.net" Version="50.3.0" />
         <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.15.0" />
         <PackageReference Include="Twilio" Version="7.14.3" />
 
