@@ -3,14 +3,15 @@
 public class Choice
 {
     public int Id { get; set; }
-    public string ChoiceText { get; set; }
+
+    // 선택지 텍스트
+    public string ChoiceText { get; set; } = string.Empty;
+
     public bool IsAnswer { get; set; }
+
     public bool IsSelected { get; set; }
 
-    private Question _question = new Question();
-    public Question Question
-    {
-        get { return _question; }
-        set { _question = value;}
-    }
+    // EF Core Navigation Property
+    // EF에서 로딩되므로 null-forgiving 사용
+    public Question Question { get; set; } = null!;
 }
