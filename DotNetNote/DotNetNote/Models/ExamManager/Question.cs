@@ -3,25 +3,29 @@
     public class Question
     {
         public int Id { get; set; }
-        public string Title { get; set; }
+
+        // 문제 제목 (기본값 설정으로 CS8618 제거)
+        public string Title { get; set; } = string.Empty;
+
         public double Point { get; set; }
 
         public int OrderNumber { get; set; }
 
-        private IList<Choice> _choices = new List<Choice>();
-        public IList<Choice> Choices
-        {
-            get { return _choices; }
-            set { _choices = value;}
-        }
+        // 1:N Navigation Property
+        // 컬렉션은 항상 초기화 (null 방지)
+        public IList<Choice> Choices { get; private set; } = new List<Choice>();
 
         public void AddChoice(Choice choice)
         {
-            _choices.Add(choice);
-            choice.Question = this; 
+            if (choice is null)
+                throw new ArgumentNullException(nameof(choice));
+
+            Choices.Add(choice);
+            choice.Question = this; // 양방향 관계 설정
         }
     }
 }
+
 
 // Exams_Questions
 
