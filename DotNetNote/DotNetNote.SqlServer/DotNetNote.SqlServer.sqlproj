@@ -187,6 +187,7 @@
     <Build Include="dbo\Tables\Employees.sql" />
     <Build Include="dbo\Tables\01_Identity\AspNetUsers.sql" />
     <Build Include="dbo\Tables\AuditTrail.sql" />
+    <Build Include="dbo\Tables\Notifications.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="dbo\Scripts\Attachments\Demo_Attachments_Processing.sql" />
