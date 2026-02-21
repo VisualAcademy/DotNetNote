@@ -81,7 +81,7 @@
         <PackageReference Include="Azunt.SignInManagement" Version="1.0.3" />
         <PackageReference Include="Azunt.SubcategoryManagement" Version="1.0.1" />
         <PackageReference Include="Azunt.TechnicianManagement" Version="1.0.1" />
-        <PackageReference Include="Azunt.TenantManagement" Version="1.0.4" />
+        <PackageReference Include="Azunt.TenantManagement" Version="1.0.5" />
         <PackageReference Include="Azunt.TenantSettingManagement" Version="1.0.5" />
         <PackageReference Include="Azure.Identity" Version="1.17.1" />
         <PackageReference Include="Azure.Storage.Blobs" Version="12.27.0" />
