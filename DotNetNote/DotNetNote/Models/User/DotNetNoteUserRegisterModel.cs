@@ -1,13 +1,18 @@
-﻿namespace DotNetNote;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace DotNetNote;
 
 public class DotNetNoteUserRegisterModel
 {
-    public string UserName { get; set; }
+    [Required]
+    public string? UserName { get; set; }
 
+    [Required]
     [DataType(DataType.Password)]
-    public string Password { get; set; }
+    public string? Password { get; set; }
 
+    [Required]
     [Compare("Password")]
     [DataType(DataType.Password)]
-    public string ConfirmPassword { get; set; }
+    public string? ConfirmPassword { get; set; }
 }
