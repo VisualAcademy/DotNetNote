@@ -2,15 +2,19 @@
 
 <h1>메인 페이지</h1>
 
-@if (User.Identity.IsAuthenticated)
+@if (User.Identity?.IsAuthenticated == true)
 {
-    <span>@User.FindFirst("UserId").Value 님, 반갑습니다.</span>
+    var userIdClaim = User.FindFirst("UserId");
+
+    if (userIdClaim != null)
+    {
+        <span>@userIdClaim.Value 님, 반갑습니다.</span>
+    }
 
     <a href="/User/Logout">로그아웃</a>
 }
 else
 {
     <a href="/User/Login">로그인</a>
-
     <a href="/User/Register">회원가입</a>
 }
