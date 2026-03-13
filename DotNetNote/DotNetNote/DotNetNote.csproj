@@ -83,31 +83,31 @@
         <PackageReference Include="Azunt.TechnicianManagement" Version="1.0.1" />
         <PackageReference Include="Azunt.TenantManagement" Version="1.0.5" />
         <PackageReference Include="Azunt.TenantSettingManagement" Version="1.0.5" />
-        <PackageReference Include="Azure.Identity" Version="1.17.1" />
+        <PackageReference Include="Azure.Identity" Version="1.19.0" />
         <PackageReference Include="Azure.Storage.Blobs" Version="12.27.0" />
         <PackageReference Include="CommonMark.NET" Version="0.15.1" />
         <PackageReference Include="CsvHelper" Version="33.1.0" />
-        <PackageReference Include="Dapper" Version="2.1.66" />
+        <PackageReference Include="Dapper" Version="2.1.72" />
         <PackageReference Include="DocumentFormat.OpenXml" Version="3.4.1" />
         <PackageReference Include="Dul" Version="1.3.4" />
         <PackageReference Include="Markdown" Version="2.2.1" />
-        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="10.0.3" />
-        <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="10.0.3" />
-        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.3" />
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="10.0.5" />
+        <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="10.0.5" />
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.5" />
 
-		<PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="10.0.3" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="10.0.3">
+		<PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="10.0.5" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="10.0.5">
 		  <PrivateAssets>all</PrivateAssets>
 		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
 
-		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.3" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="10.0.3" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.5" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="10.0.5" />
         <PackageReference Include="Microsoft.FluentUI.AspNetCore.Components" Version="4.14.0" />
         <PackageReference Include="Microsoft.FluentUI.AspNetCore.Components.DataGrid.EntityFrameworkAdapter" Version="4.14.0" />
         <PackageReference Include="Microsoft.FluentUI.AspNetCore.Components.Emoji" Version="4.14.0" />
         <PackageReference Include="Microsoft.FluentUI.AspNetCore.Components.Icons" Version="4.14.0" />
-        <PackageReference Include="Microsoft.Identity.Web" Version="4.3.0" />  
+        <PackageReference Include="Microsoft.Identity.Web" Version="4.5.0" />  
         <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="10.0.2" />
         <PackageReference Include="MimeTypesMap" Version="1.0.9" />
 
@@ -119,7 +119,7 @@
         <PackageReference Include="Serilog.Extensions.Logging" Version="10.0.0" />
         <PackageReference Include="Serilog.Sinks.File" Version="7.0.0" />
         <PackageReference Include="Serilog.Sinks.MSSqlServer" Version="9.0.3" />
-        <PackageReference Include="Stripe.net" Version="50.4.0" />
+        <PackageReference Include="Stripe.net" Version="50.4.1" />
         <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.16.0" />
         <PackageReference Include="Twilio" Version="7.14.3" />
 
