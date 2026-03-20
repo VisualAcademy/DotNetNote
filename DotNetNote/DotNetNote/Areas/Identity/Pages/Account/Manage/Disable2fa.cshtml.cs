@@ -16,7 +16,7 @@ public class Disable2faModel : PageModel
     }
 
     [TempData]
-    public string StatusMessage { get; set; }
+    public string? StatusMessage { get; set; }
 
     public async Task<IActionResult> OnGet()
     {
