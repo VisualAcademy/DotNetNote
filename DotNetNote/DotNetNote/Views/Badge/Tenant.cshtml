@@ -1,0 +1,32 @@
+﻿@model VisualAcademy.Models.Codes.BadgePageViewModel
+@{
+    Layout = null;
+}
+
+<script src="~/lib/qrcode.js"></script>
+
+<h1>@Model.Heading</h1>
+
+<h3>Candidate Portal</h3>
+<p>@Model.CandidatePortalUrl</p>
+<div id="qrcode1"></div>
+
+<hr />
+
+<h3>Change of Information</h3>
+<p>@Model.ChangeOfInformationUrl</p>
+<div id="qrcode2"></div>
+
+<script>
+    new QRCode(document.getElementById("qrcode1"), {
+        text: "@Model.CandidatePortalUrl",
+        width: 160,
+        height: 160
+    });
+
+    new QRCode(document.getElementById("qrcode2"), {
+        text: "@Model.ChangeOfInformationUrl",
+        width: 160,
+        height: 160
+    });
+</script>

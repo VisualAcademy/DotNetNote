@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc.RazorPages;
+﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Identity;
 
 namespace VisualAcademy.Areas.Identity.Pages.Account.Manage;
 
@@ -8,13 +11,13 @@ public class DeletePersonalDataModel(
     ILogger<DeletePersonalDataModel> logger) : PageModel
 {
     [BindProperty]
-    public InputModel Input { get; set; }
+    public InputModel Input { get; set; } = new(); // 초기화
 
     public class InputModel
     {
         [Required]
         [DataType(DataType.Password)]
-        public string Password { get; set; }
+        public string Password { get; set; } = string.Empty; // null 방지
     }
 
     public bool RequirePassword { get; set; }
@@ -22,7 +25,7 @@ public class DeletePersonalDataModel(
     public async Task<IActionResult> OnGet()
     {
         var user = await userManager.GetUserAsync(User);
-        if (user == null)
+        if (user is null)
         {
             return NotFound($"Unable to load user with ID '{userManager.GetUserId(User)}'.");
         }
@@ -34,12 +37,13 @@ public class DeletePersonalDataModel(
     public async Task<IActionResult> OnPostAsync()
     {
         var user = await userManager.GetUserAsync(User);
-        if (user == null)
+        if (user is null)
         {
             return NotFound($"Unable to load user with ID '{userManager.GetUserId(User)}'.");
         }
 
         RequirePassword = await userManager.HasPasswordAsync(user);
+
         if (RequirePassword)
         {
             if (!await userManager.CheckPasswordAsync(user, Input.Password))
@@ -51,9 +55,11 @@ public class DeletePersonalDataModel(
 
         var result = await userManager.DeleteAsync(user);
         var userId = await userManager.GetUserIdAsync(user);
+
         if (!result.Succeeded)
         {
-            throw new InvalidOperationException($"Unexpected error occurred deleteing user with ID '{userId}'.");
+            throw new InvalidOperationException(
+                $"Unexpected error occurred deleting user with ID '{userId}'.");
         }
 
         await signInManager.SignOutAsync();

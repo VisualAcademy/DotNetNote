@@ -38,12 +38,18 @@ using Microsoft.IdentityModel.Tokens;
 using Serilog;
 using Serilog.Sinks.MSSqlServer;
 using System.Net.Http.Headers;
+using VisualAcademy.Models.Configuration;
 
 public partial class Program
 {
     public static async Task Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
+
+
+        // 테넌트 설정 바인딩
+        builder.Services.Configure<TenantSettings>(
+            builder.Configuration.GetSection("TenantSettings"));
 
         #region Terminology
         // Terminology 설정 바인딩
