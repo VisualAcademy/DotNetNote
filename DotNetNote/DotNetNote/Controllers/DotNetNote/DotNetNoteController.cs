@@ -886,4 +886,35 @@ public class DotNetNoteController(
     //    }
     //}
     #endregion
+
+    /// <summary>
+    /// 선택된 게시글 Print (강의용 간단 출력)
+    /// </summary>
+    [HttpGet]
+    public IActionResult Print(string ids)
+    {
+        if (string.IsNullOrEmpty(ids))
+        {
+            return BadRequest();
+        }
+
+        var idList = ids
+            .Split(',', StringSplitOptions.RemoveEmptyEntries)
+            .Select(int.Parse)
+            .ToList();
+
+        var notes = new List<Note>();
+
+        foreach (var id in idList)
+        {
+            var note = repository.GetNoteById(id);
+
+            if (note != null)
+            {
+                notes.Add(note);
+            }
+        }
+
+        return View("Print", notes);
+    }
 }

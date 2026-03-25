@@ -1,0 +1,52 @@
+﻿@model IEnumerable<Note>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Print</title>
+    <style>
+            body {
+                font-family: Arial;
+            }
+
+            .note {
+                page-break-after: always;
+                margin-bottom: 40px;
+            }
+
+            .title {
+                font-size: 20px;
+                font-weight: bold;
+            }
+    </style>
+</head>
+<body>
+
+    @foreach (var item in Model)
+    {
+        <div class="note">
+            <div class="title">@item.Title</div>
+            <hr />
+            <div>
+                작성자 : @item.Name <br />
+                날짜 : @item.PostDate
+            </div>
+
+            <br />
+
+            <div>
+                @Html.Raw(item.Content)
+            </div>
+        </div>
+    }
+
+    <script>
+            window.print();
+    </script>
+
+</body>
+</html>

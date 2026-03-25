@@ -19,12 +19,20 @@
         </span>
         <hr />
 
+        <div style="margin-bottom: 10px;">
+            <button type="button" class="btn btn-secondary" onclick="printSelected()">
+                Print Selected
+            </button>
+        </div>
+
         <div style="font-style:italic;text-align:right;font-size:8pt;">
             Total Record: @ViewBag.TotalRecord
         </div>
+
         <div class="table-responsive">
             <table class="table table-bordered table-hover">
                 <colgroup>
+                    <col style="width: 30px;" />
                     <col style="width: 100px;" />
                     <col style="width: 400px;" />
                     <col style="width: 50px;" />
@@ -34,6 +42,9 @@
                     <col style="width: 20px;" />
                 </colgroup>
                 <tr class="thead-light">
+                    <th style="width:30px; text-align:center;">
+                        <input type="checkbox" onclick="toggleAll(this)" />
+                    </th>
                     <th style="width:100px; text-align:center;">
                         @Html.DisplayNameFor(model => model.Id)
                     </th>
@@ -58,17 +69,19 @@
                 </tr>
 
                 <cache expires-after="@TimeSpan.FromMinutes(10)">
-                    @*최근 공지 글 2개 출력: 캐싱 적용*@
+                    @* 최근 공지 글 2개 출력: 캐싱 적용 *@
                     @foreach (var item in NoteRepositoryReference.GetNoteSummaryByCategory("Notice").Take(2))
                     {
                         <tr>
+                            <td style="text-align:center;">
+                                <input type="checkbox" class="note-checkbox" value="@item.Id" />
+                            </td>
                             <td style="text-align:center;">
                                 <span class="badge badge-success" style="font-size:xx-small">NOTICE</span>
                             </td>
                             <td>
                                 @Html.Raw(BoardLibrary.FuncStep(item.Step))
-                                    @*<a asp-controller="DotNetNote" asp-action="Details" asp-route-id="@item.Id">*@
-                                    <a asp-action="Details" asp-route-id="@item.Id">
+                                <a asp-action="Details" asp-route-id="@item.Id">
                                     <strong>
                                         @StringLibrary.CutStringUnicode(item.Title, 35)
                                     </strong>
@@ -97,12 +110,15 @@
                     }
                 </cache>
 
-                @*게시글 출력*@
+                @* 게시글 출력 *@
                 @if (Model != null)
                 {
                     @foreach (var item in Model)
                     {
                         <tr>
+                            <td style="text-align:center;">
+                                <input type="checkbox" class="note-checkbox" value="@item.Id" />
+                            </td>
                             <td style="text-align:center; font-size: xx-small;">
                                 @if (item.Step == 0)
                                 {
@@ -115,7 +131,6 @@
                             </td>
                             <td>
                                 @Html.Raw(BoardLibrary.FuncStep(item.Step))
-                                @*<a asp-controller="DotNetNote" asp-action="Details" asp-route-id="@item.Id">*@
                                 <a asp-action="Details" asp-route-id="@item.Id">
                                     @StringLibrary.CutStringUnicode(item.Title, 35)
                                 </a>
@@ -128,11 +143,9 @@
                                 @Html.Raw(BoardLibrary.FuncFileDownSingle(item.Id, item.FileName, item.FileSize.ToString(), "DotNetNote", "/BoardDown/"))
                             </td>
                             <td style="text-align:center;">
-                                @* @Html.DisplayFor(modelItem => item.Name) *@
-
-                                @* Name이 null이거나 비어 있으면 (Unknown)을 출력, 그렇지 않으면 Name의 처음 5자만 출력 *@
-                                @(string.IsNullOrEmpty(item.Name) ? "(Unknown)" : (item.Name.Length > 5 ? item.Name.Substring(0, 5) : item.Name))
-
+                                @(string.IsNullOrEmpty(item.Name)
+                                    ? "(Unknown)"
+                                    : (item.Name.Length > 5 ? item.Name.Substring(0, 5) : item.Name))
                             </td>
                             <td style="text-align:center; font-size: xx-small;">
                                 @BoardLibrary.FuncShowTime(item.PostDate)
@@ -147,7 +160,6 @@
                     }
                 }
             </table>
-
         </div>
 
         <table style="width: 100%; margin-left: auto; margin-right: auto; border: 0;">
@@ -177,7 +189,6 @@
             </tr>
             <tr>
                 <td style="text-align:center;">
-                    @*@Html.Partial("_SearchForm")*@
                     @await Html.PartialAsync("_SearchForm")
                     <br />
                     @if (ViewBag.SearchMode)
@@ -191,14 +202,37 @@
     </div>
 
     @section Scripts {
+        <script>
+                function toggleAll(source) {
+                    document.querySelectorAll(".note-checkbox").forEach(function (cb) {
+                        cb.checked = source.checked;
+                    });
+                }
+
+                function printSelected() {
+                    var ids = [];
+
+                    document.querySelectorAll(".note-checkbox:checked").forEach(function (cb) {
+                        ids.push(cb.value);
+                    });
+
+                    if (ids.length === 0) {
+                        alert("선택된 게시글이 없습니다.");
+                        return;
+                    }
+
+                    window.open("/DotNetNote/Print?ids=" + ids.join(","), "_blank");
+                }
+        </script>
+
         @if (TempData["Message"] != null)
         {
             <link href="~/lib/toastr/toastr.min.css" rel="stylesheet" />
             <script src="~/lib/toastr/toastr.min.js"></script>
             <script>
-            $(function () {
-                toastr.info('@TempData["Message"]');
-            });
+                    $(function () {
+                        toastr.info('@TempData["Message"]');
+                    });
             </script>
         }
     }
