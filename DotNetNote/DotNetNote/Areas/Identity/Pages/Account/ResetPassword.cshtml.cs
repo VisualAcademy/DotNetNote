@@ -1,4 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc.RazorPages;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
 
 namespace VisualAcademy.Areas.Identity.Pages.Account;
 
@@ -6,41 +10,40 @@ namespace VisualAcademy.Areas.Identity.Pages.Account;
 public class ResetPasswordModel(UserManager<ApplicationUser> userManager) : PageModel
 {
     [BindProperty]
-    public InputModel Input { get; set; }
+    public InputModel Input { get; set; } = new();
 
     public class InputModel
     {
         [Required]
         [EmailAddress]
-        public string Email { get; set; }
+        public string Email { get; set; } = string.Empty;
 
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        public string Password { get; set; }
+        public string Password { get; set; } = string.Empty;
 
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
-        public string ConfirmPassword { get; set; }
+        public string ConfirmPassword { get; set; } = string.Empty;
 
-        public string Code { get; set; }
+        public string Code { get; set; } = string.Empty;
     }
 
-    public IActionResult OnGet(string code = null)
+    public IActionResult OnGet(string? code = null)
     {
         if (code == null)
         {
             return BadRequest("A code must be supplied for password reset.");
         }
-        else
+
+        Input = new InputModel
         {
-            Input = new InputModel
-            {
-                Code = code
-            };
-            return Page();
-        }
+            Code = code
+        };
+
+        return Page();
     }
 
     public async Task<IActionResult> OnPostAsync()
@@ -67,6 +70,7 @@ public class ResetPasswordModel(UserManager<ApplicationUser> userManager) : Page
         {
             ModelState.AddModelError(string.Empty, error.Description);
         }
+
         return Page();
     }
 }
