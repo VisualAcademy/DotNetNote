@@ -29,18 +29,18 @@ namespace VisualAcademy.Areas.Identity.Pages.Account.Manage
             _urlEncoder = urlEncoder;
         }
 
-        public string SharedKey { get; set; }
+        public string SharedKey { get; set; } = string.Empty;
 
-        public string AuthenticatorUri { get; set; }
-
-        [TempData]
-        public string[] RecoveryCodes { get; set; }
+        public string AuthenticatorUri { get; set; } = string.Empty;
 
         [TempData]
-        public string StatusMessage { get; set; }
+        public string[]? RecoveryCodes { get; set; }
+
+        [TempData]
+        public string? StatusMessage { get; set; }
 
         [BindProperty]
-        public InputModel Input { get; set; }
+        public InputModel Input { get; set; } = new();
 
         public class InputModel
         {
@@ -48,7 +48,7 @@ namespace VisualAcademy.Areas.Identity.Pages.Account.Manage
             [StringLength(7, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
             [DataType(DataType.Text)]
             [Display(Name = "Verification Code")]
-            public string Code { get; set; }
+            public string Code { get; set; } = string.Empty;
         }
 
         public async Task<IActionResult> OnGetAsync()
@@ -78,11 +78,12 @@ namespace VisualAcademy.Areas.Identity.Pages.Account.Manage
                 return Page();
             }
 
-            // Strip spaces and hypens
             var verificationCode = Input.Code.Replace(" ", string.Empty).Replace("-", string.Empty);
 
             var is2faTokenValid = await _userManager.VerifyTwoFactorTokenAsync(
-                user, _userManager.Options.Tokens.AuthenticatorTokenProvider, verificationCode);
+                user,
+                _userManager.Options.Tokens.AuthenticatorTokenProvider,
+                verificationCode);
 
             if (!is2faTokenValid)
             {
@@ -100,18 +101,15 @@ namespace VisualAcademy.Areas.Identity.Pages.Account.Manage
             if (await _userManager.CountRecoveryCodesAsync(user) == 0)
             {
                 var recoveryCodes = await _userManager.GenerateNewTwoFactorRecoveryCodesAsync(user, 10);
-                RecoveryCodes = recoveryCodes.ToArray();
+                RecoveryCodes = (recoveryCodes ?? Enumerable.Empty<string>()).ToArray();
                 return RedirectToPage("./ShowRecoveryCodes");
             }
-            else
-            {
-                return RedirectToPage("./TwoFactorAuthentication");
-            }
+
+            return RedirectToPage("./TwoFactorAuthentication");
         }
 
         private async Task LoadSharedKeyAndQrCodeUriAsync(ApplicationUser user)
         {
-            // Load the authenticator key & QR code URI to display on the form
             var unformattedKey = await _userManager.GetAuthenticatorKeyAsync(user);
             if (string.IsNullOrEmpty(unformattedKey))
             {
@@ -119,9 +117,11 @@ namespace VisualAcademy.Areas.Identity.Pages.Account.Manage
                 unformattedKey = await _userManager.GetAuthenticatorKeyAsync(user);
             }
 
+            unformattedKey ??= string.Empty;
+
             SharedKey = FormatKey(unformattedKey);
 
-            var email = await _userManager.GetEmailAsync(user);
+            var email = await _userManager.GetEmailAsync(user) ?? string.Empty;
             AuthenticatorUri = GenerateQrCodeUri(email, unformattedKey);
         }
 
@@ -129,11 +129,13 @@ namespace VisualAcademy.Areas.Identity.Pages.Account.Manage
         {
             var result = new StringBuilder();
             int currentPosition = 0;
+
             while (currentPosition + 4 < unformattedKey.Length)
             {
                 result.Append(unformattedKey.Substring(currentPosition, 4)).Append(" ");
                 currentPosition += 4;
             }
+
             if (currentPosition < unformattedKey.Length)
             {
                 result.Append(unformattedKey.Substring(currentPosition));
