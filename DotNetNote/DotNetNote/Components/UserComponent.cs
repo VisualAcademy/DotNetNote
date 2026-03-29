@@ -1,4 +1,7 @@
-﻿using Microsoft.Extensions.Caching.Memory;
+﻿using System.Data;
+using Dapper;
+using Microsoft.Data.SqlClient;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace DotNetNote.Components;
 
@@ -13,30 +16,30 @@ public class UserComponent
 public class UserModel
 {
     public int UID { get; set; }
-    public string UserID { get; set; }
-    public string Password { get; set; }
-    public string Username { get; set; }
+    public string UserID { get; set; } = "";
+    public string Password { get; set; } = "";
+    public string Username { get; set; } = "";
 }
 
 public interface IUserModelRepository
 {
-    UserModel GetUserInfor(int uid);
-    UserModel GetUserInforCache(int uid);
+    UserModel? GetUserInfor(int uid);
+    UserModel? GetUserInforCache(int uid);
     void RemoveUserInforCache(int uid);
 }
 
 public class UserModelRepository : IUserModelRepository
 {
-    // https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration/?view=aspnetcore-5.0
-    private IConfiguration _config;
-    private IDbConnection db;
-    private IMemoryCache _cache;
+    private readonly IConfiguration _config;
+    private readonly IDbConnection db;
+    private readonly IMemoryCache _cache;
 
     public UserModelRepository(IConfiguration config, IMemoryCache memoryCache)
     {
         _config = config;
-        db = new SqlConnection(_config.GetSection("ConnectionString").Value);
-
+        db = new SqlConnection(
+            _config.GetSection("ConnectionString").Value
+            ?? throw new InvalidOperationException("ConnectionString is not configured."));
         _cache = memoryCache;
     }
 
@@ -45,43 +48,40 @@ public class UserModelRepository : IUserModelRepository
     /// </summary>
     /// <param name="uid">Id</param>
     /// <returns>T</returns>
-    public UserModel GetUserInfor(int uid)
+    public UserModel? GetUserInfor(int uid)
     {
-        // 저장 프로시저 이름 또는 인라인 SQL 문(Ad HOC 쿼리)
         string sql = "GetUsers";
 
-        // 파라미터 추가
         var parameters = new DynamicParameters();
         parameters.Add("@UID", value: uid, dbType: DbType.Int32, direction: ParameterDirection.Input);
 
-        // 저장 프로시저 실행
-        return db.Query<UserModel>(sql, parameters, commandType: CommandType.StoredProcedure).SingleOrDefault();
+        return db.Query<UserModel>(
+            sql,
+            parameters,
+            commandType: CommandType.StoredProcedure).SingleOrDefault();
     }
 
-    public UserModel GetUserInforCache(int uid)
+    public UserModel? GetUserInforCache(int uid)
     {
-        // 저장 프로시저 이름 또는 인라인 SQL 문(Ad HOC 쿼리)
         string sql = "GetUsers";
 
-        // 파라미터 추가
         var parameters = new DynamicParameters();
         parameters.Add("@UID", value: uid, dbType: DbType.Int32, direction: ParameterDirection.Input);
 
-        // 저장 프로시저 실행
-        // var result = db.Query<UserModel>(sql, parameters, commandType: CommandType.StoredProcedure).SingleOrDefault();
-        // return result;
+        UserModel? um;
 
-        // 캐시에 담을 개체
-        UserModel um;
-
-        // 캐시에 데이터가 들어있으면 해당 데이터를 가져오기
         if (!_cache.TryGetValue($"GetUsers_{uid}", out um))
         {
-            // 캐시에 개체 값을 담기
-            um = db.Query<UserModel>(sql, parameters, commandType: CommandType.StoredProcedure).SingleOrDefault();
+            um = db.Query<UserModel>(
+                sql,
+                parameters,
+                commandType: CommandType.StoredProcedure).SingleOrDefault();
 
-            // 캐시에 현재 사용자 정보를 담기
-            _cache.Set($"GetUsers_{uid}", um, (new MemoryCacheEntryOptions()).SetAbsoluteExpiration(TimeSpan.FromSeconds(60)));
+            _cache.Set(
+                $"GetUsers_{uid}",
+                um,
+                new MemoryCacheEntryOptions()
+                    .SetAbsoluteExpiration(TimeSpan.FromSeconds(60)));
         }
 
         return um;
