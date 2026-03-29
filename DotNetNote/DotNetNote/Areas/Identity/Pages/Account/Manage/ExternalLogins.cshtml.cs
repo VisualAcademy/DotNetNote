@@ -1,6 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc.RazorPages;
+﻿using DotNetNote.Data;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace VisualAcademy.Areas.Identity.Pages.Account.Manage;
+namespace DotNetNote.Areas.Identity.Pages.Account.Manage;
 
 public class ExternalLoginsModel : PageModel
 {
@@ -15,14 +19,14 @@ public class ExternalLoginsModel : PageModel
         _signInManager = signInManager;
     }
 
-    public IList<UserLoginInfo> CurrentLogins { get; set; }
+    public IList<UserLoginInfo> CurrentLogins { get; set; } = new List<UserLoginInfo>();
 
-    public IList<AuthenticationScheme> OtherLogins { get; set; }
+    public IList<AuthenticationScheme> OtherLogins { get; set; } = new List<AuthenticationScheme>();
 
     public bool ShowRemoveButton { get; set; }
 
     [TempData]
-    public string StatusMessage { get; set; }
+    public string? StatusMessage { get; set; }
 
     public async Task<IActionResult> OnGetAsync()
     {
@@ -36,7 +40,9 @@ public class ExternalLoginsModel : PageModel
         OtherLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync())
             .Where(auth => CurrentLogins.All(ul => auth.Name != ul.LoginProvider))
             .ToList();
+
         ShowRemoveButton = user.PasswordHash != null || CurrentLogins.Count > 1;
+
         return Page();
     }
 
@@ -57,17 +63,20 @@ public class ExternalLoginsModel : PageModel
 
         await _signInManager.RefreshSignInAsync(user);
         StatusMessage = "The external login was removed.";
+
         return RedirectToPage();
     }
 
     public async Task<IActionResult> OnPostLinkLoginAsync(string provider)
     {
-        // Clear the existing external cookie to ensure a clean login process
         await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
 
-        // Request a redirect to the external login provider to link a login for the current user
         var redirectUrl = Url.Page("./ExternalLogins", pageHandler: "LinkLoginCallback");
-        var properties = _signInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl, _userManager.GetUserId(User));
+        var properties = _signInManager.ConfigureExternalAuthenticationProperties(
+            provider,
+            redirectUrl,
+            _userManager.GetUserId(User));
+
         return new ChallengeResult(provider, properties);
     }
 
@@ -91,7 +100,6 @@ public class ExternalLoginsModel : PageModel
             throw new InvalidOperationException($"Unexpected error occurred adding external login for user with ID '{user.Id}'.");
         }
 
-        // Clear the existing external cookie to ensure a clean login process
         await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
 
         StatusMessage = "The external login was added.";
