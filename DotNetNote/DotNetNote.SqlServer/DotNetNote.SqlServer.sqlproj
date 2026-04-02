@@ -94,6 +94,7 @@
     <Folder Include="dbo\Scripts\Attachments" />
     <Folder Include="dbo\Scripts\1_SqlServer" />
     <Folder Include="dbo\Tables\01_Identity" />
+    <Folder Include="Seed" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\Companies.sql" />
@@ -188,8 +189,13 @@
     <Build Include="dbo\Tables\01_Identity\AspNetUsers.sql" />
     <Build Include="dbo\Tables\AuditTrail.sql" />
     <Build Include="dbo\Tables\Notifications.sql" />
+    <Build Include="dbo\Tables\AppointmentsTypes.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="dbo\Scripts\Attachments\Demo_Attachments_Processing.sql" />
+    <None Include="Seed\AppointmentsTypes.seed.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <PostDeploy Include="Script.PostDeployment.sql" />
   </ItemGroup>
 </Project>
