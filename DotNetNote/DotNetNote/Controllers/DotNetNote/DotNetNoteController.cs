@@ -4,10 +4,7 @@ using System.Net.Http.Headers;
 using DotNetNote.Models.Notes;
 using Dul.Board;
 using Dul.Web;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace DotNetNote.Controllers;
 
