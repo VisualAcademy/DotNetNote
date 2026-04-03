@@ -1,0 +1,29 @@
+﻿@{
+    ViewData["Title"] = "License Number Demo";
+}
+
+<h2>License Number Demo</h2>
+
+<h3>Employee</h3>
+<ul>
+    @foreach (var item in (List<string>)ViewBag.EmployeeSuggestion)
+    {
+        <li>@item</li>
+    }
+</ul>
+
+<h3>Vendor Employee</h3>
+<ul>
+    @foreach (var item in (List<string>)ViewBag.VendorEmployeeSuggestion)
+    {
+        <li>@item</li>
+    }
+</ul>
+
+<h3>Vendor</h3>
+<ul>
+    @foreach (var item in (List<string>)ViewBag.VendorSuggestion)
+    {
+        <li>@item</li>
+    }
+</ul>

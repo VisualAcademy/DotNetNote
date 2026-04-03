@@ -25,6 +25,7 @@ using DotNetNote.Models.Notifications;
 using DotNetNote.Models.RecruitManager;
 using DotNetNote.Records;
 using DotNetNote.Rules;
+using DotNetNote.Services.Interfaces;
 using DotNetNote.Services.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -501,6 +502,10 @@ public partial class Program
         // HttpClient 등록
         // HttpClient 인스턴스를 DI(Dependency Injection) 컨테이너에 등록하여 재사용성을 높임
         services.AddHttpClient();
+
+        services.AddScoped<IEmployeeLicenseNumberService, EmployeeLicenseNumberService>();
+        services.AddScoped<IVendorEmployeeLicenseNumberService, VendorEmployeeLicenseNumberService>();
+        services.AddScoped<IVendorLicenseNumberService, VendorLicenseNumberService>();
     }
 
     private static void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider)
