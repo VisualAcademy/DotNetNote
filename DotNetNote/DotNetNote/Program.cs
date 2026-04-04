@@ -9,6 +9,8 @@ using Azunt.TenantSettingManagement;
 using Azunt.Web.Infrastructure.Extensions;
 using Azunt.Web.Infrastructures;
 using Azunt.Web.Policies;
+using Azunt.Web.Services;
+using Azunt.Web.Services.Interfaces;
 using Azunt.Web.Settings;
 using Dalbodre;
 using DotNetNote.Common;
@@ -61,7 +63,10 @@ public partial class Program
 
         // Add services to the container.
         builder.Services.AddRazorComponents()
-            .AddInteractiveServerComponents();
+            .AddInteractiveServerComponents(options =>
+            {
+                options.DetailedErrors = true;
+            });
 
         builder.Services.AddCascadingAuthenticationState();
         builder.Services.AddScoped<IdentityUserAccessor>();
@@ -187,6 +192,8 @@ public partial class Program
 
         // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
         builder.Services.AddOpenApi();
+
+        builder.Services.AddScoped<IPhotoLogService, InMemoryPhotoLogService>();
 
         var app = builder.Build();
 
@@ -382,7 +389,6 @@ public partial class Program
         services.AddControllersWithViews();
 
         services.AddRazorPages();
-        services.AddServerSideBlazor();
 
 
 
@@ -533,7 +539,6 @@ public partial class Program
         app.UseEndpoints(endpoints =>
         {
             endpoints.MapRazorPages();
-            endpoints.MapBlazorHub();
             endpoints.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
