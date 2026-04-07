@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System.Net.Http;
 using System.Net.Http.Headers;
 
@@ -10,22 +11,19 @@ public class TechController : Controller
 
     public async Task<IActionResult> GetTechAllWithHttpClient()
     {
-        List<Tech> teches = new List<Tech>();
-
-        teches = await GetAll();
-
+        List<Tech> teches = await GetAll();
         return View(teches);
     }
 
     /// <summary>
-    /// [1] GET: List of Tech 형태의 데이터를 JSON으로 받아오는 공식 코드 
+    /// [1] GET: List of Tech 형태의 데이터를 JSON으로 받아오는 공식 코드
     /// </summary>
     private static async Task<List<Tech>> GetAll()
     {
-        List<Tech> teches = new List<Tech>();
         var baseUri = "http://localhost:16929/";
+        List<Tech> teches = new();
 
-        HttpClient httpClient = new HttpClient();
+        using HttpClient httpClient = new();
         httpClient.BaseAddress = new Uri(baseUri);
         httpClient.DefaultRequestHeaders.Accept.Clear();
         httpClient.DefaultRequestHeaders.Accept.Add(
@@ -36,7 +34,7 @@ public class TechController : Controller
         if (response.IsSuccessStatusCode)
         {
             string json = await response.Content.ReadAsStringAsync();
-            teches = JsonConvert.DeserializeObject<List<Tech>>(json);
+            teches = JsonConvert.DeserializeObject<List<Tech>>(json) ?? new List<Tech>();
         }
 
         return teches;
