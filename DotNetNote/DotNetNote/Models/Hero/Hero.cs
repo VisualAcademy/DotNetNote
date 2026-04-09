@@ -1,46 +1,49 @@
-﻿// 모델 -> 인터페이스 -> 리포지토리 -> 컨트롤러 -> REST 
+﻿using System.Data;
+using Dapper;
 using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
 
 namespace DotNetNote.Models
 {
     /// <summary>
     /// [1] 모델 클래스
-    /// Heroes 테이블과 일대일로 매핑되는 모델 클래스: 
+    /// Heroes 테이블과 일대일로 매핑되는 모델 클래스:
     /// Heroes, HeroesModel, HeroesViewModel, HeroesBase, HeroesDto, HeroesEntity, ...
     /// </summary>
     public class Hero
     {
         public int Id { get; set; }
 
-        public string Name { get; set; }
+        public string Name { get; set; } = string.Empty;
 
-        public string Icon { get; set; }
+        public string Icon { get; set; } = string.Empty;
 
         public DateTimeOffset Created { get; set; }
     }
 
     /// <summary>
-    /// [2] 인터페이스 
+    /// [2] 인터페이스
     /// Heroes 테이블에 대한 CRUD API 명세서 작성
     /// </summary>
     public interface IHeroRepository
     {
-        Hero AddHero(Hero model);       // 입력: T Add(T model);
+        Hero AddHero(Hero model);               // 입력: T Add(T model);
 
-        List<Hero> GetAllHeroes();      // 출력: List<T> GetAll();
+        List<Hero> GetAllHeroes();              // 출력: List<T> GetAll();
 
-        Hero GetHeroById(int id);       // 상세: T GetById(int id);
+        Hero? GetHeroById(int id);              // 상세: T? GetById(int id);
 
-        Hero UpdateHero(Hero model);    // 수정: T Update(T model);
+        Hero UpdateHero(Hero model);            // 수정: T Update(T model);
 
-        void RemoveHero(int id);        // 삭제: void Remove(int id); 
+        void RemoveHero(int id);                // 삭제: void Remove(int id);
 
         int GetRecordCountHeroes();
 
         List<Hero> GetAllHeroesWithPaging(int pageIndex, int pageSize = 10);
 
         // 추가: 이미 등록된 영웅 이름인지 확인
-        Hero GetHeroByName(string name);
+        Hero? GetHeroByName(string name);
     }
 
     /// <summary>
@@ -49,17 +52,21 @@ namespace DotNetNote.Models
     /// </summary>
     public class HeroRepository : IHeroRepository
     {
-        private IConfiguration _config;
-        private IDbConnection db;
+        private readonly IConfiguration _config;
+        private readonly IDbConnection db;
 
         /// <summary>
-        /// 생성자 
+        /// 생성자
         /// </summary>
         public HeroRepository(IConfiguration config)
         {
             _config = config;
-            string connectionString = _config.GetSection("ConnectionString").Value;
-            //db = new SqlConnection(_config.GetSection("ConnectionStrings").GetSection("DefaultConnection").Value);
+
+            string connectionString =
+                _config.GetSection("ConnectionString").Value
+                ?? _config.GetConnectionString("DefaultConnection")
+                ?? throw new InvalidOperationException("A database connection string was not found.");
+
             db = new SqlConnection(connectionString);
         }
 
@@ -72,6 +79,7 @@ namespace DotNetNote.Models
                 Insert Into Heroes (Name, Icon) Values (@Name, @Icon);
                 Select Cast(SCOPE_IDENTITY() As Int);
             ";
+
             var id = db.Query<int>(sql, model).Single();
             model.Id = id;
             return model;
@@ -82,17 +90,17 @@ namespace DotNetNote.Models
         /// </summary>
         public List<Hero> GetAllHeroes()
         {
-            string sql = "Select * From Heroes Order By Id Desc";
+            const string sql = "Select * From Heroes Order By Id Desc";
             return db.Query<Hero>(sql).ToList();
         }
 
         /// <summary>
         /// 상세 메서드: GetById, GetHeroById, GetHero, FindHero()
         /// </summary>
-        public Hero GetHeroById(int id)
+        public Hero? GetHeroById(int id)
         {
-            string query = "Select * From Heroes Where Id = @Id";
-            return db.Query<Hero>(query, new { Id = id }).SingleOrDefault(); // null 반환 허용
+            const string query = "Select * From Heroes Where Id = @Id";
+            return db.Query<Hero>(query, new { Id = id }).SingleOrDefault();
         }
 
         /// <summary>
@@ -100,12 +108,13 @@ namespace DotNetNote.Models
         /// </summary>
         public Hero UpdateHero(Hero model)
         {
-            var query =
+            const string query =
                 "Update Heroes          " +
                 "Set                    " +
                 "   Name = @Name,       " +
                 "   Icon = @Icon        " +
                 "Where Id = @Id         ";
+
             db.Execute(query, model);
             return model;
         }
@@ -113,10 +122,9 @@ namespace DotNetNote.Models
         /// <summary>
         /// 삭제 메서드: Remove, RemoveHero, Delete
         /// </summary>
-        /// <param name="id"></param>
         public void RemoveHero(int id)
         {
-            var query = "Delete From Heroes Where Id = @Id";
+            const string query = "Delete From Heroes Where Id = @Id";
             db.Execute(query, new { Id = id });
         }
 
@@ -125,7 +133,7 @@ namespace DotNetNote.Models
         /// </summary>
         public int GetRecordCountHeroes()
         {
-            string query = "Select Count(*) From Heroes";
+            const string query = "Select Count(*) From Heroes";
             return db.Query<int>(query).FirstOrDefault();
         }
 
@@ -151,30 +159,30 @@ namespace DotNetNote.Models
                         And
                             (@PageIndex + 1) * @PageSize
             ";
+
             return db.Query<Hero>(
-                sql, new { PageIndex = pageIndex, PageSize = pageSize }).ToList();
+                sql,
+                new { PageIndex = pageIndex, PageSize = pageSize }).ToList();
         }
 
         /// <summary>
         /// 이름 확인
         /// </summary>
-        public Hero GetHeroByName(string name)
+        public Hero? GetHeroByName(string name)
         {
-            string query = "Select * From Heroes Where Name = @Name";
-            return db.Query<Hero>(query, new { Name = name }).FirstOrDefault(); // 이미 '홍길동'이 여러개 들어가 있음
+            const string query = "Select * From Heroes Where Name = @Name";
+            return db.Query<Hero>(query, new { Name = name }).FirstOrDefault();
         }
     }
 
     /// <summary>
-    /// [4] 컨트롤러 클래스: ASP.NET Core MVC 파트  
+    /// [4] 컨트롤러 클래스: ASP.NET Core MVC 파트
     /// </summary>
     public class HeroController : Controller
     {
-        private IHeroRepository _repository;
-        private ILogger<HeroController> _logger;
+        private readonly IHeroRepository _repository;
+        private readonly ILogger<HeroController> _logger;
 
-        // 인터페이스를 통한 생성자 주입 방식 사용: 
-        //     Startup.cs에서 services.AddTransient로 등록됨
         public HeroController(IHeroRepository repository, ILogger<HeroController> logger)
         {
             _repository = repository;
@@ -182,11 +190,10 @@ namespace DotNetNote.Models
         }
 
         /// <summary>
-        /// 리스트 
+        /// 리스트
         /// </summary>
         public IActionResult Index()
         {
-            // 모든 데이터 출력
             var heroes = _repository.GetAllHeroes();
             return View(heroes);
         }
@@ -206,17 +213,27 @@ namespace DotNetNote.Models
         [HttpPost]
         public IActionResult Create(string name, string icon)
         {
-            var hero = new Hero() { Name = name, Icon = icon };
+            var hero = new Hero
+            {
+                Name = name ?? string.Empty,
+                Icon = icon ?? string.Empty
+            };
+
             _repository.AddHero(hero);
             return RedirectToAction(nameof(Index));
         }
 
         /// <summary>
-        /// 상세 보기 
+        /// 상세 보기
         /// </summary>
         public IActionResult Details(int id)
         {
             var hero = _repository.GetHeroById(id);
+            if (hero is null)
+            {
+                return NotFound();
+            }
+
             return View(hero);
         }
 
@@ -226,7 +243,13 @@ namespace DotNetNote.Models
         [HttpPost]
         public IActionResult Edit(int id, string name, string icon)
         {
-            var hero = new Hero() { Id = id, Name = name, Icon = icon };
+            var hero = new Hero
+            {
+                Id = id,
+                Name = name ?? string.Empty,
+                Icon = icon ?? string.Empty
+            };
+
             _repository.UpdateHero(hero);
             return RedirectToAction(nameof(Details), new { Id = id });
         }
@@ -238,7 +261,7 @@ namespace DotNetNote.Models
         public IActionResult Delete(int id)
         {
             _repository.RemoveHero(id);
-            _logger.LogInformation($"{id} 자료가 삭제되었습니다.");
+            _logger.LogInformation("{Id} 자료가 삭제되었습니다.", id);
             return RedirectToAction(nameof(Index));
         }
     }
@@ -248,36 +271,26 @@ namespace DotNetNote.Models
     /// 복수형 또는 Services 등의 접미사 사용 권장
     /// 컨벤션 기반 라우팅 대신에 특성(어트리뷰트) 라우팅 추천
     /// </summary>
-    //[Route("api/heroes")] // 직접 Web API 이름을 지정할 때
-    //@Path("/api/Heroes") : Java EE 참고용으로 기록
-    [Route("api/[controller]")] // /api/heroes 
+    [Route("api/[controller]")]
     [EnableCors("AllowAnyOrigin")]
     public class HeroesController(IHeroRepository repository, ILogger<HeroesController> logger) : Controller
     {
         /// <summary>
         /// GET: /api/heroes
         /// </summary>
-        //@Get
-        //Produces(APPLICATION_JSON) 
         [HttpGet]
         [Route("")]
         [ProducesResponseType(typeof(List<Hero>), 200)]
         public IActionResult Get()
         {
-            // 500 에러 찍어보려면,
-            // throw new Exception("인위적으로 에러 발생시켜 500에러 출력");
             try
             {
                 var models = repository.GetAllHeroes();
-                if (models == null)
-                {
-                    return NotFound("아무런 데이터가 없습니다.");
-                }
-                return Ok(models); // 200 OK 
+                return Ok(models);
             }
             catch (Exception ex)
             {
-                logger.LogError($"에러 발생: {ex.Message}");
+                logger.LogError(ex, "HeroesController - Get error");
                 return BadRequest();
             }
         }
@@ -285,22 +298,23 @@ namespace DotNetNote.Models
         /// <summary>
         /// GET: /api/heroes/{id}
         /// </summary>
-        [HttpGet("{id:int}", Name = "GetHeroById")] // 이름 추가: Name 속성은 프로젝트에서 유일한 값 지정
+        [HttpGet("{id:int}", Name = "GetHeroById")]
         [ProducesResponseType(typeof(Hero), 200)]
         public IActionResult Get(int id)
         {
             try
             {
                 var model = repository.GetHeroById(id);
-                if (model == null)
+                if (model is null)
                 {
                     return NotFound($"{id}번 데이터가 없습니다.");
                 }
+
                 return Ok(model);
             }
             catch (Exception ex)
             {
-                logger.LogError($"HeroesController - GetById 에러 발생: {ex.Message}");
+                logger.LogError(ex, "HeroesController - GetById error");
                 return BadRequest($"에러가 발생했습니다. {ex.Message}");
             }
         }
@@ -310,55 +324,57 @@ namespace DotNetNote.Models
         /// </summary>
         [HttpPost]
         [Produces("application/json", Type = typeof(Hero))]
-        [Consumes("application/json")] // application/xml 
-        public IActionResult Post([FromBody] Hero model) // Deserialize, 생성 전용 DTO 클래스 사용 가능
+        [Consumes("application/json")]
+        public IActionResult Post([FromBody] Hero model)
         {
-            // 예외 처리 방법
-            if (model == null)
+            if (model is null)
             {
-                return BadRequest(); // Status: 400 Bad Request
+                return BadRequest();
             }
 
             try
             {
-                // 예외 처리
-                if (model.Name == null || model.Name.Length < 1)
+                if (string.IsNullOrWhiteSpace(model.Name))
                 {
                     ModelState.AddModelError("Name", "이름을 입력해야 합니다.");
                 }
 
-                // 모델 유효성 검사
                 if (!ModelState.IsValid)
                 {
-                    return BadRequest(ModelState); // 400 에러 출력
+                    return BadRequest(ModelState);
                 }
 
-                var m = repository.AddHero(model); // 저장 
+                model.Name ??= string.Empty;
+                model.Icon ??= string.Empty;
 
-                if (DateTime.Now.Second % 2 == 0) //[!] 2가지 방식 중 원하는 방식 사용
+                var m = repository.AddHero(model);
+
+                if (DateTime.Now.Second % 2 == 0)
                 {
-                    //return CreatedAtAction("GetHeroById", new { id = m.Id }, m);
-                    return CreatedAtRoute("GetHeroById", new { id = m.Id }, m); // Status: 201 Created
+                    return CreatedAtRoute("GetHeroById", new { id = m.Id }, m);
                 }
                 else
                 {
                     var uri = Url.Link("GetHeroById", new { id = m.Id });
-                    return Created(uri, m); // 201 Created
+                    return uri is not null
+                        ? Created(uri, m)
+                        : CreatedAtRoute("GetHeroById", new { id = m.Id }, m);
                 }
-                //return Ok(m); // 200 OK
             }
             catch (Exception ex)
             {
-                logger.LogError($"HeroesController - Post 에러 발생: {ex.Message}");
+                logger.LogError(ex, "HeroesController - Post error");
                 return BadRequest($"에러가 발생했습니다. {ex.Message}");
             }
-        } // </Post>
+        }
 
-        // PUT: /api/heroes/{id}
-        [HttpPut("{id:int}")] // HttpPatch == 부분 업데이트 
+        /// <summary>
+        /// PUT: /api/heroes/{id}
+        /// </summary>
+        [HttpPut("{id:int}")]
         public IActionResult Put(int id, [FromBody] Hero model)
         {
-            if (model == null)
+            if (model is null)
             {
                 return BadRequest();
             }
@@ -366,93 +382,84 @@ namespace DotNetNote.Models
             try
             {
                 var oldModel = repository.GetHeroById(id);
-                if (oldModel == null)
+                if (oldModel is null)
                 {
                     return NotFound($"{id}번 데이터가 없습니다.");
                 }
-                model.Id = id; // *
-                repository.UpdateHero(model); // 수정
-                //return Ok(model);
-                // 204 No Content
-                return NoContent(); // 이미 넘어온 정보에 모든 값을 가지고 있기에...
+
+                model.Id = id;
+                model.Name ??= string.Empty;
+                model.Icon ??= string.Empty;
+
+                repository.UpdateHero(model);
+                return NoContent();
             }
             catch (Exception ex)
             {
-                logger.LogError($"HeroesController - Put 에러 발생: {ex.Message}");
+                logger.LogError(ex, "HeroesController - Put error");
                 return BadRequest($"데이터가 업데이트되지 않았습니다. {ex.Message}");
             }
-        } // </Put>
+        }
 
-        // DELETE: /api/heroes/{id}
-        [HttpDelete("{id:int}")] // 데코레이터 특성
+        /// <summary>
+        /// DELETE: /api/heroes/{id}
+        /// </summary>
+        [HttpDelete("{id:int}")]
         public IActionResult Delete(int id)
         {
             try
             {
                 var oldModel = repository.GetHeroById(id);
-                if (oldModel == null)
+                if (oldModel is null)
                 {
                     return NotFound($"{id}번 데이터가 없습니다.");
                 }
 
-                // 삭제 
                 repository.RemoveHero(id);
-
-                return NoContent(); // 204 No Content 
+                return NoContent();
             }
             catch (Exception ex)
             {
-                logger.LogError($"HeroesController - Delete 에러 발생: {ex.Message}");
+                logger.LogError(ex, "HeroesController - Delete error");
                 return BadRequest($"삭제할 수 없습니다. {ex.Message}");
             }
-        } // </Delete> 
+        }
 
-        // 페이징 처리 Web API
-        // GET: /api/heroes/page/1/10
+        /// <summary>
+        /// GET: /api/heroes/page/1/10
+        /// </summary>
         [HttpGet("page/{pageNumber:int}/{pageSize:int}")]
         [ProducesResponseType(typeof(IEnumerable<Hero>), 200)]
         public IActionResult Get(int pageNumber = 1, int pageSize = 10)
         {
             try
             {
-                // 페이지 번호는 1, 2, 3 사용, 리포지토리에서는 0, 1, 2 사용
-                int pageIndex = (pageNumber > 0) ? pageNumber - 1 : 0;
+                int pageIndex = pageNumber > 0 ? pageNumber - 1 : 0;
                 var models = repository.GetAllHeroesWithPaging(pageIndex, pageSize);
-                if (models == null)
-                {
-                    return NotFound("아무런 데이터가 없습니다.");
-                }
 
-                // 응답 헤더에 총 레코드 수를 담아서 출력 
-                //Response.Headers.Add("X-TotalRecordCount", _repository.GetRecordCountHeroes().ToString());
-                // 인덱서를 사용하는 방식으로 변경
                 Response.Headers["X-TotalRecordCount"] = repository.GetRecordCountHeroes().ToString();
 
-                return Ok(models); // 200 OK 
+                return Ok(models);
             }
             catch (Exception ex)
             {
-                logger.LogError($"HeroesController - GetByPaging 에러 발생: {ex.Message}");
+                logger.LogError(ex, "HeroesController - GetByPaging error");
                 return BadRequest(ex.Message);
             }
         }
 
-        [HttpGet("{name}", Name = "GetHeroByName")] // 이름 추가: Name 속성은 프로젝트에서 유일한 값 지정
+        [HttpGet("{name}", Name = "GetHeroByName")]
         [ProducesResponseType(typeof(Hero), 200)]
         public IActionResult Get(string name)
         {
             try
             {
                 var model = repository.GetHeroByName(name);
-                if (model == null)
-                {
-                    return Ok(new Hero());
-                }
-                return Ok(model);
+                return Ok(model ?? new Hero());
             }
             catch (Exception ex)
             {
-                logger.LogError($"HeroesController - GetByName 에러 발생: {ex.Message}");
+                logger.LogError(ex, "HeroesController - GetByName error");
                 return BadRequest($"에러가 발생했습니다. {ex.Message}");
             }
         }
