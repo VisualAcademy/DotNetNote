@@ -10,11 +10,15 @@ public class CharacterController(IHeroRepository hero, ICharacterRepository char
     {
         var heroes = hero.GetAllHeroes();
 
-        var username = User.FindFirst("UserId").Value; // 사용자 아이디 
-        var myCharacter = character.GetCharacterByUsername(username);
-        if (myCharacter != null)
+        var userIdClaim = User.FindFirst("UserId");
+        if (userIdClaim is not null && !string.IsNullOrWhiteSpace(userIdClaim.Value))
         {
-            ViewBag.MyCharacter = myCharacter;
+            var username = userIdClaim.Value; // 사용자 아이디
+            var myCharacter = character.GetCharacterByUsername(username);
+            if (myCharacter != null)
+            {
+                ViewBag.MyCharacter = myCharacter;
+            }
         }
 
         return View(heroes);
@@ -22,11 +26,21 @@ public class CharacterController(IHeroRepository hero, ICharacterRepository char
 
     public IActionResult Choice(int hero)
     {
+        var userIdClaim = User.FindFirst("UserId");
+        if (userIdClaim is null || string.IsNullOrWhiteSpace(userIdClaim.Value))
+        {
+            return Unauthorized();
+        }
+
         // DB에 저장
-        var username = User.FindFirst("UserId").Value; // 사용자 아이디
+        var username = userIdClaim.Value; // 사용자 아이디
         var heroId = hero; // HeroId
 
-        var model = new CharacterModel() { Username = username, HeroId = heroId };
+        var model = new CharacterModel
+        {
+            Username = username,
+            HeroId = heroId
+        };
 
         character.SetCharacter(model);
 
