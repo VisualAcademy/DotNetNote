@@ -8,7 +8,7 @@ public class ResetAuthenticatorModel(
     ILogger<ResetAuthenticatorModel> logger) : PageModel
 {
     [TempData]
-    public string StatusMessage { get; set; }
+    public string? StatusMessage { get; set; }
 
     public async Task<IActionResult> OnGet()
     {
