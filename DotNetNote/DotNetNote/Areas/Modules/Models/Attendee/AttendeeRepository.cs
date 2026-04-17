@@ -1,43 +1,69 @@
 ﻿using Dapper;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace AttendeeApp.Models;
 
 public class AttendeeRepository : IAttendeeRepository
 {
-    // https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration/?view=aspnetcore-5.0
-    private readonly IConfiguration _config;
-    private SqlConnection con;
+    private readonly string _connectionString;
 
     public AttendeeRepository(IConfiguration config)
     {
-        _config = config;
-        con = new SqlConnection(
-            _config.GetSection("ConnectionStrings")
-                .GetSection("DefaultConnection").Value);
+        ArgumentNullException.ThrowIfNull(config);
+
+        _connectionString =
+            config.GetConnectionString("DefaultConnection")
+            ?? throw new InvalidOperationException("Connection string 'DefaultConnection' was not found.");
     }
 
-    public AttendeeRepository(string connectionString) => con = new SqlConnection(connectionString);
+    public AttendeeRepository(string connectionString)
+    {
+        if (string.IsNullOrWhiteSpace(connectionString))
+        {
+            throw new ArgumentException("A valid connection string is required.", nameof(connectionString));
+        }
+
+        _connectionString = connectionString;
+    }
+
+    private SqlConnection CreateConnection() => new(_connectionString);
 
     public void Add(Attendee model)
     {
-        var sql =
-            "Insert Into Attendees (UID, UserId, Name) "
-            + " Values (@UID, @UserId, @Name)";
+        ArgumentNullException.ThrowIfNull(model);
+
+        const string sql = @"
+            Insert Into Attendees (UID, UserId, Name)
+            Values (@UID, @UserId, @Name);";
+
+        using var con = CreateConnection();
         con.Execute(sql, model);
     }
 
     public void Delete(Attendee model)
     {
-        var sql = "Delete Attendees Where Id = @Id";
-        con.Execute(sql, new { Id = model.Id });
+        ArgumentNullException.ThrowIfNull(model);
+
+        const string sql = @"
+            Delete From Attendees
+            Where Id = @Id;";
+
+        using var con = CreateConnection();
+        con.Execute(sql, new { model.Id });
     }
 
     public List<Attendee> GetAll()
     {
-        var sql = "Select * From Attendees Order By Id Asc";
+        const string sql = @"
+            Select *
+            From Attendees
+            Order By Id Asc;";
+
+        using var con = CreateConnection();
         return con.Query<Attendee>(sql).ToList();
     }
 }
