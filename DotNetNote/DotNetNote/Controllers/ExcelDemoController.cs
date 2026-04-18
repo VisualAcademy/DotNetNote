@@ -32,7 +32,6 @@ namespace DotNetNote.Controllers
                     Name = "Demo"
                 });
 
-                // A1:B2 (헤더 + 데이터 한 줄)
                 var header = new Row { RowIndex = 1 };
                 header.Append(TextCell("A1", "Name"));
                 header.Append(TextCell("B1", "Score"));
@@ -53,7 +52,7 @@ namespace DotNetNote.Controllers
                 $"demo_{DateTime.Now:yyyyMMddHHmmss}.xlsx");
         }
 
-        // GET /excel-demo/upload (간단 업로드 폼)
+        // GET /excel-demo/upload
         [HttpGet("upload")]
         public IActionResult UploadForm()
         {
@@ -80,30 +79,40 @@ namespace DotNetNote.Controllers
             await file.CopyToAsync(ms);
             ms.Position = 0;
 
-            string[,] cells = new string[2, 2]; // [row, col] → 0..1
+            string[,] cells = new string[2, 2];
 
             using (var doc = SpreadsheetDocument.Open(ms, false))
             {
                 var wbPart = doc.WorkbookPart;
-                if (wbPart is null)
+                if (wbPart == null)
                     return BadRequest("Invalid workbook.");
 
-                var sheet = wbPart.Workbook?.Sheets?.Elements<Sheet>().FirstOrDefault();
-                if (sheet is null || sheet.Id is null)
+                var workbook = wbPart.Workbook;
+                if (workbook == null)
+                    return BadRequest("Workbook missing.");
+
+                var sheets = workbook.Sheets;
+                if (sheets == null)
+                    return BadRequest("No sheets found.");
+
+                var sheet = sheets.Elements<Sheet>().FirstOrDefault();
+                if (sheet == null)
                     return BadRequest("No worksheet found.");
 
-                var wsPart = wbPart.GetPartById(sheet.Id!) as WorksheetPart;
-                if (wsPart is null)
+                var sheetId = sheet.Id?.Value;
+                if (string.IsNullOrWhiteSpace(sheetId))
+                    return BadRequest("Worksheet id not found.");
+
+                var wsPart = wbPart.GetPartById(sheetId) as WorksheetPart;
+                if (wsPart == null)
                     return BadRequest("Worksheet part not found.");
 
-                // A1,B1 (헤더), A2,B2 (데이터)
                 cells[0, 0] = GetCellText(wsPart, wbPart, "A1");
                 cells[0, 1] = GetCellText(wsPart, wbPart, "B1");
                 cells[1, 0] = GetCellText(wsPart, wbPart, "A2");
                 cells[1, 1] = GetCellText(wsPart, wbPart, "B2");
             }
 
-            // 간단 HTML 테이블로 출력
             var html = $"""
             <html><body>
               <h3>Loaded A1:B2</h3>
@@ -119,58 +128,79 @@ namespace DotNetNote.Controllers
 
         // ===== Helpers =====
 
-        private static Cell TextCell(string cellRef, string text) =>
-            new Cell
+        private static Cell TextCell(string cellRef, string text)
+        {
+            return new Cell
             {
                 CellReference = cellRef,
                 DataType = CellValues.String,
                 CellValue = new CellValue(text ?? string.Empty)
             };
+        }
 
         private static string GetCellText(WorksheetPart wsPart, WorkbookPart wbPart, string cellRef)
         {
             var cell = GetCell(wsPart, cellRef);
-            if (cell is null) return string.Empty;
+            if (cell == null)
+                return string.Empty;
 
-            // SharedString
-            if (cell.DataType?.Value == CellValues.SharedString)
+            var dataType = cell.DataType?.Value;
+
+            if (dataType == CellValues.SharedString)
             {
                 if (int.TryParse(cell.CellValue?.Text, out var idx))
                 {
-                    var sst = wbPart.SharedStringTablePart?.SharedStringTable;
-                    return sst?.ElementAtOrDefault(idx)?.InnerText ?? string.Empty;
+                    var sstPart = wbPart.SharedStringTablePart;
+                    var sst = sstPart?.SharedStringTable;
+
+                    if (sst != null && idx >= 0 && idx < sst.Count())
+                    {
+                        return sst.ElementAt(idx).InnerText;
+                    }
                 }
+
                 return string.Empty;
             }
 
-            // InlineString
-            if (cell.DataType?.Value == CellValues.InlineString)
+            if (dataType == CellValues.InlineString)
+            {
                 return cell.InlineString?.Text?.Text ?? string.Empty;
+            }
 
-            // 숫자/일반 문자열
             return cell.CellValue?.Text ?? string.Empty;
         }
 
         private static Cell? GetCell(WorksheetPart wsPart, string cellRef)
         {
-            var sheetData = wsPart.Worksheet.GetFirstChild<SheetData>();
-            if (sheetData is null) return null;
+            var worksheet = wsPart.Worksheet;
+            if (worksheet == null)
+                return null;
 
-            // 행 번호 파싱
+            var sheetData = worksheet.GetFirstChild<SheetData>();
+            if (sheetData == null)
+                return null;
+
             int i = 0;
             while (i < cellRef.Length && char.IsLetter(cellRef[i])) i++;
-            if (!int.TryParse(cellRef[i..], out var rowIndex)) return null;
+
+            if (!int.TryParse(cellRef[i..], out var rowIndex))
+                return null;
 
             var row = sheetData.Elements<Row>()
-                .FirstOrDefault(r => r.RowIndex?.Value == (uint)rowIndex);
+                .FirstOrDefault(r => r.RowIndex != null && r.RowIndex.Value == (uint)rowIndex);
 
-            if (row is null) return null;
+            if (row == null)
+                return null;
 
             return row.Elements<Cell>()
-                .FirstOrDefault(c => string.Equals(c.CellReference?.Value, cellRef, StringComparison.OrdinalIgnoreCase));
+                .FirstOrDefault(c =>
+                    c.CellReference != null &&
+                    string.Equals(c.CellReference.Value, cellRef, StringComparison.OrdinalIgnoreCase));
         }
 
-        private static string Html(string? s) =>
-            System.Net.WebUtility.HtmlEncode(s ?? string.Empty);
+        private static string Html(string? s)
+        {
+            return System.Net.WebUtility.HtmlEncode(s ?? string.Empty);
+        }
     }
 }
