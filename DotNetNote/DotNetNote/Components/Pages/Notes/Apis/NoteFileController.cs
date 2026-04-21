@@ -1,8 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Azunt.NoteManagement;
-using System.Threading.Tasks;
-using System.IO;
-using System;
+﻿using Azunt.NoteManagement;
 
 namespace Azunt.Apis.Notes
 {
