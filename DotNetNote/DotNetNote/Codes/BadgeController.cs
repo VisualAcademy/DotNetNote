@@ -1,11 +1,5 @@
-﻿using System;
-using System.Linq;
-using VisualAcademy.Models.Codes;
+﻿using VisualAcademy.Models.Codes;
 using VisualAcademy.Models.Configuration;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Options;
 
 namespace VisualAcademy.Codes
 {
