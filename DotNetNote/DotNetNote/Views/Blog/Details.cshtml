@@ -1,6 +1,16 @@
 ﻿@model Note
 @inject Microsoft.Extensions.Options.IOptions<
-    DotNetNote.Settings.DotNetNoteSettings> option
+DotNetNote.Settings.DotNetNoteSettings > option
+
+@{
+    var currentUserId = User.FindFirst("UserId")?.Value;
+    var siteAdminId = option.Value?.SiteAdmin;
+    var canPinAsNotice =
+        Model.Category != "Notice" &&
+        User.IsInRole("Users") &&
+        !string.IsNullOrEmpty(currentUserId) &&
+        currentUserId == siteAdminId;
+}
 
 <h2 style="text-align:center;">블로그 포스트</h2>
 @*<span style="color: #ff0000">
@@ -50,9 +60,9 @@
             </td>
             <td>
                 <span>
-                    @Html.Raw(String.Format(
-                        "<a href=\"{0}\" target=\"_blank\">{0}</a>"
-                        , Model.Homepage))
+                    @Html.Raw(string.Format(
+                        "<a href=\"{0}\" target=\"_blank\">{0}</a>",
+                        Model.Homepage))
                 </span>
             </td>
         </tr>
@@ -106,13 +116,13 @@
 
 <div style="text-align:center;">
 
-    @if (Model.Category != "Notice" && User.IsInRole("Users") &&
-        User.FindFirst("UserId").Value == option.Value.SiteAdmin)
+    @if (canPinAsNotice)
     {
         <a asp-action="Pinned" asp-route-id="@Model.Id" class="btn btn-danger">
             공지로 올리기
         </a>
     }
+
     <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-default">
         삭제
     </a>
@@ -134,7 +144,7 @@
         <script src="~/lib/toastr/toastr.js"></script>
         <script>
             $(function () {
-                toastr.info('@TempData["Message"]');
+            toastr.info('@TempData["Message"]');
             });
         </script>
     }
