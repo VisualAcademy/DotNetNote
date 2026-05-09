@@ -124,7 +124,7 @@
         <PackageReference Include="Serilog.Sinks.MSSqlServer" Version="9.0.3" />
         <PackageReference Include="Stripe.net" Version="51.1.0" />
         <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.18.0" />
-        <PackageReference Include="Twilio" Version="7.14.8" />
+        <PackageReference Include="Twilio" Version="7.14.9" />
 
     </ItemGroup>
 

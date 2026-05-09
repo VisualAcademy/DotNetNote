@@ -43,7 +43,7 @@
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="Twilio" Version="7.14.8" />
+        <PackageReference Include="Twilio" Version="7.14.9" />
 
         <PackageReference Include="Microsoft.FluentUI.AspNetCore.Components" Version="4.14.1" />
         <PackageReference Include="Microsoft.FluentUI.AspNetCore.Components.DataGrid.EntityFrameworkAdapter" Version="4.14.1" />
