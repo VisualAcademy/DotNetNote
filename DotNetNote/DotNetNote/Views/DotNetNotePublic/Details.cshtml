@@ -1,10 +1,19 @@
 ﻿@{
     Layout = "_LayoutTeam";
+
+    string? userId = User.FindFirst("UserId")?.Value;
+    string? siteAdmin = option.Value.SiteAdmin;
+
+    bool canPin =
+        Model.Category != "Notice"
+        && User.IsInRole("Users")
+        && !string.IsNullOrWhiteSpace(userId)
+        && userId == siteAdmin;
 }
 
 @model Note
 @inject Microsoft.Extensions.Options.IOptions<
-    DotNetNote.Settings.DotNetNoteSettings> option
+DotNetNote.Settings.DotNetNoteSettings > option
 
 <h2 style="text-align:center;">게시판</h2>
 <span style="color: #ff0000">
@@ -49,9 +58,9 @@
             </td>
             <td>
                 <span>
-                    @Html.Raw(String.Format(
-                        "<a href=\"{0}\" target=\"_blank\">{0}</a>"
-                        , Model.Homepage))
+                    @Html.Raw(string.Format(
+                        "<a href=\"{0}\" target=\"_blank\">{0}</a>",
+                        Model.Homepage))
                 </span>
             </td>
         </tr>
@@ -105,13 +114,13 @@
 
 <div style="text-align:center;">
 
-    @if (Model.Category != "Notice" && User.IsInRole("Users") &&
-        User.FindFirst("UserId").Value == option.Value.SiteAdmin)
+    @if (canPin)
     {
         <a asp-action="Pinned" asp-route-id="@Model.Id" class="btn btn-danger">
             공지로 올리기
         </a>
     }
+
     <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-default">
         Delete
     </a>
