@@ -1,6 +1,32 @@
 ﻿@model Note
 @inject Microsoft.Extensions.Options.IOptions<
-    DotNetNote.Settings.DotNetNoteSettings> option
+DotNetNote.Settings.DotNetNoteSettings > option
+
+@{
+    var note = Model;
+    var settings = option.Value;
+    var siteAdmin = settings?.SiteAdmin;
+
+    var fileName = ViewBag.FileName as string;
+    var imageDown = ViewBag.ImageDown as string;
+    var content = ViewBag.Content as string;
+    var adminDeletePassword = ViewBag.AdminDeletePassword as string;
+    var commentListAndId = ViewBag.CommentListAndId as NoteCommentViewModel;
+}
+
+@if (note == null)
+{
+    <h2 style="text-align:center;">게시판</h2>
+    <span style="color: #ff0000">
+        글 정보를 찾을 수 없습니다.
+    </span>
+
+    <div style="text-align:center; margin-top: 20px;">
+        <a asp-action="Index" class="btn btn-default">리스트</a>
+    </div>
+
+    return;
+}
 
 <h2 style="text-align:center;">게시판</h2>
 <span style="color: #ff0000">
@@ -15,7 +41,7 @@
             </td>
             <td colspan="3">
                 <span style="font-weight:bold;font-size:18px;">
-                    @Model.Title
+                    @note.Title
                 </span>
             </td>
         </tr>
@@ -24,13 +50,16 @@
                 번 호 :
             </td>
             <td>
-                <span>@Model.Id</span>
+                <span>@note.Id</span>
             </td>
             <td class="text-right">
                 E-mail :
             </td>
             <td>
-                <a href="mailto:@Model.Email">@Model.Email</a>
+                @if (!string.IsNullOrWhiteSpace(note.Email))
+                {
+                    <a href="mailto:@note.Email">@note.Email</a>
+                }
             </td>
         </tr>
         <tr style="background-color: #efefef;">
@@ -38,17 +67,18 @@
                 이 름 :
             </td>
             <td>
-                <span>@Model.Name</span>
+                <span>@note.Name</span>
             </td>
             <td class="text-right">
                 Homepage :
             </td>
             <td>
-                <span>
-                    @Html.Raw(String.Format(
-                        "<a href=\"{0}\" target=\"_blank\">{0}</a>"
-                        , Model.Homepage))
-                </span>
+                @if (!string.IsNullOrWhiteSpace(note.Homepage))
+                {
+                    <span>
+                        <a href="@note.Homepage" target="_blank">@note.Homepage</a>
+                    </span>
+                }
             </td>
         </tr>
         <tr style="background-color: #efefef;">
@@ -56,13 +86,13 @@
                 작성일 :
             </td>
             <td>
-                <span>@Model.PostDate</span>
+                <span>@note.PostDate</span>
             </td>
             <td class="text-right">
                 IP 주소 :
             </td>
             <td>
-                <span>@Model.PostIp</span>
+                <span>@note.PostIp</span>
             </td>
         </tr>
         <tr style="background-color: #efefef;">
@@ -70,20 +100,20 @@
                 조회수 :
             </td>
             <td>
-                <span>@Model.ReadCount</span>
+                <span>@note.ReadCount</span>
             </td>
             <td class="text-right">
                 파일 :
             </td>
             <td>
-                @Html.Raw(ViewBag.FileName)
+                @Html.Raw(fileName)
             </td>
         </tr>
         <tr>
             <td colspan="4"
                 style="padding:10px;height:100px;vertical-align:top;">
-                @Html.Raw(ViewBag.ImageDown)
-                @Html.Raw(ViewBag.Content)
+                @Html.Raw(imageDown)
+                @Html.Raw(content)
             </td>
         </tr>
         <tr>
@@ -93,11 +123,11 @@
         </tr>
         <tr>
             <td colspan="4">
-                @*https://docs.microsoft.com/ko-kr/aspnet/core/mvc/views/partial?view=aspnetcore-5.0*@
-                @*@await Html.PartialAsync("_BoardCommentControl", (NoteCommentViewModel)ViewBag.CommentListAndId)*@
-                @*<partial name="_BoardCommentControl" model="(NoteCommentViewModel)ViewBag.CommentListAndId" />*@
-                <partial name="~/Views/DotNetNote/Widgets/_BoardCommentControl.cshtml"
-                         model="(NoteCommentViewModel)ViewBag.CommentListAndId" />
+                @if (commentListAndId != null)
+                {
+                    <partial name="~/Views/DotNetNote/Widgets/_BoardCommentControl.cshtml"
+                             model="commentListAndId" />
+                }
             </td>
         </tr>
     </tbody>
@@ -105,24 +135,26 @@
 
 <div style="text-align:center;">
 
-    @if (Model?.Category != "Notice" && User.IsInRole("Users") 
-        && User?.FindFirst("UserId")?.Value == option.Value.SiteAdmin)
+    @if (note.Category != "Notice"
+        && User.IsInRole("Users")
+        && User.FindFirst("UserId")?.Value == siteAdmin)
     {
-        <a asp-action="Pinned" asp-route-id="@Model.Id" class="btn btn-danger">
+        <a asp-action="Pinned" asp-route-id="@note.Id" class="btn btn-danger">
             공지로 올리기
         </a>
 
-        <button id="adminDeleteBtn" data-id="@Model.Id" class="btn btn-warning">
+        <button id="adminDeleteBtn" data-id="@note.Id" class="btn btn-warning">
             관리자 삭제 데모용
         </button>
     }
-    <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-default">
+
+    <a asp-action="Delete" asp-route-id="@note.Id" class="btn btn-default">
         삭제
     </a>
-    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-default">
+    <a asp-action="Edit" asp-route-id="@note.Id" class="btn btn-default">
         수정
     </a>
-    <a asp-action="Reply" asp-route-id="@Model.Id" class="btn btn-default">
+    <a asp-action="Reply" asp-route-id="@note.Id" class="btn btn-default">
         답변
     </a>
 
@@ -148,16 +180,14 @@
                 var postId = $(this).data("id");
 
                 $.ajax({
-                    url: '/api/DotNetNoteService/Delete/' + postId, // URL은 동일하게 유지
-                    method: 'POST', // DELETE 대신 POST를 사용
-                    data: JSON.stringify({ password: '@ViewBag.AdminDeletePassword' }), // JSON 문자열로 변환
-                    contentType: 'application/json', // Content-Type을 지정
+                    url: '/api/DotNetNoteService/Delete/' + postId,
+                    method: 'POST',
+                    data: JSON.stringify({ password: '@adminDeletePassword' }),
+                    contentType: 'application/json',
                     success: function () {
-                        // 삭제 성공 후 Index 페이지로 리디렉션
                         window.location.href = '/DotNetNote/Index';
                     },
-                    error: function (err) {
-                        // 오류 처리
+                    error: function () {
                         alert("삭제 중 오류가 발생했습니다.");
                     }
                 });
