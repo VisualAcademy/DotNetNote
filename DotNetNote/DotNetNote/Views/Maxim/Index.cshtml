@@ -1,8 +1,10 @@
-﻿@*@model IEnumerable<Maxim>*@
-@model IEnumerable<DotNetNote.Models.Maxim>
+﻿@model IEnumerable<DotNetNote.Models.Maxim>
 
 @{
     Layout = null;
+
+    var maxims = Model ?? Enumerable.Empty<DotNetNote.Models.Maxim>();
+    var maximRandom = maxims.OrderBy(m => Guid.NewGuid()).FirstOrDefault();
 }
 
 <!DOCTYPE html>
@@ -11,61 +13,64 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Index</title>
+    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
 </head>
 <body>
     <p>
         @Html.ActionLink("Create New", "Create")
     </p>
+
     <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Content)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CreationDate)
-            </th>
-            <th></th>
-        </tr>
-
-        @foreach (var item in Model)
-        {
+        <thead>
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Content)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CreationDate)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-                </td>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Content)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CreationDate)
+                </th>
+                <th></th>
             </tr>
-        }
-
+        </thead>
+        <tbody>
+            @foreach (var item in maxims)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Content)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CreationDate)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                    </td>
+                </tr>
+            }
+        </tbody>
     </table>
 
-
-    @*메인 페이지에서 랜덤하게 명언 출력*@
-    <blockquote>
-        @{
-            var maximRandom = Model.OrderBy(m => Guid.NewGuid()).Take(1).FirstOrDefault();
-            var contentRandom = maximRandom.Content;
-            var nameRandom = maximRandom.Name;
-        }
-        <p>@contentRandom</p>
-        <footer>@nameRandom</footer>
-    </blockquote>
-
-
-    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
-
+    @* 메인 페이지에서 랜덤하게 명언 출력 *@
+    @if (maximRandom is not null)
+    {
+        <blockquote>
+            <p>@maximRandom.Content</p>
+            <footer>@maximRandom.Name</footer>
+        </blockquote>
+    }
+    else
+    {
+        <blockquote>
+            <p>등록된 명언이 없습니다.</p>
+        </blockquote>
+    }
 </body>
 </html>
