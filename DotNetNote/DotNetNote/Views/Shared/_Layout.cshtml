@@ -2,14 +2,17 @@
 @using Microsoft.Extensions.Configuration
 @using Microsoft.AspNetCore.Http
 @using System.Globalization
+@using System.Security.Claims
 
 @inject IConfiguration Configuration
 @inject IHttpContextAccessor _context
 
 @{
     // 최고 관리자 권한 체크
-    bool isAuthenticated = User?.Identity?.IsAuthenticated == true;
-    bool isAdmin = isAuthenticated && User.IsInRole("Administrators");
+    ClaimsPrincipal? currentUser = _context.HttpContext?.User ?? User;
+
+    bool isAuthenticated = currentUser?.Identity?.IsAuthenticated == true;
+    bool isAdmin = currentUser?.IsInRole("Administrators") == true;
 
     // HttpContext 또는 Request가 null일 수 있으므로 안전하게 처리
     var userAgent = _context.HttpContext?.Request?.Headers["User-Agent"].ToString() ?? "";
