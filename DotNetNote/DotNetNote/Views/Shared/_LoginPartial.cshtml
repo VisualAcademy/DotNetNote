@@ -2,25 +2,37 @@
 
 @*
 // 현재 사용자가 로그인했는지 확인하는 명령어
-User.Identity.IsAuthenticated
+User.Identity?.IsAuthenticated == true
 함께보기: SignInManager.IsSignedIn(User)
 *@
 
+@{
+    var isAuthenticated = User.Identity?.IsAuthenticated == true;
+    var userName = User.Identity?.Name ?? string.Empty;
+    var userId = User.FindFirst("UserId")?.Value;
+    var siteAdmin = option.Value.SiteAdmin;
+    var isSiteAdminUser = User.IsInRole("Users") && userId == siteAdmin;
+}
+
 <ul class="navbar-nav">
-    @if (User.Identity.IsAuthenticated)
+    @if (isAuthenticated)
     {
-        @if (User.IsInRole("Users") && User.FindFirst("UserId").Value == option.Value.SiteAdmin)
+        @if (isSiteAdminUser)
         {
             <li class="nav-item">
-                <a class="nav-link text-dark text-nowrap" asp-controller="Admin" asp-action="Index" title="Dashboard"><i class="fa fa-gear"></i> 대시보드</a>
+                <a class="nav-link text-dark text-nowrap" asp-controller="Admin" asp-action="Index" title="Dashboard">
+                    <i class="fa fa-gear"></i> 대시보드
+                </a>
             </li>
         }
+
         <li class="nav-item">
             <a class="nav-link text-dark" href="/User/UserInfor" title="Manage">
-                @User.Identity.Name
-                @*@User.FindFirst("UserId").Value*@
+                @userName
+                @*@userId*@
             </a>
         </li>
+
         <li class="nav-item">
             <form class="form-inline" asp-controller="User" asp-action="Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
                 <button type="submit" class="nav-link btn btn-link text-dark text-nowrap">로그아웃</button>
@@ -32,6 +44,7 @@ User.Identity.IsAuthenticated
         <li class="nav-item">
             <a class="nav-link text-dark" asp-controller="User" asp-action="Register">회원가입</a>
         </li>
+
         <li class="nav-item">
             <a class="nav-link text-dark" asp-controller="User" asp-action="Login">로그인</a>
         </li>
