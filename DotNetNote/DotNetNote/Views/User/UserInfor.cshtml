@@ -1,10 +1,12 @@
-﻿
+﻿@{
+    var userId = User.FindFirst("UserId")?.Value ?? User.Identity?.Name ?? "사용자";
+}
+
 <h2>회원 정보 관리</h2>
 
 <p>
-    @User.FindFirst("UserId").Value 님의 정보는 아래와 같습니다. 
+    @userId 님의 정보는 아래와 같습니다.
 </p>
-
 
 <hr />
 
