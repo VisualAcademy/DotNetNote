@@ -1,10 +1,16 @@
 ﻿@{
-    var variables = ViewBag.Variables as List<Variable>;
+    // 방법 1: 가장 호환성이 좋은 방식
+    // ViewBag.Variables가 null이거나 List<Variable> 형식이 아니면 빈 리스트를 사용합니다.
+    var variables = ViewBag.Variables as List<Variable> ?? new List<Variable>();
+
+    // 방법 2: C# 12 컬렉션 식 사용 방식
+    // 최신 C# 문법을 사용할 수 있는 프로젝트라면 아래처럼도 작성할 수 있습니다.
+    // var variables = ViewBag.Variables as List<Variable> ?? [];
 }
 
 <ul>
-@foreach (var v in variables)
-{
-    <li>@v.Text - @v.Value</li>
-}
+    @foreach (var v in variables)
+    {
+        <li>@v.Text - @v.Value</li>
+    }
 </ul>
