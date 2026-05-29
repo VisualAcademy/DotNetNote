@@ -11,7 +11,7 @@
 
 @code {
     [Inject]
-    private NavigationManager Navigation { get; set; }
+    private NavigationManager Navigation { get; set; } = default!;
 
     private void NavigateToHome()
     {
