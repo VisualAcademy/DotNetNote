@@ -599,6 +599,24 @@ public partial class Program
             Console.WriteLine($"Employees table initialization failed: {ex.Message}");
         }
         #endregion
+
+        #region Employees 테이블에 LicenseNumberSort 컬럼 및 인덱스 추가
+        // 2026-05-31
+        // Azunt.EmployeeManagement NuGet package initializer
+        // 기존 Employees 테이블이 있는 테넌트 DB에 LicenseNumberSort 컬럼과 인덱스를 보장합니다.
+        try
+        {
+            EmployeesLicenseNumberSortBuilder.Run(
+                app.ApplicationServices,
+                forMaster: false);
+
+            Console.WriteLine("Employees LicenseNumberSort column and index initialization finished. Target=Tenants");
+        }
+        catch (Exception ex)
+        {
+            Console.Error.WriteLine($"[EmployeesLicenseNumberSortBuilder] Startup failed: {ex.Message}");
+        }
+        #endregion
     }
 
     private static void DependencyInjectionContainer(IServiceCollection services, IConfiguration Configuration)
