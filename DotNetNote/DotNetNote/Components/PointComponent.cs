@@ -1,6 +1,8 @@
-﻿//[Angular 강의] Points 테이블부터 Point 컴포넌트까지 JSON 데이터를 읽어다가 앵귤러 뷰 컴포넌트에 출력하기 데모
+﻿using Microsoft.AspNetCore.Mvc;
+
 namespace DotNetNote.Components;
 
+//[Angular 강의] Points 테이블부터 Point 컴포넌트까지 JSON 데이터를 읽어다가 앵귤러 뷰 컴포넌트에 출력하기 데모
 public class PointComponent
 {
     // Empty
@@ -13,8 +15,11 @@ public class PointComponent
 public class Point
 {
     public int Id { get; set; }
+
     public int UserId { get; set; }
-    public string Username { get; set; }
+
+    public string Username { get; set; } = string.Empty;
+
     public int TotalPoint { get; set; }
 }
 
@@ -24,9 +29,13 @@ public class Point
 public class PointLog
 {
     public int Id { get; set; }
+
     public int UserId { get; set; }
-    public string Username { get; set; }
+
+    public string Username { get; set; } = string.Empty;
+
     public int NewPoint { get; set; }
+
     public DateTimeOffset Created { get; set; }
 }
 
@@ -36,7 +45,9 @@ public class PointLog
 public class PointStatus
 {
     public int Gold { get; set; }
+
     public int Silver { get; set; }
+
     public int Bronze { get; set; }
 }
 
@@ -46,6 +57,7 @@ public class PointStatus
 public interface IPointRepository
 {
     int GetTotalPointByUserId(int userId = 1234);
+
     PointStatus GetPointStatusByUser();
 }
 
@@ -59,14 +71,24 @@ public class PointRepository : IPointRepository
         throw new NotImplementedException();
     }
 
-    public int GetTotalPointByUserId(int userId = 1234) =>
-        //TODO: 실제 데이터베이스 연동하는 코드
-        1234;
+    public int GetTotalPointByUserId(int userId = 1234)
+    {
+        // TODO: 실제 데이터베이스 연동하는 코드
+        return 1234;
+    }
 }
 
 public class PointRepositoryInMemory : IPointRepository
 {
-    public PointStatus GetPointStatusByUser() => new PointStatus() { Gold = 10, Silver = 123, Bronze = 345 };
+    public PointStatus GetPointStatusByUser()
+    {
+        return new PointStatus
+        {
+            Gold = 10,
+            Silver = 123,
+            Bronze = 345
+        };
+    }
 
     public int GetTotalPointByUserId(int userId = 1234)
     {
@@ -76,22 +98,22 @@ public class PointRepositoryInMemory : IPointRepository
 
 public interface IPointLogRepository
 {
-
 }
 
 public class PointLogRepository : IPointLogRepository
 {
-
 }
 
 public class PointController(IPointRepository repository) : Controller
 {
-    private IPointRepository _repository = repository;
+    private readonly IPointRepository _repository = repository;
 
     public IActionResult Index()
     {
         var myPoint = _repository.GetTotalPointByUserId();
+
         ViewBag.MyPoint = myPoint;
+
         return View();
     }
 }
@@ -104,7 +126,12 @@ public class PointServiceController(IPointRepository repository) : Controller
     public IActionResult Get()
     {
         var myPoint = repository.GetTotalPointByUserId();
-        var json = new { Point = myPoint };
+
+        var json = new
+        {
+            Point = myPoint
+        };
+
         return Ok(json);
     }
 
@@ -113,14 +140,22 @@ public class PointServiceController(IPointRepository repository) : Controller
     public IActionResult Get(int userId)
     {
         var myPoint = repository.GetTotalPointByUserId(userId);
-        var json = new { Point = myPoint };
+
+        var json = new
+        {
+            Point = myPoint
+        };
+
         return Ok(json);
     }
 }
 
 public class PointLogController : Controller
 {
-    public IActionResult Index() => View();
+    public IActionResult Index()
+    {
+        return View();
+    }
 }
 
 [Route("api/[controller]")]
@@ -130,7 +165,11 @@ public class PointLogServiceController : Controller
     [Route("")]
     public IActionResult Get()
     {
-        var json = new { Point = 2345 };
+        var json = new
+        {
+            Point = 2345
+        };
+
         return Ok(json);
     }
 }
@@ -146,6 +185,7 @@ public class PointStatusController(IPointRepository repository) : Controller
     public IActionResult Get()
     {
         var point = repository.GetPointStatusByUser();
+
         return Ok(point);
     }
 }
