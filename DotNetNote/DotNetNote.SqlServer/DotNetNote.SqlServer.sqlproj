@@ -190,6 +190,7 @@
     <Build Include="dbo\Tables\AuditTrail.sql" />
     <Build Include="dbo\Tables\Notifications.sql" />
     <Build Include="dbo\Tables\AppointmentsTypes.sql" />
+    <Build Include="dbo\Tables\LogBases.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="dbo\Scripts\Attachments\Demo_Attachments_Processing.sql" />
