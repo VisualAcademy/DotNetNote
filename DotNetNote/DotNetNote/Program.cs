@@ -608,7 +608,7 @@ public partial class Program
         {
             EmployeesLicenseNumberSortBuilder.Run(
                 app.ApplicationServices,
-                forMaster: false);
+                forMaster: true);
 
             Console.WriteLine("Employees LicenseNumberSort column and index initialization finished. Target=Tenants");
         }
