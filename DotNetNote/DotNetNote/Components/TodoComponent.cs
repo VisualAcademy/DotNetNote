@@ -1,4 +1,7 @@
-﻿namespace DotNetNote.Components;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+
+namespace DotNetNote.Components;
 
 /// <summary>
 /// Todo 컴포넌트
@@ -14,7 +17,9 @@ public class TodoComponent
 public class Todo
 {
     public int Id { get; set; }
-    public string Title { get; set; }
+
+    public string Title { get; set; } = string.Empty;
+
     public bool IsDone { get; set; } = false; // IsComplete 속성명도 많이 사용
 }
 
@@ -24,7 +29,9 @@ public class Todo
 public class TodoItem
 {
     public int Id { get; set; }
-    public string Title { get; set; }
+
+    public string Title { get; set; } = string.Empty;
+
     public bool IsDone { get; set; } = false;
 }
 
@@ -33,7 +40,7 @@ public class TodoItem
 /// </summary>
 public class TodoContext(DbContextOptions<TodoContext> options) : DbContext(options)
 {
-    public DbSet<Todo> Todos { get; set; }
+    public DbSet<Todo> Todos { get; set; } = default!;
 }
 
 /// <summary>
@@ -41,7 +48,7 @@ public class TodoContext(DbContextOptions<TodoContext> options) : DbContext(opti
 /// </summary>
 public interface ITodoRepository
 {
-
+    // 향후 Todo 관련 CRUD 메서드를 정의할 수 있습니다.
 }
 
 /// <summary>
@@ -49,7 +56,7 @@ public interface ITodoRepository
 /// </summary>
 public class TodoRepository : ITodoRepository
 {
-
+    // 향후 ITodoRepository 구현 코드를 작성할 수 있습니다.
 }
 
 /// <summary>
@@ -57,21 +64,26 @@ public class TodoRepository : ITodoRepository
 /// </summary>
 public class TodoController(TodoContext context) : Controller
 {
-
     // GET: Todo
-    public async Task<IActionResult> Index() => View(await context.Todos.ToListAsync());
+    public async Task<IActionResult> Index()
+    {
+        var todos = await context.Todos.ToListAsync();
+
+        return View(todos);
+    }
 
     // GET: Todo/Details/5
     public async Task<IActionResult> Details(int? id)
     {
-        if (id == null)
+        if (id is null)
         {
             return NotFound();
         }
 
         var todo = await context.Todos
-            .SingleOrDefaultAsync(m => m.Id == id);
-        if (todo == null)
+            .SingleOrDefaultAsync(m => m.Id == id.Value);
+
+        if (todo is null)
         {
             return NotFound();
         }
@@ -80,43 +92,49 @@ public class TodoController(TodoContext context) : Controller
     }
 
     // GET: Todo/Create
-    public IActionResult Create() => View();
+    public IActionResult Create()
+    {
+        return View();
+    }
 
     // POST: Todo/Create
-    // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-    // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+    // To protect from overposting attacks, please enable the specific properties you want to bind to.
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create([Bind("Id,Title,IsDone")] Todo todo)
     {
-        if (ModelState.IsValid)
+        if (!ModelState.IsValid)
         {
-            context.Add(todo);
-            await context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return View(todo);
         }
-        return View(todo);
+
+        context.Todos.Add(todo);
+        await context.SaveChangesAsync();
+
+        return RedirectToAction(nameof(Index));
     }
 
     // GET: Todo/Edit/5
     public async Task<IActionResult> Edit(int? id)
     {
-        if (id == null)
+        if (id is null)
         {
             return NotFound();
         }
 
-        var todo = await context.Todos.SingleOrDefaultAsync(m => m.Id == id);
-        if (todo == null)
+        var todo = await context.Todos
+            .SingleOrDefaultAsync(m => m.Id == id.Value);
+
+        if (todo is null)
         {
             return NotFound();
         }
+
         return View(todo);
     }
 
     // POST: Todo/Edit/5
-    // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-    // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+    // To protect from overposting attacks, please enable the specific properties you want to bind to.
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Edit(int id, [Bind("Id,Title,IsDone")] Todo todo)
@@ -126,40 +144,41 @@ public class TodoController(TodoContext context) : Controller
             return NotFound();
         }
 
-        if (ModelState.IsValid)
+        if (!ModelState.IsValid)
         {
-            try
-            {
-                context.Update(todo);
-                await context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!TodoExists(todo.Id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-            return RedirectToAction(nameof(Index));
+            return View(todo);
         }
-        return View(todo);
+
+        try
+        {
+            context.Todos.Update(todo);
+            await context.SaveChangesAsync();
+        }
+        catch (DbUpdateConcurrencyException)
+        {
+            if (!TodoExists(todo.Id))
+            {
+                return NotFound();
+            }
+
+            throw;
+        }
+
+        return RedirectToAction(nameof(Index));
     }
 
     // GET: Todo/Delete/5
     public async Task<IActionResult> Delete(int? id)
     {
-        if (id == null)
+        if (id is null)
         {
             return NotFound();
         }
 
         var todo = await context.Todos
-            .SingleOrDefaultAsync(m => m.Id == id);
-        if (todo == null)
+            .SingleOrDefaultAsync(m => m.Id == id.Value);
+
+        if (todo is null)
         {
             return NotFound();
         }
@@ -168,15 +187,17 @@ public class TodoController(TodoContext context) : Controller
     }
 
     // POST: Todo/Delete/5
-    [HttpPost, ActionName("Delete")]
+    [HttpPost]
+    [ActionName("Delete")]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteConfirmed(int id)
     {
-        var todo = await context.Todos.SingleOrDefaultAsync(m => m.Id == id);
+        var todo = await context.Todos
+            .SingleOrDefaultAsync(m => m.Id == id);
 
         if (todo is null)
         {
-            return NotFound(); // 또는 RedirectToAction(nameof(Index));
+            return NotFound();
         }
 
         context.Todos.Remove(todo);
@@ -185,7 +206,10 @@ public class TodoController(TodoContext context) : Controller
         return RedirectToAction(nameof(Index));
     }
 
-    private bool TodoExists(int id) => context.Todos.Any(e => e.Id == id);
+    private bool TodoExists(int id)
+    {
+        return context.Todos.Any(e => e.Id == id);
+    }
 }
 
 /// <summary>
@@ -197,20 +221,21 @@ public class TodosController(TodoContext context) : Controller
 {
     // GET: api/Todos
     [HttpGet]
-    public IEnumerable<Todo> GetTodos() => context.Todos;
+    public async Task<ActionResult<IEnumerable<Todo>>> GetTodos()
+    {
+        var todos = await context.Todos.ToListAsync();
+
+        return Ok(todos);
+    }
 
     // GET: api/Todos/5
-    [HttpGet("{id}")]
+    [HttpGet("{id:int}")]
     public async Task<IActionResult> GetTodo([FromRoute] int id)
     {
-        if (!ModelState.IsValid)
-        {
-            return BadRequest(ModelState);
-        }
+        var todo = await context.Todos
+            .SingleOrDefaultAsync(m => m.Id == id);
 
-        var todo = await context.Todos.SingleOrDefaultAsync(m => m.Id == id);
-
-        if (todo == null)
+        if (todo is null)
         {
             return NotFound();
         }
@@ -219,17 +244,17 @@ public class TodosController(TodoContext context) : Controller
     }
 
     // PUT: api/Todos/5
-    [HttpPut("{id}")]
+    [HttpPut("{id:int}")]
     public async Task<IActionResult> PutTodo([FromRoute] int id, [FromBody] Todo todo)
     {
-        if (!ModelState.IsValid)
-        {
-            return BadRequest(ModelState);
-        }
-
         if (id != todo.Id)
         {
             return BadRequest();
+        }
+
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
         }
 
         context.Entry(todo).State = EntityState.Modified;
@@ -244,10 +269,8 @@ public class TodosController(TodoContext context) : Controller
             {
                 return NotFound();
             }
-            else
-            {
-                throw;
-            }
+
+            throw;
         }
 
         return NoContent();
@@ -265,20 +288,17 @@ public class TodosController(TodoContext context) : Controller
         context.Todos.Add(todo);
         await context.SaveChangesAsync();
 
-        return CreatedAtAction("GetTodo", new { id = todo.Id }, todo);
+        return CreatedAtAction(nameof(GetTodo), new { id = todo.Id }, todo);
     }
 
     // DELETE: api/Todos/5
-    [HttpDelete("{id}")]
+    [HttpDelete("{id:int}")]
     public async Task<IActionResult> DeleteTodo([FromRoute] int id)
     {
-        if (!ModelState.IsValid)
-        {
-            return BadRequest(ModelState);
-        }
+        var todo = await context.Todos
+            .SingleOrDefaultAsync(m => m.Id == id);
 
-        var todo = await context.Todos.SingleOrDefaultAsync(m => m.Id == id);
-        if (todo == null)
+        if (todo is null)
         {
             return NotFound();
         }
@@ -289,5 +309,8 @@ public class TodosController(TodoContext context) : Controller
         return Ok(todo);
     }
 
-    private bool TodoExists(int id) => context.Todos.Any(e => e.Id == id);
+    private bool TodoExists(int id)
+    {
+        return context.Todos.Any(e => e.Id == id);
+    }
 }
