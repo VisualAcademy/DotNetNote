@@ -1,0 +1,40 @@
+﻿@model DotNetNote.Models.HttpClientDemoResult
+
+@{
+    ViewData["Title"] = "HttpClient Demo";
+}
+
+<h2>HttpClient Demo</h2>
+
+<p>
+    This page demonstrates how to inject <strong>HttpClient</strong>
+    into an ASP.NET Core MVC controller using
+    <code>builder.Services.AddHttpClient&lt;HttpClientDemoController&gt;();</code>.
+</p>
+
+<hr />
+
+<h4>Request URL</h4>
+
+<pre>@Model.Url</pre>
+
+<h4>Result</h4>
+
+@if (Model.IsSuccess)
+{
+    <div class="alert alert-success">
+        Request completed successfully.
+    </div>
+
+    <h4>Response</h4>
+    <pre>@Model.ResponseText</pre>
+}
+else
+{
+    <div class="alert alert-danger">
+        Request failed.
+    </div>
+
+    <h4>Error</h4>
+    <pre>@Model.ErrorMessage</pre>
+}
