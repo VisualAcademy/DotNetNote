@@ -103,6 +103,9 @@ public partial class Program
         // HttpClient 등록
         builder.Services.AddHttpClient();
 
+        // Typed HttpClient demo
+        builder.Services.AddHttpClient<HttpClientDemoController>();
+
         // Azure Translator 설정 바인딩
         builder.Services.Configure<AzureTranslatorSettings>(builder.Configuration.GetSection("AzureTranslator"));
         builder.Services.AddSingleton(resolver => resolver.GetRequiredService<IOptions<AzureTranslatorSettings>>().Value);
