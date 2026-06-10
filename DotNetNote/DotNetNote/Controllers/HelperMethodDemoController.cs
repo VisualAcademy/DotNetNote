@@ -1,4 +1,6 @@
-﻿namespace DotNetNote.Controllers;
+﻿using Microsoft.AspNetCore.Mvc;
+
+namespace DotNetNote.Controllers;
 
 /// <summary>
 /// 27. 헬퍼 메서드
@@ -30,7 +32,7 @@ public class HelperMethodDemoController : Controller
     /// </summary>
     public IActionResult StronglyTypedDemo()
     {
-        var stc = new StronglyTypedClass()
+        var stc = new StronglyTypedClass
         {
             Id = 1,
             Name = "홍길동",
@@ -57,6 +59,8 @@ public class HelperMethodDemoController : Controller
 public class StronglyTypedClass
 {
     public int Id { get; set; }
-    public string Name { get; set; }
+
+    public string Name { get; set; } = string.Empty;
+
     public int Age { get; set; }
 }
