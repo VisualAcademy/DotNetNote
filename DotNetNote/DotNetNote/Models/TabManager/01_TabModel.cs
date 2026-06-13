@@ -1,7 +1,7 @@
 ﻿namespace DotNetNote.Models;
 
 /// <summary>
-/// 탭(Tab) 모델 클래스: Tab, TabModel, TabViewModel, ... 
+/// 탭(Tab) 모델 클래스: Tab, TabModel, TabViewModel, ...
 /// </summary>
 public class TabModel
 {
@@ -23,12 +23,12 @@ public class TabModel
     /// <summary>
     /// 탭 이름
     /// </summary>
-    public string TabName { get; set; }
+    public string TabName { get; set; } = string.Empty;
 
     /// <summary>
     /// 선택할 때 이동 경로
     /// </summary>
-    public string TabPath { get; set; }
+    public string TabPath { get; set; } = string.Empty;
 
     /// <summary>
     /// 메뉴 표시 여부
@@ -37,9 +37,9 @@ public class TabModel
 
     /// <summary>
     /// 커뮤니티 번호(CommunityId, TabId, PortalId, ...)
-    /// 관리자용 메뉴를 하나만 사용하려면 0으로 두고 사용 
+    /// 관리자용 메뉴를 하나만 사용하려면 0으로 두고 사용
     /// </summary>
-    public int CommunityId { get; set; } = 0; 
+    public int CommunityId { get; set; } = 0;
 
     /// <summary>
     /// 게시판 링크에 대한 여부
@@ -49,17 +49,17 @@ public class TabModel
     /// <summary>
     /// 링크의 target 속성 설정 값
     /// </summary>
-    public string Target { get; set; }
+    public string Target { get; set; } = string.Empty;
 
     /// <summary>
     /// 게시판 별칭
     /// </summary>
-    public string BoardAlias { get; set; }
+    public string BoardAlias { get; set; } = string.Empty;
 
     /// <summary>
     /// 자식 메뉴 리스트
     /// </summary>
-    public List<TabModel> Tabs { get; set; } = new List<TabModel>();
+    public List<TabModel> Tabs { get; set; } = new();
 
     /// <summary>
     /// ToString 메서드 오버라이드
