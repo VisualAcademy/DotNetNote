@@ -11,17 +11,17 @@ public class Site
     public int Id { get; set; }
 
     /// <summary>
-    /// 제목, 사이트명, Name, Title 속성은 자주 사용되는 필수 속성들 중 하나   
+    /// 제목, 사이트명, Name, Title 속성은 자주 사용되는 필수 속성들 중 하나
     /// </summary>
-    public string Title { get; set; }
+    public string Title { get; set; } = string.Empty;
 
     /// <summary>
     /// 사이트 URL
     /// </summary>
-    public string Url { get; set; }
+    public string Url { get; set; } = string.Empty;
 
     /// <summary>
-    /// 사이트 간단 설명 
+    /// 사이트 간단 설명
     /// </summary>
-    public string Description { get; set; }
+    public string Description { get; set; } = string.Empty;
 }
