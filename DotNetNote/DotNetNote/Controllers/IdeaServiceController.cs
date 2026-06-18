@@ -1,5 +1,6 @@
 ﻿using DotNetNote.Models.Ideas;
-using System.Net;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 
 namespace DotNetNote.Controllers;
 
@@ -15,14 +16,15 @@ public class IdeaServiceController(IIdeaRepository repository) : Controller
         repository.GetAll().AsEnumerable();
 
     [HttpGet("{id}")]
-    public Idea Get(int id)
+    public ActionResult<Idea> Get(int id)
     {
-        var idea = repository.GetAll().Where(m => m.Id == id).SingleOrDefault();
+        var idea = repository.GetAll().SingleOrDefault(m => m.Id == id);
+
         if (idea == null)
         {
-            Response.StatusCode = (int)HttpStatusCode.NotFound;
-            return null;
+            return NotFound();
         }
+
         return idea;
     }
 
@@ -34,13 +36,13 @@ public class IdeaServiceController(IIdeaRepository repository) : Controller
             // Crud
             var m = repository.Add(model);
 
-            Response.StatusCode = (int)HttpStatusCode.Created;
+            Response.StatusCode = StatusCodes.Status201Created;
             return Json(m);
         }
         else
         {
-            Response.StatusCode = (int)HttpStatusCode.BadRequest;
-            return Json(new { Message = "실패", ModelState = ModelState });
+            Response.StatusCode = StatusCodes.Status400BadRequest;
+            return Json(new { Message = "실패", ModelState });
         }
     }
 }
