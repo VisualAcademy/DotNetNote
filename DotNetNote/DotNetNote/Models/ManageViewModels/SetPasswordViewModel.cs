@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace DotNetNote.Models.ManageViewModels
+﻿namespace DotNetNote.Models.ManageViewModels
 {
     public class SetPasswordViewModel
     {
