@@ -54,6 +54,7 @@
     </ItemGroup>
 
     <ItemGroup>
+        <PackageReference Include="Azunt.ConclusionManagement" Version="1.0.1" />
         <PackageReference Include="NuGet.Packaging" Version="7.6.0" />
         <PackageReference Include="NuGet.Protocol" Version="7.6.0" />
 
