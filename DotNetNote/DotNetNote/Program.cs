@@ -42,6 +42,11 @@ using Serilog;
 using Serilog.Sinks.MSSqlServer;
 using System.Net.Http.Headers;
 using VisualAcademy.Models.Configuration;
+using Azunt.ReasonManagement;
+using Azunt.ConclusionManagement;
+
+using ReasonRepositoryMode = Azunt.ReasonManagement.ReasonServicesRegistrationExtensions.RepositoryMode;
+using ConclusionRepositoryMode = Azunt.ConclusionManagement.ConclusionServicesRegistrationExtensions.RepositoryMode;
 
 public partial class Program
 {
@@ -49,6 +54,12 @@ public partial class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
+        var defaultConnectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+        #region Reasons and Conclusions
+        builder.Services.AddDependencyInjectionContainerForReasonApp(defaultConnectionString, ReasonRepositoryMode.EfCoreSqlServer); 
+        builder.Services.AddDependencyInjectionContainerForConclusionApp(defaultConnectionString, ConclusionRepositoryMode.EfCoreSqlServer); 
+        #endregion
 
         // 테넌트 설정 바인딩
         builder.Services.Configure<TenantSettings>(
