@@ -192,6 +192,7 @@
     <Build Include="dbo\Tables\AppointmentsTypes.sql" />
     <Build Include="dbo\Tables\LogBases.sql" />
     <Build Include="dbo\Tables\Reasons.sql" />
+    <Build Include="dbo\Tables\Conclusions.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="dbo\Scripts\Attachments\Demo_Attachments_Processing.sql" />
