@@ -44,6 +44,7 @@ using System.Net.Http.Headers;
 using VisualAcademy.Models.Configuration;
 using Azunt.ReasonManagement;
 using Azunt.ConclusionManagement;
+using Azunt.InstructionManagement;
 
 using ReasonRepositoryMode = Azunt.ReasonManagement.ReasonServicesRegistrationExtensions.RepositoryMode;
 using ConclusionRepositoryMode = Azunt.ConclusionManagement.ConclusionServicesRegistrationExtensions.RepositoryMode;
@@ -58,8 +59,10 @@ public partial class Program
 
         #region Reasons and Conclusions
         builder.Services.AddDependencyInjectionContainerForReasonApp(defaultConnectionString, ReasonRepositoryMode.EfCoreSqlServer); 
-        builder.Services.AddDependencyInjectionContainerForConclusionApp(defaultConnectionString, ConclusionRepositoryMode.EfCoreSqlServer); 
+        builder.Services.AddDependencyInjectionContainerForConclusionApp(defaultConnectionString, ConclusionRepositoryMode.EfCoreSqlServer);
         #endregion
+
+        builder.Services.AddDependencyInjectionContainerForInstructionApp(defaultConnectionString, InstructionRepositoryMode.EfCoreSqlServer);
 
         // 테넌트 설정 바인딩
         builder.Services.Configure<TenantSettings>(
@@ -210,6 +213,11 @@ public partial class Program
         builder.Services.AddScoped<IPhotoLogService, InMemoryPhotoLogService>();
 
         var app = builder.Build();
+
+        using (var scope = app.Services.CreateScope())
+        {
+            InstructionsTableBuilder.Run(scope.ServiceProvider, forMaster: true);
+        }
 
         // Configure the HTTP request pipeline.
         if (app.Environment.IsDevelopment())
