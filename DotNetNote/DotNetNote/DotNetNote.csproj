@@ -54,6 +54,8 @@
     </ItemGroup>
 
     <ItemGroup>
+        <PackageReference Include="Azunt.ConclusionManagement" Version="1.0.1" />
+        <PackageReference Include="Azunt.InstructionManagement" Version="1.0.0" />
         <PackageReference Include="NuGet.Packaging" Version="7.6.0" />
         <PackageReference Include="NuGet.Protocol" Version="7.6.0" />
 
@@ -78,7 +80,7 @@
         <PackageReference Include="Azunt.NoteManagement" Version="1.0.4" />
         <PackageReference Include="Azunt.PostManagement" Version="1.0.1" />
         <PackageReference Include="Azunt.ProgressiveTypeManagement" Version="1.0.1" />
-        <PackageReference Include="Azunt.ReasonManagement" Version="1.0.2" />
+        <PackageReference Include="Azunt.ReasonManagement" Version="1.0.3" />
         <PackageReference Include="Azunt.ResourceManagement" Version="1.0.6" />
         <PackageReference Include="Azunt.RuleManagement" Version="1.0.2" />
         <PackageReference Include="Azunt.SignInManagement" Version="1.0.3" />
