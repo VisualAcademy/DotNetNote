@@ -1,23 +1,22 @@
-﻿namespace DotNetNote.Apis
+﻿namespace DotNetNote.Apis;
+
+[Route("api/[controller]")]
+[ApiController]
+public class ImageConversionController : ControllerBase
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class ImageConversionController : ControllerBase
+    [HttpGet("{fileName}")]
+    public IActionResult GetBase64Image(string fileName)
     {
-        [HttpGet("{fileName}")]
-        public IActionResult GetBase64Image(string fileName)
+        string imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", "logos", fileName);
+        if (!System.IO.File.Exists(imagePath))
         {
-            string imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", "logos", fileName);
-            if (!System.IO.File.Exists(imagePath))
-            {
-                return NotFound("이미지를 찾을 수 없습니다.");
-            }
+            return NotFound("이미지를 찾을 수 없습니다.");
+        }
 
-            byte[] imageBytes = System.IO.File.ReadAllBytes(imagePath);
-            string base64String = Convert.ToBase64String(imageBytes);
-            string dataUrl = $"data:image/png;base64,{base64String}";
+        byte[] imageBytes = System.IO.File.ReadAllBytes(imagePath);
+        string base64String = Convert.ToBase64String(imageBytes);
+        string dataUrl = $"data:image/png;base64,{base64String}";
 
-            return Ok(dataUrl);
-        } // end of method ImageConversionController::GetBase64Image
-    } // end of class ImageConversionController
-}
+        return Ok(dataUrl);
+    } // end of method ImageConversionController::GetBase64Image
+} // end of class ImageConversionController
