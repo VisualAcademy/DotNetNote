@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-
-namespace DotNetNote.Apis
+﻿namespace DotNetNote.Apis
 {
     [Route("api/[controller]")]
     [ApiController]
