@@ -1,53 +1,58 @@
 ﻿using DotNetNote.Models.Notes;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
-namespace DotNetNote.TagHelpers
+namespace DotNetNote.TagHelpers;
+
+[HtmlTargetElement("dnn-main-summary")]
+public class DotNetNoteMainSummaryTagHelper : TagHelper
 {
-    [HtmlTargetElement("dnn-main-summary")]
-    public class DotNetNoteMainSummaryTagHelper : TagHelper
+    private readonly INoteRepository _repository;
+
+    /// <summary>
+    /// 게시판 카테고리: Notice, Free, Data, Qna, ...
+    /// </summary>
+    public string Category { get; set; } = string.Empty;
+
+    public DotNetNoteMainSummaryTagHelper(INoteRepository repository)
     {
-        private readonly INoteRepository _repository;
+        _repository = repository;
+    }
 
-        /// <summary>
-        /// 게시판 카테고리: Notice, Free, Data, Qna, ...
-        /// </summary>
-        public string Category { get; set; }
+    public override void Process(TagHelperContext context, TagHelperOutput output)
+    {
+        output.TagName = "div";
 
-        public DotNetNoteMainSummaryTagHelper(INoteRepository repository) => _repository = repository;
+        var html = new System.Text.StringBuilder();
 
-        public override void Process(
-            TagHelperContext context, TagHelperOutput output)
+        var list = _repository.GetNoteSummaryByCategoryCache(Category);
+
+        if (list is { Count: > 0 })
         {
-            output.TagName = "div";            
-
-            string s = "";
-
-            //var list = _repository.GetNoteSummaryByCategory(Category);
-            var list = _repository.GetNoteSummaryByCategoryCache(Category);
-
-            if (list != null && list.Count > 0)
+            foreach (var note in list)
             {
-                foreach (var l in list)
-                {
-                    s += $"<div class='post_item'><div class='post_item_text'>" 
-                        + $"<span class='post_date'>" 
-                        + l.PostDate.ToString("yyyy-MM-dd") 
-                        + "</span><span class='post_title'>" 
-                        + "<a href = '/DotNetNote/Details/" + l.Id + "'>" 
-                        + Dul.StringLibrary.CutStringUnicode(l.Title, 33).Replace("<", "&lt;") 
-                        + "</a></span></div></div>";
-                }
-            }
-            else
-            {
-                s += @"
-                    <div class='text-center'>
-                        항목이 없습니다.
-                    </div>
-                ";
-            }
+                var title = Dul.StringLibrary
+                    .CutStringUnicode(note.Title, 33)
+                    .Replace("<", "&lt;");
 
-            output.Content.AppendHtml(s);
+                html.Append("<div class='post_item'>");
+                html.Append("<div class='post_item_text'>");
+                html.Append($"<span class='post_date'>{note.PostDate:yyyy-MM-dd}</span>");
+                html.Append("<span class='post_title'>");
+                html.Append($"<a href='/DotNetNote/Details/{note.Id}'>{title}</a>");
+                html.Append("</span>");
+                html.Append("</div>");
+                html.Append("</div>");
+            }
         }
+        else
+        {
+            html.Append("""
+                <div class='text-center'>
+                    항목이 없습니다.
+                </div>
+                """);
+        }
+
+        output.Content.AppendHtml(html.ToString());
     }
 }
