@@ -1,6 +1,12 @@
-﻿namespace DotNetNote.ViewComponents.TenantHelpfulGuides
+﻿using Microsoft.AspNetCore.Mvc;
+
+namespace DotNetNote.ViewComponents.TenantHelpfulGuides
 {
-    public class TenantHelpfulGuidesViewComponent
+    public class TenantHelpfulGuidesViewComponent : ViewComponent
     {
+        public IViewComponentResult Invoke()
+        {
+            return View();
+        }
     }
 }
