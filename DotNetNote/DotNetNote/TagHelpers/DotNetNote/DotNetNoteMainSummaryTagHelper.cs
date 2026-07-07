@@ -13,10 +13,7 @@ public class DotNetNoteMainSummaryTagHelper : TagHelper
     /// </summary>
     public string Category { get; set; } = string.Empty;
 
-    public DotNetNoteMainSummaryTagHelper(INoteRepository repository)
-    {
-        _repository = repository;
-    }
+    public DotNetNoteMainSummaryTagHelper(INoteRepository repository) => _repository = repository;
 
     public override void Process(TagHelperContext context, TagHelperOutput output)
     {
