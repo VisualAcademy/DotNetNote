@@ -1,4 +1,6 @@
-﻿using System.Net;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Net;
+using Microsoft.AspNetCore.Mvc;
 
 namespace DotNetNote.Controllers;
 
@@ -6,16 +8,20 @@ namespace DotNetNote.Controllers;
 public class WebApiDemoController : Controller
 {
     [HttpGet]
-    public JsonResult Get() => Json(new { Name = "박용준" });
+    public JsonResult Get()
+    {
+        return Json(new { Name = "박용준" });
+    }
 
     [HttpPost]
-    public JsonResult Post([FromBody]WebApiDemoClass name)
+    public JsonResult Post([FromBody] WebApiDemoClass name)
     {
         if (ModelState.IsValid)
         {
             Response.StatusCode = (int)HttpStatusCode.Created;
             return Json(true);
         }
+
         Response.StatusCode = (int)HttpStatusCode.BadRequest;
         return Json("실패");
     }
@@ -24,7 +30,8 @@ public class WebApiDemoController : Controller
 public class WebApiDemoClass
 {
     public int Id { get; set; }
+
     [Required]
     [StringLength(50, MinimumLength = 3, ErrorMessage = "3자 이상")]
-    public string Name { get; set; }
+    public string Name { get; set; } = string.Empty;
 }
