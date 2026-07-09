@@ -6,5 +6,5 @@ public class Grade
 
     public double Score { get; set; }
 
-    public Exam Exam { get; set; }
+    public Exam Exam { get; set; } = null!;
 }
