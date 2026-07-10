@@ -194,6 +194,7 @@
     <Build Include="dbo\Tables\Reasons.sql" />
     <Build Include="dbo\Tables\Conclusions.sql" />
     <Build Include="dbo\Tables\EmployeeEmploymentAuditRecords.sql" />
+    <Build Include="dbo\Tables\EmployeeEmploymentAuditChanges.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="dbo\Scripts\Attachments\Demo_Attachments_Processing.sql" />
