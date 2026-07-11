@@ -112,14 +112,14 @@
         <PackageReference Include="Microsoft.FluentUI.AspNetCore.Components.DataGrid.EntityFrameworkAdapter" Version="4.14.3" />
         <PackageReference Include="Microsoft.FluentUI.AspNetCore.Components.Emoji" Version="4.14.3" />
         <PackageReference Include="Microsoft.FluentUI.AspNetCore.Components.Icons" Version="4.14.3" />
-        <PackageReference Include="Microsoft.Identity.Web" Version="4.12.2" />  
+        <PackageReference Include="Microsoft.Identity.Web" Version="4.13.0" />  
         <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="10.0.2" />
         <PackageReference Include="MimeTypesMap" Version="1.0.9" />
 
         <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
 
         <PackageReference Include="SendGrid" Version="9.29.3" />
-        <PackageReference Include="Serilog" Version="4.3.1" />
+        <PackageReference Include="Serilog" Version="4.4.0" />
         <PackageReference Include="Serilog.AspNetCore" Version="10.0.0" />
         <PackageReference Include="Serilog.Extensions.Logging" Version="10.0.0" />
         <PackageReference Include="Serilog.Sinks.File" Version="7.0.0" />
