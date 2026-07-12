@@ -1,12 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace DotNetNote.ViewComponents.TenantHelpfulGuides
+namespace DotNetNote.ViewComponents.TenantHelpfulGuides;
+
+public class TenantHelpfulGuidesViewComponent : ViewComponent
 {
-    public class TenantHelpfulGuidesViewComponent : ViewComponent
+    public IViewComponentResult Invoke()
     {
-        public IViewComponentResult Invoke()
-        {
-            return View();
-        }
+        return View();
     }
 }
