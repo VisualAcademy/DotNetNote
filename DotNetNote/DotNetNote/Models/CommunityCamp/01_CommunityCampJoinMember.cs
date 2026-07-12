@@ -1,7 +1,4 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-
-namespace DotNetNote.Models;
+﻿namespace DotNetNote.Models;
 
 public class CommunityCampJoinMember
 {
