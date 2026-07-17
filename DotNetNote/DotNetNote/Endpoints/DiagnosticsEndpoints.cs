@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Http;      // Results.*
 using Microsoft.AspNetCore.Routing;   // IEndpointRouteBuilder
 using System.Net.Http;
-using System.Net.Http.Headers;
 
 namespace Azunt.Endpoints;
 
