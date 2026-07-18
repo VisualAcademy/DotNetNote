@@ -1,5 +1,3 @@
-using System.ComponentModel.DataAnnotations;
-
 namespace DotNetNote.Models.AccountViewModels;
 
 public class ExternalLoginViewModel
