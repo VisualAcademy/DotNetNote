@@ -1,4 +1,4 @@
-﻿using System.Net;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace DotNetNote.Models.StudentManager;
 
@@ -9,44 +9,64 @@ public class Student
 {
     public int StudentId { get; set; }
 
-    public string Name { get; set; }
+    public string Name { get; set; } = string.Empty;
 }
 
 /// <summary>
-/// [2] Student 리포지토리 클래스 - 인메모리 
+/// [2] Student 리포지토리 클래스 - 인메모리
 /// </summary>
 public class StudentRepository
 {
     public List<Student> GetAllInMemory()
     {
-        List<Student> students = [new Student { StudentId = 1, Name = "홍길동" }, new Student { StudentId = 2, Name = "백두산" }];
-        return students;
+        return
+        [
+            new Student
+            {
+                StudentId = 1,
+                Name = "홍길동"
+            },
+            new Student
+            {
+                StudentId = 2,
+                Name = "백두산"
+            }
+        ];
     }
 }
 
 /// <summary>
-/// [3] Student Web API 서비스 클래스 
+/// [3] Student Web API 서비스 클래스
 /// </summary>
-[Route("api/[controller]")] // GET: api/StudentService 
-public class StudentServiceController : Controller
+[Route("api/[controller]")]
+[ApiController]
+public class StudentServiceController : ControllerBase
 {
     private readonly StudentRepository _repository;
 
-    public StudentServiceController() => _repository = new StudentRepository();
-
-    [HttpGet("")]
-    public IEnumerable<Student> Get() => _repository.GetAllInMemory().AsEnumerable();
-
-    [HttpGet("{id}")]
-    public Student GetById(int id)
+    public StudentServiceController()
     {
-        // 데이터 조회
-        Student student = _repository.GetAllInMemory()[id];
-        if (student == null)
+        _repository = new StudentRepository();
+    }
+
+    [HttpGet]
+    public IEnumerable<Student> Get()
+    {
+        return _repository.GetAllInMemory();
+    }
+
+    [HttpGet("{id:int}")]
+    public ActionResult<Student> GetById(int id)
+    {
+        var student = _repository
+            .GetAllInMemory()
+            .FirstOrDefault(student => student.StudentId == id);
+
+        if (student is null)
         {
-            Response.StatusCode = (int)HttpStatusCode.NotFound;
-            return null;
+            return NotFound();
         }
-        return student;
+
+        return Ok(student);
     }
 }
