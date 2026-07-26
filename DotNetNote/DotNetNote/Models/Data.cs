@@ -7,9 +7,9 @@ public class DataModel
 {
     public int Id { get; set; }
 
-    public string Name { get; set; }
+    public string Name { get; set; } = string.Empty;
 
-    public string Title { get; set; }
+    public string Title { get; set; } = string.Empty;
 }
 
 /// <summary>
@@ -17,30 +17,57 @@ public class DataModel
 /// </summary>
 public class DataService
 {
-    private readonly List<DataModel> _data = new List<DataModel>()
+    private readonly List<DataModel> _data =
+    [
+        new DataModel
+        {
+            Id = 1,
+            Name = "김태영",
+            Title = "안녕하세요."
+        },
+        new DataModel
+        {
+            Id = 2,
+            Name = "박용준",
+            Title = "반갑습니다."
+        },
+        new DataModel
+        {
+            Id = 3,
+            Name = "한상훈",
+            Title = "또 만나요."
+        }
+    ];
+
+    public List<DataModel> GetAll()
     {
-        new DataModel { Id = 1, Name = "김태영", Title = "안녕하세요." },
-        new DataModel { Id = 2, Name = "박용준", Title = "반갑습니다." },
-        new DataModel { Id = 3, Name = "한상훈", Title = "또 만나요." },
-    };
+        return _data;
+    }
 
-    public List<DataModel> GetAll() => _data;
-
-    public DataModel GetDataById(int id) => _data.Where(n => n.Id == id).SingleOrDefault();
+    public DataModel? GetDataById(int id)
+    {
+        return _data.SingleOrDefault(data => data.Id == id);
+    }
 
     public List<DataModel> GetDataByName(string name)
     {
-        return _data.Where(
-            n => n.Name.ToLower().Equals(name.ToLower())).ToList();
+        return _data
+            .Where(data =>
+                string.Equals(
+                    data.Name,
+                    name,
+                    StringComparison.OrdinalIgnoreCase))
+            .ToList();
     }
 }
 
 public class DataFinder
 {
-    private DataService _service = new DataService();
+    private readonly DataService _service = new();
 
-    public async Task<DataModel> GetDataById(int id)
+    public async Task<DataModel?> GetDataById(int id)
     {
-        return await Task.FromResult(_service.GetDataById(id));
+        return await Task.FromResult(
+            _service.GetDataById(id));
     }
 }
