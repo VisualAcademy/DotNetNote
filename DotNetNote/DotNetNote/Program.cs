@@ -1,8 +1,12 @@
+using Azunt.AttachmentManagement;
+using Azunt.ConclusionManagement;
 using Azunt.DefaultAttachmentManagement;
 using Azunt.EmployeeManagement;
 using Azunt.Endpoints;
+using Azunt.InstructionManagement;
 using Azunt.Models.Enums;
 using Azunt.NoteManagement;
+using Azunt.ReasonManagement;
 using Azunt.ResourceManagement;
 using Azunt.Services.Terminology;
 using Azunt.TenantSettingManagement;
@@ -42,18 +46,32 @@ using Serilog;
 using Serilog.Sinks.MSSqlServer;
 using System.Net.Http.Headers;
 using VisualAcademy.Models.Configuration;
-using Azunt.ReasonManagement;
-using Azunt.ConclusionManagement;
-using Azunt.InstructionManagement;
-
-using ReasonRepositoryMode = Azunt.ReasonManagement.ReasonServicesRegistrationExtensions.RepositoryMode;
 using ConclusionRepositoryMode = Azunt.ConclusionManagement.ConclusionServicesRegistrationExtensions.RepositoryMode;
+using ReasonRepositoryMode = Azunt.ReasonManagement.ReasonServicesRegistrationExtensions.RepositoryMode;
 
 public partial class Program
 {
     public static async Task Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
+
+        // ---------------------------------------------------------
+        // Database connection
+        // ---------------------------------------------------------
+        var connectionString =
+            builder.Configuration.GetConnectionString("DefaultConnection")
+            ?? throw new InvalidOperationException(
+                "Connection string 'DefaultConnection' was not found.");
+
+        // ---------------------------------------------------------
+        // Azunt.AttachmentManagement
+        //
+        // Dapper mode is recommended for the first DotNetNote exercise
+        // because it does not need to share the existing application DbContext.
+        // ---------------------------------------------------------
+        builder.Services.AddDependencyInjectionContainerForAttachmentApp(
+            connectionString,
+            AttachmentServicesRegistrationExtensions.RepositoryMode.Dapper);
 
         var defaultConnectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
@@ -213,6 +231,33 @@ public partial class Program
         builder.Services.AddScoped<IPhotoLogService, InMemoryPhotoLogService>();
 
         var app = builder.Build();
+
+
+        // ---------------------------------------------------------
+        // Install or enhance dbo.Attachments before accepting requests
+        // ---------------------------------------------------------
+        var initializeSchema =
+            app.Configuration.GetValue<bool>(
+                "AttachmentManagement:InitializeSchemaOnStartup");
+
+        if (initializeSchema)
+        {
+            await using var scope = app.Services.CreateAsyncScope();
+
+            var attachmentsTableBuilder =
+                scope.ServiceProvider
+                    .GetRequiredService<AttachmentsTableBuilder>();
+
+            var ensureIndexes =
+                app.Configuration.GetValue<bool>(
+                    "AttachmentManagement:EnsureIndexes");
+
+            await attachmentsTableBuilder.EnsureAsync(
+                connectionString,
+                ensureIndexes);
+        }
+
+
 
         using (var scope = app.Services.CreateScope())
         {
