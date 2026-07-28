@@ -1,8 +1,13 @@
-﻿namespace DotNetNote.Models.Exams;
+﻿using Dapper;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
+using System.ComponentModel.DataAnnotations;
+using System.Data;
+
+namespace DotNetNote.Models.Exams;
 
 public class ExamClass
 {
-
 }
 
 /// <summary>
@@ -13,86 +18,116 @@ public class Question
     public int Id { get; set; }
 
     [Required]
-    public string Title { get; set; } = "";
+    public string Title { get; set; } = string.Empty;
 }
 
 /// <summary>
-/// [2] 인터페이스 
+/// [2] 인터페이스
 /// </summary>
 public interface IQuestionRepository
 {
     Question Add(Question model);
+
     List<Question> GetAll();
+
     Question GetById(int id);
+
     Question Update(Question model);
+
     void Remove(int id);
 
-    List<Question> GetAllWithPaging(int pageIndex, int pageSize = 10);
+    List<Question> GetAllWithPaging(
+        int pageIndex,
+        int pageSize = 10);
+
     int GetRecordCount();
 }
 
 /// <summary>
-/// [3] 리포지토리 클래스 
+/// [3] 리포지토리 클래스
 /// </summary>
 public class QuestionRepository : IQuestionRepository
 {
-    private IConfiguration _config;
-    private IDbConnection db;
+    private readonly IDbConnection _db;
 
-    /// <summary>
-    /// 생성자
-    /// </summary>
     public QuestionRepository(IConfiguration config)
     {
-        _config = config;
-        db = new SqlConnection(
-            _config.GetSection("ConnectionStrings")
-                .GetSection("DefaultConnection").Value);
+        ArgumentNullException.ThrowIfNull(config);
+
+        var connectionString =
+            config.GetConnectionString("DefaultConnection")
+            ?? throw new InvalidOperationException(
+                "DefaultConnection 연결 문자열이 설정되지 않았습니다.");
+
+        _db = new SqlConnection(connectionString);
     }
 
     /// <summary>
-    /// 입력 메서드 
+    /// 입력 메서드
     /// </summary>
     public Question Add(Question model)
     {
-        string sql = @"
-                Insert Into Questions (Title) Values (@Title);
-                Select Cast(SCOPE_IDENTITY() As Int);
-            ";
-        var id = db.Query<int>(sql, model).Single();
+        ArgumentNullException.ThrowIfNull(model);
+
+        const string sql = """
+            INSERT INTO Questions (Title)
+            VALUES (@Title);
+
+            SELECT CAST(SCOPE_IDENTITY() AS INT);
+            """;
+
+        var id = _db.Query<int>(sql, model).Single();
+
         model.Id = id;
+
         return model;
     }
 
     /// <summary>
-    /// 출력 메서드: GetAll, GetQuestions 
+    /// 출력 메서드
     /// </summary>
     public List<Question> GetAll()
     {
-        string sql = "Select * From Questions Order By Id Desc";
-        return db.Query<Question>(sql).ToList();
+        const string sql = """
+            SELECT Id, Title
+            FROM Questions
+            ORDER BY Id DESC
+            """;
+
+        return _db.Query<Question>(sql).ToList();
     }
 
     /// <summary>
-    /// 상세 메서드: GetById, GetQuestion, GetQuestionById
+    /// 상세 메서드
     /// </summary>
     public Question GetById(int id)
     {
-        string query = "Select * From Questions Where Id = @Id";
-        return db.Query<Question>(query, new { Id = id }).Single();
+        const string sql = """
+            SELECT Id, Title
+            FROM Questions
+            WHERE Id = @Id
+            """;
+
+        return _db.Query<Question>(
+            sql,
+            new { Id = id }).Single();
     }
 
     /// <summary>
-    /// 수정 메서드 
+    /// 수정 메서드
     /// </summary>
     public Question Update(Question model)
     {
-        var query =
-            "Update Questions           " +
-            "Set                        " +
-            "   Title = @Title          " +
-            "Where Id = @Id             ";
-        db.Execute(query, model);
+        ArgumentNullException.ThrowIfNull(model);
+
+        const string sql = """
+            UPDATE Questions
+            SET Title = @Title
+            WHERE Id = @Id
+            """;
+
+        _db.Execute(sql, model);
+
         return model;
     }
 
@@ -101,8 +136,12 @@ public class QuestionRepository : IQuestionRepository
     /// </summary>
     public void Remove(int id)
     {
-        var query = "Delete From Questions Where Id = @Id";
-        db.Execute(query, new { Id = id });
+        const string sql = """
+            DELETE FROM Questions
+            WHERE Id = @Id
+            """;
+
+        _db.Execute(sql, new { Id = id });
     }
 
     /// <summary>
@@ -110,33 +149,45 @@ public class QuestionRepository : IQuestionRepository
     /// </summary>
     public int GetRecordCount()
     {
-        string query = "Select Count(*) From Questions";
-        return db.Query<int>(query).FirstOrDefault();
+        const string sql = """
+            SELECT COUNT(*)
+            FROM Questions
+            """;
+
+        return _db.Query<int>(sql).FirstOrDefault();
     }
 
     /// <summary>
     /// 페이징 처리된 리스트 출력 메서드
     /// </summary>
-    public List<Question> GetAllWithPaging(int pageIndex, int pageSize = 10)
+    public List<Question> GetAllWithPaging(
+        int pageIndex,
+        int pageSize = 10)
     {
-        string sql = @"
-                Select Id, Title
-                From 
-                    (
-                        Select Row_Number() Over (Order By Id Desc) As RowNumbers, Id, Title
-                        From Questions
-                    ) As TempRowTables
-                Where 
-                    RowNumbers
-                        Between
-                            (@PageIndex * @PageSize + 1)
-                        And
-                            (@PageIndex + 1) * @PageSize
-            ";
-        return db.Query<Question>(sql, new { PageIndex = pageIndex, PageSize = pageSize }).ToList();
+        const string sql = """
+            SELECT Id, Title
+            FROM
+            (
+                SELECT
+                    ROW_NUMBER() OVER (ORDER BY Id DESC) AS RowNumbers,
+                    Id,
+                    Title
+                FROM Questions
+            ) AS TempRowTables
+            WHERE RowNumbers
+                BETWEEN (@PageIndex * @PageSize + 1)
+                AND ((@PageIndex + 1) * @PageSize)
+            """;
+
+        return _db.Query<Question>(
+            sql,
+            new
+            {
+                PageIndex = pageIndex,
+                PageSize = pageSize
+            }).ToList();
     }
 }
-
 
 /// <summary>
 /// DTO 클래스
@@ -146,195 +197,230 @@ public class QuestionDto
     public int Id { get; set; }
 
     [Required]
-    [MaxLength(4000, ErrorMessage = "문제는 4000자 이하로 입력하세요.")]
-    public string Title { get; set; }
+    [MaxLength(
+        4000,
+        ErrorMessage = "문제는 4000자 이하로 입력하세요.")]
+    public string Title { get; set; } = string.Empty;
 }
 
 /// <summary>
 /// [4] Web API 컨트롤러 클래스
-/// 복수형 사용 권장 
-/// 컨벤션 기반 라우팅 대신에 특성(어트리뷰트) 라우팅 추천
 /// </summary>
-//[Route("api/questions")] // 직접 Web API 이름을 지정할 때
-[Route("api/[controller]")] // /api/QuestionService 
+[Route("api/[controller]")]
 public class QuestionServiceController : Controller
 {
-    private IQuestionRepository _repository;
-    private ILogger<QuestionServiceController> _logger;
+    private readonly IQuestionRepository _repository;
+    private readonly ILogger<QuestionServiceController> _logger;
 
-    public QuestionServiceController(IQuestionRepository repository, ILogger<QuestionServiceController> logger)
+    public QuestionServiceController(
+        IQuestionRepository repository,
+        ILogger<QuestionServiceController> logger)
     {
-        _repository = repository;
-        _logger = logger;
+        _repository = repository
+            ?? throw new ArgumentNullException(nameof(repository));
+
+        _logger = logger
+            ?? throw new ArgumentNullException(nameof(logger));
     }
 
-    // GET: /api/QuestionService 
     [HttpGet]
     [Route("")]
     [ProducesResponseType(typeof(List<Question>), 200)]
     public IActionResult Get()
     {
-        // 500 에러 찍어보려면,
-        // throw new Exception("인위적으로 에러 발생시켜 500에러 출력");
         try
         {
             var models = _repository.GetAll();
-            if (models == null)
+
+            if (models.Count == 0)
             {
                 return NotFound("아무런 데이터가 없습니다.");
             }
-            return Ok(models); // 200 
+
+            return Ok(models);
         }
         catch (Exception ex)
         {
-            _logger.LogError($"에러 발생: {ex.Message}");
+            _logger.LogError(
+                ex,
+                "질문 목록을 가져오는 중 오류가 발생했습니다.");
+
             return BadRequest();
         }
     }
 
-    // GET: /api/QuestionService/{id} 
-    [HttpGet("{id:int}", Name = "GetQuestionById")] // 이름 추가
+    [HttpGet("{id:int}", Name = "GetQuestionById")]
     [ProducesResponseType(typeof(Question), 200)]
     public IActionResult Get(int id)
     {
         try
         {
             var model = _repository.GetById(id);
-            if (model == null)
-            {
-                return NotFound($"{id}번 데이터가 없습니다.");
-            }
+
             return Ok(model);
+        }
+        catch (InvalidOperationException)
+        {
+            return NotFound($"{id}번 데이터가 없습니다.");
         }
         catch (Exception ex)
         {
-            return BadRequest($"에러가 발생했습니다. {ex.Message}");
+            _logger.LogError(
+                ex,
+                "{QuestionId}번 질문을 가져오는 중 오류가 발생했습니다.",
+                id);
+
+            return BadRequest("질문을 가져오는 중 오류가 발생했습니다.");
         }
     }
 
     [HttpPost]
     [Produces("application/json", Type = typeof(QuestionDto))]
-    [Consumes("application/json")] // application/xml
-    public IActionResult Post([FromBody]QuestionDto model) // Deserialize, 생성 전용 DTO 클래스 사용 가능 
+    [Consumes("application/json")]
+    public IActionResult Post([FromBody] QuestionDto? model)
     {
-        // 예외 처리 방법
-        if (model == null)
+        if (model is null)
         {
-            return BadRequest(); // Status: 400 Bad Request 
+            return BadRequest();
+        }
+
+        if (string.IsNullOrWhiteSpace(model.Title))
+        {
+            ModelState.AddModelError(
+                nameof(QuestionDto.Title),
+                "문제를 입력해야 합니다.");
+        }
+
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
         }
 
         try
         {
-            // 예외 처리 
-            if (model.Title == null || model.Title.Length < 1)
+            var newModel = new Question
             {
-                ModelState.AddModelError("Title", "문제를 입력해야 합니다.");
+                Id = model.Id,
+                Title = model.Title
+            };
+
+            var addedModel = _repository.Add(newModel);
+
+            if (DateTime.Now.Second % 2 == 0)
+            {
+                return CreatedAtRoute(
+                    "GetQuestionById",
+                    new { id = addedModel.Id },
+                    addedModel);
             }
 
-            // 모델 유효성 검사
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState); // 400 에러 출력
-            }
+            var uri = Url.Link(
+                "GetQuestionById",
+                new { id = addedModel.Id });
 
-            // QuestionDto를 Question 모델로 변경해서 리포지토리에 전달
-            // AutoMapper Mapper.Map() 형식으로 대체 가능 
-            var newModel = new Question { Id = model.Id, Title = model.Title };
-
-            var m = _repository.Add(newModel); // 저장
-
-            if (DateTime.Now.Second % 2 == 0) //[!] 둘 중 원하는 방식 사용
-            {
-                //return CreatedAtAction("GetById", new { id = m.Id }, m);
-                return CreatedAtRoute("GetQuestionById", new { id = m.Id }, m); // Status: 201 Created
-            }
-            else
-            {
-                var uri = Url.Link("GetQuestionById", new { id = m.Id });
-                return Created(uri, m); // 201 Created
-            }
-            //return Ok(m); // 200
+            return Created(uri ?? string.Empty, addedModel);
         }
-        catch (Exception)
+        catch (Exception ex)
         {
+            _logger.LogError(
+                ex,
+                "질문을 등록하는 중 오류가 발생했습니다.");
+
             return BadRequest();
         }
-    } // </Post>
+    }
 
-    // PUT: /api/QuestionService 
-    [HttpPut("{id:int}")] // HttpPatch == 부분 업데이트 
-    public IActionResult Put(int id, [FromBody] Question model)
+    [HttpPut("{id:int}")]
+    public IActionResult Put(
+        int id,
+        [FromBody] Question? model)
     {
-        if (model == null)
+        if (model is null)
         {
             return BadRequest();
         }
+
         try
         {
-            var oldModel = _repository.GetById(id);
-            if (oldModel == null)
-            {
-                return NotFound($"{id}번 데이터가 없습니다.");
-            }
-            model.Id = id; // * 
+            _repository.GetById(id);
+
+            model.Id = id;
             _repository.Update(model);
-            //return Ok(model);
-            // 204 No Content
-            return NoContent(); // 이미 넘어온 정보에 모든 값을 가지고 있기에...
+
+            return NoContent();
         }
-        catch (Exception)
+        catch (InvalidOperationException)
         {
+            return NotFound($"{id}번 데이터가 없습니다.");
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(
+                ex,
+                "{QuestionId}번 질문을 수정하는 중 오류가 발생했습니다.",
+                id);
+
             return BadRequest("데이터가 업데이트되지 않았습니다.");
         }
     }
 
-    // DELETE: /api/QuestionService/{id} 
-    [HttpDelete("{id:int}")] // 데코레이터 특성
+    [HttpDelete("{id:int}")]
     public IActionResult Delete(int id)
     {
         try
         {
-            var oldModel = _repository.GetById(id);
-            if (oldModel == null)
-            {
-                return NotFound($"{id}번 데이터가 없습니다.");
-            }
-
-            // 삭제
+            _repository.GetById(id);
             _repository.Remove(id);
 
             return NoContent();
         }
-        catch (Exception)
+        catch (InvalidOperationException)
         {
+            return NotFound($"{id}번 데이터가 없습니다.");
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(
+                ex,
+                "{QuestionId}번 질문을 삭제하는 중 오류가 발생했습니다.",
+                id);
+
             return BadRequest("삭제할 수 없습니다.");
         }
     }
 
-    // 페이징 처리 Web API 
-    // GET: /api/QuestionService/page/1/1
-    [HttpGet("page/{pageNumber:int}/{pageSize:int}")] // 이름 추가
+    [HttpGet("page/{pageNumber:int}/{pageSize:int}")]
     [ProducesResponseType(typeof(IEnumerable<Question>), 200)]
-    public IActionResult Get(int pageNumber = 1, int pageSize = 10)
+    public IActionResult Get(
+        int pageNumber = 1,
+        int pageSize = 10)
     {
         try
         {
-            // 페이지 번호는 1, 2, 3 사용, 리포지토리에서는 0, 1, 2 사용
-            pageNumber = (pageNumber > 0) ? pageNumber - 1 : 0;
-            var models = _repository.GetAllWithPaging(pageNumber, pageSize);
-            if (models == null)
+            pageNumber = pageNumber > 0
+                ? pageNumber - 1
+                : 0;
+
+            var models = _repository.GetAllWithPaging(
+                pageNumber,
+                pageSize);
+
+            if (models.Count == 0)
             {
-                return NotFound($"아무런 데이터가 없습니다.");
+                return NotFound("아무런 데이터가 없습니다.");
             }
 
-            // 응답 헤더에 총 레코드 수를 담아서 출력
-            //Response.Headers.Add("X-TotalRecordCount", _repository.GetRecordCount().ToString());
-            Response.Headers["X-TotalRecordCount"] = _repository.GetRecordCount().ToString();
+            Response.Headers["X-TotalRecordCount"] =
+                _repository.GetRecordCount().ToString();
 
-            return Ok(models); // 200 
+            return Ok(models);
         }
-        catch (Exception)
+        catch (Exception ex)
         {
+            _logger.LogError(
+                ex,
+                "질문 페이징 목록을 가져오는 중 오류가 발생했습니다.");
+
             return BadRequest();
         }
     }
