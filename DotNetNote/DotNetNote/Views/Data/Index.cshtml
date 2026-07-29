@@ -3,26 +3,43 @@
 @inject DataFinder Finder
 
 <h2>데이터 리스트</h2>
+
 <h3>전체 데이터 출력</h3>
+
 <ul>
     @foreach (var data in Model)
     {
         <li>@data.Id: @data.Name, @data.Title</li>
     }
 </ul>
+
 <hr />
 
 <h3>단일 데이터 출력</h3>
+
 @{
     var first = await Finder.GetDataById(1);
 }
-<div>
-    1번 데이터: @first.Id, @first.Name, @first.Title
-</div>
+
+@if (first is not null)
+{
+    <div>
+        1번 데이터: @first.Id, @first.Name, @first.Title
+    </div>
+}
+else
+{
+    <div>
+        1번 데이터를 찾을 수 없습니다.
+    </div>
+}
+
 <hr />
 
-
 <h3>뷰 컴포넌트 호출</h3>
+
 <div>
-    @await Component.InvokeAsync("DataList", new { name = "박용준" })
+    @await Component.InvokeAsync(
+        "DataList",
+        new { name = "박용준" })
 </div>
