@@ -1,9 +1,8 @@
-﻿namespace DotNetNote.Models
-{
-    public class DemoClass
-    {
-        public int Id { get; set; }
+﻿namespace DotNetNote.Models;
 
-        public string Name { get; set; }
-    }
+public class DemoClass
+{
+    public int Id { get; set; }
+
+    public string Name { get; set; } = string.Empty;
 }
