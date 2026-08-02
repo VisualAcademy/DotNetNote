@@ -1,4 +1,8 @@
-﻿namespace DotNetNote.Models;
+﻿using Dapper;
+using Microsoft.Data.SqlClient;
+using Microsoft.Extensions.Configuration;
+
+namespace DotNetNote.Models;
 
 /// <summary>
 /// [1] 모델 클래스
@@ -7,11 +11,11 @@ public class ThreeViewModel
 {
     public int Id { get; set; }
 
-    public string Note { get; set; }
+    public string Note { get; set; } = string.Empty;
 }
 
 /// <summary>
-/// [2] 리포지토리 인터페이스 
+/// [2] 리포지토리 인터페이스
 /// </summary>
 public interface IThreeRepository
 {
@@ -19,42 +23,59 @@ public interface IThreeRepository
 
     List<ThreeViewModel> GetAll();
 
-    ThreeViewModel GetById(int id); 
+    ThreeViewModel GetById(int id);
 }
 
 /// <summary>
-/// [3] 리포지토리 클래스 
+/// [3] 리포지토리 클래스
 /// </summary>
 public class ThreeRepository : IThreeRepository
 {
-    private SqlConnection db;
-    private IConfiguration _config;
+    private readonly SqlConnection _db;
 
     public ThreeRepository(IConfiguration config)
     {
-        _config = config;
-        db = new SqlConnection(
-                _config
-                    .GetSection("ConnectionStrings")
-                        .GetSection("DefaultConnection").Value);
+        ArgumentNullException.ThrowIfNull(config);
+
+        var connectionString =
+            config.GetConnectionString("DefaultConnection")
+            ?? throw new InvalidOperationException(
+                "DefaultConnection 연결 문자열이 설정되지 않았습니다.");
+
+        _db = new SqlConnection(connectionString);
     }
 
     public List<ThreeViewModel> GetAll()
     {
-        string sql = "Select * From Threes Order By Id Asc";
-        return db.Query<ThreeViewModel>(sql).ToList();
+        const string sql = """
+            SELECT Id, Note
+            FROM Threes
+            ORDER BY Id ASC
+            """;
+
+        return _db.Query<ThreeViewModel>(sql).ToList();
     }
 
     public ThreeViewModel Add(ThreeViewModel model)
     {
-        string sql = @"
-                Insert Into Threes (Note) Values (@Note);
-                Select Cast(SCOPE_IDENTITY() As Int);
-            ";
-        var id = db.Query<int>(sql, model).Single();
+        ArgumentNullException.ThrowIfNull(model);
+
+        const string sql = """
+            INSERT INTO Threes (Note)
+            VALUES (@Note);
+
+            SELECT CAST(SCOPE_IDENTITY() AS INT);
+            """;
+
+        var id = _db.Query<int>(sql, model).Single();
+
         model.Id = id;
+
         return model;
     }
 
-    public ThreeViewModel GetById(int id) => throw new NotImplementedException();
+    public ThreeViewModel GetById(int id)
+    {
+        throw new NotImplementedException();
+    }
 }
