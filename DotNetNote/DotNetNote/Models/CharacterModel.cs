@@ -1,102 +1,139 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Dapper;
+using Microsoft.Data.SqlClient;
+using Microsoft.Extensions.Configuration;
+using System.Data;
 
-namespace DotNetNote.Models
+namespace DotNetNote.Models;
+
+/// <summary>
+/// 모델 클래스
+/// </summary>
+public class CharacterModel
 {
+    public int Id { get; set; }
+
+    public string Username { get; set; } = string.Empty;
+
+    public int HeroId { get; set; }
+}
+
+/// <summary>
+/// 리포지토리 인터페이스
+/// </summary>
+public interface ICharacterRepository
+{
+    CharacterModel SetCharacter(CharacterModel model);
+
+    CharacterModel? GetCharacterByUsername(string username);
+}
+
+/// <summary>
+/// 리포지토리 클래스
+/// </summary>
+public class CharacterRepository : ICharacterRepository
+{
+    private readonly IDbConnection _db;
+
     /// <summary>
-    /// 모델 클래스
+    /// 생성자
     /// </summary>
-    public class CharacterModel
+    public CharacterRepository(IConfiguration config)
     {
-        public int Id { get; set; }
+        ArgumentNullException.ThrowIfNull(config);
 
-        public string Username { get; set; }
+        var connectionString =
+            config.GetConnectionString("DefaultConnection")
+            ?? throw new InvalidOperationException(
+                "DefaultConnection 연결 문자열이 설정되지 않았습니다.");
 
-        public int HeroId { get; set; }
+        _db = new SqlConnection(connectionString);
     }
 
     /// <summary>
-    /// 리포지토리 인터페이스
+    /// 캐릭터 선택: 처음 입력하거나 기존 정보를 업데이트합니다.
     /// </summary>
-    public interface ICharacterRepository
+    public CharacterModel SetCharacter(CharacterModel model)
     {
-        CharacterModel SetCharacter(CharacterModel model);
+        ArgumentNullException.ThrowIfNull(model);
 
-        CharacterModel GetCharacterByUsername(string username);
+        if (string.IsNullOrWhiteSpace(model.Username))
+        {
+            throw new ArgumentException(
+                "Username은 비어 있을 수 없습니다.",
+                nameof(model));
+        }
+
+        if (GetRecordCounts(model.Username) > 0)
+        {
+            const string updateSql = """
+                UPDATE Characters
+                SET HeroId = @HeroId
+                WHERE Username = @Username
+                """;
+
+            _db.Execute(updateSql, model);
+
+            return model;
+        }
+
+        const string insertSql = """
+            INSERT INTO Characters
+            (
+                Username,
+                HeroId
+            )
+            VALUES
+            (
+                @Username,
+                @HeroId
+            );
+
+            SELECT CAST(SCOPE_IDENTITY() AS INT);
+            """;
+
+        var id = _db.Query<int>(insertSql, model).Single();
+
+        model.Id = id;
+
+        return model;
     }
 
     /// <summary>
-    /// 리포지터리 클래스
+    /// 특정 사용자 ID에 해당하는 캐릭터 설정이 있는지 확인합니다.
     /// </summary>
-    public class CharacterRepository : ICharacterRepository
+    public int GetRecordCounts(string username)
     {
-        private IConfiguration _config;
-        private IDbConnection db;
+        ArgumentException.ThrowIfNullOrWhiteSpace(username);
 
-        /// <summary>
-        /// 생성자 
-        /// </summary>
-        public CharacterRepository(IConfiguration config)
-        {
-            _config = config;
-            db = new SqlConnection(
-                _config.GetSection("ConnectionStrings")
-                    .GetSection("DefaultConnection").Value);
-        }
+        const string sql = """
+            SELECT COUNT(*)
+            FROM Characters
+            WHERE Username = @Username
+            """;
 
-        /// <summary>
-        /// 캐릭터 선택(처음 입력 또는 업데이트)
-        /// </summary>
-        public CharacterModel SetCharacter(CharacterModel model)
-        {
-            string sql = "";
-            if (GetRecordCounts(model.Username) > 0)
-            {
-                // 이미 저장된 캐릭터: Update
-                sql =
-                    "Update Characters      " +
-                    "Set                    " +
-                    "   HeroId = @HeroId       " +
-                    "Where Username = @Username ";
-                db.Execute(sql, model);
-                return model;
-            }
-            else
-            {
-                // 아직 캐릭터가 저장되지 않음: Insert
-                sql = @"
-                Insert Into Characters (Username, HeroId) Values (@Username, @HeroId);
-                Select Cast(SCOPE_IDENTITY() As Int);
-                ";
-                var id = db.Query<int>(sql, model).Single();
-                model.Id = id;
-                return model;
-            }
-            throw new NotImplementedException();
-        }
+        return _db.Query<int>(
+            sql,
+            new { Username = username })
+            .Single();
+    }
 
-        /// <summary>
-        /// 특정 사용자ID에 해당하는 캐릭터 설정이 있는지 확인
-        /// </summary>
-        public int GetRecordCounts(string username)
-        {
-            string query = "Select Count(*) From Characters Where Username = @Username";
-            return db.Query<int>(query, new { Username = username }).FirstOrDefault();
-        }
+    /// <summary>
+    /// 특정 사용자의 캐릭터 정보를 반환합니다.
+    /// 캐릭터가 설정되지 않은 경우 null을 반환합니다.
+    /// </summary>
+    public CharacterModel? GetCharacterByUsername(string username)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(username);
 
-        /// <summary>
-        /// 특정 사용자의 캐릭터 정보 보기
-        /// </summary>
-        public CharacterModel GetCharacterByUsername(string username)
-        {
-            if (GetRecordCounts(username) > 0)
-            {
-                string query = "Select * From Characters Where Username = @Username";
-                return db.Query<CharacterModel>(query, new { Username = username }).Single();
-            }
-            else
-            {
-                return null;
-            }
-        }
+        const string sql = """
+            SELECT Id, Username, HeroId
+            FROM Characters
+            WHERE Username = @Username
+            """;
+
+        return _db.Query<CharacterModel>(
+            sql,
+            new { Username = username })
+            .SingleOrDefault();
     }
 }
