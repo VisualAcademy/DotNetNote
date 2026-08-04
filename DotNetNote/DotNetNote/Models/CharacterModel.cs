@@ -1,9 +1,4 @@
-﻿using Dapper;
-using Microsoft.Data.SqlClient;
-using Microsoft.Extensions.Configuration;
-using System.Data;
-
-namespace DotNetNote.Models;
+﻿namespace DotNetNote.Models;
 
 /// <summary>
 /// 모델 클래스
