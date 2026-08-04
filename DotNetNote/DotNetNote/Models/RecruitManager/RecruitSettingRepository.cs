@@ -1,169 +1,226 @@
-﻿namespace DotNetNote.Models.RecruitManager;
+﻿using Dapper;
+using Microsoft.Data.SqlClient;
+using Microsoft.Extensions.Configuration;
+using System.Data;
+
+namespace DotNetNote.Models.RecruitManager;
 
 public interface IRecruitSettingRepository
 {
-    RecruitSetting Add(RecruitSetting model);               // 입력 
-    Task<RecruitSetting> AddAsync(RecruitSetting model);    // 입력 
+    // 입력
+    RecruitSetting Add(RecruitSetting model);
 
-    List<RecruitSetting> GetAll();                          // 출력
-    Task<IEnumerable<RecruitSetting>> GetAllAsync();        // 출력
+    Task<RecruitSetting> AddAsync(RecruitSetting model);
 
-    RecruitSetting GetById(int id);                         // 상세
-    Task<RecruitSetting> GetByIdAsync(int id);              // 상세
+    // 출력
+    List<RecruitSetting> GetAll();
 
-    RecruitSetting Update(RecruitSetting model);            // 수정
-    Task<RecruitSetting> UpdateAsync(RecruitSetting model); // 수정
+    Task<IEnumerable<RecruitSetting>> GetAllAsync();
 
-    void Remove(int id);                                    // 삭제
+    // 상세: 데이터가 없으면 null
+    RecruitSetting? GetById(int id);
 
-    bool IsRecruitSettings(string boardName, int boardNum);
+    Task<RecruitSetting?> GetByIdAsync(int id);
 
+    // 수정
+    RecruitSetting Update(RecruitSetting model);
 
-    bool IsClosedRecruit(string boardName, int boardNum);
+    Task<RecruitSetting> UpdateAsync(RecruitSetting model);
 
-    bool IsFinishedRecruit(string boardName, int boardNum);
+    // 삭제
+    void Remove(int id);
+
+    bool IsRecruitSettings(
+        string boardName,
+        int boardNum);
+
+    bool IsClosedRecruit(
+        string boardName,
+        int boardNum);
+
+    bool IsFinishedRecruit(
+        string boardName,
+        int boardNum);
 }
 
 public class RecruitSettingRepository : IRecruitSettingRepository
 {
-    // 데이터베이스 연결 문자열 가져온 후 DB 개체 생성하기 
-    private IConfiguration _config;
-    private IDbConnection db;
+    private readonly IDbConnection db;
+
     public RecruitSettingRepository(IConfiguration config)
     {
-        _config = config;
-        db = new SqlConnection(
-            _config.GetSection("ConnectionStrings")
-                .GetSection("DefaultConnection").Value);
+        ArgumentNullException.ThrowIfNull(config);
+
+        var connectionString =
+            config.GetConnectionString("DefaultConnection")
+            ?? throw new InvalidOperationException(
+                "DefaultConnection 연결 문자열이 설정되지 않았습니다.");
+
+        db = new SqlConnection(connectionString);
     }
 
-    #region 모집 정보 설정 기록 
+    #region 모집 정보 설정 기록
+
     /// <summary>
-    /// 모집 정보 설정 기록 
+    /// 모집 정보 설정 기록
     /// </summary>
     public RecruitSetting Add(RecruitSetting model)
     {
-        var sql = @"
-                Insert Into RecruitSettings (
-                    Remarks,
-                    BoardName, 
-                    BoardNum, 
-                    BoardTitle, 
-                    BoardContent,
-                    StartDate, 
-                    EventDate, 
-                    EndDate, 
-                    MaxCount
-                ) 
-                Values (
-                    @Remarks,
-                    @BoardName, 
-                    @BoardNum, 
-                    @BoardTitle, 
-                    @BoardContent,
-                    @StartDate, 
-                    @EventDate, 
-                    @EndDate, 
-                    @MaxCount
-                ); 
+        ArgumentNullException.ThrowIfNull(model);
 
-                Select Cast(SCOPE_IDENTITY() As Int);
-            ";
+        const string sql = @"
+            Insert Into RecruitSettings
+            (
+                Remarks,
+                BoardName,
+                BoardNum,
+                BoardTitle,
+                BoardContent,
+                StartDate,
+                EventDate,
+                EndDate,
+                MaxCount
+            )
+            Values
+            (
+                @Remarks,
+                @BoardName,
+                @BoardNum,
+                @BoardTitle,
+                @BoardContent,
+                @StartDate,
+                @EventDate,
+                @EndDate,
+                @MaxCount
+            );
+
+            Select Cast(SCOPE_IDENTITY() As Int);
+        ";
+
         var id = db.Query<int>(sql, model).Single();
-        model.Id = id;
-        return model;
-    }
-    /// <summary>
-    /// 모집 정보 설정 기록 
-    /// </summary>
-    public async Task<RecruitSetting> AddAsync(RecruitSetting model)
-    {
-        var sql = @"
-                Insert Into RecruitSettings (
-                    Remarks,
-                    BoardName, 
-                    BoardNum, 
-                    BoardTitle, 
-                    BoardContent,
-                    StartDate, 
-                    EventDate, 
-                    EndDate, 
-                    MaxCount
-                ) 
-                Values (
-                    @Remarks,
-                    @BoardName, 
-                    @BoardNum, 
-                    @BoardTitle, 
-                    @BoardContent,
-                    @StartDate, 
-                    @EventDate, 
-                    @EndDate, 
-                    @MaxCount
-                ); 
 
-                Select Cast(SCOPE_IDENTITY() As Int);
-            ";
-        var id = await db.QuerySingleAsync<int>(sql, model);
         model.Id = id;
+
         return model;
     }
+
+    /// <summary>
+    /// 모집 정보 설정 기록
+    /// </summary>
+    public async Task<RecruitSetting> AddAsync(
+        RecruitSetting model)
+    {
+        ArgumentNullException.ThrowIfNull(model);
+
+        const string sql = @"
+            Insert Into RecruitSettings
+            (
+                Remarks,
+                BoardName,
+                BoardNum,
+                BoardTitle,
+                BoardContent,
+                StartDate,
+                EventDate,
+                EndDate,
+                MaxCount
+            )
+            Values
+            (
+                @Remarks,
+                @BoardName,
+                @BoardNum,
+                @BoardTitle,
+                @BoardContent,
+                @StartDate,
+                @EventDate,
+                @EndDate,
+                @MaxCount
+            );
+
+            Select Cast(SCOPE_IDENTITY() As Int);
+        ";
+
+        var id = await db.QuerySingleAsync<int>(
+            sql,
+            model);
+
+        model.Id = id;
+
+        return model;
+    }
+
     #endregion
 
     #region 전체 모집 정보 출력
+
     /// <summary>
     /// 전체 모집 정보 출력
     /// </summary>
     public List<RecruitSetting> GetAll()
     {
-        string sql = @"
-                Select * 
-                From RecruitSettings
-                Order By Id Desc
-            ";
+        const string sql = @"
+            Select *
+            From RecruitSettings
+            Order By Id Desc
+        ";
+
         return db.Query<RecruitSetting>(sql).ToList();
     }
+
     /// <summary>
     /// 전체 모집 정보 출력
     /// </summary>
     public async Task<IEnumerable<RecruitSetting>> GetAllAsync()
     {
-        string sql = @"
-                Select * 
-                From RecruitSettings
-                Order By Id Desc
-            ";
+        const string sql = @"
+            Select *
+            From RecruitSettings
+            Order By Id Desc
+        ";
+
         return await db.QueryAsync<RecruitSetting>(sql);
     }
+
     #endregion
 
-    #region 상세보기 액션 메서드들 
+    #region 상세보기 액션 메서드
+
     /// <summary>
-    /// 상세 
+    /// 상세 정보를 반환합니다.
+    /// 데이터가 없으면 null을 반환합니다.
     /// </summary>
-    public RecruitSetting GetById(int id)
+    public RecruitSetting? GetById(int id)
     {
-        string sql = @"
-                Select * 
-                From RecruitSettings
-                Where Id = @Id 
-            ";
-        return db.Query<RecruitSetting>(sql,
-            new { id }).SingleOrDefault();
+        const string sql = @"
+            Select *
+            From RecruitSettings
+            Where Id = @Id
+        ";
+
+        return db.Query<RecruitSetting>(
+            sql,
+            new { Id = id })
+            .SingleOrDefault();
     }
+
     /// <summary>
-    /// 상세 
+    /// 상세 정보를 비동기로 반환합니다.
+    /// 데이터가 없으면 null을 반환합니다.
     /// </summary>
-    public async Task<RecruitSetting> GetByIdAsync(int id)
+    public async Task<RecruitSetting?> GetByIdAsync(int id)
     {
-        string sql = @"
-                Select * 
-                From RecruitSettings
-                Where Id = @Id 
-            ";
-        return await
-            db.QuerySingleOrDefaultAsync<RecruitSetting>(sql, new { id });
+        const string sql = @"
+            Select *
+            From RecruitSettings
+            Where Id = @Id
+        ";
+
+        return await db.QuerySingleOrDefaultAsync<RecruitSetting>(
+            sql,
+            new { Id = id });
     }
+
     #endregion
 
     /// <summary>
@@ -171,41 +228,53 @@ public class RecruitSettingRepository : IRecruitSettingRepository
     /// </summary>
     public RecruitSetting Update(RecruitSetting model)
     {
-        var sql =
-            " Update RecruitSettings                    " +
-            " Set                                       " +
-            "    Remarks       =       @Remarks,        " +
-            "    BoardName     =       @BoardName,      " +
-            "    BoardNum      =       @BoardNum,       " +
-            "    BoardTitle    =       @BoardTitle,     " +
-            "    BoardContent  =       @BoardContent,   " +
-            "    StartDate     =       @StartDate,      " +
-            "    EventDate     =       @EventDate,      " +
-            "    EndDate       =       @EndDate,        " +
-            "    MaxCount      =       @MaxCount        " +
-            " Where Id = @Id                 ";
+        ArgumentNullException.ThrowIfNull(model);
+
+        const string sql = @"
+            Update RecruitSettings
+            Set
+                Remarks = @Remarks,
+                BoardName = @BoardName,
+                BoardNum = @BoardNum,
+                BoardTitle = @BoardTitle,
+                BoardContent = @BoardContent,
+                StartDate = @StartDate,
+                EventDate = @EventDate,
+                EndDate = @EndDate,
+                MaxCount = @MaxCount
+            Where Id = @Id
+        ";
+
         db.Execute(sql, model);
+
         return model;
     }
+
     /// <summary>
     /// 모집 설정 정보 수정
     /// </summary>
-    public async Task<RecruitSetting> UpdateAsync(RecruitSetting model)
+    public async Task<RecruitSetting> UpdateAsync(
+        RecruitSetting model)
     {
-        var sql =
-            " Update RecruitSettings                    " +
-            " Set                                       " +
-            "    Remarks       =       @Remarks,        " +
-            "    BoardName     =       @BoardName,      " +
-            "    BoardNum      =       @BoardNum,       " +
-            "    BoardTitle    =       @BoardTitle,     " +
-            "    BoardContent  =       @BoardContent,   " +
-            "    StartDate     =       @StartDate,      " +
-            "    EventDate     =       @EventDate,      " +
-            "    EndDate       =       @EndDate,        " +
-            "    MaxCount      =       @MaxCount        " +
-            " Where Id = @Id                 ";
+        ArgumentNullException.ThrowIfNull(model);
+
+        const string sql = @"
+            Update RecruitSettings
+            Set
+                Remarks = @Remarks,
+                BoardName = @BoardName,
+                BoardNum = @BoardNum,
+                BoardTitle = @BoardTitle,
+                BoardContent = @BoardContent,
+                StartDate = @StartDate,
+                EventDate = @EventDate,
+                EndDate = @EndDate,
+                MaxCount = @MaxCount
+            Where Id = @Id
+        ";
+
         await db.ExecuteAsync(sql, model);
+
         return model;
     }
 
@@ -214,107 +283,108 @@ public class RecruitSettingRepository : IRecruitSettingRepository
     /// </summary>
     public void Remove(int id)
     {
-        string sql = "Delete From RecruitSettings Where Id = @Id";
-        db.Execute(sql, new { Id = id });
+        const string sql = @"
+            Delete From RecruitSettings
+            Where Id = @Id
+        ";
+
+        db.Execute(
+            sql,
+            new { Id = id });
     }
 
     /// <summary>
-    /// 특정 게시판에 대한 모집 관련 세부 설정이 되었는지 안되었는지 확인
+    /// 특정 게시판에 대한 모집 관련 세부 설정 여부를 확인합니다.
     /// </summary>
-    /// <param name="boardName">게시판 별칭</param>
-    /// <param name="boardNum">게시판 아티클 번호</param>
-    /// <returns>True면 이미 세부 설정이 완료됨</returns>
-    public bool IsRecruitSettings(string boardName, int boardNum)
+    public bool IsRecruitSettings(
+        string boardName,
+        int boardNum)
     {
-        var sqlCount = @"
-                Select Count(*) 
-                From RecruitSettings 
-                Where 
-                    BoardName = @BoardName 
-                    And 
-                    BoardNum = @BoardNum
-            ";
+        const string sql = @"
+            Select Count(*)
+            From RecruitSettings
+            Where BoardName = @BoardName
+                And BoardNum = @BoardNum
+        ";
 
-        var count = db.Query<int>(sqlCount, new
-        {
-            BoardName = boardName,
-            BoardNum = boardNum
-        }).Single();
-
-        if (count > 0)
-        {
-            return true; // 이미 이벤트 관련 세부 설정이 등록된 상태
-        }
-        return false;
-    }
-
-    /// <summary>
-    /// 모집 종료: 최대 등록 인원을 0으로 설정하면 종료된 이벤트로 처리 
-    /// </summary>
-    public bool IsClosedRecruit(string boardName, int boardNum)
-    {
-        var sql = @"
-                Select MaxCount 
-                From RecruitSettings 
-                Where 
-                    BoardName = @BoardName 
-                    And 
-                    BoardNum = @BoardNum";
-        var cnt = this.db.Query<int>(sql, new
-        {
-            BoardName = boardName,
-            BoardNum = boardNum
-        }).SingleOrDefault();
-
-        if (cnt == 0)
-        {
-            return true; // 최대 등록자 수를 0으로 두면 종료된 이벤트
-        }
-        return false;
-    }
-
-    /// <summary>
-    /// 모집 마감 여부 확인
-    /// </summary>
-    /// <param name="boardName">모집 게시판 별칭</param>
-    /// <param name="boardNum">모집 게시판 번호</param>
-    /// <returns>모집 마감(true), 마감 전(false)</returns>
-    public bool IsFinishedRecruit(string boardName, int boardNum)
-    {
-        // 최대 모집 카운트
-        var sqlCount1 = @"
-                Select MaxCount From RecruitSettings 
-                Where 
-                    BoardName = @BoardName And BoardNum = @BoardNum";
-        var count1 = db.Query<int>(
-            sqlCount1,
+        var count = db.Query<int>(
+            sql,
             new
             {
                 BoardName = boardName,
                 BoardNum = boardNum
-            }
-            ).SingleOrDefault();
+            })
+            .Single();
 
-        // 모집 등록 카운트
-        var sqlCount2 = @"
-                Select Count(*) From RecruitSettings 
-                Where BoardName = @BoardName And BoardNum = @BoardNum";
-        var count2 = db.Query<int>(
-            sqlCount2,
+        return count > 0;
+    }
+
+    /// <summary>
+    /// 최대 등록 인원이 0이면 종료된 모집으로 처리합니다.
+    /// </summary>
+    public bool IsClosedRecruit(
+        string boardName,
+        int boardNum)
+    {
+        const string sql = @"
+            Select MaxCount
+            From RecruitSettings
+            Where BoardName = @BoardName
+                And BoardNum = @BoardNum
+        ";
+
+        var count = db.Query<int>(
+            sql,
             new
             {
                 BoardName = boardName,
                 BoardNum = boardNum
-            }
-            ).Single();
+            })
+            .SingleOrDefault();
 
-        // 모집에 등록된 숫자가 같거나, 더 많으면 마감된 모집로 봄
-        if (count1 != 0 && count1 <= count2)
-        {
-            return true; // 모집 마감
-        }
-
-        return false; // 모집 중...
+        return count == 0;
     }
 
+    /// <summary>
+    /// 모집 마감 여부를 확인합니다.
+    /// </summary>
+    public bool IsFinishedRecruit(
+        string boardName,
+        int boardNum)
+    {
+        const string maxCountSql = @"
+            Select MaxCount
+            From RecruitSettings
+            Where BoardName = @BoardName
+                And BoardNum = @BoardNum
+        ";
+
+        var maxCount = db.Query<int>(
+            maxCountSql,
+            new
+            {
+                BoardName = boardName,
+                BoardNum = boardNum
+            })
+            .SingleOrDefault();
+
+        const string registeredCountSql = @"
+            Select Count(*)
+            From RecruitSettings
+            Where BoardName = @BoardName
+                And BoardNum = @BoardNum
+        ";
+
+        var registeredCount = db.Query<int>(
+            registeredCountSql,
+            new
+            {
+                BoardName = boardName,
+                BoardNum = boardNum
+            })
+            .Single();
+
+        return maxCount != 0 &&
+               maxCount <= registeredCount;
+    }
 }
