@@ -1,106 +1,286 @@
-﻿namespace DotNetNote;
+﻿using Dapper;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Data.SqlClient;
+using System.Data;
 
-public class DotNetNoteUserStore : IUserStore<DotNetNoteUser>, IUserPasswordStore<DotNetNoteUser>
+namespace DotNetNote;
+
+public class DotNetNoteUserStore :
+    IUserStore<DotNetNoteUser>,
+    IUserPasswordStore<DotNetNoteUser>
 {
+    private const string ConnectionString =
+        "server=(localdb)\\mssqllocaldb;" +
+        "database=DotNetNote;" +
+        "integrated security=true;";
+
     public static IDbConnection GetDbConnection()
     {
-        var con = new SqlConnection("server=(localdb)\\mssqllocaldb;database=DotNetNote;integrated security=true;");
-        con.Open();
-        return con;
+        var connection = new SqlConnection(ConnectionString);
+        connection.Open();
+
+        return connection;
     }
 
-    public async Task<IdentityResult> CreateAsync(DotNetNoteUser user, CancellationToken cancellationToken)
+    public async Task<IdentityResult> CreateAsync(
+        DotNetNoteUser user,
+        CancellationToken cancellationToken)
     {
-        string sql =
-            "Insert Into DotNetNoteUsers(Id, UserName, NormalizedUserName, PasswordHash) " +
-            "Values(@Id, @UserName, @NormalizedUserName, @PasswordHash)";
-        using (var con = GetDbConnection())
-        {
-            await con.ExecuteAsync(sql, new
+        ArgumentNullException.ThrowIfNull(user);
+        cancellationToken.ThrowIfCancellationRequested();
+
+        const string sql = """
+            INSERT INTO DotNetNoteUsers
+            (
+                Id,
+                UserName,
+                NormalizedUserName,
+                PasswordHash
+            )
+            VALUES
+            (
+                @Id,
+                @UserName,
+                @NormalizedUserName,
+                @PasswordHash
+            )
+            """;
+
+        using var connection = GetDbConnection();
+
+        var command = new CommandDefinition(
+            sql,
+            new
             {
-                Id = user.Id,
-                UserName = user.UserName,
-                NormalizedUserName = user.NormalizedUserName,
-                PasswordHash = user.PasswordHash
-            });
-        }
+                user.Id,
+                user.UserName,
+                user.NormalizedUserName,
+                user.PasswordHash
+            },
+            cancellationToken: cancellationToken);
+
+        await connection.ExecuteAsync(command);
 
         return IdentityResult.Success;
     }
 
-    public Task<IdentityResult> DeleteAsync(DotNetNoteUser user, CancellationToken cancellationToken)
+    public async Task<IdentityResult> DeleteAsync(
+        DotNetNoteUser user,
+        CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        ArgumentNullException.ThrowIfNull(user);
+        cancellationToken.ThrowIfCancellationRequested();
+
+        const string sql = """
+            DELETE FROM DotNetNoteUsers
+            WHERE Id = @Id
+            """;
+
+        using var connection = GetDbConnection();
+
+        var command = new CommandDefinition(
+            sql,
+            new
+            {
+                user.Id
+            },
+            cancellationToken: cancellationToken);
+
+        await connection.ExecuteAsync(command);
+
+        return IdentityResult.Success;
+    }
+
+    public async Task<DotNetNoteUser?> FindByIdAsync(
+        string userId,
+        CancellationToken cancellationToken)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(userId);
+        cancellationToken.ThrowIfCancellationRequested();
+
+        const string sql = """
+            SELECT
+                Id,
+                UserName,
+                NormalizedUserName,
+                PasswordHash
+            FROM DotNetNoteUsers
+            WHERE Id = @Id
+            """;
+
+        using var connection = GetDbConnection();
+
+        var command = new CommandDefinition(
+            sql,
+            new
+            {
+                Id = userId
+            },
+            cancellationToken: cancellationToken);
+
+        return await connection
+            .QueryFirstOrDefaultAsync<DotNetNoteUser>(command);
+    }
+
+    public async Task<DotNetNoteUser?> FindByNameAsync(
+        string normalizedUserName,
+        CancellationToken cancellationToken)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(
+            normalizedUserName);
+
+        cancellationToken.ThrowIfCancellationRequested();
+
+        const string sql = """
+            SELECT
+                Id,
+                UserName,
+                NormalizedUserName,
+                PasswordHash
+            FROM DotNetNoteUsers
+            WHERE NormalizedUserName = @NormalizedUserName
+            """;
+
+        using var connection = GetDbConnection();
+
+        var command = new CommandDefinition(
+            sql,
+            new
+            {
+                NormalizedUserName = normalizedUserName
+            },
+            cancellationToken: cancellationToken);
+
+        return await connection
+            .QueryFirstOrDefaultAsync<DotNetNoteUser>(command);
+    }
+
+    public Task<string> GetUserIdAsync(
+        DotNetNoteUser user,
+        CancellationToken cancellationToken)
+    {
+        ArgumentNullException.ThrowIfNull(user);
+        cancellationToken.ThrowIfCancellationRequested();
+
+        return Task.FromResult(user.Id);
+    }
+
+    public Task<string?> GetUserNameAsync(
+        DotNetNoteUser user,
+        CancellationToken cancellationToken)
+    {
+        ArgumentNullException.ThrowIfNull(user);
+        cancellationToken.ThrowIfCancellationRequested();
+
+        return Task.FromResult(user.UserName);
+    }
+
+    public Task<string?> GetNormalizedUserNameAsync(
+        DotNetNoteUser user,
+        CancellationToken cancellationToken)
+    {
+        ArgumentNullException.ThrowIfNull(user);
+        cancellationToken.ThrowIfCancellationRequested();
+
+        return Task.FromResult(user.NormalizedUserName);
+    }
+
+    public Task SetUserNameAsync(
+        DotNetNoteUser user,
+        string? userName,
+        CancellationToken cancellationToken)
+    {
+        ArgumentNullException.ThrowIfNull(user);
+        cancellationToken.ThrowIfCancellationRequested();
+
+        user.UserName = userName;
+
+        return Task.CompletedTask;
+    }
+
+    public Task SetNormalizedUserNameAsync(
+        DotNetNoteUser user,
+        string? normalizedName,
+        CancellationToken cancellationToken)
+    {
+        ArgumentNullException.ThrowIfNull(user);
+        cancellationToken.ThrowIfCancellationRequested();
+
+        user.NormalizedUserName = normalizedName;
+
+        return Task.CompletedTask;
+    }
+
+    public Task SetPasswordHashAsync(
+        DotNetNoteUser user,
+        string? passwordHash,
+        CancellationToken cancellationToken)
+    {
+        ArgumentNullException.ThrowIfNull(user);
+        cancellationToken.ThrowIfCancellationRequested();
+
+        user.PasswordHash = passwordHash;
+
+        return Task.CompletedTask;
+    }
+
+    public Task<string?> GetPasswordHashAsync(
+        DotNetNoteUser user,
+        CancellationToken cancellationToken)
+    {
+        ArgumentNullException.ThrowIfNull(user);
+        cancellationToken.ThrowIfCancellationRequested();
+
+        return Task.FromResult(user.PasswordHash);
+    }
+
+    public Task<bool> HasPasswordAsync(
+        DotNetNoteUser user,
+        CancellationToken cancellationToken)
+    {
+        ArgumentNullException.ThrowIfNull(user);
+        cancellationToken.ThrowIfCancellationRequested();
+
+        return Task.FromResult(
+            !string.IsNullOrEmpty(user.PasswordHash));
+    }
+
+    public async Task<IdentityResult> UpdateAsync(
+        DotNetNoteUser user,
+        CancellationToken cancellationToken)
+    {
+        ArgumentNullException.ThrowIfNull(user);
+        cancellationToken.ThrowIfCancellationRequested();
+
+        const string sql = """
+            UPDATE DotNetNoteUsers
+            SET
+                UserName = @UserName,
+                NormalizedUserName = @NormalizedUserName,
+                PasswordHash = @PasswordHash
+            WHERE Id = @Id
+            """;
+
+        using var connection = GetDbConnection();
+
+        var command = new CommandDefinition(
+            sql,
+            new
+            {
+                user.Id,
+                user.UserName,
+                user.NormalizedUserName,
+                user.PasswordHash
+            },
+            cancellationToken: cancellationToken);
+
+        await connection.ExecuteAsync(command);
+
+        return IdentityResult.Success;
     }
 
     public void Dispose()
     {
-
-    }
-
-    public async Task<DotNetNoteUser> FindByIdAsync(string userId, CancellationToken cancellationToken)
-    {
-        var sql = "Select * From DotNetNoteUsers Wher Id = @Id";
-        using (var con = GetDbConnection())
-        {
-            return await con.QueryFirstOrDefaultAsync<DotNetNoteUser>(sql, new { Id = userId });
-        }
-    }
-
-    public async Task<DotNetNoteUser> FindByNameAsync(string normalizedUserName, CancellationToken cancellationToken)
-    {
-        var sql = "Select * From DotNetNoteUsers Where NormalizedUserName = @NormalizedUserName";
-        using (var con = GetDbConnection())
-        {
-            return await con.QueryFirstOrDefaultAsync<DotNetNoteUser>(sql, new { NormalizedUserName = normalizedUserName });
-        }
-    }
-
-    public Task<string> GetNormalizedUserNameAsync(DotNetNoteUser user, CancellationToken cancellationToken) => Task.FromResult(user.NormalizedUserName);
-
-    public Task<string> GetPasswordHashAsync(DotNetNoteUser user, CancellationToken cancellationToken) => Task.FromResult(user.PasswordHash);
-
-    public Task<string> GetUserIdAsync(DotNetNoteUser user, CancellationToken cancellationToken) => Task.FromResult(user.Id);
-
-    public Task<string> GetUserNameAsync(DotNetNoteUser user, CancellationToken cancellationToken) => Task.FromResult(user.UserName);
-
-    public Task<bool> HasPasswordAsync(DotNetNoteUser user, CancellationToken cancellationToken) => Task.FromResult(user.PasswordHash != null);
-
-    public Task SetNormalizedUserNameAsync(DotNetNoteUser user, string normalizedName, CancellationToken cancellationToken)
-    {
-        user.NormalizedUserName = normalizedName;
-        return Task.CompletedTask;
-    }
-
-    public Task SetPasswordHashAsync(DotNetNoteUser user, string passwordHash, CancellationToken cancellationToken)
-    {
-        user.PasswordHash = passwordHash;
-        return Task.CompletedTask;
-    }
-
-    public Task SetUserNameAsync(DotNetNoteUser user, string userName, CancellationToken cancellationToken)
-    {
-        user.UserName = userName;
-        return Task.CompletedTask;
-    }
-
-    public async Task<IdentityResult> UpdateAsync(DotNetNoteUser user, CancellationToken cancellationToken)
-    {
-        string sql =
-            "Update DotNetNoteUsers " +
-            "Set Id = @Id, UserName = @UserName, NormalizedUserName = @NormalizedUserName, PasswordHash = @PasswordHash " +
-            "Where Id = @Id";
-        using (var con = GetDbConnection())
-        {
-            await con.ExecuteAsync(sql, new
-            {
-                Id = user.Id,
-                UserName = user.UserName,
-                NormalizedUserName = user.NormalizedUserName,
-                PasswordHash = user.PasswordHash
-            });
-        }
-
-        return IdentityResult.Success;
+        GC.SuppressFinalize(this);
     }
 }
