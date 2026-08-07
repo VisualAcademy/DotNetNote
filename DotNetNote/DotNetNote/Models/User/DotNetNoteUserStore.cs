@@ -167,7 +167,7 @@ public class DotNetNoteUserStore :
         ArgumentNullException.ThrowIfNull(user);
         cancellationToken.ThrowIfCancellationRequested();
 
-        return Task.FromResult(user.UserName);
+        return Task.FromResult<string?>(user.UserName);
     }
 
     public Task<string?> GetNormalizedUserNameAsync(
@@ -177,7 +177,8 @@ public class DotNetNoteUserStore :
         ArgumentNullException.ThrowIfNull(user);
         cancellationToken.ThrowIfCancellationRequested();
 
-        return Task.FromResult(user.NormalizedUserName);
+        return Task.FromResult<string?>(
+            user.NormalizedUserName);
     }
 
     public Task SetUserNameAsync(
@@ -226,7 +227,8 @@ public class DotNetNoteUserStore :
         ArgumentNullException.ThrowIfNull(user);
         cancellationToken.ThrowIfCancellationRequested();
 
-        return Task.FromResult(user.PasswordHash);
+        return Task.FromResult<string?>(
+            user.PasswordHash);
     }
 
     public Task<bool> HasPasswordAsync(
