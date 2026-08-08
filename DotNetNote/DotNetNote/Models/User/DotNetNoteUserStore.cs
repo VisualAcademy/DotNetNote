@@ -189,7 +189,7 @@ public class DotNetNoteUserStore :
         ArgumentNullException.ThrowIfNull(user);
         cancellationToken.ThrowIfCancellationRequested();
 
-        user.UserName = userName;
+        user.UserName = userName ?? string.Empty;
 
         return Task.CompletedTask;
     }
@@ -202,7 +202,7 @@ public class DotNetNoteUserStore :
         ArgumentNullException.ThrowIfNull(user);
         cancellationToken.ThrowIfCancellationRequested();
 
-        user.NormalizedUserName = normalizedName;
+        user.NormalizedUserName = normalizedName ?? string.Empty;
 
         return Task.CompletedTask;
     }
@@ -215,7 +215,7 @@ public class DotNetNoteUserStore :
         ArgumentNullException.ThrowIfNull(user);
         cancellationToken.ThrowIfCancellationRequested();
 
-        user.PasswordHash = passwordHash;
+        user.PasswordHash = passwordHash ?? string.Empty;
 
         return Task.CompletedTask;
     }
