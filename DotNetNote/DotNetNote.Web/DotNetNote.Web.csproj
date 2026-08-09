@@ -35,14 +35,22 @@
         <PackageReference Include="Azunt.SubcategoryManagement" Version="1.0.1" />
         <PackageReference Include="Azunt.TechnicianManagement" Version="1.0.1" />
         <PackageReference Include="Azunt.TenantManagement" Version="1.0.5" />
+
         <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="10.0.10" />
         <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="10.0.10" />
         <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="10.0.10" />
+
         <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.10" />
+
         <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="10.0.10">
-          <PrivateAssets>all</PrivateAssets>
-          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
+
+        <!-- NU1903 security vulnerability fixes -->
+        <PackageReference Include="SQLitePCLRaw.lib.e_sqlite3" Version="2.1.12" />
+        <PackageReference Include="System.IO.Packaging" Version="10.0.10" />
+
         <PackageReference Include="Twilio" Version="7.14.9" />
 
         <PackageReference Include="Microsoft.FluentUI.AspNetCore.Components" Version="4.14.4" />
@@ -56,7 +64,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Components\Pages\BackgroundChecks\Components\" />
+        <Folder Include="Components\Pages\BackgroundChecks\Components\" />
     </ItemGroup>
 
 </Project>
