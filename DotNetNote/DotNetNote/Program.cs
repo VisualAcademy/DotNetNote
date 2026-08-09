@@ -564,9 +564,16 @@ public partial class Program
         #endregion
 
         #region Ensure the columns exist in the AspNetUsers table.
-        // Ensure the columns exist in the AspNetUsers table.
-        var userTableEnhancer = new UserTableEnhancer(Configuration.GetConnectionString("DefaultConnection"));
+
+        var userTableConnectionString =
+            Configuration.GetConnectionString("DefaultConnection")
+            ?? throw new InvalidOperationException(
+                "Connection string 'DefaultConnection' was not found.");
+
+        var userTableEnhancer = new UserTableEnhancer(userTableConnectionString);
+
         await userTableEnhancer.EnsureUserTableColumnsAsync();
+
         #endregion
 
         // 의존성 주입 컨테이너 설정 호출
