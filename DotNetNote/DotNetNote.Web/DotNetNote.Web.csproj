@@ -36,20 +36,20 @@
         <PackageReference Include="Azunt.TechnicianManagement" Version="1.0.1" />
         <PackageReference Include="Azunt.TenantManagement" Version="1.0.5" />
 
-        <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="10.0.10" />
-        <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="10.0.10" />
-        <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="10.0.10" />
+        <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="10.0.11" />
+        <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="10.0.11" />
+        <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="10.0.11" />
 
-        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.10" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.11" />
 
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="10.0.10">
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="10.0.11">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
 
         <!-- NU1903 security vulnerability fixes -->
-        <PackageReference Include="SQLitePCLRaw.lib.e_sqlite3" Version="2.1.12" />
-        <PackageReference Include="System.IO.Packaging" Version="10.0.10" />
+        <PackageReference Include="SQLitePCLRaw.lib.e_sqlite3" Version="3.53.3" />
+        <PackageReference Include="System.IO.Packaging" Version="10.0.11" />
 
         <PackageReference Include="Twilio" Version="7.14.9" />
 
