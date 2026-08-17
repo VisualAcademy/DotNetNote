@@ -57,6 +57,7 @@
         <PackageReference Include="Azunt.AttachmentManagement" Version="1.0.0" />
         <PackageReference Include="Azunt.ConclusionManagement" Version="1.0.1" />
         <PackageReference Include="Azunt.InstructionManagement" Version="1.0.0" />
+        <PackageReference Include="Microsoft.Playwright" Version="1.62.0" />
         <PackageReference Include="NuGet.Packaging" Version="7.9.0" />
         <PackageReference Include="NuGet.Protocol" Version="7.9.0" />
 

@@ -1,0 +1,62 @@
+﻿@{
+    ViewData["Title"] = "Playwright.NET Test";
+
+    var success =
+        ViewBag.Success is bool result &&
+        result;
+}
+
+<div class="container"
+     style="padding-top:30px; padding-bottom:50px;">
+
+    <h2>Playwright.NET Test</h2>
+
+    <p>
+        Playwright.NET과 Chromium을 사용하여 HTML을 렌더링하고
+        특정 HTML 영역만 PNG 이미지로 캡처하는 예제입니다.
+    </p>
+
+    <hr />
+
+    @if (success)
+    {
+        <div class="alert alert-success">
+            <strong>Success!</strong>
+            Playwright.NET Chromium screenshot completed successfully.
+        </div>
+
+        <p>
+            Image Size:
+            <strong>@ViewBag.ImageSize bytes</strong>
+        </p>
+
+        <h4>Captured Image</h4>
+
+        <div style="margin-top:15px;">
+            <img src="data:image/png;base64,@ViewBag.ImageBase64"
+                 alt="Playwright Screenshot"
+                 style="max-width:100%; border:1px solid #cccccc;" />
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-danger">
+            <strong>Playwright.NET Test Failed</strong>
+        </div>
+
+        @if (!string.IsNullOrWhiteSpace(
+            ViewBag.ErrorMessage as string))
+        {
+            <pre style="white-space:pre-wrap;">@ViewBag.ErrorMessage</pre>
+        }
+    }
+
+    <hr />
+
+    <a asp-controller="PlaywrightTest"
+       asp-action="Index"
+       class="btn btn-primary">
+        Run Test Again
+    </a>
+
+</div>
