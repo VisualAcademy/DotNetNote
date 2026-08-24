@@ -1,12 +1,4 @@
-﻿using Microsoft.Data.SqlClient;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Data;
-
-namespace Azunt.Web.Infrastructures.Auth;
+﻿namespace Azunt.Web.Infrastructures.Auth;
 
 /// <summary>
 /// 테넌트 및 마스터 데이터베이스에 AspNetUsers 테이블을 생성 및 보강하고,
