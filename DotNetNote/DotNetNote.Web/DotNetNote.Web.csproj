@@ -51,7 +51,7 @@
         <PackageReference Include="SQLitePCLRaw.lib.e_sqlite3" Version="3.53.3" />
         <PackageReference Include="System.IO.Packaging" Version="10.0.11" />
 
-        <PackageReference Include="Twilio" Version="7.14.9" />
+        <PackageReference Include="Twilio" Version="8.0.0" />
 
         <PackageReference Include="Microsoft.FluentUI.AspNetCore.Components" Version="4.14.4" />
         <PackageReference Include="Microsoft.FluentUI.AspNetCore.Components.DataGrid.EntityFrameworkAdapter" Version="4.14.4" />
