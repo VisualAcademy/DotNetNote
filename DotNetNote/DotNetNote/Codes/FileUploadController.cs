@@ -1,6 +1,4 @@
 ﻿using Azure.Storage.Blobs;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
 
 namespace VisualAcademy.Codes;
 
