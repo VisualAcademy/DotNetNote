@@ -69,6 +69,7 @@
         <PackageReference Include="Azunt.BackgroundCheckManagement" Version="1.0.6" />
         <PackageReference Include="Azunt.BannedCustomerManagement" Version="1.0.2" />
         <PackageReference Include="Azunt.BranchManagement" Version="1.0.0" />
+        <PackageReference Include="Azunt.BundleManagement" Version="1.0.0" />
         <PackageReference Include="Azunt.Components" Version="1.0.4" />
         <PackageReference Include="Azunt.DefaultAttachmentManagement" Version="1.0.0" />
         <PackageReference Include="Azunt.DenominationManagement" Version="1.0.0" />

@@ -1,4 +1,5 @@
 using Azunt.AttachmentManagement;
+using Azunt.BundleManagement;
 using Azunt.ConclusionManagement;
 using Azunt.DefaultAttachmentManagement;
 using Azunt.EmployeeManagement;
@@ -73,6 +74,17 @@ public partial class Program
             connectionString,
             AttachmentServicesRegistrationExtensions.RepositoryMode.Dapper);
 
+        // ---------------------------------------------------------
+        // Azunt.BundleManagement 1.0.0
+        //
+        // DotNetNote.com is used as a UI test host, so Bundle CRUD
+        // runs against the package's shared EF Core In-Memory store.
+        // The physical dbo.Bundles schema is still ensured separately
+        // in DefaultConnection at application startup.
+        // ---------------------------------------------------------
+        builder.Services.AddDependencyInjectionContainerForBundleApp(
+            BundleServicesRegistrationExtensions.RepositoryMode.EfCoreInMemory);
+
         var defaultConnectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
         #region Reasons and Conclusions
@@ -99,7 +111,6 @@ public partial class Program
             {
                 options.DetailedErrors = true;
             });
-
         builder.Services.AddCascadingAuthenticationState();
         builder.Services.AddScoped<IdentityUserAccessor>();
         builder.Services.AddScoped<IdentityRedirectManager>();
@@ -231,6 +242,24 @@ public partial class Program
         builder.Services.AddScoped<IPhotoLogService, InMemoryPhotoLogService>();
 
         var app = builder.Build();
+
+
+        // ---------------------------------------------------------
+        // Azunt.BundleManagement schema initialization
+        //
+        // CRUD above intentionally uses In-Memory for this test site.
+        // This initializer is independent from the CRUD store and only
+        // guarantees that DefaultConnection contains dbo.Bundles.
+        // EnsureAsync is idempotent: it creates the table when missing
+        // and safely ensures the package's common columns/defaults/indexes.
+        // ---------------------------------------------------------
+        await using (var bundleSchemaScope = app.Services.CreateAsyncScope())
+        {
+            var bundlesTableBuilder =
+                bundleSchemaScope.ServiceProvider.GetRequiredService<BundlesTableBuilder>();
+
+            await bundlesTableBuilder.EnsureAsync(connectionString);
+        }
 
 
         // ---------------------------------------------------------

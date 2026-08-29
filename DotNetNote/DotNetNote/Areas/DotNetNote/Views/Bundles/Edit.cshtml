@@ -1,0 +1,23 @@
+@model Bundle
+
+@{
+    ViewData["Title"] = "Edit Bundle";
+}
+
+<h1>Edit Bundle #@Model.Id</h1>
+
+<div class="card">
+    <div class="card-body">
+        <form asp-action="Edit"
+              asp-route-id="@Model.Id"
+              method="post">
+            @Html.AntiForgeryToken()
+            <partial name="_BundleForm" model="Model" />
+
+            <div class="d-flex justify-content-end gap-2 mt-4">
+                <a class="btn btn-secondary" asp-action="Index">Cancel</a>
+                <button class="btn btn-primary" type="submit">Save</button>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,36 @@
+@model Bundle
+
+@{
+    ViewData["Title"] = "Delete Bundle";
+}
+
+<h1>Delete Bundle</h1>
+
+<div class="alert alert-warning">
+    Delete <strong>@Model.Name</strong>?
+</div>
+
+<dl class="row">
+    <dt class="col-sm-3">ID</dt>
+    <dd class="col-sm-9">@Model.Id</dd>
+
+    <dt class="col-sm-3">Code</dt>
+    <dd class="col-sm-9">@(string.IsNullOrWhiteSpace(Model.Code) ? "-" : Model.Code)</dd>
+
+    <dt class="col-sm-3">Version</dt>
+    <dd class="col-sm-9">@(string.IsNullOrWhiteSpace(Model.Version) ? "-" : Model.Version)</dd>
+
+    <dt class="col-sm-3">Status</dt>
+    <dd class="col-sm-9">@(string.IsNullOrWhiteSpace(Model.Status) ? "-" : Model.Status)</dd>
+</dl>
+
+<form asp-action="DeleteConfirmed"
+      asp-route-id="@Model.Id"
+      method="post">
+    @Html.AntiForgeryToken()
+
+    <div class="d-flex gap-2">
+        <a class="btn btn-secondary" asp-action="Index">Cancel</a>
+        <button class="btn btn-danger" type="submit">Delete</button>
+    </div>
+</form>

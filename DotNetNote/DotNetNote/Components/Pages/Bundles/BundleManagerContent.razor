@@ -1,0 +1,673 @@
+@using System.Globalization
+@using Azunt.BundleManagement
+@using Microsoft.JSInterop
+@implements IAsyncDisposable
+@inject IBundleRepository Repository
+@inject IJSRuntime JS
+
+<div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+    <div>
+        <h1 class="mb-0">Bundles</h1>
+        <div class="text-muted">Azunt.BundleManagement 1.0.0 CRUD test</div>
+    </div>
+    <div class="d-flex align-items-center gap-2">
+        <span class="badge text-bg-info">In-Memory Test Mode</span>
+        <button class="btn btn-primary" @onclick="CreateNew">Add Bundle</button>
+    </div>
+</div>
+
+<div class="card mb-3">
+    <div class="card-body">
+        <div class="row g-2 align-items-end">
+            <div class="col-lg-6">
+                <label class="form-label">Search</label>
+                <input class="form-control"
+                       @bind="searchQuery"
+                       @bind:event="oninput"
+                       placeholder="Name, code, version, status, description, audit user..." />
+            </div>
+
+            <div class="col-md-3 col-lg-2">
+                <label class="form-label">Status</label>
+                <InputSelect class="form-select" @bind-Value="statusFilter">
+                    <option value="">All</option>
+                    @foreach (var value in statusOptions)
+                    {
+                        <option value="@value">@value</option>
+                    }
+                </InputSelect>
+            </div>
+
+            <div class="col-md-3 col-lg-2">
+                <div class="form-check mb-2">
+                    <InputCheckbox class="form-check-input" @bind-Value="activeOnly" />
+                    <label class="form-check-label">Active only</label>
+                </div>
+                <button class="btn btn-outline-primary w-100" @onclick="ApplyFilters">
+                    Apply
+                </button>
+            </div>
+
+            <div class="col-lg-2">
+                <button class="btn btn-outline-secondary w-100" @onclick="ClearFilters">
+                    Clear
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (!string.IsNullOrWhiteSpace(statusMessage))
+{
+    <div class="alert alert-info py-2">@statusMessage</div>
+}
+
+@if (loading)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover align-middle bg-white">
+            <thead class="table-light">
+                <tr>
+                    <th>ID</th>
+                    <th class="bundle-sortable" @onclick="() => SortBy(nameof(Bundle.Name))">
+                        Name @SortMark(nameof(Bundle.Name))
+                    </th>
+                    <th class="bundle-sortable" @onclick="() => SortBy(nameof(Bundle.Code))">
+                        Code @SortMark(nameof(Bundle.Code))
+                    </th>
+                    <th class="bundle-sortable" @onclick="() => SortBy(nameof(Bundle.Version))">
+                        Version @SortMark(nameof(Bundle.Version))
+                    </th>
+                    <th class="bundle-sortable" @onclick="() => SortBy(nameof(Bundle.Status))">
+                        Status @SortMark(nameof(Bundle.Status))
+                    </th>
+                    <th>Active</th>
+                    <th class="bundle-sortable" @onclick="() => SortBy(nameof(Bundle.CreatedAt))">
+                        Created @SortMark(nameof(Bundle.CreatedAt))
+                    </th>
+                    <th class="bundle-sortable" @onclick="() => SortBy(nameof(Bundle.ModifiedAt))">
+                        Modified @SortMark(nameof(Bundle.ModifiedAt))
+                    </th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (models.Count == 0)
+                {
+                    <tr>
+                        <td colspan="9" class="text-center text-muted py-4">
+                            No bundle records. Add a Bundle to test the NuGet module.
+                        </td>
+                    </tr>
+                }
+                else
+                {
+                    @foreach (var item in models)
+                    {
+                        <tr>
+                            <td>@item.Id</td>
+                            <td>
+                                <strong>@item.Name</strong>
+                                @if (!string.IsNullOrWhiteSpace(item.Description))
+                                {
+                                    <div class="small text-muted text-truncate"
+                                         style="max-width: 320px;">
+                                        @item.Description
+                                    </div>
+                                }
+                            </td>
+                            <td>@Display(item.Code)</td>
+                            <td>@Display(item.Version)</td>
+                            <td>
+                                <span class="badge @StatusBadge(item.Status, item.IsActive)">
+                                    @Display(item.Status)
+                                </span>
+                            </td>
+                            <td>@(item.IsActive ? "Yes" : "No")</td>
+                            <td class="bundle-audit-value">@FormatDate(item.CreatedAt)</td>
+                            <td class="bundle-audit-value">@FormatDate(item.ModifiedAt)</td>
+                            <td class="text-nowrap">
+                                <button class="btn btn-sm btn-outline-primary me-1"
+                                        @onclick="() => Edit(item)">
+                                    Edit
+                                </button>
+                                <button class="btn btn-sm btn-outline-danger"
+                                        @onclick="() => AskDelete(item)">
+                                    Delete
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <div class="d-flex justify-content-between align-items-center">
+        <small class="text-muted">
+            @totalCount record(s), page @(pageIndex + 1) of @TotalPages
+        </small>
+
+        <div class="btn-group">
+            <button class="btn btn-outline-secondary"
+                    disabled="@(pageIndex == 0)"
+                    @onclick="PreviousPage">
+                Previous
+            </button>
+            <button class="btn btn-outline-secondary"
+                    disabled="@(pageIndex + 1 >= TotalPages)"
+                    @onclick="NextPage">
+                Next
+            </button>
+        </div>
+    </div>
+}
+
+@if (showEditor)
+{
+    <div class="bundle-modal-backdrop">
+        <div class="bundle-modal-card">
+            <h3>
+                @(editModel.Id == 0
+                    ? "Create Bundle"
+                    : $"Edit Bundle #{editModel.Id}")
+            </h3>
+
+            <EditForm Model="editModel" OnValidSubmit="Save">
+                <DataAnnotationsValidator />
+                <ValidationSummary />
+
+                <div class="row g-3">
+                    <div class="col-12">
+                        <label class="form-label">Name *</label>
+                        <InputText class="form-control" @bind-Value="editModel.Name" />
+                        <ValidationMessage For="@(() => editModel.Name)" />
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">Code</label>
+                        <InputText class="form-control" @bind-Value="editModel.Code" />
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">Version</label>
+                        <InputText class="form-control" @bind-Value="editModel.Version" />
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">Status</label>
+                        <InputSelect class="form-select" @bind-Value="editModel.Status">
+                            @foreach (var value in statusOptions)
+                            {
+                                <option value="@value">@value</option>
+                            }
+                        </InputSelect>
+                    </div>
+
+                    <div class="col-md-6 d-flex align-items-end">
+                        <div class="form-check mb-2">
+                            <InputCheckbox class="form-check-input" @bind-Value="editModel.IsActive" />
+                            <label class="form-check-label">Active record</label>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <label class="form-label">Description</label>
+                        <InputTextArea class="form-control"
+                                       rows="4"
+                                       @bind-Value="editModel.Description" />
+                    </div>
+
+                    @if (editModel.Id == 0)
+                    {
+                        <div class="col-md-6">
+                            <label class="form-label">Created by</label>
+                            <InputText class="form-control" @bind-Value="editModel.CreatedBy" />
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-md-6">
+                            <label class="form-label">Created</label>
+                            <input class="form-control bundle-audit-value"
+                                   value="@FormatDate(editModel.CreatedAt)"
+                                   disabled />
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Created by</label>
+                            <input class="form-control"
+                                   value="@Display(editModel.CreatedBy)"
+                                   disabled />
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Modified by</label>
+                            <InputText class="form-control" @bind-Value="editModel.ModifiedBy" />
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Modified</label>
+                            <input class="form-control bundle-audit-value"
+                                   value="@FormatDate(editModel.ModifiedAt)"
+                                   disabled />
+                        </div>
+                    }
+                </div>
+
+                <div class="d-flex justify-content-end gap-2 mt-4">
+                    <button type="button"
+                            class="btn btn-secondary"
+                            @onclick="CloseEditor">
+                        Cancel
+                    </button>
+                    <button type="submit"
+                            class="btn btn-primary">
+                        Save
+                    </button>
+                </div>
+            </EditForm>
+        </div>
+    </div>
+}
+
+@if (deleteModel is not null)
+{
+    <div class="bundle-modal-backdrop">
+        <div class="bundle-modal-card" style="max-width: 520px;">
+            <h3>Delete Bundle</h3>
+            <p>Delete <strong>@deleteModel.Name</strong>?</p>
+
+            <div class="d-flex justify-content-end gap-2">
+                <button class="btn btn-secondary" @onclick="CancelDelete">Cancel</button>
+                <button class="btn btn-danger" @onclick="DeleteConfirmed">Delete</button>
+            </div>
+        </div>
+    </div>
+}
+
+<style>
+    .bundle-sortable {
+        cursor: pointer;
+        user-select: none;
+    }
+
+    .bundle-audit-value {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+        font-size: .85rem;
+    }
+
+    .bundle-modal-backdrop {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, .45);
+        z-index: 2000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 1rem;
+    }
+
+    .bundle-modal-card {
+        width: min(760px, 96vw);
+        max-height: 92vh;
+        overflow: auto;
+        background: white;
+        border-radius: .75rem;
+        padding: 1.25rem;
+        box-shadow: 0 1rem 3rem rgba(0, 0, 0, .2);
+    }
+</style>
+
+@code {
+    private readonly int pageSize = 10;
+
+    private readonly string[] statusOptions =
+    [
+        "Draft",
+        "Active",
+        "Inactive",
+        "Retired"
+    ];
+
+    private List<Bundle> models = [];
+    private Bundle editModel = new();
+    private Bundle? deleteModel;
+
+    private bool showEditor;
+    private bool loading = true;
+    private bool activeOnly;
+
+    private string searchQuery = string.Empty;
+    private string statusFilter = string.Empty;
+    private string sortOrder = string.Empty;
+    private string statusMessage = string.Empty;
+
+    private int pageIndex;
+    private long totalCount;
+
+    private int browserOffsetMinutes;
+    private string browserCulture = "en-US";
+    private bool browserSettingsLoaded;
+
+    private IJSObjectReference? timeZoneModule;
+
+    private int TotalPages =>
+        Math.Max(1, (int)Math.Ceiling(totalCount / (double)pageSize));
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadAsync();
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender)
+        {
+            return;
+        }
+
+        try
+        {
+            timeZoneModule =
+                await JS.InvokeAsync<IJSObjectReference>(
+                    "import",
+                    "/js/bundle-timezone.js");
+
+            browserOffsetMinutes =
+                await timeZoneModule.InvokeAsync<int>(
+                    "getLocalOffsetMinutes");
+
+            var culture =
+                await timeZoneModule.InvokeAsync<string>(
+                    "getBrowserCulture");
+
+            if (!string.IsNullOrWhiteSpace(culture))
+            {
+                browserCulture = culture;
+            }
+
+            browserSettingsLoaded = true;
+            StateHasChanged();
+        }
+        catch
+        {
+            browserOffsetMinutes = 0;
+            browserCulture = "en-US";
+            browserSettingsLoaded = false;
+        }
+    }
+
+    private async Task LoadAsync()
+    {
+        loading = true;
+
+        // No SQL Server connection string is passed here intentionally.
+        // RepositoryMode.EfCoreInMemory makes both the Blazor route and
+        // MVC Area use the same shared in-memory Bundle store.
+        var result =
+            await Repository.GetPagedAsync(
+                new BundleFilterOptions
+                {
+                    PageIndex = pageIndex,
+                    PageSize = pageSize,
+                    SearchQuery = searchQuery,
+                    SortOrder = sortOrder,
+                    Status =
+                        string.IsNullOrWhiteSpace(statusFilter)
+                            ? null
+                            : statusFilter,
+                    ActiveOnly = activeOnly
+                });
+
+        models = result.Items.ToList();
+        totalCount = result.TotalCount;
+
+        if (pageIndex >= TotalPages)
+        {
+            pageIndex = Math.Max(0, TotalPages - 1);
+        }
+
+        loading = false;
+    }
+
+    private async Task ApplyFilters()
+    {
+        pageIndex = 0;
+        await LoadAsync();
+    }
+
+    private async Task ClearFilters()
+    {
+        searchQuery = string.Empty;
+        statusFilter = string.Empty;
+        activeOnly = false;
+        sortOrder = string.Empty;
+        pageIndex = 0;
+
+        await LoadAsync();
+    }
+
+    private void CreateNew()
+    {
+        editModel = new Bundle
+        {
+            Status = "Active",
+            IsActive = true,
+            CreatedBy = "DotNetNote Test"
+        };
+
+        showEditor = true;
+    }
+
+    private void Edit(Bundle item)
+    {
+        editModel = Clone(item);
+        editModel.ModifiedBy ??= "DotNetNote Test";
+        showEditor = true;
+    }
+
+    private void CloseEditor()
+    {
+        showEditor = false;
+        editModel = new Bundle();
+    }
+
+    private async Task Save()
+    {
+        var now =
+            DateTimeOffset.UtcNow
+                .ToOffset(GetBrowserOffset());
+
+        if (editModel.Id == 0)
+        {
+            editModel.CreatedAt = now;
+
+            await Repository.AddAsync(editModel);
+
+            statusMessage =
+                $"Bundle #{editModel.Id} created at {FormatDate(editModel.CreatedAt)}.";
+        }
+        else
+        {
+            editModel.ModifiedAt = now;
+
+            await Repository.UpdateAsync(editModel);
+
+            statusMessage =
+                $"Bundle #{editModel.Id} updated at {FormatDate(editModel.ModifiedAt)}.";
+        }
+
+        showEditor = false;
+        await LoadAsync();
+    }
+
+    private TimeSpan GetBrowserOffset()
+    {
+        var minutes =
+            browserSettingsLoaded
+                ? Math.Clamp(browserOffsetMinutes, -14 * 60, 14 * 60)
+                : 0;
+
+        return TimeSpan.FromMinutes(minutes);
+    }
+
+    private CultureInfo GetBrowserCulture()
+    {
+        try
+        {
+            return CultureInfo.GetCultureInfo(browserCulture);
+        }
+        catch (CultureNotFoundException)
+        {
+            return CultureInfo.GetCultureInfo("en-US");
+        }
+    }
+
+    private void AskDelete(Bundle item)
+    {
+        deleteModel = item;
+    }
+
+    private void CancelDelete()
+    {
+        deleteModel = null;
+    }
+
+    private async Task DeleteConfirmed()
+    {
+        if (deleteModel is null)
+        {
+            return;
+        }
+
+        var id = deleteModel.Id;
+
+        await Repository.DeleteAsync(id);
+
+        statusMessage = $"Bundle #{id} deleted.";
+        deleteModel = null;
+
+        await LoadAsync();
+    }
+
+    private async Task SortBy(string column)
+    {
+        sortOrder =
+            sortOrder switch
+            {
+                var current when current == column => column + "Desc",
+                var current when current == column + "Desc" => string.Empty,
+                _ => column
+            };
+
+        pageIndex = 0;
+        await LoadAsync();
+    }
+
+    private string SortMark(string column)
+    {
+        return sortOrder switch
+        {
+            var current when current == column => "▲",
+            var current when current == column + "Desc" => "▼",
+            _ => string.Empty
+        };
+    }
+
+    private async Task PreviousPage()
+    {
+        if (pageIndex == 0)
+        {
+            return;
+        }
+
+        pageIndex--;
+        await LoadAsync();
+    }
+
+    private async Task NextPage()
+    {
+        if (pageIndex + 1 >= TotalPages)
+        {
+            return;
+        }
+
+        pageIndex++;
+        await LoadAsync();
+    }
+
+    private static Bundle Clone(Bundle source)
+    {
+        return new Bundle
+        {
+            Id = source.Id,
+            Name = source.Name,
+            Code = source.Code,
+            Version = source.Version,
+            Status = source.Status,
+            Description = source.Description,
+            IsActive = source.IsActive,
+            CreatedBy = source.CreatedBy,
+            CreatedAt = source.CreatedAt,
+            ModifiedBy = source.ModifiedBy,
+            ModifiedAt = source.ModifiedAt
+        };
+    }
+
+    private static string Display(string? value)
+    {
+        return string.IsNullOrWhiteSpace(value)
+            ? "-"
+            : value;
+    }
+
+    private string FormatDate(DateTimeOffset? value)
+    {
+        if (!value.HasValue)
+        {
+            return "-";
+        }
+
+        var browserDateTime =
+            value.Value.ToOffset(GetBrowserOffset());
+
+        return browserDateTime.ToString("g", GetBrowserCulture());
+    }
+
+    private static string StatusBadge(string? status, bool active)
+    {
+        if (!active)
+        {
+            return "text-bg-secondary";
+        }
+
+        return status?.ToLowerInvariant() switch
+        {
+            "active" => "text-bg-success",
+            "draft" => "text-bg-warning",
+            "inactive" => "text-bg-secondary",
+            "retired" => "text-bg-dark",
+            _ => "text-bg-light"
+        };
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        if (timeZoneModule is not null)
+        {
+            try
+            {
+                await timeZoneModule.DisposeAsync();
+            }
+            catch
+            {
+                // Ignore circuit shutdown/disconnect disposal errors.
+            }
+        }
+    }
+}

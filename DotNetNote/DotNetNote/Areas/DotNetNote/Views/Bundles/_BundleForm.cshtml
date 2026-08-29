@@ -1,0 +1,80 @@
+@model Bundle
+
+<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+<div class="row g-3">
+    <div class="col-12">
+        <label asp-for="Name" class="form-label"></label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-6">
+        <label asp-for="Code" class="form-label"></label>
+        <input asp-for="Code" class="form-control" />
+        <span asp-validation-for="Code" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-6">
+        <label asp-for="Version" class="form-label"></label>
+        <input asp-for="Version" class="form-control" />
+        <span asp-validation-for="Version" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-6">
+        <label asp-for="Status" class="form-label"></label>
+        <select asp-for="Status" class="form-select">
+            @foreach (var value in new[] { "Draft", "Active", "Inactive", "Retired" })
+            {
+                <option value="@value">@value</option>
+            }
+        </select>
+        <span asp-validation-for="Status" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-6 d-flex align-items-end">
+        <div class="form-check mb-2">
+            <input asp-for="IsActive" class="form-check-input" />
+            <label asp-for="IsActive" class="form-check-label">Active record</label>
+        </div>
+    </div>
+
+    <div class="col-12">
+        <label asp-for="Description" class="form-label"></label>
+        <textarea asp-for="Description" class="form-control" rows="4"></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+
+    @if (Model.Id == 0)
+    {
+        <div class="col-md-6">
+            <label asp-for="CreatedBy" class="form-label">Created by</label>
+            <input asp-for="CreatedBy" class="form-control" />
+        </div>
+    }
+    else
+    {
+        <input asp-for="Id" type="hidden" />
+        <input asp-for="CreatedAt" type="hidden" />
+        <input asp-for="CreatedBy" type="hidden" />
+
+        <div class="col-md-6">
+            <label class="form-label">Created</label>
+            <input class="form-control"
+                   value="@(Model.CreatedAt?.ToString("yyyy-MM-dd HH:mm") ?? "-")"
+                   disabled />
+        </div>
+
+        <div class="col-md-6">
+            <label class="form-label">Created by</label>
+            <input class="form-control"
+                   value="@(string.IsNullOrWhiteSpace(Model.CreatedBy) ? "-" : Model.CreatedBy)"
+                   disabled />
+        </div>
+
+        <div class="col-md-6">
+            <label asp-for="ModifiedBy" class="form-label">Modified by</label>
+            <input asp-for="ModifiedBy" class="form-control" />
+        </div>
+    }
+</div>

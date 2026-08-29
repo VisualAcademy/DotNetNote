@@ -1,0 +1,304 @@
+@model IReadOnlyList<Bundle>
+
+@{
+    ViewData["Title"] = "Bundles";
+
+    var searchQuery = ViewBag.SearchQuery as string ?? "";
+    var status = ViewBag.Status as string ?? "";
+    var activeOnly = ViewBag.ActiveOnly is bool active && active;
+    var sortOrder = ViewBag.SortOrder as string ?? "";
+    var currentPage = ViewBag.Page is int pageNumber ? pageNumber : 1;
+    var totalCount = ViewBag.TotalCount is long count ? count : 0L;
+    var pageSize = ViewBag.PageSize is int size ? size : 20;
+    var totalPages = Math.Max(1, (int)Math.Ceiling(totalCount / (double)pageSize));
+
+    string SortLink(string column)
+    {
+        if (sortOrder == column)
+        {
+            return column + "Desc";
+        }
+
+        if (sortOrder == column + "Desc")
+        {
+            return "";
+        }
+
+        return column;
+    }
+
+    string SortMark(string column)
+    {
+        if (sortOrder == column)
+        {
+            return "▲";
+        }
+
+        if (sortOrder == column + "Desc")
+        {
+            return "▼";
+        }
+
+        return "";
+    }
+
+    string StatusBadge(string? value, bool isActive)
+    {
+        if (!isActive)
+        {
+            return "text-bg-secondary";
+        }
+
+        return value?.ToLowerInvariant() switch
+        {
+            "active" => "text-bg-success",
+            "draft" => "text-bg-warning",
+            "inactive" => "text-bg-secondary",
+            "retired" => "text-bg-dark",
+            _ => "text-bg-light"
+        };
+    }
+}
+
+<div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+    <div>
+        <h1 class="mb-0">Bundles</h1>
+        <div class="text-muted">Azunt.BundleManagement 1.0.0 MVC CRUD test</div>
+    </div>
+    <div class="d-flex gap-2 align-items-center">
+        <span class="badge text-bg-info">In-Memory Test Mode</span>
+        <a class="btn btn-primary"
+           asp-area="DotNetNote"
+           asp-controller="Bundles"
+           asp-action="Create">
+            Add Bundle
+        </a>
+    </div>
+</div>
+
+@if (TempData["StatusMessage"] is string message)
+{
+    <div class="alert alert-info py-2">@message</div>
+}
+
+<form method="get"
+      asp-area="DotNetNote"
+      asp-controller="Bundles"
+      asp-action="Index"
+      class="card mb-3">
+    <div class="card-body">
+        <div class="row g-2 align-items-end">
+            <div class="col-lg-6">
+                <label class="form-label">Search</label>
+                <input class="form-control"
+                       type="text"
+                       name="searchQuery"
+                       value="@searchQuery"
+                       placeholder="Name, code, version, status, description, audit user..." />
+            </div>
+
+            <div class="col-md-3 col-lg-2">
+                <label class="form-label">Status</label>
+                <select class="form-select" name="status">
+                    <option value="">All</option>
+                    @foreach (var value in new[] { "Draft", "Active", "Inactive", "Retired" })
+                    {
+                        if (string.Equals(status, value, StringComparison.OrdinalIgnoreCase))
+                        {
+                            <option value="@value" selected>@value</option>
+                        }
+                        else
+                        {
+                            <option value="@value">@value</option>
+                        }
+                    }
+                </select>
+            </div>
+
+            <div class="col-md-3 col-lg-2">
+                <div class="form-check mb-2">
+                    <input class="form-check-input"
+                           type="checkbox"
+                           name="activeOnly"
+                           value="true"
+                           checked="@activeOnly" />
+                    <label class="form-check-label">Active only</label>
+                </div>
+                <button class="btn btn-outline-primary w-100" type="submit">Apply</button>
+            </div>
+
+            <div class="col-lg-2">
+                <a class="btn btn-outline-secondary w-100"
+                   asp-area="DotNetNote"
+                   asp-controller="Bundles"
+                   asp-action="Index">
+                    Clear
+                </a>
+            </div>
+        </div>
+    </div>
+</form>
+
+<div class="table-responsive">
+    <table class="table table-bordered table-hover align-middle bg-white">
+        <thead class="table-light">
+            <tr>
+                <th>ID</th>
+                <th>
+                    <a class="text-decoration-none text-body"
+                       asp-action="Index"
+                       asp-route-searchQuery="@searchQuery"
+                       asp-route-status="@status"
+                       asp-route-activeOnly="@activeOnly"
+                       asp-route-sortOrder="@SortLink(nameof(Bundle.Name))">
+                        Name @SortMark(nameof(Bundle.Name))
+                    </a>
+                </th>
+                <th>
+                    <a class="text-decoration-none text-body"
+                       asp-action="Index"
+                       asp-route-searchQuery="@searchQuery"
+                       asp-route-status="@status"
+                       asp-route-activeOnly="@activeOnly"
+                       asp-route-sortOrder="@SortLink(nameof(Bundle.Code))">
+                        Code @SortMark(nameof(Bundle.Code))
+                    </a>
+                </th>
+                <th>Version</th>
+                <th>Status</th>
+                <th>Active</th>
+                <th>Created</th>
+                <th>Modified</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Count == 0)
+            {
+                <tr>
+                    <td colspan="9" class="text-center text-muted py-4">
+                        No bundle records.
+                    </td>
+                </tr>
+            }
+            else
+            {
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Id</td>
+                        <td>
+                            <strong>@item.Name</strong>
+                            @if (!string.IsNullOrWhiteSpace(item.Description))
+                            {
+                                <div class="small text-muted text-truncate"
+                                     style="max-width:320px;">
+                                    @item.Description
+                                </div>
+                            }
+                        </td>
+                        <td>@(string.IsNullOrWhiteSpace(item.Code) ? "-" : item.Code)</td>
+                        <td>@(string.IsNullOrWhiteSpace(item.Version) ? "-" : item.Version)</td>
+                        <td>
+                            <span class="badge @StatusBadge(item.Status, item.IsActive)">
+                                @(string.IsNullOrWhiteSpace(item.Status) ? "-" : item.Status)
+                            </span>
+                        </td>
+                        <td>@(item.IsActive ? "Yes" : "No")</td>
+                        <td class="bundle-date"
+                            data-datetime="@item.CreatedAt?.ToString("O")">
+                            @(item.CreatedAt?.ToString("yyyy-MM-dd HH:mm") ?? "-")
+                        </td>
+                        <td class="bundle-date"
+                            data-datetime="@item.ModifiedAt?.ToString("O")">
+                            @(item.ModifiedAt?.ToString("yyyy-MM-dd HH:mm") ?? "-")
+                        </td>
+                        <td class="text-nowrap">
+                            <a class="btn btn-sm btn-outline-primary me-1"
+                               asp-action="Edit"
+                               asp-route-id="@item.Id">
+                                Edit
+                            </a>
+                            <a class="btn btn-sm btn-outline-danger"
+                               asp-action="Delete"
+                               asp-route-id="@item.Id">
+                                Delete
+                            </a>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
+<div class="d-flex justify-content-between align-items-center">
+    <small class="text-muted">
+        @totalCount record(s), page @currentPage of @totalPages
+    </small>
+
+    <div class="btn-group">
+        @if (currentPage > 1)
+        {
+            <a class="btn btn-outline-secondary"
+               asp-action="Index"
+               asp-route-searchQuery="@searchQuery"
+               asp-route-status="@status"
+               asp-route-activeOnly="@activeOnly"
+               asp-route-sortOrder="@sortOrder"
+               asp-route-page="@(currentPage - 1)">
+                Previous
+            </a>
+        }
+        else
+        {
+            <button class="btn btn-outline-secondary" disabled>Previous</button>
+        }
+
+        @if (currentPage < totalPages)
+        {
+            <a class="btn btn-outline-secondary"
+               asp-action="Index"
+               asp-route-searchQuery="@searchQuery"
+               asp-route-status="@status"
+               asp-route-activeOnly="@activeOnly"
+               asp-route-sortOrder="@sortOrder"
+               asp-route-page="@(currentPage + 1)">
+                Next
+            </a>
+        }
+        else
+        {
+            <button class="btn btn-outline-secondary" disabled>Next</button>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.querySelectorAll(".bundle-date[data-datetime]").forEach(function (element) {
+            var value = element.getAttribute("data-datetime");
+
+            if (!value) {
+                return;
+            }
+
+            var date = new Date(value);
+
+            if (Number.isNaN(date.getTime())) {
+                return;
+            }
+
+            element.textContent = new Intl.DateTimeFormat(
+                navigator.language || "en-US",
+                {
+                    year: "numeric",
+                    month: "numeric",
+                    day: "numeric",
+                    hour: "2-digit",
+                    minute: "2-digit"
+                }
+            ).format(date);
+        });
+    </script>
+}
