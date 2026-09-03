@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-
-namespace DotNetNote.Apis;
+﻿namespace DotNetNote.Apis;
 
 [ApiController]
 [Route("v1/[controller]")]
