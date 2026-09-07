@@ -31,6 +31,7 @@ using DotNetNote.Models.Notes;
 using DotNetNote.Models.Notifications;
 using DotNetNote.Models.RecruitManager;
 using DotNetNote.Records;
+using DotNetNote.Repositories;
 using DotNetNote.Rules;
 using DotNetNote.Services.Interfaces;
 using DotNetNote.Services.Tasks;
@@ -73,6 +74,10 @@ public partial class Program
         builder.Services.AddDependencyInjectionContainerForAttachmentApp(
             connectionString,
             AttachmentServicesRegistrationExtensions.RepositoryMode.Dapper);
+
+
+        builder.Services.AddSingleton<IAssetRecordRepository, AssetRecordRepository>();
+
 
         // ---------------------------------------------------------
         // Azunt.BundleManagement 1.0.0
