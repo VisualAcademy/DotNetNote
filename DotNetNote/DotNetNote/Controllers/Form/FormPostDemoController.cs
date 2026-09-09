@@ -9,6 +9,7 @@ public class FormPostDemoController : Controller
     public IActionResult Index() => View();
 
     [HttpPost] // /FormPostDemo/Index
+    [ValidateAntiForgeryToken]
     public IActionResult Index(string name, string content)
     {
         //ViewBag.Result = $"이름: {Request.Form["name"]}, " 
