@@ -198,6 +198,7 @@
     <Build Include="dbo\Tables\Instructions.sql" />
     <Build Include="dbo\Tables\InventoryCategories.sql" />
     <Build Include="dbo\Tables\InventoryItems.sql" />
+    <Build Include="dbo\Tables\WarehouseLocations.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="dbo\Scripts\Attachments\Demo_Attachments_Processing.sql" />
