@@ -200,6 +200,7 @@
     <Build Include="dbo\Tables\InventoryItems.sql" />
     <Build Include="dbo\Tables\WarehouseLocations.sql" />
     <Build Include="dbo\Tables\InventoryStocks.sql" />
+    <Build Include="dbo\Tables\InventoryTransactions.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="dbo\Scripts\Attachments\Demo_Attachments_Processing.sql" />
