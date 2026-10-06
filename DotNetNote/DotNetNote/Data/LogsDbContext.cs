@@ -1,4 +1,6 @@
-﻿namespace DotNetNote.Data;
+﻿using Azunt.Models;
+
+namespace DotNetNote.Data;
 
 public class LogsDbContext : DbContext
 {

@@ -1,4 +1,5 @@
-﻿using System.Security.Cryptography;
+﻿using Azunt.Models;
+using System.Security.Cryptography;
 
 namespace DotNetNote.Utils
 {
