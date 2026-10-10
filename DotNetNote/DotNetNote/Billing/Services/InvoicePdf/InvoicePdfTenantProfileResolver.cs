@@ -1,6 +1,5 @@
-﻿namespace DotNetNote.Billing.Services.InvoicePdf
+﻿namespace DotNetNote.Billing.Services.InvoicePdf;
+
+public class InvoicePdfTenantProfileResolver
 {
-    public class InvoicePdfTenantProfileResolver
-    {
-    }
 }
