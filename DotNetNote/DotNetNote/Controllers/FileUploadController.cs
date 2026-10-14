@@ -1,6 +1,6 @@
 ﻿using Azure.Storage.Blobs;
 
-namespace VisualAcademy.Codes;
+namespace DotNetNote.Controllers;
 
 /// <summary>
 /// Azure Blob Storage에 파일 업로드 및 다운로드 작업을 처리합니다.
