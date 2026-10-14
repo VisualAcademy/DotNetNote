@@ -1,7 +1,7 @@
 ﻿using VisualAcademy.Models.Codes;
 using VisualAcademy.Models.Configuration;
 
-namespace VisualAcademy.Codes;
+namespace DotNetNote.Controllers;
 
 [AllowAnonymous]
 [Route("badge")]
