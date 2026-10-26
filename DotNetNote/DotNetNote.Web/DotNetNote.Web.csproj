@@ -47,9 +47,10 @@
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
 
-        <!-- NU1903 security vulnerability fixes -->
+        <!-- NuGet security vulnerability fixes (NU1902 / NU1903) -->
         <PackageReference Include="SQLitePCLRaw.lib.e_sqlite3" Version="3.53.3" />
         <PackageReference Include="System.IO.Packaging" Version="10.0.13" />
+        <PackageReference Include="System.Security.Cryptography.Pkcs" Version="10.0.13" />
 
         <PackageReference Include="Twilio" Version="8.1.0" />
 
