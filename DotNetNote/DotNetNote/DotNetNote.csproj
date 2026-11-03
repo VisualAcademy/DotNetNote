@@ -105,9 +105,6 @@
         <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="10.0.14" />
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.14" />
 
-        <!-- ASP.NET Core 10 OpenAPI source generator compatible version -->
-        <PackageReference Include="Microsoft.OpenApi" Version="2.12.2" />
-
         <PackageReference Include="SQLitePCLRaw.lib.e_sqlite3" Version="3.53.3" />
 
         <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="10.0.14" />
