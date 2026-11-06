@@ -51,7 +51,7 @@
         <PackageReference Include="System.IO.Packaging" Version="10.0.14" />
         <PackageReference Include="System.Security.Cryptography.Pkcs" Version="10.0.14" />
 
-        <PackageReference Include="Twilio" Version="8.1.0" />
+        <PackageReference Include="Twilio" Version="8.2.0" />
 
         <PackageReference Include="Microsoft.FluentUI.AspNetCore.Components" Version="5.0.1" />
         <PackageReference Include="Microsoft.FluentUI.AspNetCore.Components.DataGrid.EntityFrameworkAdapter" Version="5.0.1" />
