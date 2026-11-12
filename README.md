@@ -1,6 +1,6 @@
-# DotNetNote 10.0 - 닷넷노트 10.0
+# DotNetNote 11.0 - 닷넷노트 11.0
 
-ASP.NET Core 10.0 개발, 강의, 집필 소스 모음
+ASP.NET Core 11.0 개발, 강의, 집필 소스 모음
 
 `ASP.NET & Core를 다루는 기술` 책의 닷넷코어 파트 소스 결과물
 
@@ -8,12 +8,12 @@ https://www.dotnetnote.com 사이트에서 실행결괴를 확인하세요.
 
 DotNetNote 이름으로 만들어진 소스의 시작은 박용준 강사가 집필한 ASP.NET & Core를 다루는 기술 책의 .NET Core 파트의 최종 결과물로부터 계속 버전업되어
 
-1.0 버전부터 현재 10.0 버전까지 업데이트가 되고 있습니다.
+1.0 버전부터 현재 11.0 버전까지 업데이트가 되고 있습니다.
 
 특별한 경우가 아니면 버전 업데이트에 맞는 수정만할 뿐이지, 새롭게 추가되는 기능은 없습니다.
 
 
-## ASP.NET Core 10.0 전체 강의 소스
+## ASP.NET Core 11.0 전체 강의 소스
 
 박용준 강사가 진행하는 ASP.NET Core 10.0 강의(이전 버전 포함)의 전체 소스는 현재 리포지토리에 들어 있습니다. 
 
@@ -77,6 +77,9 @@ https://github.com/VisualAcademy/DotNetNote.V8.0
 
 ## ASP.NET Core 9.0 버전의 DotNetNote는 다음 리포지토리에 있습니다.
 https://github.com/VisualAcademy/DotNetNote.V9.0
+
+## ASP.NET Core 10.0 버전의 DotNetNote는 다음 리포지토리에 있습니다.
+https://github.com/VisualAcademy/DotNetNote.V10.0
 
 ## 마무리
 
