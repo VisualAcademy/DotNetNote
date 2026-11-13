@@ -1,7 +1,5 @@
 ﻿using Azunt.BannedCustomerManagement;
 using Azunt.IncidentManagement;
-using Microsoft.Extensions.DependencyInjection;
-using System;
 
 namespace Azunt.Web.Infrastructures.Initializers
 {
