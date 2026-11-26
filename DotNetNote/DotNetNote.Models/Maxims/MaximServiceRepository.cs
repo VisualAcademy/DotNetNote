@@ -19,8 +19,7 @@ namespace DotNetNote.Models
         {
             _config = config;
             db = new SqlConnection(
-                _config.GetSection("Data").GetSection("DefaultConnection")
-                .GetSection("ConnectionString").Value);
+                _config.GetConnectionString("DefaultConnection") ?? throw new System.InvalidOperationException("Connection string 'DefaultConnection' is not configured."));
         }
 
         // 입력

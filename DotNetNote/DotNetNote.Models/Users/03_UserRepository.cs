@@ -19,7 +19,7 @@ namespace DotNetNote.Models
         {
             _config = config;
             // appsettings.json 파일에 설정된 데이터베이스 연결 문자열 읽어오기
-            con = new SqlConnection(_config.GetSection("ConnectionStrings").GetSection("DefaultConnection").Value);
+            con = new SqlConnection(_config.GetConnectionString("DefaultConnection") ?? throw new System.InvalidOperationException("Connection string 'DefaultConnection' is not configured."));
         }
 
         /// <summary>

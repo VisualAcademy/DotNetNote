@@ -19,8 +19,7 @@ namespace DotNetNote.Models
             // IConfiguration 개체를 통해서 
             // appsettings.json의 데이터베이스 연결 문자열을 읽어온다. 
             db = new SqlConnection(
-                _config.GetSection("ConnectionStrings").GetSection(
-                    "DefaultConnection").Value);
+                _config.GetConnectionString("DefaultConnection") ?? throw new System.InvalidOperationException("Connection string 'DefaultConnection' is not configured."));
         }
 
         // 입력

@@ -9,8 +9,7 @@ public class CommunityCampJoinMemberRepository :
     public CommunityCampJoinMemberRepository(IConfiguration config)
     {
         _config = config;
-        _db = new SqlConnection(_config.GetSection("Data")
-            .GetSection("DefaultConnection").GetSection("ConnectionString").Value);
+        _db = new SqlConnection(_config.GetConnectionString("DefaultConnection") ?? throw new System.InvalidOperationException("Connection string 'DefaultConnection' is not configured."));
     }
 
     public List<CommunityCampJoinMember> GetAll() =>

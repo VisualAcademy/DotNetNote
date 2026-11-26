@@ -38,8 +38,8 @@ public class UserModelRepository : IUserModelRepository
     {
         _config = config;
         db = new SqlConnection(
-            _config.GetSection("ConnectionString").Value
-            ?? throw new InvalidOperationException("ConnectionString is not configured."));
+            _config.GetConnectionString("DefaultConnection")
+            ?? throw new InvalidOperationException("Connection string 'DefaultConnection' is not configured."));
         _cache = memoryCache;
     }
 

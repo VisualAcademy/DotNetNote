@@ -18,8 +18,7 @@ namespace DotNetNote.Models.Notes
         public NoteCommentRepository(IConfiguration config, IMemoryCache memoryCache)
         {
             _config = config;
-            con = new SqlConnection(_config.GetSection("ConnectionStrings")
-                .GetSection("DefaultConnection").Value);
+            con = new SqlConnection(_config.GetConnectionString("DefaultConnection") ?? throw new System.InvalidOperationException("Connection string 'DefaultConnection' is not configured."));
 
             _cache = memoryCache;
         }

@@ -591,6 +591,8 @@ public partial class Program
         });
         services.AddDbContext<DotNetNoteContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
         services.AddDbContext<TechContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+        services.AddDbContext<DotNetNote.DashboardContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+        services.AddDbContext<VisualAcademy.Models.TextMessages.TextMessageAppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
         #region AspNetUsers 테이블에 새로운 컬럼 추가 
         //var aspNetUsersTableAddColumn = new AspNetUsersTableEnhancer(Configuration.GetConnectionString("DefaultConnection"));
@@ -738,7 +740,7 @@ public partial class Program
         services.AddTransient<ILoginFailedManager, LoginFailedManager>();
         services.AddTransient<IUserModelRepository, UserModelRepository>();
 
-        services.AddSingleton<IBuyerRepository>(new BuyerRepository(Configuration["ConnectionStrings:DefaultConnection"]));
+        services.AddSingleton<IBuyerRepository>(new BuyerRepository(Configuration.GetConnectionString("DefaultConnection")));
 
         // 컬렉션 형태의 데이터를 인-메모리 또는 DB에서 가져오는 초간단 리포지토리 패턴
         services.AddTransient<IVariableRepository, VariableRepositoryInMemory>();
@@ -794,7 +796,7 @@ public partial class Program
 
         services.AddTransient<DotNetSale.Models.ICategoryRepository, DotNetSale.Models.CategoryRepositoryInMemory>();
         services.AddTransient<IGoodsRepository, GoodsRepository>();
-        services.AddSingleton<ICompanyRepository>(new CompanyRepositoryAdo(Configuration["ConnectionStrings:DefaultConnection"]));
+        services.AddSingleton<ICompanyRepository>(new CompanyRepositoryAdo(Configuration.GetConnectionString("DefaultConnection")));
         services.AddTransient<IMyNotificationRepository>(
             serviceProvider => new MyNotificationRepository(Configuration.GetConnectionString("DefaultConnection"))
         );

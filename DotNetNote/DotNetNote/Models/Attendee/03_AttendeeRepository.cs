@@ -12,10 +12,7 @@ public class AttendeeRepository : IAttendeeRepository
     /// </summary>
     public AttendeeRepository(IConfiguration config)
     {
-        var connectionString = config
-            .GetSection("ConnectionStrings")
-            .GetSection("DefaultConnection")
-            .Value;
+        var connectionString = config.GetConnectionString("DefaultConnection") ?? throw new System.InvalidOperationException("Connection string 'DefaultConnection' is not configured.");
 
         con = new SqlConnection(connectionString);
     }

@@ -35,8 +35,7 @@ public class RecruitRegistrationRepository :
     {
         _config = config;
         db = new SqlConnection(
-            _config.GetSection("ConnectionStrings")
-                .GetSection("DefaultConnection").Value);
+            _config.GetConnectionString("DefaultConnection") ?? throw new System.InvalidOperationException("Connection string 'DefaultConnection' is not configured."));
     }
 
     public RecruitRegistration Add(RecruitRegistration model) => throw new NotImplementedException();

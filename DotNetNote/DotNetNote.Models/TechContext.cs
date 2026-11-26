@@ -22,7 +22,8 @@ public class TechContext : DbContext
         if (!optionsBuilder.IsConfigured)
         {
             string connectionString = ConfigurationManager
-                .ConnectionStrings["ConnectionString"].ConnectionString;
+                .ConnectionStrings["DefaultConnection"]?.ConnectionString
+                ?? throw new System.InvalidOperationException("Connection string 'DefaultConnection' is not configured.");
             optionsBuilder.UseSqlServer(connectionString);
         }
     }

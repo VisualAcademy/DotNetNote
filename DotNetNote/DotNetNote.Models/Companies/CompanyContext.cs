@@ -34,7 +34,8 @@ public class CompanyContext : DbContext
         if (!optionsBuilder.IsConfigured)
         {
             string connectionString = ConfigurationManager.ConnectionStrings[
-                "DefaultConnection"].ConnectionString;
+                "DefaultConnection"]?.ConnectionString
+                ?? throw new System.InvalidOperationException("Connection string 'DefaultConnection' is not configured.");
             optionsBuilder.UseSqlServer(connectionString); // SQL Server 사용
         }
     }

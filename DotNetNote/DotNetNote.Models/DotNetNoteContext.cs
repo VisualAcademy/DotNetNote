@@ -32,7 +32,8 @@ namespace DotNetNote.Models
             if (!optionsBuilder.IsConfigured)
             {
                 string connectionString = ConfigurationManager.ConnectionStrings[
-                    "ConnectionString"].ConnectionString;
+                    "DefaultConnection"]?.ConnectionString
+                    ?? throw new System.InvalidOperationException("Connection string 'DefaultConnection' is not configured.");
                 optionsBuilder.UseSqlServer(connectionString);
             }
         }

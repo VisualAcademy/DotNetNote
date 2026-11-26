@@ -25,7 +25,8 @@ public class DashboardContext : DbContext
     {
         if (!optionsBuilder.IsConfigured)
         {
-            string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
+            string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["DefaultConnection"]?.ConnectionString
+                ?? throw new System.InvalidOperationException("Connection string 'DefaultConnection' is not configured.");
             optionsBuilder.UseSqlServer(connectionString);
         }
     }

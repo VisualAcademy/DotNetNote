@@ -151,8 +151,7 @@ public class LoginFailedRepository : ILoginFailedRepository
     {
         _config = config;
         db = new SqlConnection(
-            _config.GetSection("ConnectionStrings")
-                .GetSection("DefaultConnection").Value);
+            _config.GetConnectionString("DefaultConnection") ?? throw new System.InvalidOperationException("Connection string 'DefaultConnection' is not configured."));
     }
 
     /// <summary>

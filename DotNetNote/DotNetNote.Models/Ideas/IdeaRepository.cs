@@ -19,7 +19,7 @@ public class IdeaRepository : IIdeaRepository
     {
         _config = config;
 
-        db = new SqlConnection(_config.GetSection("ConnectionString").Value);
+        db = new SqlConnection(_config.GetConnectionString("DefaultConnection") ?? throw new System.InvalidOperationException("Connection string 'DefaultConnection' is not configured."));
     }
 
     public List<Idea> GetAll() =>

@@ -18,8 +18,8 @@ public class GoodsRepository : IGoodsRepository
         _configuration = configuration;
 
         string connectionString =
-            _configuration.GetSection("ConnectionString").Value
-            ?? throw new InvalidOperationException("ConnectionString configuration value is missing.");
+            _configuration.GetConnectionString("DefaultConnection")
+            ?? throw new InvalidOperationException("Connection string 'DefaultConnection' is not configured.");
 
         db = new SqlConnection(connectionString);
     }

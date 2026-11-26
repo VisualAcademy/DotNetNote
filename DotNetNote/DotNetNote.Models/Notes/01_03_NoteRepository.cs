@@ -30,7 +30,7 @@ namespace DotNetNote.Models.Notes
         {
             _config = config;
             //TODO: 아래 라인에 F9로 중단점 설정 후 F5로 실행 -> F10로 다음 라인까지 테스트
-            con = new SqlConnection(_config.GetSection("ConnectionStrings").GetSection("DefaultConnection").Value);
+            con = new SqlConnection(_config.GetConnectionString("DefaultConnection") ?? throw new System.InvalidOperationException("Connection string 'DefaultConnection' is not configured."));
             _logger = logger;
             _cache = memoryCache;
         }

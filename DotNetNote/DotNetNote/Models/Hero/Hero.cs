@@ -63,9 +63,8 @@ namespace DotNetNote.Models
             _config = config;
 
             string connectionString =
-                _config.GetSection("ConnectionString").Value
-                ?? _config.GetConnectionString("DefaultConnection")
-                ?? throw new InvalidOperationException("A database connection string was not found.");
+                _config.GetConnectionString("DefaultConnection")
+                ?? throw new InvalidOperationException("Connection string 'DefaultConnection' is not configured.");
 
             db = new SqlConnection(connectionString);
         }

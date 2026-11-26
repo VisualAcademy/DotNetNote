@@ -10,7 +10,14 @@ public class CategoryRepository : ICategoryRepository
 {
     private IDbConnection db;
 
-    public CategoryRepository() => db = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString);
+    private readonly string _connectionString;
+
+    public CategoryRepository(IConfiguration config)
+    {
+        _connectionString = config.GetConnectionString("DefaultConnection")
+            ?? throw new InvalidOperationException("Connection string 'DefaultConnection' is not configured.");
+        db = new SqlConnection(_connectionString);
+    }
 
     /// <summary>
     /// 카테고리(대분류) 등록
@@ -51,7 +58,7 @@ public class CategoryRepository : ICategoryRepository
     {
         #region ADO.NET 클래스 사용
         SqlConnection objCon =
-            new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString);
+            new SqlConnection(_connectionString);
         objCon.Open();
 
         SqlCommand objCmd = new SqlCommand("ProductCategoryList", objCon);
