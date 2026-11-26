@@ -35,6 +35,7 @@ using DotNetNote.Repositories;
 using DotNetNote.Rules;
 using DotNetNote.Services.Interfaces;
 using DotNetNote.Services.Tasks;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components.Authorization;
@@ -558,9 +559,16 @@ public partial class Program
         // ASP.NET Core 애플리케이션에서 권한 정책을 정의합니다.
         services.AddAuthorization(options =>
         {
-            options.AddPolicy("Users", policy => policy.RequireRole("Users"));
+            // Legacy DotNetNote policies use the /User/Login cookie, not Identity.Application.
+            options.AddPolicy("Users", policy =>
+                policy.AddAuthenticationSchemes(CookieAuthenticationDefaults.AuthenticationScheme)
+                      .RequireAuthenticatedUser()
+                      .RequireRole("Users"));
             options.AddPolicy("Administrators", policy =>
-                policy.RequireRole("Users").RequireClaim("UserId", siteAdminId));
+                policy.AddAuthenticationSchemes(CookieAuthenticationDefaults.AuthenticationScheme)
+                      .RequireAuthenticatedUser()
+                      .RequireRole("Users")
+                      .RequireClaim("UserId", siteAdminId));
 
             // "AdminOnly" 정책: "Administrators" 역할을 가진 사용자만 접근 가능
             options.AddPolicy("AdminOnly", policy => policy.RequireRole("Administrators"));
