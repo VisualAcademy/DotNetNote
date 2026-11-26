@@ -1,0 +1,11 @@
+- name: 문서 홈
+  href: ../index.md
+- name: DotNetNote
+  expanded: true
+  items:
+    - name: DotNetNote 설치하기
+      href: ../dotnetnote/install-dotnetnote/index.md
+- name: 문서 관리
+  items:
+    - name: DocFX 빌드 및 배포
+      href: ../guides/build-and-publish/index.md

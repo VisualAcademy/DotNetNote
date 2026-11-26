@@ -1,0 +1,12 @@
+/* Keep screenshots readable at their original aspect ratio. */
+article img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin-block: .75rem 1.5rem;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+article h1 { letter-spacing: -.02em; }
+article h2 { margin-top: 2rem; }

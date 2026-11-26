@@ -640,6 +640,8 @@ public partial class Program
         }
 
         //app.UseDefaultFiles(); // 기본 파일을 사용하도록 설정: 아래 UseStaticFiles()만 사용
+        // Public DocFX documentation is served separately from MVC and Blazor.
+        DotNetNote.Documentation.DocFxDocumentation.UseDotNetNoteDocs(app, env);
         app.UseStaticFiles();
         //app.MapStaticAssets();
 

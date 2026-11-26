@@ -150,4 +150,6 @@
         <Folder Include="wwwroot\files\" />
     </ItemGroup>
 
+    <Import Project="DocFx.targets" />
+
 </Project>

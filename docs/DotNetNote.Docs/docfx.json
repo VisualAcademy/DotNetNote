@@ -1,0 +1,49 @@
+{
+  "$schema": "https://raw.githubusercontent.com/dotnet/docfx/main/schemas/docfx.schema.json",
+  "build": {
+    "content": [
+      {
+        "files": [
+          "**/*.md",
+          "**/toc.yml"
+        ],
+        "exclude": [
+          "templates/**",
+          "_site/**",
+          "obj/**"
+        ]
+      }
+    ],
+    "resource": [
+      {
+        "files": [
+          "**/images/**/*"
+        ],
+        "exclude": [
+          "_site/**",
+          "obj/**",
+          "templates/**"
+        ]
+      }
+    ],
+    "template": [
+      "default",
+      "modern",
+      "templates/dotnetnote"
+    ],
+    "globalMetadata": {
+      "_appName": "DotNetNote Docs",
+      "_appTitle": "DotNetNote 문서",
+      "_appFooter": "DotNetNote · ASP.NET Core · DocFX",
+      "_enableSearch": true,
+      "_disableContribution": true,
+      "_lang": "ko"
+    },
+    "sitemap": {
+      "baseUrl": "https://www.dotnetnote.com/docs/"
+    },
+    "postProcessors": [
+      "ExtractSearchIndex"
+    ]
+  }
+}

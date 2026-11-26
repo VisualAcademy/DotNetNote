@@ -1,0 +1,51 @@
+<Project>
+  <PropertyGroup>
+    <BuildDocsOnBuild Condition="'$(BuildDocsOnBuild)' == ''">true</BuildDocsOnBuild>
+    <DocFxVersion Condition="'$(DocFxVersion)' == ''">2.78.5</DocFxVersion>
+    <DocFxRoot>$([System.IO.Path]::GetFullPath('$(MSBuildProjectDirectory)/../../docs/DotNetNote.Docs'))</DocFxRoot>
+    <DocFxOutput>$([System.IO.Path]::GetFullPath('$(MSBuildProjectDirectory)/obj/DocFxSite'))</DocFxOutput>
+    <DocFxBuildStamp>$([System.IO.Path]::GetFullPath('$(MSBuildProjectDirectory)/obj/DocFxBuild.stamp'))</DocFxBuildStamp>
+    <!-- Ensure F5 performs the build, even for external docs and deleted files. -->
+    <DisableFastUpToDateCheck Condition="'$(BuildDocsOnBuild)' == 'true'">true</DisableFastUpToDateCheck>
+  </PropertyGroup>
+
+  <!-- Link the external Markdown sources into Visual Studio without publishing the raw files. -->
+  <ItemGroup>
+    <None Include="$(DocFxRoot)/**/*" Exclude="$(DocFxRoot)/_site/**/*;$(DocFxRoot)/obj/**/*">
+      <Link>Docs/%(RecursiveDir)%(Filename)%(Extension)</Link>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>Never</CopyToPublishDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(BuildDocsOnBuild)' == 'true'">
+    <UpToDateCheckInput Include="$(DocFxRoot)/**/*" Exclude="$(DocFxRoot)/_site/**/*;$(DocFxRoot)/obj/**/*" Set="DocFx" />
+    <UpToDateCheckOutput Include="$(DocFxBuildStamp);$(DocFxOutput)/index.html" Set="DocFx" />
+  </ItemGroup>
+
+  <!-- .NET 10+ tool exec restores/caches the pinned tool without changing the existing EF tool manifest. -->
+  <Target Name="BuildDocFx" BeforeTargets="Build"
+          Condition="'$(BuildDocsOnBuild)' == 'true' and '$(DesignTimeBuild)' != 'true'">
+    <Message Text="Building DotNetNote documentation with DocFX $(DocFxVersion)..." Importance="high" />
+    <Delete Files="$(DocFxBuildStamp)" />
+    <RemoveDir Directories="$(DocFxOutput)" />
+    <MakeDir Directories="$(DocFxOutput)" />
+    <Exec WorkingDirectory="$(DocFxRoot)"
+          Command="dotnet tool exec docfx@$(DocFxVersion) --allow-roll-forward -- build docfx.json --output &quot;$(DocFxOutput)&quot;" />
+    <Error Condition="!Exists('$(DocFxOutput)/index.html')"
+           Text="DocFX did not generate the expected documentation pages." />
+    <Touch Files="$(DocFxBuildStamp)" AlwaysCreate="true" />
+  </Target>
+
+  <Target Name="IncludeDocFxInPublish" AfterTargets="ComputeFilesToPublish" DependsOnTargets="BuildDocFx"
+          Condition="'$(BuildDocsOnBuild)' == 'true' and '$(DesignTimeBuild)' != 'true'">
+    <ItemGroup>
+      <DocFxPublishFiles Include="$(DocFxOutput)/**/*" />
+      <ResolvedFileToPublish Include="@(DocFxPublishFiles)">
+        <RelativePath>wwwroot/docs/%(DocFxPublishFiles.RecursiveDir)%(DocFxPublishFiles.Filename)%(DocFxPublishFiles.Extension)</RelativePath>
+        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+        <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      </ResolvedFileToPublish>
+    </ItemGroup>
+  </Target>
+</Project>
