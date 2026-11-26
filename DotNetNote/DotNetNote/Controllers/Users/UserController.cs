@@ -29,7 +29,7 @@ public class UserController : Controller
     }
 
     //[User][6][2]
-    [Authorize]
+    [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme)]
     public IActionResult Index() => View();
 
     //[User][6][3] : 회원 가입 폼
@@ -177,7 +177,7 @@ public class UserController : Controller
     }
 
     //[User][6][8] : 회원 정보 보기 및 수정
-    [Authorize]
+    [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme)]
     public IActionResult UserInfor() => View();
 
     //[User][6][9] : 인사말 페이지
@@ -187,7 +187,7 @@ public class UserController : Controller
         // 인증되지 않은 사용자는 로그인 페이지로 리디렉션
         if (!(User.Identity?.IsAuthenticated ?? false))
         {
-            return new ChallengeResult();
+            return new ChallengeResult(CookieAuthenticationDefaults.AuthenticationScheme);
         }
 
         return View();
@@ -197,13 +197,13 @@ public class UserController : Controller
     public IActionResult Forbidden() => View();
 
     //[!] 추가: 사용자 상세 보기(GetUsers 저장 프로시저 사용)
-    [Authorize]
+    [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme)]
     public IActionResult UserDetail()
     {
         var userId = User.FindFirst("UserId")?.Value;
         if (string.IsNullOrWhiteSpace(userId))
         {
-            return Challenge();
+            return Challenge(CookieAuthenticationDefaults.AuthenticationScheme);
         }
 
         var user = _repository.GetUserByUserId(userId);
